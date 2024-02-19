@@ -9,8 +9,7 @@ final class TaskViewModelTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         simpleTaskList = TaskViewModel()
-        multipleTaskList = TaskViewModel()
-        multipleTaskList.getExamples()
+        multipleTaskList = TaskViewModel(taskList: TaskModel.examples)
     }
     
     override func tearDownWithError() throws {

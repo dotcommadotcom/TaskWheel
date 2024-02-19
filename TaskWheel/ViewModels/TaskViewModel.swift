@@ -1,16 +1,12 @@
 import Foundation
 
-class TaskViewModel {
-    @Published var taskList: [TaskModel] = []
+class TaskViewModel: ObservableObject {
+    @Published var taskList: [TaskModel]
     
-//    init() {
-//        getExamples()
-//    }
-    
-    func getExamples() {
-        taskList.append(contentsOf: TaskModel.examples)
+    init(_ taskList: [TaskModel] = []) {
+        self.taskList = taskList
     }
-    
+
     func addTask(_ task: TaskModel) {
         if task.isTitleValid() {
             taskList.append(task)

@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct ListRowView: View {
+    
+//    @EnvironmentObject var taskViewModel: TaskViewModel
+    
     let task: TaskModel
     
     var body: some View {

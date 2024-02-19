@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    @EnvironmentObject var taskViewModel: TaskViewModel
     @State private var path = NavigationPath()
     
     let colorBackground: Color = Color.seasaltJet
@@ -11,7 +13,7 @@ struct MainView: View {
         NavigationStack(path: $path) {
             ZStack(alignment: .bottomTrailing) {
                 List {
-                    ForEach(TaskModel.examples) { task in
+                    ForEach(taskViewModel.taskList) { task in
                         ListRowView(task: task)
                     }
                     .listRowBackground(colorBackground)
@@ -36,9 +38,11 @@ struct MainView: View {
 
 #Preview {
     MainView()
+        .environmentObject(TaskViewModel(TaskModel.examples))
 }
 
 #Preview("dark") {
     MainView()
         .preferredColorScheme(.dark)
+        .environmentObject(TaskViewModel(TaskModel.examples))
 }

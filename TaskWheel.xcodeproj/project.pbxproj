@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B71A81DA2B830BB000A8886F /* TaskWheelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81D92B830BB000A8886F /* TaskWheelApp.swift */; };
-		B71A81DC2B830BB000A8886F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81DB2B830BB000A8886F /* ContentView.swift */; };
 		B71A81DE2B830BB100A8886F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71A81DD2B830BB100A8886F /* Assets.xcassets */; };
 		B71A81E12B830BB100A8886F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71A81E02B830BB100A8886F /* Preview Assets.xcassets */; };
 		B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81EA2B830E4B00A8886F /* MainView.swift */; };
@@ -34,7 +33,6 @@
 /* Begin PBXFileReference section */
 		B71A81D62B830BB000A8886F /* TaskWheel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskWheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71A81D92B830BB000A8886F /* TaskWheelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskWheelApp.swift; sourceTree = "<group>"; };
-		B71A81DB2B830BB000A8886F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B71A81DD2B830BB100A8886F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B71A81E02B830BB100A8886F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B71A81EA2B830E4B00A8886F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 				B7F5B8082B8371EC00F5CD9D /* ViewModels */,
 				B71A81E82B830E1800A8886F /* Views */,
 				B71A81D92B830BB000A8886F /* TaskWheelApp.swift */,
-				B71A81DB2B830BB000A8886F /* ContentView.swift */,
 				B71A81DD2B830BB100A8886F /* Assets.xcassets */,
 				B71A81DF2B830BB100A8886F /* Preview Content */,
 			);
@@ -243,7 +240,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71A81F62B831CD100A8886F /* AddView.swift in Sources */,
-				B71A81DC2B830BB000A8886F /* ContentView.swift in Sources */,
 				B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */,
 				B71A81F42B83139200A8886F /* ButtonView.swift in Sources */,
 				B71A81F22B8310D600A8886F /* ListRowView.swift in Sources */,
