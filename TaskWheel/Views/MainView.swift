@@ -1,8 +1,23 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var path = NavigationPath()
+    
+    let taskListTitle = "Sample Task List"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack() {
+            List {
+                ForEach(TaskModel.examples) { task in
+                    ListRowView(task: task)
+                }
+            }
+            .toolbarBackground(Color.white, for: .navigationBar)
+            .listStyle(.plain)
+            .navigationTitle(taskListTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .scrollIndicators(.never)
+        }
     }
 }
 
