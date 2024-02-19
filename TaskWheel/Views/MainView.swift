@@ -1,22 +1,27 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var path = NavigationPath()
-    
     let taskListTitle = "Sample Task List"
     
     var body: some View {
         NavigationStack() {
-            List {
-                ForEach(TaskModel.examples) { task in
-                    ListRowView(task: task)
+            ZStack(alignment: .bottomTrailing) {
+                List {
+                    ForEach(TaskModel.examples) { task in
+                        ListRowView(task: task)
+                    }
                 }
+                .toolbarBackground(Color.white, for: .navigationBar)
+                .listStyle(.plain)
+                .navigationTitle(taskListTitle)
+                .navigationBarTitleDisplayMode(.inline)
+                .scrollIndicators(.never)
+                
+                ButtonImageView(image: "plus", color: Color("crayolaBlue")) {
+                    print("clicked")
+                }
+                .padding(.trailing, 30)
             }
-            .toolbarBackground(Color.white, for: .navigationBar)
-            .listStyle(.plain)
-            .navigationTitle(taskListTitle)
-            .navigationBarTitleDisplayMode(.inline)
-            .scrollIndicators(.never)
         }
     }
 }
