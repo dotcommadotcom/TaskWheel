@@ -14,7 +14,7 @@ struct MainView: View {
             ZStack(alignment: .bottomTrailing) {
                 List {
                     ForEach(taskViewModel.taskList) { task in
-                        ListRowView(task: task)
+                        ListRowView(task: task, action: taskViewModel.toggleComplete)
                     }
                     .listRowBackground(colorBackground)
                 }
@@ -38,11 +38,5 @@ struct MainView: View {
 
 #Preview {
     MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-}
-
-#Preview("dark") {
-    MainView()
-        .preferredColorScheme(.dark)
         .environmentObject(TaskViewModel(TaskModel.examples))
 }

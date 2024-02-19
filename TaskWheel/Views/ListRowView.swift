@@ -2,13 +2,24 @@ import SwiftUI
 
 struct ListRowView: View {
     
-//    @EnvironmentObject var taskViewModel: TaskViewModel
-    
     let task: TaskModel
+    let action: (TaskModel) -> Void
+    
+    init(task: TaskModel, action: @escaping (TaskModel) -> Void = {_ in }) {
+        self.task = task
+        self.action = action
+    }
     
     var body: some View {
         HStack {
-            Image(systemName: task.isComplete ? "checkmark.square" : "square")
+            Button(action: {
+                action(task)
+            }, label: {
+                Image(systemName: task.isComplete ? "checkmark.square" : "square")
+            })
+            .onTapGesture { }
+            .buttonStyle(BorderlessButtonStyle())
+            
             Text(task.title)
                 .font(.title3)
             Spacer()
@@ -24,7 +35,7 @@ struct TaskRowModifier: ViewModifier {
         if isComplete {
             return AnyView(content.strikethrough().foregroundStyle(.gray))
         } else {
-            return AnyView(content)
+            return AnyView(content.foregroundStyle(.primary))
         }
     }
 }
