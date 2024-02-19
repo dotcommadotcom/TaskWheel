@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  TaskWheel
-//
-//  Created by Jiwoo on 2024-02-19.
-//
-
 import SwiftUI
 
 struct ContentView: View {
