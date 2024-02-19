@@ -10,6 +10,19 @@ struct ListRowView: View {
                 .font(.title3)
             Spacer()
         }
+        .modifier(TaskRowModifier(isComplete: task.isComplete))
+    }
+}
+
+struct TaskRowModifier: ViewModifier {
+    let isComplete: Bool
+    
+    func body(content: Content) -> some View {
+        if isComplete {
+            return AnyView(content.strikethrough().foregroundStyle(.gray))
+        } else {
+            return AnyView(content)
+        }
     }
 }
 

@@ -4,8 +4,6 @@ struct MainView: View {
     @State private var path = NavigationPath()
     
     let colorBackground: Color = Color.seasaltJet
-    let colorContrast: Color = Color.jetSeasalt
-    let colorAccent: Color = Color.crayolaBlue
     
     let taskListTitle = "Sample Task List"
     

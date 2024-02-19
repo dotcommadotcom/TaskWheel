@@ -4,9 +4,9 @@ struct AddView: View {
     @State var height: CGFloat = 0
     @State var textFieldText: String = ""
     
-    let colorBackground: Color = Color("seasaltJet")
-    let colorContrast: Color = Color("jetSeasalt")
-    let colorAccent: Color = Color("crayolaBlue")
+    let colorBackground: Color = Color.seasaltJet
+    let colorContrast: Color = Color.jetSeasalt
+    let colorAccent: Color = Color.crayolaBlue
     
     let radiusTop: CGFloat = 25
     let textFieldDefault: String = "What now?"
@@ -24,10 +24,8 @@ struct AddView: View {
                     .frame(height: height)
                     .clipShape(.rect(topLeadingRadius: radiusTop, topTrailingRadius: radiusTop))
 
-                TextField(text: $textFieldText, prompt: Text(textFieldDefault).foregroundColor(colorContrast.opacity(0.6)), axis: .vertical) {}
+                TextField(text: $textFieldText, prompt: Text(textFieldDefault).foregroundStyle(colorContrast.opacity(0.6)), axis: .vertical) {}
                     .font(.system(size: sizeFont))
-//                    .foregroundColor(colorContrast)
-//                    .accentColor(colorAccent)
                     .padding(.horizontal, paddingDefault).padding(.top, paddingDefault).padding(.bottom, paddingDefault / 2)
                     .lineLimit(nil)
                     .overlay(
@@ -46,8 +44,8 @@ struct AddView: View {
             ZStack {
                 Rectangle()
                     .fill(.placeholder)
-//                    .fill(colorBackground)
-//                    .frame(height: heightButtonBar)
+                    .fill(colorBackground)
+                    .frame(height: heightButtonBar)
                 
                 HStack(spacing: 20) {
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
@@ -68,12 +66,12 @@ struct AddView: View {
                         Image(systemName: "square.and.arrow.down")
                     })
                 }
+                .foregroundStyle(colorContrast)
                 .font(.system(size: sizeFont))
-//                .foregroundColor(colorContrast)
-//                .accentColor(colorAccent)
                 .padding(.horizontal, paddingDefault).padding(.top, paddingDefault / 2).padding(.bottom, paddingDefault)
             }
         }
+        .accentColor(colorAccent)
     }
 }
 

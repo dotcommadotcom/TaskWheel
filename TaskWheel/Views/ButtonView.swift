@@ -16,7 +16,7 @@ struct ButtonImageView: View {
             Image(systemName: image)
                 .padding()
                 .font(.system(size: 28, weight: .semibold))
-                .foregroundColor(Color("seasalt"))
+                .foregroundStyle(Color.seasalt)
                 .background(color)
                 .shadow(color: /*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/.opacity(0.09), radius: 5, x: 5, y: 5)
                 .clipShape(Circle())
@@ -25,7 +25,7 @@ struct ButtonImageView: View {
 }
 
 #Preview("image button", traits: .sizeThatFitsLayout) {
-    ButtonImageView(image: "star", color: Color("crayolaBlue")) {
+    ButtonImageView(image: "star", color: Color.crayolaBlue) {
         print("Button pressed!")
     }
 }
