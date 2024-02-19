@@ -16,11 +16,9 @@ struct ListRowView: View {
 #Preview("incomplete task", traits: .sizeThatFitsLayout) {
     let incomplete = TaskModel(title: "first task", isComplete: false)
     return ListRowView(task: incomplete)
-        .previewLayout(.sizeThatFits)
 }
 
 #Preview("completed task", traits: .sizeThatFitsLayout) {
     let completed = TaskModel(title: "second task", isComplete: true)
     return ListRowView(task: completed)
-        .previewLayout(.sizeThatFits)
 }

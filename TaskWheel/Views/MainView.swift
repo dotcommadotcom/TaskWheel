@@ -3,6 +3,10 @@ import SwiftUI
 struct MainView: View {
     @State private var path = NavigationPath()
     
+    let colorBackground: Color = Color.seasaltJet
+    let colorContrast: Color = Color.jetSeasalt
+    let colorAccent: Color = Color.crayolaBlue
+    
     let taskListTitle = "Sample Task List"
     
     var body: some View {
@@ -12,8 +16,8 @@ struct MainView: View {
                     ForEach(TaskModel.examples) { task in
                         ListRowView(task: task)
                     }
+                    .listRowBackground(colorBackground)
                 }
-                .toolbarBackground(Color.white, for: .navigationBar)
                 .listStyle(.plain)
                 .navigationTitle(taskListTitle)
                 .navigationBarTitleDisplayMode(.inline)
@@ -24,13 +28,19 @@ struct MainView: View {
                 }
                 .padding(.trailing, 30)
                 .navigationDestination(for: String.self) { _ in
-                    Text("hi")
+                    AddView()
                 }
             }
+            .background(colorBackground)
         }
     }
 }
 
 #Preview {
     MainView()
+}
+
+#Preview("dark") {
+    MainView()
+        .preferredColorScheme(.dark)
 }

@@ -26,8 +26,8 @@ struct AddView: View {
 
                 TextField(text: $textFieldText, prompt: Text(textFieldDefault).foregroundColor(colorContrast.opacity(0.6)), axis: .vertical) {}
                     .font(.system(size: sizeFont))
-                    .foregroundColor(colorContrast)
-                    .accentColor(colorAccent)
+//                    .foregroundColor(colorContrast)
+//                    .accentColor(colorAccent)
                     .padding(.horizontal, paddingDefault).padding(.top, paddingDefault).padding(.bottom, paddingDefault / 2)
                     .lineLimit(nil)
                     .overlay(
@@ -46,8 +46,8 @@ struct AddView: View {
             ZStack {
                 Rectangle()
                     .fill(.placeholder)
-                    .fill(colorBackground)
-                    .frame(height: heightButtonBar)
+//                    .fill(colorBackground)
+//                    .frame(height: heightButtonBar)
                 
                 HStack(spacing: 20) {
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
@@ -69,8 +69,8 @@ struct AddView: View {
                     })
                 }
                 .font(.system(size: sizeFont))
-                .foregroundColor(colorContrast)
-                .accentColor(colorAccent)
+//                .foregroundColor(colorContrast)
+//                .accentColor(colorAccent)
                 .padding(.horizontal, paddingDefault).padding(.top, paddingDefault / 2).padding(.bottom, paddingDefault)
             }
         }

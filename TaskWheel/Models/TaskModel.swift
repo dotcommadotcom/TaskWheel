@@ -7,15 +7,15 @@ struct TaskModel: Identifiable, Hashable {
     
     init(title: String, isComplete: Bool = false) {
         self.title = title
-        self.isComplete = false
+        self.isComplete = isComplete
     }
 }
 
 extension TaskModel {
     static let examples: [TaskModel] = [
-        .init(title: "laundry", isComplete: false),
+        .init(title: "laundry", isComplete: true),
         .init(title: "dishes", isComplete: true),
-        .init(title: "vacuum", isComplete: false),
+        .init(title: "vacuum", isComplete: true),
         .init(title: "mop", isComplete: false),
         .init(title: "water plants", isComplete: false),
         .init(title: "throw out trash", isComplete: false),
