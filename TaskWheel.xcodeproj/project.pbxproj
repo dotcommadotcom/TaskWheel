@@ -15,6 +15,7 @@
 		B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81EF2B830F3800A8886F /* TaskModel.swift */; };
 		B71A81F22B8310D600A8886F /* ListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81F12B8310D600A8886F /* ListRowView.swift */; };
 		B71A81F42B83139200A8886F /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81F32B83139200A8886F /* ButtonView.swift */; };
+		B71A81F62B831CD100A8886F /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81F52B831CD100A8886F /* AddView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		B71A81EF2B830F3800A8886F /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		B71A81F12B8310D600A8886F /* ListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowView.swift; sourceTree = "<group>"; };
 		B71A81F32B83139200A8886F /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		B71A81F52B831CD100A8886F /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				B71A81EA2B830E4B00A8886F /* MainView.swift */,
 				B71A81F12B8310D600A8886F /* ListRowView.swift */,
 				B71A81F32B83139200A8886F /* ButtonView.swift */,
+				B71A81F52B831CD100A8886F /* AddView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71A81F62B831CD100A8886F /* AddView.swift in Sources */,
 				B71A81DC2B830BB000A8886F /* ContentView.swift in Sources */,
 				B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */,
 				B71A81F42B83139200A8886F /* ButtonView.swift in Sources */,

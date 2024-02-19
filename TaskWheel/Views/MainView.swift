@@ -1,10 +1,12 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var path = NavigationPath()
+    
     let taskListTitle = "Sample Task List"
     
     var body: some View {
-        NavigationStack() {
+        NavigationStack(path: $path) {
             ZStack(alignment: .bottomTrailing) {
                 List {
                     ForEach(TaskModel.examples) { task in
@@ -18,9 +20,12 @@ struct MainView: View {
                 .scrollIndicators(.never)
                 
                 ButtonImageView(image: "plus", color: Color("crayolaBlue")) {
-                    print("clicked")
+                    path.append("add view")
                 }
                 .padding(.trailing, 30)
+                .navigationDestination(for: String.self) { _ in
+                    Text("hi")
+                }
             }
         }
     }
