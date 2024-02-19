@@ -9,6 +9,10 @@ struct TaskModel: Identifiable, Hashable {
         self.title = title
         self.isComplete = isComplete
     }
+    
+    func isTitleValid() -> Bool {
+        return !self.title.isEmpty
+    }
 }
 
 extension TaskModel {

@@ -16,7 +16,21 @@
 		B71A81F22B8310D600A8886F /* ListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81F12B8310D600A8886F /* ListRowView.swift */; };
 		B71A81F42B83139200A8886F /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81F32B83139200A8886F /* ButtonView.swift */; };
 		B71A81F62B831CD100A8886F /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81F52B831CD100A8886F /* AddView.swift */; };
+		B7F5B80A2B83721600F5CD9D /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */; };
+		B7F5B8142B83746300F5CD9D /* TaskWheelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5B8132B83746300F5CD9D /* TaskWheelTests.swift */; };
+		B7F5B81B2B8374AE00F5CD9D /* TaskViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5B81A2B8374AE00F5CD9D /* TaskViewModelTests.swift */; };
+		B7F5B81D2B83852000F5CD9D /* TaskModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5B81C2B83852000F5CD9D /* TaskModelTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B7F5B8152B83746300F5CD9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B71A81CE2B830BB000A8886F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B71A81D52B830BB000A8886F;
+			remoteInfo = TaskWheel;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B71A81D62B830BB000A8886F /* TaskWheel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskWheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,10 +43,22 @@
 		B71A81F12B8310D600A8886F /* ListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowView.swift; sourceTree = "<group>"; };
 		B71A81F32B83139200A8886F /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		B71A81F52B831CD100A8886F /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
+		B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		B7F5B8112B83746300F5CD9D /* TaskWheelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaskWheelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7F5B8132B83746300F5CD9D /* TaskWheelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskWheelTests.swift; sourceTree = "<group>"; };
+		B7F5B81A2B8374AE00F5CD9D /* TaskViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModelTests.swift; sourceTree = "<group>"; };
+		B7F5B81C2B83852000F5CD9D /* TaskModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B71A81D32B830BB000A8886F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7F5B80E2B83746300F5CD9D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				B71A81D82B830BB000A8886F /* TaskWheel */,
+				B7F5B8122B83746300F5CD9D /* TaskWheelTests */,
 				B71A81D72B830BB000A8886F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				B71A81D62B830BB000A8886F /* TaskWheel.app */,
+				B7F5B8112B83746300F5CD9D /* TaskWheelTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -62,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				B71A81EE2B830F2B00A8886F /* Models */,
+				B7F5B8082B8371EC00F5CD9D /* ViewModels */,
 				B71A81E82B830E1800A8886F /* Views */,
 				B71A81D92B830BB000A8886F /* TaskWheelApp.swift */,
 				B71A81DB2B830BB000A8886F /* ContentView.swift */,
@@ -98,6 +127,24 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		B7F5B8082B8371EC00F5CD9D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B7F5B8122B83746300F5CD9D /* TaskWheelTests */ = {
+			isa = PBXGroup;
+			children = (
+				B7F5B8132B83746300F5CD9D /* TaskWheelTests.swift */,
+				B7F5B81A2B8374AE00F5CD9D /* TaskViewModelTests.swift */,
+				B7F5B81C2B83852000F5CD9D /* TaskModelTests.swift */,
+			);
+			path = TaskWheelTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -118,6 +165,24 @@
 			productReference = B71A81D62B830BB000A8886F /* TaskWheel.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B7F5B8102B83746300F5CD9D /* TaskWheelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7F5B8172B83746300F5CD9D /* Build configuration list for PBXNativeTarget "TaskWheelTests" */;
+			buildPhases = (
+				B7F5B80D2B83746300F5CD9D /* Sources */,
+				B7F5B80E2B83746300F5CD9D /* Frameworks */,
+				B7F5B80F2B83746300F5CD9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7F5B8162B83746300F5CD9D /* PBXTargetDependency */,
+			);
+			name = TaskWheelTests;
+			productName = TaskWheelTests;
+			productReference = B7F5B8112B83746300F5CD9D /* TaskWheelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -130,6 +195,10 @@
 				TargetAttributes = {
 					B71A81D52B830BB000A8886F = {
 						CreatedOnToolsVersion = 15.2;
+					};
+					B7F5B8102B83746300F5CD9D = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = B71A81D52B830BB000A8886F;
 					};
 				};
 			};
@@ -147,6 +216,7 @@
 			projectRoot = "";
 			targets = (
 				B71A81D52B830BB000A8886F /* TaskWheel */,
+				B7F5B8102B83746300F5CD9D /* TaskWheelTests */,
 			);
 		};
 /* End PBXProject section */
@@ -158,6 +228,13 @@
 			files = (
 				B71A81E12B830BB100A8886F /* Preview Assets.xcassets in Resources */,
 				B71A81DE2B830BB100A8886F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7F5B80F2B83746300F5CD9D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,12 +250,31 @@
 				B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */,
 				B71A81F42B83139200A8886F /* ButtonView.swift in Sources */,
 				B71A81F22B8310D600A8886F /* ListRowView.swift in Sources */,
+				B7F5B80A2B83721600F5CD9D /* TaskViewModel.swift in Sources */,
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
 				B71A81DA2B830BB000A8886F /* TaskWheelApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7F5B80D2B83746300F5CD9D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7F5B8142B83746300F5CD9D /* TaskWheelTests.swift in Sources */,
+				B7F5B81B2B8374AE00F5CD9D /* TaskViewModelTests.swift in Sources */,
+				B7F5B81D2B83852000F5CD9D /* TaskModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B7F5B8162B83746300F5CD9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B71A81D52B830BB000A8886F /* TaskWheel */;
+			targetProxy = B7F5B8152B83746300F5CD9D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B71A81E22B830BB100A8886F /* Debug */ = {
@@ -356,6 +452,48 @@
 			};
 			name = Release;
 		};
+		B7F5B8182B83746300F5CD9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dotcommadotcom.TaskWheelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TaskWheel.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TaskWheel";
+			};
+			name = Debug;
+		};
+		B7F5B8192B83746300F5CD9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dotcommadotcom.TaskWheelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TaskWheel.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TaskWheel";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -373,6 +511,15 @@
 			buildConfigurations = (
 				B71A81E52B830BB100A8886F /* Debug */,
 				B71A81E62B830BB100A8886F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7F5B8172B83746300F5CD9D /* Build configuration list for PBXNativeTarget "TaskWheelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7F5B8182B83746300F5CD9D /* Debug */,
+				B7F5B8192B83746300F5CD9D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
