@@ -7,9 +7,9 @@ class TaskViewModel: ObservableObject {
         self.taskList = taskList
     }
 
-    func addTask(_ task: TaskModel) {
-        if task.isTitleValid() {
-            taskList.append(task)
+    func addTask(title: String) {
+        if !title.isEmpty {
+            taskList.append(TaskModel(title: title))
         }
     }
     
