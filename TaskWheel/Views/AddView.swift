@@ -21,9 +21,9 @@ struct AddView: View {
         VStack(spacing: paddingDefault) {
             TextField(textDefault, text: $textInput, axis: .vertical)
                 .lineLimit(maxLineLimit)
-                .preventTextFieldError()
+//                .preventTextFieldError()
             
-            HStack(spacing: 20) {
+            HStack(spacing: paddingDefault) {
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     Image(systemName: "text.alignleft")
                 })
@@ -84,12 +84,19 @@ struct GetHeightModifier: ViewModifier {
         .environmentObject(TaskViewModel())
 }
 
-#Preview("single line") {
+#Preview("short text") {
     AddView(textInput: "Hello, World!")
         .environmentObject(TaskViewModel())
 }
 
-#Preview("multiple lines") {
+#Preview("medium text") {
+    @State var mediumText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    
+    return AddView(textInput: String(repeating: mediumText, count: 3))
+        .environmentObject(TaskViewModel())
+}
+
+#Preview("long text") {
     @State var longText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     
     return AddView(textInput: String(repeating: longText, count: 5))
