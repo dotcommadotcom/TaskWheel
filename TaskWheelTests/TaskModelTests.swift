@@ -37,4 +37,11 @@ final class TaskModelTests: XCTestCase {
         
         XCTAssertFalse(testTask.isComplete)
     }
+    
+    func testToggleDeleteTrue() throws {
+        testTask = testTask.markDeleted()
+        testTask = testTask.markDeleted()
+        
+        XCTAssertTrue(testTask.isDeleted)
+    }
 }

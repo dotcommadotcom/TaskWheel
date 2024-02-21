@@ -16,7 +16,7 @@ struct MainView: View {
         NavigationStack() {
             ZStack(alignment: .bottomTrailing) {
                 List {
-                    ForEach(taskViewModel.taskList) { task in
+                    ForEach(taskViewModel.showTasks()) { task in
                         ListRowView(task: task, action: taskViewModel.toggleComplete)
                     }
                     .listRowBackground(colorBackground)

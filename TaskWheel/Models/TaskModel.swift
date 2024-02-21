@@ -5,11 +5,13 @@ struct TaskModel: Identifiable, Hashable {
     let id: UUID
     let title: String
     let isComplete: Bool
+    let isDeleted: Bool
     
-    init(id: UUID = UUID(), title: String, isComplete: Bool = false) {
+    init(id: UUID = UUID(), title: String, isComplete: Bool = false, isDeleted: Bool = false) {
         self.id = id
         self.title = title
         self.isComplete = isComplete
+        self.isDeleted = isDeleted
     }
     
     func editTitle(_ newTitle: String) -> TaskModel {
@@ -18,6 +20,10 @@ struct TaskModel: Identifiable, Hashable {
     
     func toggleComplete() -> TaskModel {
         return TaskModel(id: self.id, title: self.title, isComplete: !self.isComplete)
+    }
+    
+    func markDeleted() -> TaskModel {
+        return TaskModel(id: self.id, title: self.title, isComplete: self.isComplete, isDeleted: true)
     }
 }
 
