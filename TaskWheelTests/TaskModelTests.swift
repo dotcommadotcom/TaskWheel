@@ -19,16 +19,6 @@ final class TaskModelTests: XCTestCase {
         XCTAssertTrue(true)
     }
     
-    func testIsTitleValidTrue() throws {
-        XCTAssertTrue(testTask.isTitleValid())
-    }
-    
-    func testIsTitleValidFalse() throws {
-        let notValidTask = TaskModel(title: "")
-        
-        XCTAssertFalse(notValidTask.isTitleValid())
-    }
-    
     func testEditTitle() throws {
         testTask = testTask.editTitle("hello")
         

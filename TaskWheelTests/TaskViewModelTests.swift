@@ -9,7 +9,7 @@ final class TaskViewModelTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         simpleTaskList = TaskViewModel()
-        multipleTaskList = TaskViewModel(taskList: TaskModel.examples)
+        multipleTaskList = TaskViewModel(TaskModel.examples)
     }
     
     override func tearDownWithError() throws {
@@ -22,22 +22,20 @@ final class TaskViewModelTests: XCTestCase {
         XCTAssertTrue(simpleTaskList.taskList.isEmpty)
     }
     
-    func testAddValidTaskAddsTask() throws {
-        let testTask = TaskModel(title: "this is a test")
-        
-        simpleTaskList.addTask(testTask)
+    func testAddTask() throws {
+        simpleTaskList.addTask(title: "this is a test")
         
         XCTAssertEqual(simpleTaskList.taskList.count, 1)
     }
     
-    func testAddInvalidTaskDoesNothing() throws {
-        let testTask = TaskModel(title: "")
+    func testAddTaskPrepends() throws {
+        let testTitle = "this is a test"
         
-        simpleTaskList.addTask(testTask)
+        multipleTaskList.addTask(title: testTitle)
         
-        XCTAssertEqual(simpleTaskList.taskList.count, 0)
+        XCTAssertEqual(multipleTaskList.taskList[0].title, testTitle)
     }
-        
+    
     func testMultipleTaskList() throws {
         XCTAssertEqual(multipleTaskList.taskList.count, 25)
     }

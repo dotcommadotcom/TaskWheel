@@ -1,4 +1,5 @@
 import Foundation
+import DequeModule
 
 struct TaskModel: Identifiable, Hashable {
     let id: UUID
@@ -11,10 +12,6 @@ struct TaskModel: Identifiable, Hashable {
         self.isComplete = isComplete
     }
     
-    func isTitleValid() -> Bool {
-        return !self.title.isEmpty
-    }
-    
     func editTitle(_ newTitle: String) -> TaskModel {
         return TaskModel(id: self.id, title: newTitle, isComplete: self.isComplete)
     }
@@ -25,7 +22,7 @@ struct TaskModel: Identifiable, Hashable {
 }
 
 extension TaskModel {
-    static let examples: [TaskModel] = [
+    static let examples: Deque<TaskModel> = [
         .init(title: "laundry", isComplete: true),
         .init(title: "dishes", isComplete: true),
         .init(title: "vacuum", isComplete: true),

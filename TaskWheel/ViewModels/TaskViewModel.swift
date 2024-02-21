@@ -1,16 +1,15 @@
 import Foundation
+import DequeModule
 
 class TaskViewModel: ObservableObject {
-    @Published var taskList: [TaskModel]
+    @Published var taskList = Deque<TaskModel>()
     
-    init(_ taskList: [TaskModel] = []) {
+    init(_ taskList: Deque<TaskModel> = []) {
         self.taskList = taskList
     }
 
     func addTask(title: String) {
-        if !title.isEmpty {
-            taskList.append(TaskModel(title: title))
-        }
+        taskList.prepend(TaskModel(title: title))
     }
     
     func toggleComplete(_ task: TaskModel) {
