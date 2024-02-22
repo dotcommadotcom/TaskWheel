@@ -40,7 +40,7 @@ extension TaskModel {
         .init(title: "laundry", isComplete: true),
         .init(title: "dishes", isComplete: true),
         .init(title: "vacuum", isComplete: true),
-        .init(title: "mop", isComplete: false),
+        .init(title: "mop", isComplete: false, details: "where are the clean mop heads?"),
         .init(title: "water plants", isComplete: false),
         .init(title: "throw out trash", isComplete: false),
         .init(title: "recycle", isComplete: false),
