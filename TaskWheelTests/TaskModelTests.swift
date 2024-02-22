@@ -43,4 +43,16 @@ final class TaskModelTests: XCTestCase {
         
         XCTAssertEqual(testTask.details, "new details")
     }
+    
+    func testEditHelperDoesNotChangeId() throws {
+        let previousID = testTask.id
+        
+        testTask = testTask.editTitle("new title")
+        
+        XCTAssertEqual(testTask.id, previousID)
+    }
+    
+    func testEmptyEditHelper() throws {
+        XCTAssertEqual(testTask.edit(), testTask)
+    }
 }

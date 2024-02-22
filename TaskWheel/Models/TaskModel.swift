@@ -14,16 +14,23 @@ struct TaskModel: Identifiable, Hashable {
         self.details = details
     }
     
+    func edit(id: UUID? = nil, title: String? = nil, isComplete: Bool? = nil, details: String? = nil) -> TaskModel {
+            return TaskModel(id: self.id,
+                             title: title ?? self.title,
+                             isComplete: isComplete ?? self.isComplete,
+                             details: details ?? self.details)
+        }
+        
     func editTitle(_ newTitle: String) -> TaskModel {
-        return TaskModel(id: self.id, title: newTitle, isComplete: self.isComplete, details: self.details)
+        return edit(title: newTitle)
     }
     
     func toggleComplete() -> TaskModel {
-        return TaskModel(id: self.id, title: self.title, isComplete: !self.isComplete, details: self.details)
+        return edit(isComplete: !self.isComplete)
     }
     
     func editDetails(_ newDetails: String) -> TaskModel {
-        return TaskModel(id: self.id, title: self.title, isComplete: !self.isComplete, details: newDetails)
+        return edit(details: newDetails)
     }
     
 }
