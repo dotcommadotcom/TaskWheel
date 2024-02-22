@@ -7,7 +7,7 @@ final class TaskModelTests: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        testTask = TaskModel(title: "this is a test")
+        testTask = TaskModel(title: "this is a test", details: "details test")
     }
     
     override func tearDownWithError() throws {
@@ -38,10 +38,9 @@ final class TaskModelTests: XCTestCase {
         XCTAssertFalse(testTask.isComplete)
     }
     
-    func testToggleDeleteTrue() throws {
-        testTask = testTask.markDeleted()
-        testTask = testTask.markDeleted()
+    func testEditDetails() throws {
+        testTask = testTask.editDetails("new details")
         
-        XCTAssertTrue(testTask.isDeleted)
+        XCTAssertEqual(testTask.details, "new details")
     }
 }
