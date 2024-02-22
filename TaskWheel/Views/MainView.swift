@@ -10,13 +10,13 @@ struct MainView: View {
     let colorTest: Color = .pink
     
     let taskListTitle = "Sample Task List"
-    var addViewText = ""
+    var testText = ""
     
     var body: some View {
         NavigationStack() {
             ZStack(alignment: .bottomTrailing) {
                 List {
-                    ForEach(taskViewModel.showTasks()) { task in
+                    ForEach(taskViewModel.taskList) { task in
                         ListRowView(task: task, action: taskViewModel.toggleComplete)
                     }
                     .listRowBackground(colorBackground)
@@ -31,7 +31,7 @@ struct MainView: View {
                 }
                 .padding(.trailing, 30)
                 .sheet(isPresented: $isAddShown, content: {
-                    AddView(textInput: addViewText)
+                    AddView(titleInput: testText, detailsInput: testText)
                 })
             }
             .background(colorBackground)
@@ -40,27 +40,28 @@ struct MainView: View {
     
 }
 
-#Preview("light") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-}
-
-#Preview("dark") {
-    MainView()
-        .preferredColorScheme(.dark)
-        .environmentObject(TaskViewModel(TaskModel.examples))
-}
+//#Preview("light") {
+//    MainView()
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//}
+//
+//#Preview("dark") {
+//    MainView()
+//        .preferredColorScheme(.dark)
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//}
 
 #Preview("medium text", traits: .sizeThatFitsLayout) {
     @State var mediumText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    return MainView(addViewText: mediumText)
-        .environmentObject(TaskViewModel(TaskModel.examples))
-}
-
-#Preview("long text") {
-    @State var longText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    
-    return MainView(addViewText: String(repeating: longText, count: 5))
+    return MainView(testText: mediumText)
         .preferredColorScheme(.dark)
         .environmentObject(TaskViewModel(TaskModel.examples))
 }
+
+//#Preview("long text") {
+//    @State var longText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+//    
+//    return MainView(testText: String(repeating: longText, count: 5))
+//        .preferredColorScheme(.dark)
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//}
