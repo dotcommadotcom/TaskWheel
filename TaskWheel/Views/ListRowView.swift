@@ -63,6 +63,6 @@ struct TaskRowModifier: ViewModifier {
 }
 
 #Preview("completed task", traits: .sizeThatFitsLayout) {
-    let completed = TaskModel(title: "second task", isComplete: true)
+    let completed = TaskModel(title: "second task", isComplete: true, details: "i'm completed")
     return ListRowView(task: completed)
 }

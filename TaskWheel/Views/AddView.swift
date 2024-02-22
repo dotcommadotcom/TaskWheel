@@ -15,13 +15,13 @@ struct AddView: View {
     private let textDefault: String = "What now?"
     private let detailDefault: String = "Add details."
     private let cornerRadius: CGFloat = 25
-    private let paddingDefault: CGFloat = 30
+    private let sizePadding: CGFloat = 30
     private let heightMaximum: CGFloat = 500
     private let maxLineLimit: Int = 20
     private let sizeFont: CGFloat = 20
     
     var body: some View {
-        VStack(spacing: paddingDefault / 2) {
+        VStack(spacing: sizePadding / 2) {
             TextField(textDefault, text: $titleInput, axis: .vertical)
                 .lineLimit(maxLineLimit)
 //                .preventTextFieldError()
@@ -32,7 +32,7 @@ struct AddView: View {
                     .font(.system(size: sizeFont - 3))
             }
             
-            HStack(spacing: paddingDefault) {
+            HStack(spacing: sizePadding) {
                 Button(action: {
                     isDetailsHidden.toggle()
                 }, label: {
@@ -58,7 +58,7 @@ struct AddView: View {
             }
             .buttonStyle(NoAnimationStyle())
         }
-        .padding(paddingDefault)
+        .padding(sizePadding)
         .font(.system(size: sizeFont))
         .foregroundStyle(colorContrast)
         .presentationBackground(colorBackground)
