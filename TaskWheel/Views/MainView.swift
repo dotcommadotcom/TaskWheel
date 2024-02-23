@@ -32,8 +32,16 @@ struct MainView: View {
                     UpdateView(task: task)
                 }
                 
-                ButtonImageView(image: "plus", color: Color("crayolaBlue")) {
-                    self.isAddShown = true
+                Button {
+                    isAddShown = true
+                } label: {
+                    Image(systemName: "plus")
+                        .padding(13)
+                        .font(.system(size: 30, weight: .semibold))
+                        .foregroundStyle(.seasalt)
+                        .background(.crayolaBlue)
+                        .shadow(color: /*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/.opacity(0.1), radius: 5, x: 5, y: 5)
+                        .clipShape(Circle())
                 }
                 .padding(.trailing, 30)
                 .sheet(isPresented: $isAddShown, content: {
