@@ -3,9 +3,7 @@ import SwiftUI
 struct UpdateView: View {
     let task: TaskModel
     
-    private let colorBackground: Color = .seasaltJet
-    private let colorContrast: Color = .jetSeasalt
-    private let colorAccent: Color = .crayolaBlue
+    @State var color = ColorSettings()
     
     private let textDefault: String = "What now?"
     private let detailDefault: String = "Add details."
@@ -29,8 +27,8 @@ struct UpdateView: View {
         }
         .padding(sizePadding)
         .font(.system(size: sizeFont))
-        .foregroundStyle(colorContrast)
-        .background(colorBackground)
+        .foregroundStyle(color.text)
+        .background(color.background)
         
     }
 }

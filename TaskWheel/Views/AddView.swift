@@ -7,10 +7,7 @@ struct AddView: View {
     @State var detailsInput: String = ""
     @State private var sheetHeight: CGFloat = 50
     @State private var isDetailsHidden = true
-    
-    private let colorBackground: Color = .seasaltJet // .pink
-    private let colorContrast: Color = .jetSeasalt
-    private let colorAccent: Color = .crayolaBlue
+    @State var color = ColorSettings()
     
     private let textDefault: String = "What now?"
     private let detailDefault: String = "Add details."
@@ -38,7 +35,7 @@ struct AddView: View {
                 }, label: {
                     Image(systemName: "text.alignleft")
                 })
-                .foregroundStyle(detailsInput.isEmpty ? colorContrast : colorAccent)
+                .foregroundStyle(detailsInput.isEmpty ? color.text : color.accent)
                 
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     Image(systemName: "alarm")
@@ -54,14 +51,14 @@ struct AddView: View {
                     Image(systemName: "square.and.arrow.down")
                 })
                 .disabled(titleInput.isEmpty)
-                .foregroundStyle(isTaskEmpty() ? .gray : colorContrast)
+                .foregroundStyle(isTaskEmpty() ? .gray : color.text)
             }
             .buttonStyle(NoAnimationStyle())
         }
         .padding(sizePadding)
         .font(.system(size: sizeFont))
-        .foregroundStyle(colorContrast)
-        .presentationBackground(colorBackground)
+        .foregroundStyle(color.text)
+        .presentationBackground(color.background)
         .presentationCornerRadius(cornerRadius)
         .presentationDragIndicator(.hidden)
         .fixedSize(horizontal: false, vertical: true)

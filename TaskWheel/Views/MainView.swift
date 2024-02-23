@@ -5,8 +5,7 @@ struct MainView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
 //    @State private var path = NavigationPath()
     @State private var isAddShown: Bool = false
-    
-    private let colorBackground: Color = .seasaltJet
+    @State var color = ColorSettings()
     
     let taskListTitle = "Sample Task List"
     var testText = ""
@@ -15,14 +14,13 @@ struct MainView: View {
         NavigationStack() {
             ZStack(alignment: .bottomTrailing) {
                 List {
-                    
                     ForEach(taskViewModel.taskList) { task in
                         NavigationLink(value: task) {
                             ListRowView(task: task, action: taskViewModel.toggleComplete)
                             
                         }
                     }
-                    .listRowBackground(colorBackground)
+                    .listRowBackground(color.background)
                 }
                 .listStyle(.plain)
                 .navigationTitle(taskListTitle)
@@ -48,7 +46,7 @@ struct MainView: View {
                     AddView(titleInput: testText, detailsInput: testText)
                 })
             }
-            .background(colorBackground)
+            .background(color.background)
         }
     }
     
