@@ -3,7 +3,7 @@ import Observation
 
 @Observable class ColorSettings {
     let background: Color = .seasaltJet
-    let text: Color = .jetSeasalt
+    let text: Color = .eerieSeasalt
     let accent: Color = .crayolaBlue
 }
 

@@ -29,7 +29,15 @@ struct UpdateView: View {
         .font(.system(size: sizeFont))
         .foregroundStyle(color.text)
         .background(color.background)
-        
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button(action: {}) {
+                    Image(systemName: "chevron.left.circle")
+                        .foregroundStyle(color.accent)
+                }
+            }
+        }
     }
 }
 
@@ -56,12 +64,22 @@ struct PropertiesUpdateView: View {
     }
 }
 
+#Preview("from main") {
+    MainView()
+        .environmentObject(TaskViewModel(TaskModel.examples))
+}
+
+
 #Preview("incomplete task", traits: .sizeThatFitsLayout) {
     let incomplete = TaskModel(title: "first task", isComplete: false, details: "first task details")
-    return UpdateView(task: incomplete)
+    return NavigationStack {
+        UpdateView(task: incomplete)
+    }
 }
 
 #Preview("completed task", traits: .sizeThatFitsLayout) {
     let completed = TaskModel(title: "second task", isComplete: true, details: "i'm completed")
-    return UpdateView(task: completed)
+    return NavigationStack {
+        UpdateView(task: completed)
+    }
 }
