@@ -13,9 +13,9 @@
 		B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81EA2B830E4B00A8886F /* MainView.swift */; };
 		B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81EF2B830F3800A8886F /* TaskModel.swift */; };
 		B71A81F62B831CD100A8886F /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81F52B831CD100A8886F /* AddView.swift */; };
-		B79D9A9E2B884839009CA9FF /* NavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9A9D2B884839009CA9FF /* NavigationStackView.swift */; };
 		B79D9AA22B8857FA009CA9FF /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA12B8857FA009CA9FF /* TaskListView.swift */; };
 		B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA32B885899009CA9FF /* ColorSettings.swift */; };
+		B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */; };
 		B7A97B1A2B85C6EB00C9E9AA /* TextFieldErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */; };
 		B7A97B1D2B85D26500C9E9AA /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = B7A97B1C2B85D26500C9E9AA /* DequeModule */; };
 		B7B02C1F2B878772000B8A7C /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B02C1E2B878772000B8A7C /* UpdateView.swift */; };
@@ -42,9 +42,9 @@
 		B71A81EA2B830E4B00A8886F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B71A81EF2B830F3800A8886F /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		B71A81F52B831CD100A8886F /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
-		B79D9A9D2B884839009CA9FF /* NavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStackView.swift; sourceTree = "<group>"; };
 		B79D9AA12B8857FA009CA9FF /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		B79D9AA32B885899009CA9FF /* ColorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSettings.swift; sourceTree = "<group>"; };
+		B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldErrorView.swift; sourceTree = "<group>"; };
 		B7B02C1E2B878772000B8A7C /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 		B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
@@ -120,7 +120,6 @@
 				B7B02C1E2B878772000B8A7C /* UpdateView.swift */,
 				B79D9AA32B885899009CA9FF /* ColorSettings.swift */,
 				B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */,
-				B79D9A9D2B884839009CA9FF /* NavigationStackView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -137,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */,
+				B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -260,11 +260,11 @@
 				B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */,
 				B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */,
 				B7A97B1A2B85C6EB00C9E9AA /* TextFieldErrorView.swift in Sources */,
-				B79D9A9E2B884839009CA9FF /* NavigationStackView.swift in Sources */,
 				B7F5B80A2B83721600F5CD9D /* TaskViewModel.swift in Sources */,
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
 				B79D9AA22B8857FA009CA9FF /* TaskListView.swift in Sources */,
 				B7B02C1F2B878772000B8A7C /* UpdateView.swift in Sources */,
+				B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */,
 				B71A81DA2B830BB000A8886F /* TaskWheelApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -3,6 +3,7 @@ import SwiftUI
 struct TaskListView: View {
 
     @EnvironmentObject var taskViewModel: TaskViewModel
+    @EnvironmentObject var navigation: NavigationCoordinator
 
     let color = ColorSettings()
     let taskListTitle: String
@@ -35,6 +36,7 @@ struct TaskListView: View {
             }
         }
         .toolbarBackground(color.background, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
     }
 }
 
@@ -99,6 +101,7 @@ struct TaskRowModifier: ViewModifier {
 #Preview {
     MainView()
         .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(NavigationCoordinator())
 }
 
 #Preview("incomplete task", traits: .sizeThatFitsLayout) {

@@ -3,7 +3,7 @@ import SwiftUI
 struct MainView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
-//    @State private var path = NavigationPath()
+    @EnvironmentObject var navigation: NavigationCoordinator
     @State private var isAddShown: Bool = false
     
     let color = ColorSettings()
@@ -11,7 +11,7 @@ struct MainView: View {
     var testText = ""
     
     var body: some View {
-        NavigationStack() {
+        NavigationStack(path: $navigation.path) {
             ZStack(alignment: .bottomTrailing) {
                 TaskListView(taskListTitle: taskListTitle)
                 
@@ -40,12 +40,14 @@ struct MainView: View {
 #Preview("light") {
     MainView()
         .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(NavigationCoordinator())
 }
 
 #Preview("dark") {
     MainView()
         .preferredColorScheme(.dark)
         .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(NavigationCoordinator())
 }
 
 //#Preview("medium text", traits: .sizeThatFitsLayout) {
@@ -53,6 +55,7 @@ struct MainView: View {
 //    return MainView(testText: mediumText)
 ////        .preferredColorScheme(.dark)
 //        .environmentObject(TaskViewModel(TaskModel.examples))
+//.environmentObject(NavigationCoordinator())
 //}
 
 //#Preview("long text") {
@@ -61,4 +64,5 @@ struct MainView: View {
 //    return MainView(testText: String(repeating: longText, count: 5))
 //        .preferredColorScheme(.dark)
 //        .environmentObject(TaskViewModel(TaskModel.examples))
+//.environmentObject(NavigationCoordinator())
 //}
