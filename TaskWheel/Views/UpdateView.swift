@@ -1,7 +1,9 @@
 import SwiftUI
 
 struct UpdateView: View {
-    private let colorBackground: Color = .seasaltJet 
+    let task: TaskModel
+    
+    private let colorBackground: Color = .seasaltJet
     private let colorContrast: Color = .jetSeasalt
     private let colorAccent: Color = .crayolaBlue
     
@@ -15,15 +17,15 @@ struct UpdateView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: sizePadding - 10) {
-            Text("Navigation Bark with back button")
-            Text("I am the title.")
+            Text(task.title)
                 .font(.system(size: sizeFont * 2))
                 .foregroundStyle(.primary)
-            PropertiesUpdateView(imageName: "text.alignleft", text: "temp text")
+                .strikethrough(task.isComplete ? true : false)
+            PropertiesUpdateView(imageName: "text.alignleft", text: task.details)
             PropertiesUpdateView(imageName: "alarm", text: "date tbd")
             PropertiesUpdateView(imageName: "tag", text: "priority tbd")
             Spacer()
-            Text("Complete Checkmark")
+            Text("Delete left Checkmark right")
         }
         .padding(sizePadding)
         .font(.system(size: sizeFont))
@@ -47,10 +49,7 @@ struct PropertiesUpdateView: View {
     
     var body: some View {
         HStack(spacing: sizePadding) {
-            Button(action: {}, label: {
-                Image(systemName: imageName)
-            })
-            .buttonStyle(BorderlessButtonStyle())
+            Image(systemName: imageName)
             
             Text(input)
                 
@@ -59,6 +58,12 @@ struct PropertiesUpdateView: View {
     }
 }
 
-#Preview {
-    UpdateView()
+#Preview("incomplete task", traits: .sizeThatFitsLayout) {
+    let incomplete = TaskModel(title: "first task", isComplete: false, details: "first task details")
+    return UpdateView(task: incomplete)
+}
+
+#Preview("completed task", traits: .sizeThatFitsLayout) {
+    let completed = TaskModel(title: "second task", isComplete: true, details: "i'm completed")
+    return UpdateView(task: completed)
 }

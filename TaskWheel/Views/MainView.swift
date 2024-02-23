@@ -15,8 +15,12 @@ struct MainView: View {
         NavigationStack() {
             ZStack(alignment: .bottomTrailing) {
                 List {
+                    
                     ForEach(taskViewModel.taskList) { task in
-                        ListRowView(task: task, action: taskViewModel.toggleComplete)
+                        NavigationLink(value: task) {
+                            ListRowView(task: task, action: taskViewModel.toggleComplete)
+                            
+                        }
                     }
                     .listRowBackground(colorBackground)
                 }
@@ -24,6 +28,9 @@ struct MainView: View {
                 .navigationTitle(taskListTitle)
                 .navigationBarTitleDisplayMode(.inline)
                 .scrollIndicators(.never)
+                .navigationDestination(for: TaskModel.self) { task in
+                    UpdateView(task: task)
+                }
                 
                 ButtonImageView(image: "plus", color: Color("crayolaBlue")) {
                     self.isAddShown = true
