@@ -3,7 +3,7 @@ import SwiftUI
 struct MainView: View {
     
     let sampleTasks = (1...10).map { "Task \($0)" }
-    @State private var tabSelection: TopTabItem = .list
+    @State private var topSelection: TopTabItem = .list
     
     var body: some View {
         
@@ -11,12 +11,12 @@ struct MainView: View {
             TaskListTitleView(taskListTitle: "Sample Task List")
                 .background(.indigo)
             
-            TopTabContainerView(selected: $tabSelection) {
+            TopTabContainerView(selected: $topSelection) {
                 ListView(taskList: sampleTasks)
-                    .topTabItem(tab: .list, selected: $tabSelection)
+                    .topTabItem(tab: .list, selected: $topSelection)
                 
                 WheelView(taskList: sampleTasks)
-                    .topTabItem(tab: .wheel, selected: $tabSelection)
+                    .topTabItem(tab: .wheel, selected: $topSelection)
             }
             
             Spacer()

@@ -1,63 +1,81 @@
 import SwiftUI
 
-enum BottomTabItem: Hashable {
-    case lists, reorder, more, add
-    
-    var icon: String {
-        switch self {
-        case .lists: return "list.dash"
-        case .reorder: return "arrow.up.arrow.down"
-        case .more: return "ellipsis"
-        case .add: return "plus"
-        }
-    }
+struct BottomTabType: Identifiable, Equatable {
+    var id: String
+    var icon: String
 }
 
 struct BottomTabView: View {
+    @State private var selected: BottomTabType?
     
-    let leftTabs: [BottomTabItem] = [.lists, .reorder, .more]
-    let rightTabs: [BottomTabItem] = [.add]
+    let bottomTabs: [BottomTabType] = [
+        BottomTabType(id: "lists", icon: "list.dash"),
+        BottomTabType(id: "reorder", icon: "arrow.up.arrow.down"),
+        BottomTabType(id: "more", icon: "ellipsis"),
+        BottomTabType(id: "add", icon: "plus"),
+    ]
     
     var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(.clear)
-            
-            HStack {
-                ForEach(leftTabs, id: \.self) { tab in
-                    view(tab: tab)
-                        .onTapGesture {
-                            click(tab: tab)
-                        }
-                }
-                Spacer()
-                
-                ForEach(rightTabs, id: \.self) { tab in
-                    view(tab: tab)
-                        .onTapGesture {
-                            click(tab: tab)
-                        }
-                }
+        HStack {
+            ForEach(bottomTabs) { tab in
+                view(tab: tab, isSpace: tab == bottomTabs.last)
             }
         }
         .foregroundStyle(.white)
-        .frame(height: 70)
-    }
-    
-    private func view(tab: BottomTabItem) -> some View {
-        ZStack(alignment: .center) {
-            Rectangle()
-                .fill(.black.opacity(0.5))
-            
-            Image(systemName: tab.icon)
+        .sheet(item: $selected) { tab in
+            SheetView(selectedTab: tab)
         }
-        .frame(width: 50)
     }
     
-    private func click(tab: BottomTabItem) {
-        print("im \(tab.icon)")
+    private func view(tab: BottomTabType, isSpace: Bool) -> some View {
+        HStack {
+            if isSpace {
+                Spacer()
+            }
+            
+            Button {
+                selected = tab
+            } label: {
+                Image(systemName: tab.icon)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 35, height: 35)
+            }
+            .background(.black.opacity(0.4))
+        }
+    }
+    
+    private func dismissSheet() {
+        selected = nil
     }
 }
+
+struct SheetView: View {
+    let selectedTab: BottomTabType
+    
+    var body: some View {
+        VStack {
+            switch selectedTab.id {
+            case "lists":
+                Text(selectedTab.id)
+                    .font(.title)
+            case "reorder":
+                Text(selectedTab.id)
+                    .font(.title)
+            case "more":
+                Text(selectedTab.id)
+                    .font(.title)
+            case "add":
+                Text(selectedTab.id)
+                    .font(.title)
+            default:
+                EmptyView()
+            }
+        }
+        .presentationDetents([.fraction(0.3)])
+    }
+}
+
 
 #Preview("main") {
     MainView()
