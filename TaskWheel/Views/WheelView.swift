@@ -1,18 +1,25 @@
-//
-//  WheelView.swift
-//  TaskWheel
-//
-//  Created by Jiwoo on 2024-02-26.
-//
-
 import SwiftUI
 
 struct WheelView: View {
+    
+    let taskList: [String]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView(.vertical) {
+            LazyVStack {
+                ForEach(taskList, id: \.self) { task in
+                    TaskRowView(task: task)
+                        .frame(height: 100)
+                        .background(.white)
+                }
+            }
+        }
+        
     }
 }
 
 #Preview {
-    WheelView()
+    let sampleTasks = (1...10).map { "Task \($0)" }
+    
+    return WheelView(taskList: sampleTasks)
 }

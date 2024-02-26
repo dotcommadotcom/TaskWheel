@@ -1,18 +1,22 @@
-//
-//  TaskRowView.swift
-//  TaskWheel
-//
-//  Created by Jiwoo on 2024-02-26.
-//
-
 import SwiftUI
 
 struct TaskRowView: View {
+    
+    let task: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack() {
+            Button(action: {}, label: {
+                Image(systemName: "checkmark.square")
+            })
+            
+            Text(task)
+            
+            Spacer()
+        }
     }
 }
 
 #Preview {
-    TaskRowView()
+    TaskRowView(task: "hi")
 }
