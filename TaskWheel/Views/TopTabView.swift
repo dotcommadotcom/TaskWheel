@@ -9,6 +9,13 @@ enum TopTabItem: Hashable {
         case .wheel: return "Wheel"
         }
     }
+    
+    var iconName: String {
+        switch self {
+        case .list: return "list.clipboard.fill"
+        case .wheel: return "heart.fill"
+        }
+    }
 }
 
 struct TopTabContainerView<Content: View>: View {
@@ -23,8 +30,9 @@ struct TopTabContainerView<Content: View>: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             TopTabView(tabs: tabs, selected: $selected)
+            
             
             ZStack {
                 content
@@ -34,6 +42,7 @@ struct TopTabContainerView<Content: View>: View {
             self.tabs = value
         })
     }
+    
 }
 
 struct TopTabView: View {
@@ -42,8 +51,10 @@ struct TopTabView: View {
     
     @Binding var selected: TopTabItem
     
+    let color = ColorSettings()
+    
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             ForEach(tabs, id: \.self) { tab in
                 view(tab: tab)
                     .onTapGesture {
@@ -54,17 +65,23 @@ struct TopTabView: View {
     }
     
     private func view(tab: TopTabItem) -> some View {
-        ZStack(alignment: .center) {
-            Rectangle()
-//                .fill(selected == tab ? .red.opacity(0.2) : .gray.opacity(0.2))
-                .fill(.clear)
-            
-            HStack {
+        VStack(spacing: 0) {
+            ZStack(alignment: .center) {
+                Rectangle()
+                    .fill(.clear)
+                
                 Text(tab.title)
+                    .font(.system(size: 16))
+                    .fontWeight(.semibold)
             }
+            
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 1.5)
+                .shadow(color: .gray.opacity(0.5), radius: 1, x: 0, y: 1)
+            
         }
-        .frame(maxWidth: .infinity, maxHeight: 50)
-//        .foregroundStyle(selected == tab ? .red : .gray)
+        .frame(maxWidth: .infinity, maxHeight: 35)
+        .foregroundStyle(selected == tab ? color.accent : .gray)
     }
     
     private func click(tab: TopTabItem) {

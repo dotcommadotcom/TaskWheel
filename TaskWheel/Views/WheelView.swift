@@ -10,7 +10,6 @@ struct WheelView: View {
                 ForEach(taskList, id: \.self) { task in
                     TaskRowView(task: task)
                         .frame(height: 100)
-//                        .background(.white)
                 }
             }
         }

@@ -9,31 +9,40 @@ struct MainView: View {
     
     var body: some View {
         
-        VStack {
-            TitleView(taskListTitle: "Sample Task List")
-//                .background(.indigo)
+        VStack(spacing: 0) {
+            TitleView(title: "Sample Task List")
+//                .background(.pink.opacity(0.3))
             
             TopTabContainerView(selected: $topSelection) {
                 ListView(taskList: sampleTasks)
                     .topTabItem(tab: .list, selected: $topSelection)
+//                    .background(.asparagus)
                 
                 WheelView(taskList: sampleTasks)
                     .topTabItem(tab: .wheel, selected: $topSelection)
             }
-            
-            Spacer()
+            .highPriorityGesture(DragGesture().onEnded({
+                handleSwipe(translation: $0.translation.width)
+            }))
+//            .background(.indigo.opacity(0.3))
             
             BottomTabView()
-//                .background(.red)
+                .background(color.text.opacity(0.05))
         }
         .background(color.background)
         .foregroundStyle(color.text)
+        .animation(.easeInOut, value: topSelection)
+    }
+    
+    private func handleSwipe(translation: CGFloat) {
+        if translation < -50 && topSelection == .list {
+            topSelection = .wheel
+        } else if translation > 50 && topSelection == .wheel {
+            topSelection = .list
+        }
     }
 }
 
-extension View {
-   
-}
 
 #Preview("main") {
     MainView()
@@ -45,20 +54,20 @@ extension View {
 }
 
 //struct MainView3: View {
-//    
+//
 //    @EnvironmentObject var taskViewModel: TaskViewModel
 //    @EnvironmentObject var navigation: NavigationCoordinator
 //    @State private var isAddShown: Bool = false
-//    
+//
 //    let color = ColorSettings()
 //    let taskListTitle = "Sample Task List"
 //    var testText = ""
-//    
+//
 //    var body: some View {
 //        NavigationStack(path: $navigation.path) {
 //            ZStack(alignment: .bottomTrailing) {
 //                TaskListView2(taskListTitle: taskListTitle)
-//                
+//
 //                Button {
 //                    isAddShown = true
 //                } label: {
@@ -78,7 +87,7 @@ extension View {
 //            .background(color.background)
 //        }
 //    }
-//    
+//
 //}
 //#Preview("light") {
 //    MainView3()
@@ -103,7 +112,7 @@ extension View {
 
 //#Preview("long text") {
 //    @State var longText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-//    
+//
 //    return MainView(testText: String(repeating: longText, count: 5))
 //        .preferredColorScheme(.dark)
 //        .environmentObject(TaskViewModel(TaskModel.examples))

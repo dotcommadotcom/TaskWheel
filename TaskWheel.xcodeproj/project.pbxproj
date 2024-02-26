@@ -20,6 +20,7 @@
 		B72F69332B8C32AE00525EF8 /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F69322B8C32AE00525EF8 /* TaskRowView.swift */; };
 		B72F69352B8C54CF00525EF8 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F69342B8C54CF00525EF8 /* TaskView.swift */; };
 		B72F69402B8C97AD00525EF8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B72F693F2B8C97AD00525EF8 /* .gitignore */; };
+		B72F69422B8CC09D00525EF8 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F69412B8CC09D00525EF8 /* SheetView.swift */; };
 		B75F44022B8C253A00D0B182 /* TopTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75F44012B8C253A00D0B182 /* TopTabView.swift */; };
 		B79D9AA22B8857FA009CA9FF /* TaskListView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA12B8857FA009CA9FF /* TaskListView2.swift */; };
 		B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA32B885899009CA9FF /* ColorSettings.swift */; };
@@ -57,6 +58,7 @@
 		B72F69322B8C32AE00525EF8 /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		B72F69342B8C54CF00525EF8 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		B72F693F2B8C97AD00525EF8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B72F69412B8CC09D00525EF8 /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		B75F44012B8C253A00D0B182 /* TopTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabView.swift; sourceTree = "<group>"; };
 		B79D9AA12B8857FA009CA9FF /* TaskListView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView2.swift; sourceTree = "<group>"; };
 		B79D9AA32B885899009CA9FF /* ColorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSettings.swift; sourceTree = "<group>"; };
@@ -139,11 +141,12 @@
 				B72F692C2B8C2DF000525EF8 /* WheelView.swift */,
 				B72F69322B8C32AE00525EF8 /* TaskRowView.swift */,
 				B72F69342B8C54CF00525EF8 /* TaskView.swift */,
+				B72F69412B8CC09D00525EF8 /* SheetView.swift */,
+				B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */,
 				B79D9AA12B8857FA009CA9FF /* TaskListView2.swift */,
 				B71A81F52B831CD100A8886F /* AddView.swift */,
 				B7B02C1E2B878772000B8A7C /* UpdateView.swift */,
 				B79D9AA32B885899009CA9FF /* ColorSettings.swift */,
-				B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				B7F5B80A2B83721600F5CD9D /* TaskViewModel.swift in Sources */,
 				B72F69312B8C2F4800525EF8 /* BottomTabView.swift in Sources */,
 				B72F692D2B8C2DF000525EF8 /* WheelView.swift in Sources */,
+				B72F69422B8CC09D00525EF8 /* SheetView.swift in Sources */,
 				B72F69332B8C32AE00525EF8 /* TaskRowView.swift in Sources */,
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
 				B79D9AA22B8857FA009CA9FF /* TaskListView2.swift in Sources */,

@@ -5,12 +5,16 @@ struct ListView: View {
     let taskList: [String]
     
     var body: some View {
-        ScrollView {
+        ScrollView() {
             ForEach(taskList, id: \.self) { task in
                 TaskRowView(task: task)
             }
         }
     }
+}
+
+#Preview("main") {
+    MainView()
 }
 
 #Preview {
