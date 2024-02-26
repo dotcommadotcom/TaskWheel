@@ -5,6 +5,8 @@ struct MainView: View {
     let sampleTasks = (1...25).map { "Task \($0)" }
     @State private var topSelection: TopTabItem = .list
     
+    let color = ColorSettings()
+    
     var body: some View {
         
         VStack {
@@ -24,13 +26,22 @@ struct MainView: View {
             BottomTabView()
 //                .background(.red)
         }
-        .background(.blue.opacity(0.3))
-        .foregroundStyle(.pink)
+        .background(color.background)
+        .foregroundStyle(color.text)
     }
+}
+
+extension View {
+   
 }
 
 #Preview("main") {
     MainView()
+}
+
+#Preview("dark") {
+    MainView()
+        .preferredColorScheme(.dark)
 }
 
 //struct MainView3: View {

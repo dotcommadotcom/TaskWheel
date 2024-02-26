@@ -17,8 +17,14 @@ class TaskViewModel: ObservableObject {
             taskList[index] = task.toggleComplete()
         }
     }
-
     
+    func deleteTask(_ task: TaskModel) {
+        print("deleted \(task.title)")
+    }
+    
+    func updateTask(_ task: TaskModel) {
+        print("updated \(task.title)")
+    }
 //    func deleteTask(indexSet: IndexSet) {
 //        taskList.remove(atOffsets: indexSet)
 //    }

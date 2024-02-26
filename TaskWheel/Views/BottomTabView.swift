@@ -21,7 +21,7 @@ struct BottomTabView: View {
                 view(tab: tab, isSpace: tab == bottomTabs.last)
             }
         }
-        .foregroundStyle(.white)
+//        .foregroundStyle(.white)
         .sheet(item: $selected) { tab in
             SheetView(selectedTab: tab)
         }
@@ -41,7 +41,7 @@ struct BottomTabView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 35, height: 35)
             }
-            .background(.black.opacity(0.4))
+//            .background(.black.opacity(0.4))
         }
     }
     
