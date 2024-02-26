@@ -56,14 +56,15 @@ struct TopTabView: View {
     private func view(tab: TopTabItem) -> some View {
         ZStack(alignment: .center) {
             Rectangle()
-                .fill(selected == tab ? .red.opacity(0.2) : .gray.opacity(0.2))
+//                .fill(selected == tab ? .red.opacity(0.2) : .gray.opacity(0.2))
+                .fill(.clear)
             
             HStack {
                 Text(tab.title)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: 50)
-        .foregroundStyle(selected == tab ? .red : .gray)
+//        .foregroundStyle(selected == tab ? .red : .gray)
     }
     
     private func click(tab: TopTabItem) {

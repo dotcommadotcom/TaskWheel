@@ -1,10 +1,3 @@
-//
-//  TaskView.swift
-//  TaskWheel
-//
-//  Created by Jiwoo on 2024-02-26.
-//
-
 import SwiftUI
 
 struct TaskView: View {

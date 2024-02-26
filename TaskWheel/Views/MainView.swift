@@ -2,14 +2,14 @@ import SwiftUI
 
 struct MainView: View {
     
-    let sampleTasks = (1...10).map { "Task \($0)" }
+    let sampleTasks = (1...25).map { "Task \($0)" }
     @State private var topSelection: TopTabItem = .list
     
     var body: some View {
         
         VStack {
-            TaskListTitleView(taskListTitle: "Sample Task List")
-                .background(.indigo)
+            TitleView(taskListTitle: "Sample Task List")
+//                .background(.indigo)
             
             TopTabContainerView(selected: $topSelection) {
                 ListView(taskList: sampleTasks)
@@ -22,9 +22,10 @@ struct MainView: View {
             Spacer()
             
             BottomTabView()
-                .background(.red)
+//                .background(.red)
         }
         .background(.blue.opacity(0.3))
+        .foregroundStyle(.pink)
     }
 }
 

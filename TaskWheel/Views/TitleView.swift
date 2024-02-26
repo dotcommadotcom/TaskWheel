@@ -1,7 +1,7 @@
 import SwiftUI
 
 
-struct TaskListTitleView: View {
+struct TitleView: View {
     
     let taskListTitle: String
     
@@ -12,5 +12,5 @@ struct TaskListTitleView: View {
 
 
 #Preview {
-    TaskListTitleView(taskListTitle: "sample task list")
+    TitleView(taskListTitle: "sample task list")
 }
