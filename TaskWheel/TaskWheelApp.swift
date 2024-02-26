@@ -9,8 +9,8 @@ struct TaskWheelApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-                .environmentObject(taskViewModel)
-                .environmentObject(navigation)
+//                .environmentObject(taskViewModel)
+//                .environmentObject(navigation)
         }
     }
 }

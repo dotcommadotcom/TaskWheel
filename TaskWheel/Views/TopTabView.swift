@@ -1,5 +1,16 @@
 import SwiftUI
 
+enum TopTabItem: Hashable {
+    case list, wheel
+    
+    var title: String {
+        switch self {
+        case .list: return "List"
+        case .wheel: return "Wheel"
+        }
+    }
+}
+
 struct TopTabContainerView<Content: View>: View {
     let content: Content
     
@@ -81,7 +92,6 @@ extension View {
     }
 }
 
-
 struct TopTabPreferenceKey: PreferenceKey {
     static var defaultValue: [TopTabItem] = []
     
@@ -90,21 +100,8 @@ struct TopTabPreferenceKey: PreferenceKey {
     }
 }
 
-
-enum TopTabItem: Hashable {
-    case list, wheel
-    
-    var title: String {
-        switch self {
-        case .list: return "List"
-        case .wheel: return "Wheel"
-        }
-    }
-}
-
-
 #Preview("main") {
-    SkeletonView()
+    MainView()
 }
 
 #Preview("tabs") {
