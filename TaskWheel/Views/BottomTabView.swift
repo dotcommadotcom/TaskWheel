@@ -52,22 +52,47 @@ struct BottomTabView: View {
 
 struct SheetView: View {
     let selectedTab: BottomTabType
+    let sampleTaskLists = (1...4).map { "Task List \($0)" }
     
     var body: some View {
         VStack {
             switch selectedTab.id {
             case "lists":
-                Text(selectedTab.id)
-                    .font(.title)
+                VStack {
+                    List {
+                        ForEach(sampleTaskLists, id: \.self) { taskList in
+                            Text(taskList)
+                        }
+                    }
+                    Divider()
+                    Text("Create new list")
+                        .font(.title)
+                }
             case "reorder":
-                Text(selectedTab.id)
-                    .font(.title)
+                VStack(alignment: .leading) {
+                    Text("Sort by")
+                    HStack {
+                        Image(systemName: "checkmark")
+                        Text("Creation date")
+                    }
+                    HStack {
+                        Image(systemName: "checkmark")
+                        Text("Due date")
+                    }
+                    HStack {
+                        Image(systemName: "checkmark")
+                        Text("Priority")
+                    }
+                }
             case "more":
-                Text(selectedTab.id)
-                    .font(.title)
+                VStack(alignment: .leading) {
+                    Text("Rename list")
+                    Text("Delete list")
+                    Text("Show/Hide completed tasks")
+                    Text("Delete all completed tasks")
+                }
             case "add":
-                Text(selectedTab.id)
-                    .font(.title)
+                Text("What to add?")
             default:
                 EmptyView()
             }

@@ -5,7 +5,7 @@ struct ListView: View {
     let taskList: [String]
     
     var body: some View {
-        List {
+        ScrollView {
             ForEach(taskList, id: \.self) { task in
                 TaskRowView(task: task)
             }
