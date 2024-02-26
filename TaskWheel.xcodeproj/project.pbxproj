@@ -13,7 +13,11 @@
 		B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81EA2B830E4B00A8886F /* MainView.swift */; };
 		B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81EF2B830F3800A8886F /* TaskModel.swift */; };
 		B71A81F62B831CD100A8886F /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81F52B831CD100A8886F /* AddView.swift */; };
-		B79D9AA22B8857FA009CA9FF /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA12B8857FA009CA9FF /* TaskListView.swift */; };
+		B75F44022B8C253A00D0B182 /* TopTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75F44012B8C253A00D0B182 /* TopTabView.swift */; };
+		B76E61112B898D46006FF1E1 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76E61102B898D46006FF1E1 /* SkeletonView.swift */; };
+		B76E61182B8997E0006FF1E1 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76E61172B8997E0006FF1E1 /* CustomTabView.swift */; };
+		B76E611D2B8AD6BB006FF1E1 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76E611C2B8AD6BB006FF1E1 /* CarouselView.swift */; };
+		B79D9AA22B8857FA009CA9FF /* TaskListView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA12B8857FA009CA9FF /* TaskListView2.swift */; };
 		B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA32B885899009CA9FF /* ColorSettings.swift */; };
 		B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */; };
 		B7A97B1A2B85C6EB00C9E9AA /* TextFieldErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */; };
@@ -42,7 +46,11 @@
 		B71A81EA2B830E4B00A8886F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B71A81EF2B830F3800A8886F /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		B71A81F52B831CD100A8886F /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
-		B79D9AA12B8857FA009CA9FF /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
+		B75F44012B8C253A00D0B182 /* TopTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabView.swift; sourceTree = "<group>"; };
+		B76E61102B898D46006FF1E1 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
+		B76E61172B8997E0006FF1E1 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
+		B76E611C2B8AD6BB006FF1E1 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
+		B79D9AA12B8857FA009CA9FF /* TaskListView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView2.swift; sourceTree = "<group>"; };
 		B79D9AA32B885899009CA9FF /* ColorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSettings.swift; sourceTree = "<group>"; };
 		B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldErrorView.swift; sourceTree = "<group>"; };
@@ -115,11 +123,15 @@
 			isa = PBXGroup;
 			children = (
 				B71A81EA2B830E4B00A8886F /* MainView.swift */,
-				B79D9AA12B8857FA009CA9FF /* TaskListView.swift */,
+				B79D9AA12B8857FA009CA9FF /* TaskListView2.swift */,
 				B71A81F52B831CD100A8886F /* AddView.swift */,
 				B7B02C1E2B878772000B8A7C /* UpdateView.swift */,
 				B79D9AA32B885899009CA9FF /* ColorSettings.swift */,
 				B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */,
+				B76E61102B898D46006FF1E1 /* SkeletonView.swift */,
+				B76E61172B8997E0006FF1E1 /* CustomTabView.swift */,
+				B76E611C2B8AD6BB006FF1E1 /* CarouselView.swift */,
+				B75F44012B8C253A00D0B182 /* TopTabView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -258,11 +270,15 @@
 			files = (
 				B71A81F62B831CD100A8886F /* AddView.swift in Sources */,
 				B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */,
+				B75F44022B8C253A00D0B182 /* TopTabView.swift in Sources */,
 				B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */,
+				B76E61182B8997E0006FF1E1 /* CustomTabView.swift in Sources */,
 				B7A97B1A2B85C6EB00C9E9AA /* TextFieldErrorView.swift in Sources */,
 				B7F5B80A2B83721600F5CD9D /* TaskViewModel.swift in Sources */,
+				B76E611D2B8AD6BB006FF1E1 /* CarouselView.swift in Sources */,
+				B76E61112B898D46006FF1E1 /* SkeletonView.swift in Sources */,
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
-				B79D9AA22B8857FA009CA9FF /* TaskListView.swift in Sources */,
+				B79D9AA22B8857FA009CA9FF /* TaskListView2.swift in Sources */,
 				B7B02C1F2B878772000B8A7C /* UpdateView.swift in Sources */,
 				B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */,
 				B71A81DA2B830BB000A8886F /* TaskWheelApp.swift in Sources */,

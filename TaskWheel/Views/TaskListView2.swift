@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TaskListView: View {
+struct TaskListView2: View {
 
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
@@ -16,7 +16,7 @@ struct TaskListView: View {
         List {
             ForEach(taskViewModel.taskList) { task in
                 NavigationLink(value: task) {
-                    TaskRowView(task: task, action: taskViewModel.toggleComplete)
+                    TaskRowView2(task: task, action: taskViewModel.toggleComplete)
                 }
             }
             .listRowBackground(color.background)
@@ -40,7 +40,7 @@ struct TaskListView: View {
     }
 }
 
-struct TaskRowView: View {
+struct TaskRowView2: View {
     
     let task: TaskModel
     let action: (TaskModel) -> Void
@@ -106,10 +106,10 @@ struct TaskRowModifier: ViewModifier {
 
 #Preview("incomplete task", traits: .sizeThatFitsLayout) {
     let incomplete = TaskModel(title: "first task", isComplete: false, details: "first task details")
-    return TaskRowView(task: incomplete)
+    return TaskRowView2(task: incomplete)
 }
 
 #Preview("completed task", traits: .sizeThatFitsLayout) {
     let completed = TaskModel(title: "second task", isComplete: true, details: "i'm completed")
-    return TaskRowView(task: completed)
+    return TaskRowView2(task: completed)
 }
