@@ -1,41 +1,5 @@
 import SwiftUI
 
-enum PropertyItem: Hashable {
-    case details, complete, schedule, priority
-    
-    var emptyIcon: String {
-        switch self {
-        case .details: return "text.alignleft"
-        case .complete: return "square"
-        case .schedule: return "alarm"
-        case .priority: return "tag"
-        }
-    }
-    
-    var fullIcon: String {
-        switch self {
-        case .complete: return "checkmark.square"
-        default: return self.emptyIcon
-        }
-    }
-    
-    var emptyText: String {
-        switch self {
-        case .details: return "Add details"
-        case .complete: return "Incomplete"
-        case .schedule: return "Set schedule"
-        case .priority: return "Add priority"
-        }
-    }
-    
-    var fullText: String {
-        switch self {
-        case .complete: return "All done"
-        default: return "Should be hidden"
-        }
-    }
-}
-
 struct UpdateView: View {
     
     @EnvironmentObject var navigation: NavigationCoordinator
@@ -100,7 +64,7 @@ struct UpdateView: View {
         }
         
         return HStack(spacing: 13) {
-            Image(systemName: condition ? property.fullIcon : property.emptyIcon)
+            Image(systemName: condition ? property.altIcon : property.icon)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 20, height: 20)

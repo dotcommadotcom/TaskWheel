@@ -34,7 +34,6 @@ struct OrderSheetView: View {
                 
             }
         }
-        .padding(20)
     }
     
     private func view(order: OrderItem) -> some View {
@@ -46,9 +45,6 @@ struct OrderSheetView: View {
             Text(order.text)
             Spacer()
         }
-        .font(.system(size: 22))
-        .padding(.horizontal, 10)
-        
     }
     
     private func click(order: OrderItem) {

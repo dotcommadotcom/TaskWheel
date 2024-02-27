@@ -84,13 +84,6 @@ struct AddView: View {
 }
 
 
-struct NoAnimationStyle: PrimitiveButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .contentShape(Rectangle())
-            .onTapGesture(perform: configuration.trigger)
-    }
-}
 
 struct StaticTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {

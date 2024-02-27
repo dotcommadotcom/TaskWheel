@@ -9,7 +9,6 @@ struct BottomTabView: View {
     @State private var selected: BottomTabType?
     @State private var sheetHeight: CGFloat = .zero
     
-    let sampleTaskLists = (1...4).map { "Task List \($0)" }
     let color = ColorSettings()
     
     let bottomTabs: [BottomTabType] = [
@@ -20,7 +19,7 @@ struct BottomTabView: View {
     ]
     
     var body: some View {
-        HStack(spacing: 25) {
+        HStack(spacing: 30) {
             ForEach(bottomTabs, id: \.self) { tab in
                 view(tab: tab, isSpace: tab == bottomTabs.last)
             }
@@ -53,31 +52,20 @@ struct BottomTabView: View {
         VStack {
             switch tab.id {
             case "lists":
-                VStack {
-                    List {
-                        ForEach(sampleTaskLists, id: \.self) { taskList in
-                            Text(taskList)
-                        }
-                    }
-                    Divider()
-                    Text("Create new list")
-                        .font(.title)
-                }
+                ListsSheetView()
             case "reorder":
                 OrderSheetView()
             case "more":
-                VStack(alignment: .leading) {
-                    Text("Rename list")
-                    Text("Delete list")
-                    Text("Show/Hide completed tasks")
-                    Text("Delete all completed tasks")
-                }
+                MoreSheetView()
             case "add":
-                Text("What to add?")
+                AddSheetView()
             default:
                 EmptyView()
             }
         }
+        .font(.system(size: 22))
+        .padding(30)
+        .foregroundStyle(color.text)
         .get(sheetHeight: $sheetHeight)
         .presentationDetents([.height(sheetHeight)])
         .presentationCornerRadius(25)
@@ -96,15 +84,25 @@ struct GetHeightModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .overlay {
-                GeometryReader { geometry in
+            .background(
+                GeometryReader { geo -> Color in
+                    DispatchQueue.main.async {
+                        sheetHeight = max(geo.size.height, 50)
+                    }
+                    return Color.clear
                     Color.clear
-                        .preference(key: SheetHeightPreferenceKey.self, value: geometry.size.height)
+                    Color.clear
                 }
-            }
-            .onPreferenceChange(SheetHeightPreferenceKey.self) { nextHeight in
-                sheetHeight = max(nextHeight, 50)
-            }
+            )
+//            .overlay {
+//                GeometryReader { geometry in
+//                    Color.clear
+//                        .preference(key: SheetHeightPreferenceKey.self, value: geometry.size.height)
+//                }
+//            }
+//            .onPreferenceChange(SheetHeightPreferenceKey.self) { nextHeight in
+//                sheetHeight = max(nextHeight, 50)
+//            }
     }
 }
 
@@ -123,7 +121,6 @@ struct SheetHeightPreferenceKey: PreferenceKey {
     }
 }
 
-
 #Preview("main") {
     MainView()
         .environmentObject(TaskViewModel(TaskModel.examples))
@@ -133,7 +130,6 @@ struct SheetHeightPreferenceKey: PreferenceKey {
 #Preview {
     BottomTabView()
 }
-
 
 
 struct OldGetHeightModifier: ViewModifier {
