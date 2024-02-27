@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BottomTabType: Identifiable, Equatable {
+struct BottomTabType: Identifiable, Hashable {
     var id: String
     var icon: String
 }
@@ -17,7 +17,7 @@ struct BottomTabView: View {
     
     var body: some View {
         HStack(spacing: 25) {
-            ForEach(bottomTabs) { tab in
+            ForEach(bottomTabs, id: \.self) { tab in
                 view(tab: tab, isSpace: tab == bottomTabs.last)
             }
         }

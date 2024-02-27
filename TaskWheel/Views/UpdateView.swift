@@ -1,60 +1,71 @@
 import SwiftUI
 
 enum PropertyItem: Hashable {
-    case list, wheel
+    case details, complete, schedule, priority
     
-    var title: String {
+    var emptyIcon: String {
         switch self {
-        case .list: return "List"
-        case .wheel: return "Wheel"
+        case .details: return "text.alignleft"
+        case .complete: return "square"
+        case .schedule: return "alarm"
+        case .priority: return "tag"
         }
     }
     
-    var iconName: String {
+    var fullIcon: String {
         switch self {
-        case .list: return "list.clipboard.fill"
-        case .wheel: return "heart.fill"
+        case .complete: return "checkmark.square"
+        default: return self.emptyIcon
+        }
+    }
+    
+    var emptyText: String {
+        switch self {
+        case .details: return "Add details"
+        case .complete: return "Incomplete"
+        case .schedule: return "Set schedule"
+        case .priority: return "Add priority"
+        }
+    }
+    
+    var fullText: String {
+        switch self {
+        case .complete: return "All done"
+        default: return "Should be hidden"
         }
     }
 }
 
 struct UpdateView: View {
-
+    
     @EnvironmentObject var navigation: NavigationCoordinator
     @State var titleInput: String = ""
     @State var detailsInput: String = ""
-
+    
     let task: TaskModel
+    let properties: [PropertyItem] = [.details, .complete, .schedule, .priority]
     
     private let color = ColorSettings()
-    private let textDefault: String = "What now?"
-    private let detailDefault: String = "Add details."
-    private let cornerRadius: CGFloat = 25
-    private let sizePadding: CGFloat = 30
-    private let heightMaximum: CGFloat = 500
-    private let maxLineLimit: Int = 20
-    private let sizeFont: CGFloat = 20
+    private let taskListTitle: String = "current task list"
     
     var body: some View {
-        VStack(alignment: .leading, spacing: sizePadding - 10) {
-            Text("current task list")
+        VStack(alignment: .leading, spacing: 20) {
+            Text(taskListTitle)
             
             Text(task.title)
-                .font(.system(size: sizeFont * 2))
-                .foregroundStyle(.primary)
+                .font(.system(size: 30))
                 .strikethrough(task.isComplete ? true : false)
             
-            PropertiesUpdateView(imageName: "text.alignleft", input: task.details, alternativeInput: "Add details", condition: !task.details.isEmpty)
-            PropertiesUpdateView(imageName: !task.isComplete ? "square" : "checkmark.square", input: "Done", alternativeInput: "Incomplete", condition: task.isComplete)
-            PropertiesUpdateView(imageName: "alarm", input: "Schedule", alternativeInput: "Set schedule", condition: false)
-            PropertiesUpdateView(imageName: "tag", input: "Important", alternativeInput: "Add priority", condition: false)
+            ForEach(properties, id: \.self) { property in
+                view(property: property, task: task)
+            }
 
             Spacer()
             BottomUpdateView(task: task)
         }
-        .padding(.horizontal, sizePadding)
-        .padding(.vertical, sizePadding / 2)
-        .font(.system(size: sizeFont))
+        .padding(.horizontal, 30)
+        .padding(.vertical, 15)
+        .font(.system(size: 20))
         .background(color.background)
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -62,7 +73,7 @@ struct UpdateView: View {
                 Button(action: {
                     navigation.goBack()
                 }) {
-                    PropertiesUpdateView(imageName: "arrow.backward")
+                    Image(systemName: "arrow.backward")
                 }
                 .padding([.horizontal])
                 .fontWeight(.semibold)
@@ -70,46 +81,38 @@ struct UpdateView: View {
         }
         .foregroundStyle(color.text)
     }
-}
-
-struct PropertiesUpdateView: View {
     
-    let imageName: String
-    let input: String
-    let alternativeInput: String
-    let condition: Bool
-    
-    private let color = ColorSettings()
-    private let sizePadding: CGFloat = 10
-    private let sizeFont: CGFloat = 20
-    
-    init(imageName: String, input: String = "", alternativeInput: String = "", condition: Bool = false) {
-        self.imageName = imageName
-        self.input = input
-        self.alternativeInput = alternativeInput
-        self.condition = condition
-    }
-    
-    var body: some View {
-        HStack(spacing: sizePadding) {
-            ZStack(alignment: .center) {
-                Rectangle()
-                    .fill(.clear)
-                    .frame(width: 25, height: 25)
-                Image(systemName: imageName)
-            }
+    private func view(property: PropertyItem, task: TaskModel) -> some View {
+        
+        let condition: Bool
+        let shownProperty: String
+        
+        switch property {
+        case .details:
+            condition = !task.details.isEmpty
+            shownProperty = task.details
+        case .complete:
+            condition = task.isComplete
+            shownProperty = "All done"
+        default:
+            condition = false
+            shownProperty = ""
+        }
+        
+        return HStack(spacing: 13) {
+            Image(systemName: condition ? property.fullIcon : property.emptyIcon)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 20, height: 20)
             
             if condition {
-                Text(input)
-            } else if !alternativeInput.isEmpty {
-                Text(alternativeInput)
+                Text(shownProperty)
+            } else {
+                Text(property.emptyText)
                     .foregroundStyle(.gray)
-//                    .background(.yellow)
             }
             Spacer()
         }
-//        .foregroundStyle(.jetSeasalt)
-//        .background(.blue)
     }
 }
 
@@ -152,26 +155,17 @@ struct BottomUpdateView: View {
 }
 
 #Preview("empty task", traits: .sizeThatFitsLayout) {
-    let completed = TaskModel(title: "empty task")
+    let empty = TaskModel(title: "empty task")
     return NavigationStack {
-        UpdateView(task: completed)
+        UpdateView(task: empty)
     }
     .environmentObject(NavigationCoordinator())
 }
 
-#Preview("incomplete task", traits: .sizeThatFitsLayout) {
-    let incomplete = TaskModel(title: "first task", isComplete: false, details: "first task details")
+#Preview("full task", traits: .sizeThatFitsLayout) {
+    let full = TaskModel(title: "full task", isComplete: true, details: "i have details")
     return NavigationStack {
-        UpdateView(task: incomplete)
+        UpdateView(task: full)
     }
     .environmentObject(NavigationCoordinator())
 }
-
-#Preview("completed task", traits: .sizeThatFitsLayout) {
-    let completed = TaskModel(title: "second task", isComplete: true)
-    return NavigationStack {
-        UpdateView(task: completed)
-    }
-    .environmentObject(NavigationCoordinator())
-}
-

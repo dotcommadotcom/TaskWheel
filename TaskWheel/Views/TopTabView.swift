@@ -9,13 +9,6 @@ enum TopTabItem: Hashable {
         case .wheel: return "Wheel"
         }
     }
-    
-    var iconName: String {
-        switch self {
-        case .list: return "list.clipboard.fill"
-        case .wheel: return "heart.fill"
-        }
-    }
 }
 
 struct TopTabContainerView<Content: View>: View {
@@ -32,7 +25,6 @@ struct TopTabContainerView<Content: View>: View {
     var body: some View {
         VStack(spacing: 0) {
             TopTabView(tabs: tabs, selected: $selected)
-            
             
             ZStack {
                 content
@@ -51,7 +43,7 @@ struct TopTabView: View {
     
     @Binding var selected: TopTabItem
     
-    let color = ColorSettings()
+    private let color = ColorSettings()
     
     var body: some View {
         HStack(spacing: 0) {
