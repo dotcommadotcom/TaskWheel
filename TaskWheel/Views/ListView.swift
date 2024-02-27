@@ -12,9 +12,6 @@ struct ListView: View {
                 }
             }
         }
-        .navigationDestination(for: TaskModel.self) { task in
-            UpdateView(task: task)
-        }
     }
 }
 

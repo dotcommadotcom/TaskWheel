@@ -104,6 +104,7 @@ extension View {
 #Preview("main") {
     MainView()
         .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(NavigationCoordinator())
 }
 
 #Preview("incomplete task", traits: .sizeThatFitsLayout) {

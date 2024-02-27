@@ -112,6 +112,8 @@ struct TopTabPreferenceKey: PreferenceKey {
 
 #Preview("main") {
     MainView()
+        .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(NavigationCoordinator())
 }
 
 #Preview("tabs") {

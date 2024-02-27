@@ -15,14 +15,14 @@ struct EmptyView: View {
         ZStack {
             Rectangle().fill(color.background).ignoresSafeArea()
             
-            VStack {
-                Text("hi my name is")
+            HStack {
+                Text("this is an empty view")
                     .foregroundStyle(color.text)
     
                 Button(action: {
-                    print("love")
+                    print("empty")
                 }, label: {
-                    Image(systemName: "heart.fill")
+                    Image(systemName: "circle.fill")
                 })
                 .foregroundStyle(color.accent)
             }

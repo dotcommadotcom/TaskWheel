@@ -15,9 +15,6 @@ struct WheelView: View {
                 }
             }
         }
-        .navigationDestination(for: TaskModel.self) { task in
-            UpdateView(task: task)
-        }
         
     }
 }

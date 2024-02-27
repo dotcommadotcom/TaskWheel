@@ -21,7 +21,7 @@ struct AddView: View {
         VStack(spacing: sizePadding / 2) {
             TextField(textDefault, text: $titleInput, axis: .vertical)
                 .lineLimit(maxLineLimit)
-//                .preventTextFieldError()
+            //                .preventTextFieldError()
             
             if !isDetailsHidden {
                 TextField(detailDefault, text: $detailsInput, axis: .vertical)
@@ -63,7 +63,7 @@ struct AddView: View {
         .presentationDragIndicator(.hidden)
         .fixedSize(horizontal: false, vertical: true)
         .presentationDetents([.height(sheetHeight)])
-        .modifier(GetHeightModifier(height: $sheetHeight))
+        .modifier(OldGetHeightModifier(height: $sheetHeight))
         .textFieldStyle(StaticTextFieldStyle())
         
     }
@@ -75,7 +75,7 @@ struct AddView: View {
     private func isTaskEmpty() -> Bool {
         return titleInput.isEmpty && detailsInput.isEmpty
     }
-
+    
     private func clickSaveButton() {
         taskViewModel.addTask(title: titleInput, details: detailsInput)
         presentationMode.wrappedValue.dismiss()
@@ -83,21 +83,6 @@ struct AddView: View {
     
 }
 
-struct GetHeightModifier: ViewModifier {
-    @Binding var height: CGFloat
-    private let heightMaximum: CGFloat = 500
-    
-    func body(content: Content) -> some View {
-        content.background(
-            GeometryReader { geo -> Color in
-                DispatchQueue.main.async {
-                    height = max(geo.size.height, 50)
-                }
-                return Color.clear
-            }
-        )
-    }
-}
 
 struct NoAnimationStyle: PrimitiveButtonStyle {
     func makeBody(configuration: Configuration) -> some View {

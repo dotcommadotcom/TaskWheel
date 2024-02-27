@@ -31,6 +31,9 @@ struct MainView: View {
             .background(color.background)
             .foregroundStyle(color.text)
             .animation(.easeInOut, value: topSelection)
+            .navigationDestination(for: TaskModel.self) { task in
+                UpdateView(task: task)
+            }
         }
     }
     
