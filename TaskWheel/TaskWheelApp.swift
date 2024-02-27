@@ -10,7 +10,7 @@ struct TaskWheelApp: App {
         WindowGroup {
             MainView()
                 .environmentObject(taskViewModel)
-//                .environmentObject(navigation)
+                .environmentObject(navigation)
         }
     }
 }

@@ -5,8 +5,6 @@ struct TaskRowView: View {
     let task: TaskModel
     let action: (TaskModel) -> Void
     
-    
-    
     init(task: TaskModel, action: @escaping (TaskModel) -> Void = {_ in }) {
         self.task = task
         self.action = action
@@ -43,6 +41,7 @@ struct TaskRowView: View {
         .padding()
         .font(.system(size: 23))
         .whenComplete(isComplete: task.isComplete)
+       
     }
 }
 

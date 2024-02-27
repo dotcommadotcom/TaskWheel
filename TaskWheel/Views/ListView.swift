@@ -7,8 +7,13 @@ struct ListView: View {
     var body: some View {
         ScrollView() {
             ForEach(taskViewModel.taskList) { task in
-                TaskRowView(task: task, action: taskViewModel.toggleComplete)
+                NavigationLink(value: task) {
+                    TaskRowView(task: task, action: taskViewModel.toggleComplete)
+                }
             }
+        }
+        .navigationDestination(for: TaskModel.self) { task in
+            UpdateView(task: task)
         }
     }
 }
@@ -16,6 +21,7 @@ struct ListView: View {
 #Preview("main") {
     MainView()
         .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(NavigationCoordinator())
 }
 
 #Preview {

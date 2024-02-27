@@ -1,5 +1,23 @@
 import SwiftUI
 
+enum PropertyItem: Hashable {
+    case list, wheel
+    
+    var title: String {
+        switch self {
+        case .list: return "List"
+        case .wheel: return "Wheel"
+        }
+    }
+    
+    var iconName: String {
+        switch self {
+        case .list: return "list.clipboard.fill"
+        case .wheel: return "heart.fill"
+        }
+    }
+}
+
 struct UpdateView: View {
 
     @EnvironmentObject var navigation: NavigationCoordinator

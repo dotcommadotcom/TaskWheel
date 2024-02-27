@@ -8,16 +8,27 @@ struct WheelView: View {
         ScrollView(.vertical) {
             LazyVStack {
                 ForEach(taskViewModel.taskList) { task in
-                    TaskRowView(task: task, action: taskViewModel.toggleComplete)
-                        .frame(height: 100)
+                    NavigationLink(value: task) {
+                        TaskRowView(task: task, action: taskViewModel.toggleComplete)
+                            .frame(height: 100)
+                    }
                 }
             }
+        }
+        .navigationDestination(for: TaskModel.self) { task in
+            UpdateView(task: task)
         }
         
     }
 }
 
+#Preview("main") {
+    MainView()
+        .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(NavigationCoordinator())
+}
+
 #Preview {
-    return WheelView()
+    WheelView()
         .environmentObject(TaskViewModel(TaskModel.examples))
 }
