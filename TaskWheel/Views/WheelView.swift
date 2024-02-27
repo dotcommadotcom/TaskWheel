@@ -2,13 +2,13 @@ import SwiftUI
 
 struct WheelView: View {
     
-    let taskList: [String]
+    @EnvironmentObject var taskViewModel: TaskViewModel
     
     var body: some View {
         ScrollView(.vertical) {
             LazyVStack {
-                ForEach(taskList, id: \.self) { task in
-                    TaskRowView(task: task)
+                ForEach(taskViewModel.taskList) { task in
+                    TaskRowView(task: task, action: taskViewModel.toggleComplete)
                         .frame(height: 100)
                 }
             }
@@ -18,7 +18,6 @@ struct WheelView: View {
 }
 
 #Preview {
-    let sampleTasks = (1...10).map { "Task \($0)" }
-    
-    return WheelView(taskList: sampleTasks)
+    return WheelView()
+        .environmentObject(TaskViewModel(TaskModel.examples))
 }

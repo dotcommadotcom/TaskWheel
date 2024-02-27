@@ -84,19 +84,6 @@ struct TaskRowView2: View {
     }
 }
 
-struct TaskRowModifier: ViewModifier {
-    let isComplete: Bool
-    let color = ColorSettings()
-    
-    func body(content: Content) -> some View {
-        if isComplete {
-            return AnyView(content.strikethrough().foregroundStyle(.gray))
-        } else {
-            return AnyView(content.foregroundStyle(color.text))
-        }
-    }
-}
-
 
 #Preview {
     MainView()

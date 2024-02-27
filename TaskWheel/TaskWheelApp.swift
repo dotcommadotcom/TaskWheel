@@ -9,7 +9,7 @@ struct TaskWheelApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-//                .environmentObject(taskViewModel)
+                .environmentObject(taskViewModel)
 //                .environmentObject(navigation)
         }
     }

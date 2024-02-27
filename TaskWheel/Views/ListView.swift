@@ -2,12 +2,12 @@ import SwiftUI
 
 struct ListView: View {
     
-    let taskList: [String]
+    @EnvironmentObject var taskViewModel: TaskViewModel
     
     var body: some View {
         ScrollView() {
-            ForEach(taskList, id: \.self) { task in
-                TaskRowView(task: task)
+            ForEach(taskViewModel.taskList) { task in
+                TaskRowView(task: task, action: taskViewModel.toggleComplete)
             }
         }
     }
@@ -15,10 +15,10 @@ struct ListView: View {
 
 #Preview("main") {
     MainView()
+        .environmentObject(TaskViewModel(TaskModel.examples))
 }
 
 #Preview {
-    let sampleTasks = (1...10).map { "Task \($0)" }
-    
-    return ListView(taskList: sampleTasks)
+    return ListView()
+        .environmentObject(TaskViewModel(TaskModel.examples))
 }

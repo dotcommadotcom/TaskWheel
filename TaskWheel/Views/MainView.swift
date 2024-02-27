@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MainView: View {
     
+    @EnvironmentObject var taskViewModel: TaskViewModel
     let sampleTasks = (1...25).map { "Task \($0)" }
     @State private var topSelection: TopTabItem = .list
     
@@ -14,11 +15,10 @@ struct MainView: View {
 //                .background(.pink.opacity(0.3))
             
             TopTabContainerView(selected: $topSelection) {
-                ListView(taskList: sampleTasks)
+                ListView()
                     .topTabItem(tab: .list, selected: $topSelection)
-//                    .background(.asparagus)
                 
-                WheelView(taskList: sampleTasks)
+                WheelView()
                     .topTabItem(tab: .wheel, selected: $topSelection)
             }
             .highPriorityGesture(DragGesture().onEnded({
@@ -46,11 +46,13 @@ struct MainView: View {
 
 #Preview("main") {
     MainView()
+        .environmentObject(TaskViewModel(TaskModel.examples))
 }
 
 #Preview("dark") {
     MainView()
         .preferredColorScheme(.dark)
+        .environmentObject(TaskViewModel(TaskModel.examples))
 }
 
 //struct MainView3: View {
