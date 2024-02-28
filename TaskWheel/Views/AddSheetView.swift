@@ -11,8 +11,6 @@ struct AddSheetView: View {
     @State private var showDetails = false
     @State private var showPriority = false
     
-    let properties: [PropertyItem] = [.details, .schedule, .priority, .save]
-    
     private let color = ColorSettings()
     private let textDefault: String = "What now?"
     private let detailDefault: String = "Add details"
@@ -133,4 +131,5 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
     }
     .environmentObject(TaskViewModel())
 }
+
 
