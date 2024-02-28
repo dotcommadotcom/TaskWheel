@@ -7,7 +7,7 @@ class TaskViewModel: ObservableObject {
     init(_ taskList: Deque<TaskModel> = []) {
         self.taskList = taskList
     }
-
+    
     func add(title: String = "", details: String = "", priority: Int = 4) {
         taskList.prepend(TaskModel(title: title, details: details, priority: priority))
     }
@@ -31,8 +31,22 @@ class TaskViewModel: ObservableObject {
                                         priority: priority ?? task.priority)
         }
     }
+
+    func getIncompleteTasks() -> Deque<TaskModel> {
+        return taskList.filter { !$0.isComplete }
+    }
     
+    func getCompletedTasks() -> Deque<TaskModel> {
+        return taskList.filter { $0.isComplete }
+    }
+    
+
 //    func showTasks() -> Deque<TaskModel> {
 //        return taskList.filter { !$0.isComplete }
+//    }
+    
+    
+//    func filter(_ condition: (TaskModel) -> Bool) -> Deque<TaskModel> {
+//        return taskList.filter { task in condition(task) }
 //    }
 }

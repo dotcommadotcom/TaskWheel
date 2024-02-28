@@ -5,17 +5,20 @@ final class TaskViewModelTests: XCTestCase {
     
     private var simpleTaskVM: TaskViewModel!
     private var multipleTaskVM: TaskViewModel!
+    private var sampleTask: TaskModel!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
         simpleTaskVM = TaskViewModel()
         multipleTaskVM = TaskViewModel(TaskModel.examples)
+        sampleTask = multipleTaskVM.taskList[6]
     }
     
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         simpleTaskVM = nil
         multipleTaskVM = nil
+        sampleTask = nil
     }
     
     // TEST - Constructor
@@ -36,6 +39,18 @@ final class TaskViewModelTests: XCTestCase {
         XCTAssertEqual(simpleTaskVM.taskList.count, 1)
     }
     
+    func testAddTaskWithProperties() throws {
+        let title = "task title"
+        let details = "task details"
+        let priority = 3
+        
+        simpleTaskVM.add(title: title, details: details, priority: priority)
+        
+        XCTAssertEqual(simpleTaskVM.taskList[0].title, title)
+        XCTAssertEqual(simpleTaskVM.taskList[0].details, details)
+        XCTAssertEqual(simpleTaskVM.taskList[0].priority, priority)
+    }
+    
     func testAddTaskPrepends() throws {
         let testTitle = "this is a test"
         
@@ -47,9 +62,7 @@ final class TaskViewModelTests: XCTestCase {
     // TEST - Toggle complete
 
     func testToggleCompleteChangesTask() throws {
-        let recycleTask = multipleTaskVM.taskList[6]
-        
-        multipleTaskVM.toggleComplete(task: recycleTask)
+        multipleTaskVM.toggleComplete(task: sampleTask)
         
         XCTAssertTrue(multipleTaskVM.taskList[6].isComplete)
     }
@@ -57,11 +70,37 @@ final class TaskViewModelTests: XCTestCase {
     // TEST - Delete task
     
     func testDeleteTask() throws {
-        let recycleTask = multipleTaskVM.taskList[6]
+        multipleTaskVM.delete(task: sampleTask)
         
-        multipleTaskVM.delete(task: recycleTask)
+        XCTAssertEqual(multipleTaskVM.taskList.count, 24)
+    }
+    
+    // TEST - Update task
+    
+    func testUpdateTask() throws {
+        let previousPriority = sampleTask.priority
         
-        XCTAssertNotEqual(multipleTaskVM.taskList[6], recycleTask)
+        multipleTaskVM.update(task: sampleTask, priority: 2)
+        
+        XCTAssertNotEqual(multipleTaskVM.taskList[6].priority, previousPriority)
+    }
+    
+    func testUpdateMultiple() throws {
+        let previousTitle = sampleTask.title
+        let previousDetails = sampleTask.details
+        
+        multipleTaskVM.update(task: sampleTask, title: "new title", details: "lets add some more")
+        
+        XCTAssertNotEqual(multipleTaskVM.taskList[6].title, previousTitle)
+        XCTAssertNotEqual(multipleTaskVM.taskList[6].details, previousDetails)
+    }
+    
+    func testUpdateTaskDoesNotChangeID() throws {
+        let previousId = sampleTask.id
+        
+        multipleTaskVM.update(task: sampleTask, priority: 2)
+        
+        XCTAssertEqual(multipleTaskVM.taskList[6].id, previousId)
     }
     
 //    func testShowTasks() throws {
