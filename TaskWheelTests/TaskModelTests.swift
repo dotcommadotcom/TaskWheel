@@ -4,57 +4,32 @@ import XCTest
 final class TaskModelTests: XCTestCase {
     
     private var testTask: TaskModel!
+    private var testTaskList: TaskListModel!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
+        testTaskList = TaskListModel(title: "sample task list")
         testTask = TaskModel(title: "this is a test",
+                             ofTaskList: testTaskList.id,
                              details: "details test")
     }
     
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         testTask = nil
+        testTaskList = nil
     }
     
     func testCanary() throws {
         XCTAssertTrue(true)
     }
     
-    // TEST - Edit Helper
+    // TEST - Priority
     
-    func testEditHelperDoesNotChangeId() throws {
-        let previousID = testTask.id
+    func testEditPriority() throws {
+        let testTask = testTask.edit(priority: 1)
         
-        testTask = testTask.edit(title: "new title")
-        
-        XCTAssertEqual(testTask.id, previousID)
-    }
-    
-    func testEmptyEditHelper() throws {
-        XCTAssertEqual(testTask.edit(), testTask)
-    }
-    
-    // TEST - Title
-    
-    func testEditTitle() throws {
-        testTask = testTask.edit(title: "hello")
-        
-        XCTAssertEqual(testTask.title, "hello")
-    }
-    
-    // TEST - isComplete
-    
-    func testToggleCompleteTrue() throws {
-        testTask = testTask.toggleComplete()
-        
-        XCTAssertTrue(testTask.isComplete)
-    }
-    
-    func testToggleCompleteFalse() throws {
-        testTask = testTask.toggleComplete()
-        testTask = testTask.toggleComplete()
-        
-        XCTAssertFalse(testTask.isComplete)
+        XCTAssertEqual(testTask.priority, 1)
     }
     
     // TEST - Details
@@ -65,11 +40,48 @@ final class TaskModelTests: XCTestCase {
         XCTAssertEqual(testTask.details, "new details")
     }
     
-    // TEST - Priority
+    // TEST - isComplete
     
-    func testEditPriority() throws {
-        let testTask = testTask.edit(priority: 1)
+    func testToggleCompleteFalse() throws {
+        testTask = testTask.toggleComplete()
+        testTask = testTask.toggleComplete()
         
-        XCTAssertEqual(testTask.priority, 1)
+        XCTAssertFalse(testTask.isComplete)
+    }
+    
+    func testToggleCompleteTrue() throws {
+        testTask = testTask.toggleComplete()
+        
+        XCTAssertTrue(testTask.isComplete)
+    }
+    
+    // TEST - Title
+    
+    func testEditTitle() throws {
+        testTask = testTask.edit(title: "hello")
+        
+        XCTAssertEqual(testTask.title, "hello")
+    }
+    
+    // TEST - Edit Helper
+    
+    func testEmptyEditHelper() throws {
+        XCTAssertEqual(testTask.edit(), testTask)
+    }
+    
+    func testEditHelperDoesNotChangeId() throws {
+        let previousID = testTask.id
+        
+        testTask = testTask.edit(title: "new title")
+        
+        XCTAssertEqual(testTask.id, previousID)
+    }
+    
+    // TEST - Constructor
+    
+    func testConstructorIdIsNotOfTaskList() throws {
+        let sampleTask = TaskModel(title: "test id")
+        
+        XCTAssertNotEqual(sampleTask.id, sampleTask.ofTaskList)
     }
 }

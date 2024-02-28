@@ -2,11 +2,11 @@ import SwiftUI
 
 struct TitleView: View {
     
-    let title: String
+    @EnvironmentObject var taskViewModel: TaskViewModel
     
     var body: some View {
         HStack {
-            Text(title)
+            Text(taskViewModel.defaultTaskList.title)
                 .font(.system(size: 25, weight: .bold))
             
             Spacer()
@@ -22,10 +22,11 @@ struct TitleView: View {
 
 #Preview("main") {
     MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
         .environmentObject(NavigationCoordinator())
 }
 
 #Preview {
-    TitleView(title: "sample task list")
+    TitleView()
+        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
 }

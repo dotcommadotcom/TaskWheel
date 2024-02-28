@@ -2,15 +2,21 @@ import SwiftUI
 
 struct ListsSheetView: View {
     
-    @State private var selected: String = "Task List 1"
+    @EnvironmentObject var taskViewModel: TaskViewModel
     
-    let sampleTaskLists = (1...4).map { "Task List \($0)" }
+//    @State var selected: TaskListModel
+//    
+//    init() {
+//        _selected = State(initialValue: taskViewModel.defaultTaskList)
+//    }
+//    
+//    let sampleTaskLists = (1...4).map { "Task List \($0)" }
     private let color = ColorSettings()
     
     var body: some View {
         
         VStack(alignment: .leading, spacing: 22) {
-            ForEach(sampleTaskLists, id: \.self) { taskList in
+            ForEach(taskViewModel.taskLists) { taskList in
                 view(taskList: taskList)
                     .onTapGesture {
                         click(taskList: taskList)
@@ -28,35 +34,32 @@ struct ListsSheetView: View {
         }
     }
     
-    private func view(taskList: String) -> some View {
+    private func view(taskList: TaskListModel) -> some View {
         
-        let highlight: Bool = selected == taskList
+        let highlight: Bool = false // selected == taskList
         
         return HStack(spacing: 15) {
             Image(systemName: highlight ? "record.circle" : "circle")
                 .fontWeight(highlight ? .bold : .regular)
                 .foregroundStyle(highlight ? color.accent : color.text)
             
-            Text(taskList)
+            Text(taskList.title)
             Spacer()
         }
     }
     
-    private func click(taskList: String) {
-        selected = taskList
+    private func click(taskList: TaskListModel) {
+//        selected = taskList
+        print("hi")
     }
 }
 
 #Preview("main") {
     MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
         .environmentObject(NavigationCoordinator())
 }
 
 #Preview {
     BottomTabView()
-}
-
-#Preview {
-    ListsSheetView()
 }

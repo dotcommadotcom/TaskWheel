@@ -4,21 +4,24 @@ import DequeModule
 struct TaskModel: Identifiable, Hashable {
     let id: UUID
     let title: String
+    let ofTaskList: UUID
     let isComplete: Bool
     let details: String
     let priority: Int
     
-    init(id: UUID = UUID(), title: String, isComplete: Bool = false, details: String = "", priority: Int = 4) {
+    init(id: UUID = UUID(), title: String, ofTaskList: UUID = UUID(), isComplete: Bool = false, details: String = "", priority: Int = 4) {
         self.id = id
         self.title = title
+        self.ofTaskList = ofTaskList
         self.isComplete = isComplete
         self.details = details
         self.priority = priority
     }
     
-    func edit(title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) -> TaskModel {
+    func edit(title: String? = nil, ofTaskList: UUID? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) -> TaskModel {
         return TaskModel(id: self.id,
                          title: title ?? self.title,
+                         ofTaskList: ofTaskList ?? self.ofTaskList,
                          isComplete: isComplete ?? self.isComplete,
                          details: details ?? self.details,
                          priority: priority ?? self.priority)
