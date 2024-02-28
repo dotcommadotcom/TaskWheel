@@ -20,14 +20,14 @@ struct ListView: View {
         }
     }
 }
-
-#Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
-
-#Preview {
-    return ListView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-}
+//
+//#Preview("main") {
+//    MainView()
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//        .environmentObject(NavigationCoordinator())
+//}
+//
+//#Preview {
+//    return ListView()
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//}

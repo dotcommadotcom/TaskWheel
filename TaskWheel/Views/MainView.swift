@@ -6,8 +6,8 @@ struct MainView: View {
     @EnvironmentObject var navigation: NavigationCoordinator
     @State private var topSelection: TopTabItem = .list
     
-    let color = ColorSettings()
-    
+    private let color = ColorSettings()
+        
     var body: some View {
         NavigationStack(path: $navigation.path) {
             VStack(spacing: 0) {
@@ -47,14 +47,20 @@ struct MainView: View {
 
 
 #Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
+    let taskLists = TaskListModel.examples
+    let defaultTaskListID = taskLists[0].id
+    
+    return MainView()
+        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
         .environmentObject(NavigationCoordinator())
 }
 
 #Preview("dark") {
-    MainView()
-        .preferredColorScheme(.dark)
-        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
+    let taskLists = TaskListModel.examples
+    let defaultTaskListID = taskLists[0].id
+    
+    return MainView()
+        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
         .environmentObject(NavigationCoordinator())
+        .preferredColorScheme(.dark)
 }

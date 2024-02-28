@@ -20,12 +20,12 @@ struct MoreSheetView: View {
         }
     }
 }
-
-#Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
+//
+//#Preview("main") {
+//    MainView()
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//        .environmentObject(NavigationCoordinator())
+//}
 
 #Preview {
     BottomTabView()

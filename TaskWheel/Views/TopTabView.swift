@@ -110,12 +110,6 @@ struct TopTabPreferenceKey: PreferenceKey {
     }
 }
 
-#Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
-
 #Preview("tabs") {
     let tabs: [TopTabItem] = [.list, .wheel]
     @State var selected: TopTabItem = .list

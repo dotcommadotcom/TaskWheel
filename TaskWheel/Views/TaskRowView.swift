@@ -115,12 +115,6 @@ extension View {
     }
 }
 
-#Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
-
 #Preview("incomplete task", traits: .sizeThatFitsLayout) {
     let color = ColorSettings()
     let incomplete = TaskModel(title: "incomplete task", isComplete: false, details: "i'm not completed", priority: 3)

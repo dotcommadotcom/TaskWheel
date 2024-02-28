@@ -98,12 +98,12 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
     }
 }
 
-
-#Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
+//
+//#Preview("main") {
+//    MainView()
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//        .environmentObject(NavigationCoordinator())
+//}
 
 #Preview("empty", traits: .sizeThatFitsLayout) {
     ZStack {

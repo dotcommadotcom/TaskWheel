@@ -44,11 +44,11 @@ class TaskViewModel: ObservableObject {
     }
     
     func getIncompleteTasks() -> Deque<TaskModel> {
-        return tasks.filter { !$0.isComplete }
+        return tasks.filter { $0.ofTaskList == defaultTaskList.id && !$0.isComplete }
     }
     
     func getCompletedTasks() -> Deque<TaskModel> {
-        return tasks.filter { $0.isComplete }
+        return tasks.filter { $0.ofTaskList == defaultTaskList.id && $0.isComplete }
     }
     
     
@@ -60,40 +60,4 @@ class TaskViewModel: ObservableObject {
     //    func filter(_ condition: (TaskModel) -> Bool) -> Deque<TaskModel> {
     //        return taskList.filter { task in condition(task) }
     //    }
-}
-
-extension TaskViewModel {
-    
-    func examples() -> TaskViewModel {
-        
-        let sampleTaskLists: Deque<TaskListModel> = [
-            .init(title: "chores"),
-            .init(title: "homework"),
-            .init(title: "job search"),
-            .init(title: "to buy"),
-        ]
-        
-        let sampleDefault = sampleTaskLists[0].id
-        
-        let examples: Deque<TaskModel> = [
-            .init(title: "laundry", ofTaskList: sampleDefault, isComplete: true),
-            .init(title: "dishes", ofTaskList: sampleDefault, isComplete: true),
-            .init(title: "vacuum", ofTaskList: sampleDefault, isComplete: true, priority: 1),
-            .init(title: "mop", ofTaskList: sampleDefault, isComplete: false, details: "where are the clean mop heads?"),
-            .init(title: "water plants", ofTaskList: sampleDefault, isComplete: false),
-            .init(title: "throw out trash", ofTaskList: sampleDefault, isComplete: false, priority: 1),
-            .init(title: "recycle plastic and paper, separate vinyl labels", ofTaskList: sampleDefault, isComplete: false),
-            .init(title: "wipe countertop", ofTaskList: sampleDefault, isComplete: false),
-            .init(title: "fold laundry", ofTaskList: sampleDefault, isComplete: false),
-            .init(title: "clean bathroom", ofTaskList: sampleDefault, isComplete: false, priority: 2),
-            .init(title: "organize shelf", ofTaskList: sampleDefault, isComplete: false),
-            .init(title: "wipe mirror", ofTaskList: sampleDefault, isComplete: false, priority: 3),
-            .init(title: "wipe windowsill", ofTaskList: sampleDefault, isComplete: false),
-            .init(title: "sanitize toilet brushes", ofTaskList: sampleDefault, isComplete: false),
-            .init(title: "call water company", ofTaskList: sampleDefault, isComplete: false),
-        ]
-    
-        return TaskViewModel(examples, sampleTaskLists)
-    }
-    
 }

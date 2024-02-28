@@ -18,14 +18,14 @@ struct WheelView: View {
         
     }
 }
-
-#Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
-
-#Preview {
-    WheelView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-}
+//
+//#Preview("main") {
+//    MainView()
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//        .environmentObject(NavigationCoordinator())
+//}
+//
+//#Preview {
+//    WheelView()
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//}

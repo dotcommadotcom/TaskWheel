@@ -19,14 +19,14 @@ struct TitleView: View {
         .padding(.vertical, 10)
     }
 }
-
-#Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
-
-#Preview {
-    TitleView()
-        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
-}
+//
+//#Preview("main") {
+//    MainView()
+//        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
+//        .environmentObject(NavigationCoordinator())
+//}
+//
+//#Preview {
+//    TitleView()
+//        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
+//}

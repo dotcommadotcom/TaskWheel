@@ -51,12 +51,12 @@ struct OrderSheetView: View {
         selected = order
     }
 }
-
-#Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
+//
+//#Preview("main") {
+//    MainView()
+//        .environmentObject(TaskViewModel(TaskModel.examples))
+//        .environmentObject(NavigationCoordinator())
+//}
 
 #Preview {
     ZStack {

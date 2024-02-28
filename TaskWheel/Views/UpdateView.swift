@@ -147,13 +147,6 @@ struct UpdateView: View {
     }
 }
 
-
-#Preview("from main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
-
 #Preview("empty task", traits: .sizeThatFitsLayout) {
     let empty = TaskModel(title: "")
     return NavigationStack {

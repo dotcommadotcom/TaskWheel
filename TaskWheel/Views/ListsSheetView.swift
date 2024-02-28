@@ -53,12 +53,12 @@ struct ListsSheetView: View {
         print("hi")
     }
 }
-
-#Preview("main") {
-    MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
-        .environmentObject(NavigationCoordinator())
-}
+//
+//#Preview("main") {
+//    MainView()
+//        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
+//        .environmentObject(NavigationCoordinator())
+//}
 
 #Preview {
     BottomTabView()
