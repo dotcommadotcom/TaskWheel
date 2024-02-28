@@ -12,6 +12,7 @@ struct UpdateView: View {
     @State var priorityInput: Int
     
     private let color = ColorSettings()
+    private let textDefault: String = "What now?"
     private let taskListTitle: String = "current task list"
     private let bottomTabs: [IconItem] = [.complete, .delete, .save]
     
@@ -26,7 +27,7 @@ struct UpdateView: View {
         VStack(alignment: .leading, spacing: 20) {
             Text(taskListTitle)
             
-            TextField(titleInput, text: $titleInput, axis: .vertical)
+            TextField(titleInput.isEmpty ? textDefault : titleInput, text: $titleInput, axis: .vertical)
                 .lineLimit(5)
                 .font(.system(size: 30))
                 .strikethrough(task.isComplete ? true : false)
@@ -36,7 +37,7 @@ struct UpdateView: View {
             Spacer()
             
             HStack(spacing: 30) {
-
+                
                 ForEach(bottomTabs, id: \.self) { tab in
                     var action: () -> Void {
                         switch tab {
@@ -74,7 +75,7 @@ struct UpdateView: View {
     
     private func PropertyContainerView(task: TaskModel) -> some View {
         VStack(spacing: 20) {
-            viewProperty(.details, isEmpty: task.details.isEmpty, defaultText: "Add details")
+            viewProperty(.details, isEmpty: false, defaultText: "")
             
             viewProperty(.schedule, isEmpty: true, defaultText: "Set schedule")
             
@@ -91,7 +92,7 @@ struct UpdateView: View {
             
             if isEmpty {
                 Text(defaultText)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.gray.opacity(0.6))
             } else {
                 TaskPropertyView(property)
             }
@@ -103,11 +104,13 @@ struct UpdateView: View {
     private func TaskPropertyView(_ property: IconItem) -> some View {
         switch property {
         case .details:
-            return AnyView(TextField(detailsInput, text: $detailsInput)
-                .lineLimit(5))
+            return AnyView(
+                TextField(detailsInput.isEmpty ? "Add details" : detailsInput, text: $detailsInput)
+                    .foregroundStyle(detailsInput.isEmpty ? .gray : color.text)
+                    .lineLimit(5)
+            )
         case .priority:
-            let priorityItem = PriorityItem(priorityInput)
-            return AnyView(Text(priorityItem.text))
+            return AnyView(Text(PriorityItem(priorityInput).text))
         default:
             return AnyView(Text(property.text))
         }
@@ -152,7 +155,7 @@ struct UpdateView: View {
 }
 
 #Preview("empty task", traits: .sizeThatFitsLayout) {
-    let empty = TaskModel(title: "empty task")
+    let empty = TaskModel(title: "")
     return NavigationStack {
         UpdateView(task: empty)
     }

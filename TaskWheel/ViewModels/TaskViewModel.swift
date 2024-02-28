@@ -2,51 +2,62 @@ import Foundation
 import DequeModule
 
 class TaskViewModel: ObservableObject {
-    @Published var taskList = Deque<TaskModel>()
+    @Published var tasks: Deque<TaskModel>
+    @Published var taskLists: Deque<TaskListModel>
+    @Published var defaultTaskList: TaskListModel
     
-    init(_ taskList: Deque<TaskModel> = []) {
-        self.taskList = taskList
+    init(_ tasks: Deque<TaskModel> = [], _ taskLists: Deque<TaskListModel> = []) {
+        self.tasks = tasks
+        let backupTaskList = TaskListModel(title: "My Tasks")
+        self.taskLists = taskLists.isEmpty ? [backupTaskList] : taskLists
+        self.defaultTaskList = taskLists.first ?? backupTaskList
     }
     
     func add(title: String = "", details: String = "", priority: Int = 4) {
-        taskList.prepend(TaskModel(title: title, details: details, priority: priority))
+        tasks.prepend(TaskModel(title: title, details: details, priority: priority))
     }
     
     func toggleComplete(task: TaskModel) {
-        if let index = taskList.firstIndex(where: { $0.id == task.id }) {
-            taskList[index] = task.toggleComplete()
+        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            tasks[index] = task.toggleComplete()
         }
     }
     
     func delete(task: TaskModel) {
-        if let index = taskList.firstIndex(where: { $0.id == task.id }) {
-            taskList.remove(at: index)
+        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            tasks.remove(at: index)
+        }
+    }
+    
+    func deleteCompleted(task: TaskModel) {
+        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            tasks.remove(at: index)
         }
     }
     
     func update(task: TaskModel, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
-        if let index = taskList.firstIndex(where: { $0.id == task.id }) {
-            taskList[index] = task.edit(title: title ?? task.title,
-                                        details: details ?? task.details,
-                                        priority: priority ?? task.priority)
+        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            tasks[index] = task.edit(title: title ?? task.title,
+                                     details: details ?? task.details,
+                                     priority: priority ?? task.priority)
         }
     }
-
+    
     func getIncompleteTasks() -> Deque<TaskModel> {
-        return taskList.filter { !$0.isComplete }
+        return tasks.filter { !$0.isComplete }
     }
     
     func getCompletedTasks() -> Deque<TaskModel> {
-        return taskList.filter { $0.isComplete }
+        return tasks.filter { $0.isComplete }
     }
     
-
-//    func showTasks() -> Deque<TaskModel> {
-//        return taskList.filter { !$0.isComplete }
-//    }
+    
+    //    func showTasks() -> Deque<TaskModel> {
+    //        return taskList.filter { !$0.isComplete }
+    //    }
     
     
-//    func filter(_ condition: (TaskModel) -> Bool) -> Deque<TaskModel> {
-//        return taskList.filter { task in condition(task) }
-//    }
+    //    func filter(_ condition: (TaskModel) -> Bool) -> Deque<TaskModel> {
+    //        return taskList.filter { task in condition(task) }
+    //    }
 }
