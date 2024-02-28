@@ -18,18 +18,20 @@ class TaskViewModel: ObservableObject {
         }
     }
     
-    func deleteTask(_ task: TaskModel) {
-        print("deleted \(task.title)")
+    func delete(task: TaskModel) {
+        if let index = taskList.firstIndex(where: { $0.id == task.id }) {
+            taskList.remove(at: index)
+        }
     }
     
-    func updateTask(_ task: TaskModel) {
-        print("updated \(task.title)")
+    func update(task: TaskModel, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
+        if let index = taskList.firstIndex(where: { $0.id == task.id }) {
+            taskList[index] = task.edit(title: title ?? task.title,
+                                        details: details ?? task.details,
+                                        priority: priority ?? task.priority)
+        }
     }
     
-//    func deleteTask(indexSet: IndexSet) {
-//        taskList.remove(atOffsets: indexSet)
-//    }
-//    
 //    func showTasks() -> Deque<TaskModel> {
 //        return taskList.filter { !$0.isComplete }
 //    }

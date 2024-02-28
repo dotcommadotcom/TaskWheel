@@ -31,19 +31,19 @@ struct AddSheetView: View {
                 Button {
                     showDetails.toggle()
                 } label: {
-                    viewImage(PropertyItem.details.icon)
+                    viewImage(IconItem.details.icon)
                 }
                 .foregroundStyle(!detailsInput.isEmpty ? color.accent : color.text)
                 
                 Button {
                 } label: {
-                    viewImage(PropertyItem.schedule.icon)
+                    viewImage(IconItem.schedule.icon)
                 }
                 
                 Button {
                     showPriority.toggle()
                 } label: {
-                    viewImage(priorityInput.rawValue == 4 ? PropertyItem.priority.icon : PropertyItem.priority.altIcon)
+                    viewImage(priorityInput.rawValue == 4 ? IconItem.priority.icon : IconItem.priority.altIcon)
                 }
                 .foregroundStyle(priorityInput.color)
                 .padding(.vertical, 8)
@@ -58,7 +58,7 @@ struct AddSheetView: View {
                 Button {
                     clickSaveButton()
                 } label: {
-                    viewImage(PropertyItem.save.icon)
+                    viewImage(IconItem.save.icon)
                 }
                 .disabled(isTaskEmpty() ? true : false)
                 .foregroundStyle(isTaskEmpty() ? .gray : color.text)
@@ -75,7 +75,7 @@ struct AddSheetView: View {
             .frame(width: 22, height: 22)
     }
     
-    private func viewPopover(property: PropertyItem) -> some View {
+    private func viewPopover(property: IconItem) -> some View {
         Text(property.icon)
             .presentationCompactAdaptation(.popover)
     }

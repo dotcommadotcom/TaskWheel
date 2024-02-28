@@ -1,29 +1,12 @@
 import SwiftUI
 
-enum BottomTabItem: Identifiable, Hashable {
-    case lists, order, more, add
-    
-    var id: Self {
-        self
-    }
-    
-    var icon: String {
-        switch self {
-        case .lists: return "list.dash"
-        case .order: return "arrow.up.arrow.down"
-        case .more: return "ellipsis"
-        case .add: return "plus.square"
-        }
-    }
-}
-
 struct BottomTabView: View {
-    @State private var selected: BottomTabItem?
+    @State private var selected: IconItem?
     @State private var sheetHeight: CGFloat = .zero
     
     let color = ColorSettings()
     
-    let bottomTabs: [BottomTabItem] = [.lists, .order, .more, .add]
+    let bottomTabs: [IconItem] = [.lists, .order, .more, .add]
     
     var body: some View {
         HStack(spacing: 30) {
@@ -37,7 +20,7 @@ struct BottomTabView: View {
         .padding(20)
     }
     
-    private func view(tab: BottomTabItem, isSpace: Bool) -> some View {
+    private func view(tab: IconItem, isSpace: Bool) -> some View {
         HStack {
             if isSpace {
                 Spacer()
@@ -54,13 +37,14 @@ struct BottomTabView: View {
         }
     }
     
-    private func viewSheet(tab: BottomTabItem) -> some View {
+    private func viewSheet(tab: IconItem) -> some View {
         VStack {
             switch tab {
             case .lists: ListsSheetView()
             case .order: OrderSheetView()
             case .more: MoreSheetView()
             case .add: AddSheetView()
+            default: EmptyView()
             }
         }
         .font(.system(size: 22))

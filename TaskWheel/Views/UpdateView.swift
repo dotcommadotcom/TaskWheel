@@ -2,30 +2,56 @@ import SwiftUI
 
 struct UpdateView: View {
     
+    @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
-    @State var titleInput: String = ""
-    @State var detailsInput: String = ""
     
     let task: TaskModel
-    let properties: [PropertyItem] = [.details, .complete, .schedule, .priority]
+    
+    @State var titleInput: String
+    @State var detailsInput: String
+    @State var priorityInput: Int
     
     private let color = ColorSettings()
     private let taskListTitle: String = "current task list"
+    
+    init(task: TaskModel) {
+        self.task = task
+        _titleInput = State(initialValue: task.title)
+        _detailsInput = State(initialValue: task.details)
+        _priorityInput = State(initialValue: task.priority)
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text(taskListTitle)
             
-            Text(task.title)
+            TextField(titleInput, text: $titleInput, axis: .vertical)
+                .lineLimit(5)
                 .font(.system(size: 30))
                 .strikethrough(task.isComplete ? true : false)
             
-            ForEach(properties, id: \.self) { property in
-                view(property: property, task: task)
-            }
-
+            PropertyContainerView(task: task)
+            
             Spacer()
-            BottomUpdateView(task: task)
+            
+            HStack(spacing: 30) {
+                
+                Button(action: {}) {
+                    Image(systemName: "checkmark.square")
+                }
+                
+                Button(action: clickDelete) {
+                    Image(systemName: "trash")
+                }
+                
+                Spacer()
+                
+                Button(action: clickSave) {
+                    Image(systemName: "square.and.arrow.down")
+                }
+            }
+            .foregroundStyle(color.accent)
+            .font(.system(size: 25))
         }
         .padding(.horizontal, 30)
         .padding(.vertical, 15)
@@ -44,73 +70,61 @@ struct UpdateView: View {
             }
         }
         .foregroundStyle(color.text)
+        
     }
     
-    private func view(property: PropertyItem, task: TaskModel) -> some View {
-        
-        let condition: Bool
-        let shownProperty: String
-        
-        switch property {
-        case .details:
-            condition = !task.details.isEmpty
-            shownProperty = task.details
-        case .complete:
-            condition = task.isComplete
-            shownProperty = "All done"
-        default:
-            condition = false
-            shownProperty = ""
+    private func PropertyContainerView(task: TaskModel) -> some View {
+        VStack(spacing: 20) {
+            view(.details, isEmpty: task.details.isEmpty, defaultText: "Add details")
+            
+            view(.schedule, isEmpty: true, defaultText: "Set schedule")
+            
+            view(.priority, isEmpty: task.priority == 4, defaultText: "Set priority")
         }
-        
-        return HStack(spacing: 13) {
-            Image(systemName: condition ? property.altIcon : property.icon)
+    }
+    
+    private func view(_ property: IconItem, isEmpty: Bool, defaultText: String) -> some View {
+        HStack(spacing: 13) {
+            Image(systemName: property.icon)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 20, height: 20)
             
-            if condition {
-                Text(shownProperty)
-            } else {
-                Text(property.emptyText)
+            if isEmpty {
+                Text(defaultText)
                     .foregroundStyle(.gray)
+            } else {
+                viewProperty(property)
             }
+            
             Spacer()
         }
+    }
+    
+    private func viewProperty(_ property: IconItem) -> some View {
+        switch property {
+        case .details:
+            return AnyView(TextField(detailsInput, text: $detailsInput)
+                .lineLimit(5))
+        case .priority:
+            let priorityItem = PriorityItem(priorityInput)
+            return AnyView(Text(priorityItem.text))
+        default:
+            return AnyView(Text(property.icon))
+        }
+    }
+    
+    private func clickDelete() {
+        taskViewModel.delete(task: task)
+        navigation.goBack()
+    }
+    
+    private func clickSave() {
+        taskViewModel.update(task: task, title: titleInput, details: detailsInput)
+        navigation.goBack()
     }
 }
 
-struct BottomUpdateView: View {
-    
-    @EnvironmentObject var taskViewModel: TaskViewModel
-    @EnvironmentObject var navigation: NavigationCoordinator
-    
-    let task: TaskModel
-    
-    private let color = ColorSettings()
-    
-    var body: some View {
-        HStack {
-            Button(action: {
-                navigation.goBack()
-                taskViewModel.deleteTask(task)
-            }) {
-                Image(systemName: "trash")
-            }
-            
-            Spacer()
-            
-            Button(action: {
-                navigation.goBack()
-                taskViewModel.updateTask(task)
-            }) {
-                Image(systemName: "square.and.arrow.down")
-            }
-        }
-        .foregroundStyle(color.accent)
-        .font(.system(size: 25))
-    }
-}
 
 #Preview("from main") {
     MainView()
@@ -127,7 +141,7 @@ struct BottomUpdateView: View {
 }
 
 #Preview("full task", traits: .sizeThatFitsLayout) {
-    let full = TaskModel(title: "full task", isComplete: true, details: "i have details")
+    let full = TaskModel(title: "full task", isComplete: true, details: "i have details", priority: 2)
     return NavigationStack {
         UpdateView(task: full)
     }

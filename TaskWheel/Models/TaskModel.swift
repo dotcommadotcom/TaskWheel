@@ -16,7 +16,7 @@ struct TaskModel: Identifiable, Hashable {
         self.priority = priority
     }
     
-    func edit(id: UUID? = nil, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) -> TaskModel {
+    func edit(title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) -> TaskModel {
         return TaskModel(id: self.id,
                          title: title ?? self.title,
                          isComplete: isComplete ?? self.isComplete,
@@ -24,22 +24,9 @@ struct TaskModel: Identifiable, Hashable {
                          priority: priority ?? self.priority)
     }
     
-    func editTitle(_ newTitle: String) -> TaskModel {
-        return edit(title: newTitle)
-    }
-    
     func toggleComplete() -> TaskModel {
         return edit(isComplete: !self.isComplete)
     }
-    
-    func editDetails(_ newDetails: String) -> TaskModel {
-        return edit(details: newDetails)
-    }
-    
-    func editPriority(_ newPriority: Int) -> TaskModel {
-        return edit(priority: newPriority)
-    }
-    
 }
 
 extension TaskModel {
