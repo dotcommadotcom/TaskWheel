@@ -31,19 +31,19 @@ struct AddSheetView: View {
                 Button {
                     showDetails.toggle()
                 } label: {
-                    viewImage(IconItem.details.icon)
+                    viewImage(IconItem.details)
                 }
                 .foregroundStyle(!detailsInput.isEmpty ? color.accent : color.text)
                 
                 Button {
                 } label: {
-                    viewImage(IconItem.schedule.icon)
+                    viewImage(IconItem.schedule)
                 }
                 
                 Button {
                     showPriority.toggle()
                 } label: {
-                    viewImage(priorityInput.rawValue == 4 ? IconItem.priority.icon : IconItem.priority.altIcon)
+                    viewImage(IconItem.priority, isAlternative: priorityInput.rawValue != 4)
                 }
                 .foregroundStyle(priorityInput.color)
                 .padding(.vertical, 8)
@@ -58,7 +58,7 @@ struct AddSheetView: View {
                 Button {
                     clickSaveButton()
                 } label: {
-                    viewImage(IconItem.save.icon)
+                    viewImage(IconItem.save)
                 }
                 .disabled(isTaskEmpty() ? true : false)
                 .foregroundStyle(isTaskEmpty() ? .gray : color.text)
@@ -68,15 +68,15 @@ struct AddSheetView: View {
         .fixedSize(horizontal: false, vertical: true)
     }
     
-    private func viewImage(_ icon: String) -> some View {
-        Image(systemName: icon)
+    private func viewImage(_ icon: IconItem, isAlternative: Bool = true) -> some View {
+        Image(systemName: isAlternative ? icon.alternative : icon.text)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(width: 22, height: 22)
+            .frame(width: 22, height: icon == .save ? 26 : 22)
     }
     
     private func viewPopover(property: IconItem) -> some View {
-        Text(property.icon)
+        Text(property.text)
             .presentationCompactAdaptation(.popover)
     }
     

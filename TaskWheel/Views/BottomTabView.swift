@@ -4,9 +4,8 @@ struct BottomTabView: View {
     @State private var selected: IconItem?
     @State private var sheetHeight: CGFloat = .zero
     
-    let color = ColorSettings()
-    
-    let bottomTabs: [IconItem] = [.lists, .order, .more, .add]
+    private let color = ColorSettings()
+    private let bottomTabs: [IconItem] = [.lists, .order, .more, .add]
     
     var body: some View {
         HStack(spacing: 30) {
@@ -29,7 +28,7 @@ struct BottomTabView: View {
             Button {
                 selected = tab
             } label: {
-                Image(systemName: tab.icon)
+                Image(systemName: tab.text)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 25, height: 25)

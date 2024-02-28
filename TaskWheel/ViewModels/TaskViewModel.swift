@@ -12,7 +12,7 @@ class TaskViewModel: ObservableObject {
         taskList.prepend(TaskModel(title: title, details: details, priority: priority))
     }
     
-    func toggleComplete(_ task: TaskModel) {
+    func toggleComplete(task: TaskModel) {
         if let index = taskList.firstIndex(where: { $0.id == task.id }) {
             taskList[index] = task.toggleComplete()
         }

@@ -13,6 +13,7 @@ struct UpdateView: View {
     
     private let color = ColorSettings()
     private let taskListTitle: String = "current task list"
+    private let bottomTabs: [IconItem] = [.complete, .delete, .save]
     
     init(task: TaskModel) {
         self.task = task
@@ -35,19 +36,17 @@ struct UpdateView: View {
             Spacer()
             
             HStack(spacing: 30) {
-                
-                Button(action: {}) {
-                    Image(systemName: "checkmark.square")
-                }
-                
-                Button(action: clickDelete) {
-                    Image(systemName: "trash")
-                }
-                
-                Spacer()
-                
-                Button(action: clickSave) {
-                    Image(systemName: "square.and.arrow.down")
+
+                ForEach(bottomTabs, id: \.self) { tab in
+                    var action: () -> Void {
+                        switch tab {
+                        case .complete: return clickComplete
+                        case .delete: return clickDelete
+                        case .save: return clickSave
+                        default: return {}
+                        }
+                    }
+                    viewBottom(tab, isSpace: tab == bottomTabs.last, action: action)
                 }
             }
             .foregroundStyle(color.accent)
@@ -75,17 +74,17 @@ struct UpdateView: View {
     
     private func PropertyContainerView(task: TaskModel) -> some View {
         VStack(spacing: 20) {
-            view(.details, isEmpty: task.details.isEmpty, defaultText: "Add details")
+            viewProperty(.details, isEmpty: task.details.isEmpty, defaultText: "Add details")
             
-            view(.schedule, isEmpty: true, defaultText: "Set schedule")
+            viewProperty(.schedule, isEmpty: true, defaultText: "Set schedule")
             
-            view(.priority, isEmpty: task.priority == 4, defaultText: "Set priority")
+            viewProperty(.priority, isEmpty: task.priority == 4, defaultText: "Set priority")
         }
     }
     
-    private func view(_ property: IconItem, isEmpty: Bool, defaultText: String) -> some View {
+    private func viewProperty(_ property: IconItem, isEmpty: Bool, defaultText: String) -> some View {
         HStack(spacing: 13) {
-            Image(systemName: property.icon)
+            Image(systemName: property.text)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 20, height: 20)
@@ -94,14 +93,14 @@ struct UpdateView: View {
                 Text(defaultText)
                     .foregroundStyle(.gray)
             } else {
-                viewProperty(property)
+                TaskPropertyView(property)
             }
             
             Spacer()
         }
     }
     
-    private func viewProperty(_ property: IconItem) -> some View {
+    private func TaskPropertyView(_ property: IconItem) -> some View {
         switch property {
         case .details:
             return AnyView(TextField(detailsInput, text: $detailsInput)
@@ -110,8 +109,28 @@ struct UpdateView: View {
             let priorityItem = PriorityItem(priorityInput)
             return AnyView(Text(priorityItem.text))
         default:
-            return AnyView(Text(property.icon))
+            return AnyView(Text(property.text))
         }
+    }
+    
+    private func viewBottom(_ tab: IconItem, isSpace: Bool, action: @escaping () -> Void) -> some View {
+        HStack {
+            if isSpace {
+                Spacer()
+            }
+            
+            Button (action: action) {
+                Image(systemName: tab.alternative)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: tab == .save ? 29 : 25)
+            }
+        }
+    }
+    
+    private func clickComplete() {
+        taskViewModel.toggleComplete(task: task)
+        navigation.goBack()
     }
     
     private func clickDelete() {
