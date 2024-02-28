@@ -40,7 +40,7 @@ struct TaskRowView: View {
         }
         .padding()
         .font(.system(size: 23))
-        .whenComplete(isComplete: task.isComplete)
+        .check(isComplete: task.isComplete)
        
     }
 }
@@ -95,7 +95,7 @@ struct TaskRowModifier: ViewModifier {
 }
 
 extension View {
-    func whenComplete(isComplete: Bool) -> some View {
+    func check(isComplete: Bool) -> some View {
         self
             .modifier(TaskRowModifier(isComplete: isComplete))
     }

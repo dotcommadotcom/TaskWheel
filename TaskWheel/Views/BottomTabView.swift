@@ -90,8 +90,6 @@ struct GetHeightModifier: ViewModifier {
                         sheetHeight = max(geo.size.height, 50)
                     }
                     return Color.clear
-                    Color.clear
-                    Color.clear
                 }
             )
 //            .overlay {

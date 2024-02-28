@@ -13,7 +13,6 @@ struct AddView: View {
     private let detailDefault: String = "Add details."
     private let cornerRadius: CGFloat = 25
     private let sizePadding: CGFloat = 30
-    private let heightMaximum: CGFloat = 500
     private let maxLineLimit: Int = 20
     private let sizeFont: CGFloat = 20
     
@@ -21,7 +20,7 @@ struct AddView: View {
         VStack(spacing: sizePadding / 2) {
             TextField(textDefault, text: $titleInput, axis: .vertical)
                 .lineLimit(maxLineLimit)
-            //                .preventTextFieldError()
+            
             
             if !isDetailsHidden {
                 TextField(detailDefault, text: $detailsInput, axis: .vertical)

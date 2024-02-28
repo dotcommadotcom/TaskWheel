@@ -52,9 +52,9 @@ enum PropertyItem: Hashable {
     }
 }
 
-
 struct AddSheetView: View {
     
+    @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
     
     @State var titleInput: String = ""
@@ -71,23 +71,24 @@ struct AddSheetView: View {
         VStack(alignment: .leading, spacing: 22) {
             TextField(textDefault, text: $titleInput, axis: .vertical)
                 .lineLimit(20)
+//                .preventTextFieldError()
             
             if !isDetailsHidden {
                 TextField(detailDefault, text: $detailsInput, axis: .vertical)
                     .lineLimit(5)
                     .font(.system(size: 17))
-                    .background(.blue.opacity(0.3))
-            }
+                }
             
             HStack(spacing: 30) {
                 ForEach(properties, id: \.self) { property in
-                    view(property: property)
+                    view(property: property, isSpace: property == properties.last)
                 }
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
     }
     
-    private func view(property: PropertyItem) -> some View {
+    private func view(property: PropertyItem, isSpace: Bool) -> some View {
         
         let action: () -> Void
         let accentCondition: Bool
@@ -95,7 +96,7 @@ struct AddSheetView: View {
         
         switch property {
         case .details:
-            action = { isDetailsHidden.toggle() }
+            action = clickDetailsButton
             accentCondition = !detailsInput.isEmpty
             disableCondition = false
         case .save:
@@ -108,14 +109,20 @@ struct AddSheetView: View {
             disableCondition = false
         }
         
-        return Button {
-            action()
-        } label: {
-            Image(systemName: property.icon)
+        return HStack {
+            if isSpace {
+                Spacer()
+            }
+            
+            Button {
+                action()
+            } label: {
+                Image(systemName: property.icon)
+            }
+            .disabled(disableCondition)
+            .foregroundStyle(accentCondition ? property.accent : property.color)
+            .buttonStyle(NoAnimationStyle())
         }
-        .disabled(disableCondition)
-        .foregroundStyle(accentCondition ? property.accent : property.color)
-        .buttonStyle(NoAnimationStyle())
     }
     
     private func clickDetailsButton() {
@@ -123,7 +130,7 @@ struct AddSheetView: View {
     }
     
     private func clickSaveButton() {
-//        taskViewModel.addTask(title: titleInput, details: detailsInput)
+        taskViewModel.addTask(title: titleInput, details: detailsInput)
         presentationMode.wrappedValue.dismiss()
     }
     
@@ -140,6 +147,7 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
     }
 }
 
+
 #Preview("main") {
     MainView()
         .environmentObject(TaskViewModel(TaskModel.examples))
@@ -148,39 +156,39 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
 
 #Preview("empty", traits: .sizeThatFitsLayout) {
     ZStack {
-        Color.pink.opacity(0.3).ignoresSafeArea()
+        Color.gray.opacity(0.3).ignoresSafeArea()
         AddSheetView()
     }
-//    .environmentObject(TaskViewModel())
+    .environmentObject(TaskViewModel())
 }
 
 #Preview("short text", traits: .sizeThatFitsLayout) {
     ZStack {
-        Color.pink.opacity(0.3).ignoresSafeArea()
+        Color.gray.opacity(0.3).ignoresSafeArea()
         AddSheetView(titleInput: "Hello, World!")
     }
-//    .environmentObject(TaskViewModel())
+    .environmentObject(TaskViewModel())
 }
 
 #Preview("medium text", traits: .sizeThatFitsLayout) {
     @State var mediumText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     
     return ZStack {
-        Color.pink.opacity(0.3).ignoresSafeArea()
+        Color.gray.opacity(0.3).ignoresSafeArea()
         AddSheetView(titleInput: String(repeating: mediumText, count: 3))
     }
-//        .environmentObject(TaskViewModel())
+    .environmentObject(TaskViewModel())
 }
 
 #Preview("long text", traits: .sizeThatFitsLayout) {
     @State var longText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     
     return ZStack {
-        Color.pink.opacity(0.3).ignoresSafeArea()
+        Color.gray.opacity(0.3).ignoresSafeArea()
         AddSheetView(titleInput: String(repeating: longText, count: 5),
                      detailsInput: String(repeating: longText, count: 3))
     }
-//    .environmentObject(TaskViewModel())
+    .environmentObject(TaskViewModel())
 }
 
 

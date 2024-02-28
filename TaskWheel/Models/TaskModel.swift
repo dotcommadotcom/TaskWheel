@@ -6,21 +6,24 @@ struct TaskModel: Identifiable, Hashable {
     let title: String
     let isComplete: Bool
     let details: String
+    let priority: Int
     
-    init(id: UUID = UUID(), title: String, isComplete: Bool = false, details: String = "") {
+    init(id: UUID = UUID(), title: String, isComplete: Bool = false, details: String = "", priority: Int = 4) {
         self.id = id
         self.title = title
         self.isComplete = isComplete
         self.details = details
+        self.priority = priority
     }
     
-    func edit(id: UUID? = nil, title: String? = nil, isComplete: Bool? = nil, details: String? = nil) -> TaskModel {
-            return TaskModel(id: self.id,
-                             title: title ?? self.title,
-                             isComplete: isComplete ?? self.isComplete,
-                             details: details ?? self.details)
-        }
-        
+    func edit(id: UUID? = nil, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) -> TaskModel {
+        return TaskModel(id: self.id,
+                         title: title ?? self.title,
+                         isComplete: isComplete ?? self.isComplete,
+                         details: details ?? self.details,
+                         priority: priority ?? self.priority)
+    }
+    
     func editTitle(_ newTitle: String) -> TaskModel {
         return edit(title: newTitle)
     }
@@ -33,22 +36,26 @@ struct TaskModel: Identifiable, Hashable {
         return edit(details: newDetails)
     }
     
+    func editPriority(_ newPriority: Int) -> TaskModel {
+        return edit(priority: newPriority)
+    }
+    
 }
 
 extension TaskModel {
     static let examples: Deque<TaskModel> = [
         .init(title: "laundry", isComplete: true),
         .init(title: "dishes", isComplete: true),
-        .init(title: "vacuum", isComplete: true),
+        .init(title: "vacuum", isComplete: true, priority: 1),
         .init(title: "mop", isComplete: false, details: "where are the clean mop heads?"),
         .init(title: "water plants", isComplete: false),
-        .init(title: "throw out trash", isComplete: false),
+        .init(title: "throw out trash", isComplete: false, priority: 1),
         .init(title: "recycle plastic and paper, separate vinyl labels", isComplete: false),
         .init(title: "wipe countertop", isComplete: false),
         .init(title: "fold laundry", isComplete: false),
-        .init(title: "clean bathroom", isComplete: false),
+        .init(title: "clean bathroom", isComplete: false, priority: 2),
         .init(title: "organize shelf", isComplete: false),
-        .init(title: "wipe mirror", isComplete: false),
+        .init(title: "wipe mirror", isComplete: false, priority: 3),
         .init(title: "wipe windowsill", isComplete: false),
         .init(title: "sanitize toilet brushes", isComplete: false),
         .init(title: "call water company", isComplete: false),
