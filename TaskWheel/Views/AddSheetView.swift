@@ -1,57 +1,5 @@
 import SwiftUI
 
-enum PropertyItem: Hashable {
-    case details, complete, schedule, priority, save
-    
-    var icon: String {
-        switch self {
-        case .details: return "text.alignleft"
-        case .complete: return "square"
-        case .schedule: return "alarm"
-        case .priority: return "tag"
-        case .save: return "square.and.arrow.down"
-        }
-    }
-    
-    var altIcon: String {
-        switch self {
-        case .complete: return "checkmark.square"
-        default: return self.icon
-        }
-    }
-    
-    var emptyText: String {
-        switch self {
-        case .details: return "Add details"
-        case .complete: return "Incomplete"
-        case .schedule: return "Set schedule"
-        case .priority: return "Add priority"
-        default: return ""
-        }
-    }
-    
-    var fullText: String {
-        switch self {
-        case .complete: return "All done"
-        default: return "Should be hidden"
-        }
-    }
-    
-    var color: Color {
-        switch self {
-        case .save: return .gray
-        default: return ColorSettings().text
-        }
-    }
-    
-    var accent: Color {
-        switch self {
-        case .save: return ColorSettings().text
-        default: return ColorSettings().accent
-        }
-    }
-}
-
 struct AddSheetView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
@@ -59,7 +7,9 @@ struct AddSheetView: View {
     
     @State var titleInput: String = ""
     @State var detailsInput: String = ""
-    @State private var isDetailsHidden = true
+    @State var priorityInput: PriorityItem = .no
+    @State private var showDetails = false
+    @State private var showPriority = false
     
     let properties: [PropertyItem] = [.details, .schedule, .priority, .save]
     
@@ -71,66 +21,69 @@ struct AddSheetView: View {
         VStack(alignment: .leading, spacing: 22) {
             TextField(textDefault, text: $titleInput, axis: .vertical)
                 .lineLimit(20)
-//                .preventTextFieldError()
+            //                .preventTextFieldError()
             
-            if !isDetailsHidden {
+            if showDetails {
                 TextField(detailDefault, text: $detailsInput, axis: .vertical)
                     .lineLimit(5)
                     .font(.system(size: 17))
-                }
+            }
             
             HStack(spacing: 30) {
-                ForEach(properties, id: \.self) { property in
-                    view(property: property, isSpace: property == properties.last)
+                Button {
+                    showDetails.toggle()
+                } label: {
+                    viewImage(PropertyItem.details.icon)
                 }
+                .foregroundStyle(!detailsInput.isEmpty ? color.accent : color.text)
+                
+                Button {
+                } label: {
+                    viewImage(PropertyItem.schedule.icon)
+                }
+                
+                Button {
+                    showPriority.toggle()
+                } label: {
+                    viewImage(priorityInput.value == 4 ? PropertyItem.priority.icon : PropertyItem.priority.altIcon)
+                }
+                .foregroundStyle(priorityInput.color)
+                .padding(.vertical, 8)
+                .popover(isPresented: $showPriority, attachmentAnchor: .point(.top), arrowEdge: .top) {
+                    PriorityView(selected: $priorityInput)
+                        .presentationCompactAdaptation(.popover)
+                        .presentationBackground(color.background)
+                }
+                
+                Spacer()
+                
+                Button {
+                    clickSaveButton()
+                } label: {
+                    viewImage(PropertyItem.save.icon)
+                }
+                .disabled(isTaskEmpty() ? true : false)
+                .foregroundStyle(isTaskEmpty() ? .gray : color.text)
             }
+            .buttonStyle(NoAnimationStyle())
         }
         .fixedSize(horizontal: false, vertical: true)
     }
     
-    private func view(property: PropertyItem, isSpace: Bool) -> some View {
-        
-        let action: () -> Void
-        let accentCondition: Bool
-        let disableCondition: Bool
-        
-        switch property {
-        case .details:
-            action = clickDetailsButton
-            accentCondition = !detailsInput.isEmpty
-            disableCondition = false
-        case .save:
-            action = clickSaveButton
-            accentCondition = !isTaskEmpty()
-            disableCondition = isTaskEmpty()
-        default:
-            action = {}
-            accentCondition = false
-            disableCondition = false
-        }
-        
-        return HStack {
-            if isSpace {
-                Spacer()
-            }
-            
-            Button {
-                action()
-            } label: {
-                Image(systemName: property.icon)
-            }
-            .disabled(disableCondition)
-            .foregroundStyle(accentCondition ? property.accent : property.color)
-            .buttonStyle(NoAnimationStyle())
-        }
+    private func viewImage(_ icon: String) -> some View {
+        Image(systemName: icon)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 22, height: 22)
     }
     
-    private func clickDetailsButton() {
-        isDetailsHidden.toggle()
+    private func viewPopover(property: PropertyItem) -> some View {
+        Text(property.icon)
+            .presentationCompactAdaptation(.popover)
     }
     
     private func clickSaveButton() {
-        taskViewModel.addTask(title: titleInput, details: detailsInput)
+        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput.value)
         presentationMode.wrappedValue.dismiss()
     }
     
@@ -165,17 +118,7 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
 #Preview("short text", traits: .sizeThatFitsLayout) {
     ZStack {
         Color.gray.opacity(0.3).ignoresSafeArea()
-        AddSheetView(titleInput: "Hello, World!")
-    }
-    .environmentObject(TaskViewModel())
-}
-
-#Preview("medium text", traits: .sizeThatFitsLayout) {
-    @State var mediumText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-    
-    return ZStack {
-        Color.gray.opacity(0.3).ignoresSafeArea()
-        AddSheetView(titleInput: String(repeating: mediumText, count: 3))
+        AddSheetView(titleInput: "Hello, World!", detailsInput: "Hiya")
     }
     .environmentObject(TaskViewModel())
 }
@@ -190,5 +133,4 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
     }
     .environmentObject(TaskViewModel())
 }
-
 

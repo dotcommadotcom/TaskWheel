@@ -8,8 +8,8 @@ class TaskViewModel: ObservableObject {
         self.taskList = taskList
     }
 
-    func addTask(title: String, details: String = "") {
-        taskList.prepend(TaskModel(title: title, details: details))
+    func addTask(title: String, details: String, priority: Int) {
+        taskList.prepend(TaskModel(title: title, details: details, priority: priority))
     }
     
     func toggleComplete(_ task: TaskModel) {
@@ -25,6 +25,7 @@ class TaskViewModel: ObservableObject {
     func updateTask(_ task: TaskModel) {
         print("updated \(task.title)")
     }
+    
 //    func deleteTask(indexSet: IndexSet) {
 //        taskList.remove(atOffsets: indexSet)
 //    }

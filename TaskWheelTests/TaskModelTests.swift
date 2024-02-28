@@ -43,7 +43,6 @@ final class TaskModelTests: XCTestCase {
     }
     
     // TEST - isComplete
-
     
     func testToggleCompleteTrue() throws {
         testTask = testTask.toggleComplete()
