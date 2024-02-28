@@ -42,18 +42,4 @@ enum PropertyItem: Identifiable, Hashable {
         default: return "Should be hidden"
         }
     }
-    
-    var color: Color {
-        switch self {
-        case .save: return .gray
-        default: return ColorSettings().text
-        }
-    }
-    
-    var accent: Color {
-        switch self {
-        case .save: return ColorSettings().text
-        default: return ColorSettings().accent
-        }
-    }
 }

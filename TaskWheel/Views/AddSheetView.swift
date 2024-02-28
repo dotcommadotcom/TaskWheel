@@ -45,7 +45,7 @@ struct AddSheetView: View {
                 Button {
                     showPriority.toggle()
                 } label: {
-                    viewImage(priorityInput.value == 4 ? PropertyItem.priority.icon : PropertyItem.priority.altIcon)
+                    viewImage(priorityInput.rawValue == 4 ? PropertyItem.priority.icon : PropertyItem.priority.altIcon)
                 }
                 .foregroundStyle(priorityInput.color)
                 .padding(.vertical, 8)
@@ -83,7 +83,7 @@ struct AddSheetView: View {
     }
     
     private func clickSaveButton() {
-        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput.value)
+        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput.rawValue)
         presentationMode.wrappedValue.dismiss()
     }
     

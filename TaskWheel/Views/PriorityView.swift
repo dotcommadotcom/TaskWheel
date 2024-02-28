@@ -1,7 +1,16 @@
 import SwiftUI
 
-enum PriorityItem {
-    case high, medium, low, no
+enum PriorityItem: Int {
+    case high = 1, medium = 2, low = 3, no = 4
+    
+    init(_ value: Int) {
+        switch value {
+        case 1: self = .high
+        case 2: self = .medium
+        case 3: self = .low
+        default: self = .no
+        }
+    }
     
     var text: String {
         switch self {
@@ -12,21 +21,12 @@ enum PriorityItem {
         }
     }
     
-    var value: Int {
-        switch self {
-        case .high: return 1
-        case .medium: return 2
-        case .low: return 3
-        case .no: return 4
-        }
-    }
-    
     var color: Color {
         switch self {
-        case .high: return .crayolaBlue
-        case .medium: return .mustard
-        case .low: return .asparagus
-        case .no: return ColorSettings().text
+        case .high: return ColorSettings().high
+        case .medium: return ColorSettings().medium
+        case .low: return ColorSettings().low
+        default: return ColorSettings().text
         }
     }
 }

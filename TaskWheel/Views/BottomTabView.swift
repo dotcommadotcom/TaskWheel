@@ -1,22 +1,29 @@
 import SwiftUI
 
-struct BottomTabType: Identifiable, Hashable {
-    var id: String
-    var icon: String
+enum BottomTabItem: Identifiable, Hashable {
+    case lists, order, more, add
+    
+    var id: Self {
+        self
+    }
+    
+    var icon: String {
+        switch self {
+        case .lists: return "list.dash"
+        case .order: return "arrow.up.arrow.down"
+        case .more: return "ellipsis"
+        case .add: return "plus.square"
+        }
+    }
 }
 
 struct BottomTabView: View {
-    @State private var selected: BottomTabType?
+    @State private var selected: BottomTabItem?
     @State private var sheetHeight: CGFloat = .zero
     
     let color = ColorSettings()
     
-    let bottomTabs: [BottomTabType] = [
-        BottomTabType(id: "lists", icon: "list.dash"),
-        BottomTabType(id: "reorder", icon: "arrow.up.arrow.down"),
-        BottomTabType(id: "more", icon: "ellipsis"),
-        BottomTabType(id: "add", icon: "plus.square"),
-    ]
+    let bottomTabs: [BottomTabItem] = [.lists, .order, .more, .add]
     
     var body: some View {
         HStack(spacing: 30) {
@@ -30,7 +37,7 @@ struct BottomTabView: View {
         .padding(20)
     }
     
-    private func view(tab: BottomTabType, isSpace: Bool) -> some View {
+    private func view(tab: BottomTabItem, isSpace: Bool) -> some View {
         HStack {
             if isSpace {
                 Spacer()
@@ -47,20 +54,13 @@ struct BottomTabView: View {
         }
     }
     
-    private func viewSheet(tab: BottomTabType) -> some View {
-        
+    private func viewSheet(tab: BottomTabItem) -> some View {
         VStack {
-            switch tab.id {
-            case "lists":
-                ListsSheetView()
-            case "reorder":
-                OrderSheetView()
-            case "more":
-                MoreSheetView()
-            case "add":
-                AddSheetView()
-            default:
-                EmptyView()
+            switch tab {
+            case .lists: ListsSheetView()
+            case .order: OrderSheetView()
+            case .more: MoreSheetView()
+            case .add: AddSheetView()
             }
         }
         .font(.system(size: 22))
@@ -92,15 +92,6 @@ struct GetHeightModifier: ViewModifier {
                     return Color.clear
                 }
             )
-//            .overlay {
-//                GeometryReader { geometry in
-//                    Color.clear
-//                        .preference(key: SheetHeightPreferenceKey.self, value: geometry.size.height)
-//                }
-//            }
-//            .onPreferenceChange(SheetHeightPreferenceKey.self) { nextHeight in
-//                sheetHeight = max(nextHeight, 50)
-//            }
     }
 }
 
@@ -131,18 +122,18 @@ struct SheetHeightPreferenceKey: PreferenceKey {
 
 
 struct OldGetHeightModifier: ViewModifier {
-    @Binding var height: CGFloat
-    private let heightMaximum: CGFloat = 500
+    @Binding var sheetHeight: CGFloat
     
     func body(content: Content) -> some View {
         content
-            .background(
-                GeometryReader { geo -> Color in
-                    DispatchQueue.main.async {
-                        height = max(geo.size.height, 50)
-                    }
-                    return Color.clear
+            .overlay {
+                GeometryReader { geometry in
+                    Color.clear
+                        .preference(key: SheetHeightPreferenceKey.self, value: geometry.size.height)
                 }
-            )
+            }
+            .onPreferenceChange(SheetHeightPreferenceKey.self) { nextHeight in
+                sheetHeight = max(nextHeight, 50)
+            }
     }
 }

@@ -1,6 +1,5 @@
 import SwiftUI
 
-
 struct TitleView: View {
     
     let title: String
@@ -23,6 +22,8 @@ struct TitleView: View {
 
 #Preview("main") {
     MainView()
+        .environmentObject(TaskViewModel(TaskModel.examples))
+        .environmentObject(NavigationCoordinator())
 }
 
 #Preview {

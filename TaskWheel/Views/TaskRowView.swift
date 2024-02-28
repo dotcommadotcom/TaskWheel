@@ -16,6 +16,7 @@ struct TaskRowView: View {
                 action(task)
             } label: {
                 Image(systemName: task.isComplete ? "checkmark.square" : "square")
+                    .foregroundStyle(task.isComplete ? .gray : PriorityItem(task.priority).color)
             }
             .font(.system(size: 25))
             
@@ -31,9 +32,8 @@ struct TaskRowView: View {
                         .lineLimit(2)
                         .truncationMode(.tail)
     
-                    PropertiesView()
+                    PropertiesView(task: task)
                 }
-                
             }
             
             Spacer()
@@ -53,6 +53,8 @@ struct PropertiesView: View {
         "school",
     ]
     
+    let task: TaskModel
+    
     let color = ColorSettings()
     
     var body: some View {
@@ -64,6 +66,18 @@ struct PropertiesView: View {
             }
             .padding(.horizontal, 4)
         }
+    }
+    
+    private func viewPriority(_ priority: Int) -> some View {
+        var priorityItem: PriorityItem {
+            switch priority {
+            case 1: return .high
+            case 2: return .medium
+            case 3: return .low
+            default: return .no
+            }
+        }
+        return view(property: priorityItem.text)
     }
     
     private func view(property: String) -> some View {
@@ -109,7 +123,7 @@ extension View {
 
 #Preview("incomplete task", traits: .sizeThatFitsLayout) {
     let color = ColorSettings()
-    let incomplete = TaskModel(title: "incomplete task", isComplete: false, details: "i'm not completed")
+    let incomplete = TaskModel(title: "incomplete task", isComplete: false, details: "i'm not completed", priority: 3)
     
     return ZStack {
         color.background.ignoresSafeArea()

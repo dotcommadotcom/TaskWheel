@@ -151,10 +151,10 @@
 				B72F692C2B8C2DF000525EF8 /* WheelView.swift */,
 				B72F69322B8C32AE00525EF8 /* TaskRowView.swift */,
 				B7B02C1E2B878772000B8A7C /* UpdateView.swift */,
-				B79D9AA32B885899009CA9FF /* ColorSettings.swift */,
-				B7DD374F2B8ED87E008AD29D /* PropertyItem.swift */,
-				B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */,
 				B7DD37512B8EE9BF008AD29D /* PriorityView.swift */,
+				B7DD374F2B8ED87E008AD29D /* PropertyItem.swift */,
+				B79D9AA32B885899009CA9FF /* ColorSettings.swift */,
+				B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

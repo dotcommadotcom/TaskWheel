@@ -5,6 +5,9 @@ import Observation
     let background: Color = .seasaltJet
     let text: Color = .eerieSeasalt
     let accent: Color = .crayolaBlue
+    let high: Color = .crayolaBlue
+    let medium: Color = .mustard
+    let low: Color = .asparagus
 }
 
 struct EmptyView: View {
