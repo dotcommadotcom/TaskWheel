@@ -8,7 +8,7 @@ class TaskViewModel: ObservableObject {
         self.taskList = taskList
     }
 
-    func addTask(title: String, details: String, priority: Int) {
+    func add(title: String = "", details: String = "", priority: Int = 4) {
         taskList.prepend(TaskModel(title: title, details: details, priority: priority))
     }
     

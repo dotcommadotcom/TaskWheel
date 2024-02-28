@@ -25,7 +25,7 @@ final class TaskModelTests: XCTestCase {
     func testEditHelperDoesNotChangeId() throws {
         let previousID = testTask.id
         
-        testTask = testTask.editTitle("new title")
+        testTask = testTask.edit(title: "new title")
         
         XCTAssertEqual(testTask.id, previousID)
     }
@@ -37,7 +37,7 @@ final class TaskModelTests: XCTestCase {
     // TEST - Title
     
     func testEditTitle() throws {
-        testTask = testTask.editTitle("hello")
+        testTask = testTask.edit(title: "hello")
         
         XCTAssertEqual(testTask.title, "hello")
     }
@@ -60,7 +60,7 @@ final class TaskModelTests: XCTestCase {
     // TEST - Details
     
     func testEditDetails() throws {
-        testTask = testTask.editDetails("new details")
+        testTask = testTask.edit(details: "new details")
         
         XCTAssertEqual(testTask.details, "new details")
     }
@@ -68,7 +68,7 @@ final class TaskModelTests: XCTestCase {
     // TEST - Priority
     
     func testEditPriority() throws {
-        let testTask = testTask.editPriority(1)
+        let testTask = testTask.edit(priority: 1)
         
         XCTAssertEqual(testTask.priority, 1)
     }

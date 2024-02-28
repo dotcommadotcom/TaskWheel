@@ -81,12 +81,12 @@ struct AddSheetView: View {
     }
     
     private func clickSaveButton() {
-        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput.rawValue)
+        taskViewModel.add(title: titleInput, details: detailsInput, priority: priorityInput.rawValue)
         presentationMode.wrappedValue.dismiss()
     }
     
     private func isTaskEmpty() -> Bool {
-        return titleInput.isEmpty && detailsInput.isEmpty
+        return titleInput.isEmpty && detailsInput.isEmpty && priorityInput.rawValue == 4
     }
 }
 

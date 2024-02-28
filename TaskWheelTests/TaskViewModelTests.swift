@@ -18,12 +18,20 @@ final class TaskViewModelTests: XCTestCase {
         multipleTaskVM = nil
     }
     
+    // TEST - Constructor
+    
     func testEmptyTaskList() throws {
         XCTAssertTrue(simpleTaskVM.taskList.isEmpty)
     }
     
+    func testMultipleTaskList() throws {
+        XCTAssertEqual(multipleTaskVM.taskList.count, 25)
+    }
+    
+    // TEST - Add task
+    
     func testAddTask() throws {
-        simpleTaskVM.addTask(title: "this is a test", details: "new details")
+        simpleTaskVM.add(title: "this is a test")
         
         XCTAssertEqual(simpleTaskVM.taskList.count, 1)
     }
@@ -31,32 +39,31 @@ final class TaskViewModelTests: XCTestCase {
     func testAddTaskPrepends() throws {
         let testTitle = "this is a test"
         
-        multipleTaskVM.addTask(title: testTitle)
+        multipleTaskVM.add(title: testTitle)
         
         XCTAssertEqual(multipleTaskVM.taskList[0].title, testTitle)
     }
     
-    func testMultipleTaskList() throws {
-        XCTAssertEqual(multipleTaskVM.taskList.count, 25)
-    }
-    
+    // TEST - Toggle complete
+
     func testToggleCompleteChangesTask() throws {
         let recycleTask = multipleTaskVM.taskList[6]
         
-        multipleTaskVM.toggleComplete(recycleTask)
+        multipleTaskVM.toggleComplete(task: recycleTask)
         
         XCTAssertTrue(multipleTaskVM.taskList[6].isComplete)
     }
     
+    // TEST - Delete task
     
-//    func testDeleteTask() throws {
-//        let recycleTask = multipleTaskVM.taskList[6]
-//        
-//        multipleTaskVM.deleteTask(recycleTask)
-//        
-//        XCTAssertTrue(multipleTaskVM.taskList[6].isDeleted)
-//    }
-//    
+    func testDeleteTask() throws {
+        let recycleTask = multipleTaskVM.taskList[6]
+        
+        multipleTaskVM.delete(task: recycleTask)
+        
+        XCTAssertNotEqual(multipleTaskVM.taskList[6], recycleTask)
+    }
+    
 //    func testShowTasks() throws {
 //        let recycleTask = multipleTaskVM.taskList[6]
 //        multipleTaskVM.deleteTask(recycleTask)
