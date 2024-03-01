@@ -41,7 +41,8 @@ extension MoreSheetView {
         
         var isDisabled: Bool {
             switch option {
-            case .deleteList: return taskViewModel.taskLists.count == 1
+            case .deleteList: 
+                return taskViewModel.currentTaskList.id == taskViewModel.defaultTaskList.id
             case .showHide, .deleteCompleted:
                 return taskViewModel.getCurrentCompletedTasks().count == 0
             default: return false

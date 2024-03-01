@@ -79,7 +79,7 @@ class TaskViewModel: ObservableObject {
     }
     
     func deleteTaskList(_ taskList: TaskListModel) {
-        guard taskLists.count > 1 else {
+        guard taskList.id != defaultTaskList.id else {
             return
         }
         
@@ -90,10 +90,6 @@ class TaskViewModel: ObservableObject {
             taskLists.remove(at: index)
             
             if let firstTaskList = taskLists.first {
-                if targetID == defaultTaskList.id {
-                    updateDefaultTaskList(firstTaskList)
-                }
-                
                 if targetID == currentTaskList.id {
                     updateCurrentTaskList(firstTaskList)
                 }
@@ -101,7 +97,6 @@ class TaskViewModel: ObservableObject {
             
         }
     }
-
     
     func updateTaskList(_ taskList: TaskListModel, title: String? = nil) {
         if let index = taskLists.firstIndex(where: { $0.id == taskList.id }) {
