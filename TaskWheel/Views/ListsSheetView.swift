@@ -9,7 +9,7 @@ struct ListsSheetView: View {
     
     private let color = ColorSettings()
     private let newListText = "Create new list"
-    private let newTitleDefault = "Enter list title"
+    private let newTitleDefault = "Enter title of new list"
     
     var body: some View {
         
@@ -108,11 +108,7 @@ extension ListsSheetView {
         taskViewModel.updateCurrentTaskList(taskList: taskList)
         selected = nil
     }
-    
-    //    private func (_ taskList: TaskListModel) {
-    //        taskViewModel.updateCurrentTaskList(taskList: taskList)
-    //        selected = nil
-    //    }
+
 }
 
 #Preview("lists sheet") {

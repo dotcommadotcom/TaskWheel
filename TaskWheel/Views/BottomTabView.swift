@@ -45,7 +45,7 @@ extension BottomTabView {
             switch tab {
             case .lists: ListsSheetView(selected: $selected)
             case .order: OrderSheetView()
-            case .more: MoreSheetView()
+            case .more: MoreSheetView(selected: $selected)
             case .add: AddSheetView()
             default: EmptyView()
             }

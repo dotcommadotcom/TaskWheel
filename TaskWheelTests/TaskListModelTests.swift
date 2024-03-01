@@ -14,6 +14,14 @@ final class TaskListModelTests: XCTestCase {
         try super.tearDownWithError()
         testTaskList = nil
     }
+    
+    // TEST - Title
+    
+    func testEditTitle() throws {
+        testTaskList = testTaskList.edit(title: "hello")
+        
+        XCTAssertEqual(testTaskList.title, "hello")
+    }
 
     // TEST - Edit Helper
     

@@ -97,7 +97,7 @@ final class TaskViewModelTests: XCTestCase {
         XCTAssertEqual(multipleTaskVM.defaultTaskList, previousTaskList)
     }
     
-    func testTaskListsDefaultIsBackup() throws {
+    func testTaskListsInitialDefaultIsFirst() throws {
         XCTAssertEqual(simpleTaskVM.taskLists[0], simpleTaskVM.defaultTaskList)
     }
     
