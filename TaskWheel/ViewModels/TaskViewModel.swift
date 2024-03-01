@@ -15,29 +15,27 @@ class TaskViewModel: ObservableObject {
         self.currentTaskList = taskLists.first ?? backupTaskList
     }
     
-    func add(title: String = "", details: String = "", priority: Int = 4) {
+    func addTask(title: String = "", details: String = "", priority: Int = 4) {
         tasks.prepend(TaskModel(title: title, details: details, priority: priority))
     }
     
-    func toggleComplete(task: TaskModel) {
+    func toggleCompleteTask(task: TaskModel) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.toggleComplete()
         }
     }
     
-    func delete(task: TaskModel) {
+    func deleteTask(task: TaskModel) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks.remove(at: index)
         }
     }
     
-    func deleteCompleted(task: TaskModel) {
-        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
-            tasks.remove(at: index)
-        }
+    func deleteMultipleTasks(condition: @escaping (TaskModel) -> Bool) {
+        tasks.removeAll(where: condition)
     }
-    
-    func update(task: TaskModel, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
+
+    func updateTask(task: TaskModel, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.edit(title: title ?? task.title,
                                      details: details ?? task.details,
@@ -45,24 +43,25 @@ class TaskViewModel: ObservableObject {
         }
     }
     
-    func getIncompleteTasks() -> Deque<TaskModel> {
+    func getCurrentTasks() -> Deque<TaskModel> {
         return tasks.filter { $0.ofTaskList == currentTaskList.id && !$0.isComplete }
     }
     
-    func getCompletedTasks() -> Deque<TaskModel> {
+    func getCurrentCompletedTasks() -> Deque<TaskModel> {
         return tasks.filter { $0.ofTaskList == currentTaskList.id && $0.isComplete }
-    }
-    
-    func updateDefaultTaskList(taskList: TaskListModel) {
-        self.defaultTaskList = taskList
-    }
-    
-    func updateCurrentTaskList(taskList: TaskListModel) {
-        self.currentTaskList = taskList
     }
     
     func getCurrentTitle() -> String {
         return self.currentTaskList.title
+    }
+
+    func updateCurrentTaskList(taskList: TaskListModel) {
+        self.currentTaskList = taskList
+    }
+    
+    
+    func updateDefaultTaskList(taskList: TaskListModel) {
+        self.defaultTaskList = taskList
     }
     
     func addTaskList(title: String) {
@@ -72,6 +71,19 @@ class TaskViewModel: ObservableObject {
         
         updateCurrentTaskList(taskList: newTaskList)
     }
+    
+    func deleteTaskList(taskList: TaskListModel) {
+        if let index = taskLists.firstIndex(where: { $0.id == taskList.id }) {
+            taskLists.remove(at: index)
+        }
+    }
+    
+    func updateTaskList(taskList: TaskListModel, title: String? = nil) {
+        if let index = taskLists.firstIndex(where: { $0.id == taskList.id }) {
+            taskLists[index] = taskList.edit(title: title ?? taskList.title)
+        }
+    }
+    
     
     //    func showTasks() -> Deque<TaskModel> {
     //        return taskList.filter { !$0.isComplete }

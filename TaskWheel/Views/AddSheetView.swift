@@ -82,7 +82,7 @@ struct AddSheetView: View {
     }
     
     private func clickSaveButton() {
-        taskViewModel.add(title: titleInput, details: detailsInput, priority: priorityInput.rawValue)
+        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput.rawValue)
         presentationMode.wrappedValue.dismiss()
     }
     

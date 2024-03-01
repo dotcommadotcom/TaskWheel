@@ -167,17 +167,17 @@ extension UpdateView {
     }
     
     private func clickComplete() {
-        taskViewModel.toggleComplete(task: task)
+        taskViewModel.toggleCompleteTask(task: task)
         navigation.goBack()
     }
     
     private func clickDelete() {
-        taskViewModel.delete(task: task)
+        taskViewModel.deleteTask(task: task)
         navigation.goBack()
     }
     
     private func clickSave() {
-        taskViewModel.update(task: task, title: titleInput, details: detailsInput)
+        taskViewModel.updateTask(task: task, title: titleInput, details: detailsInput)
         navigation.goBack()
     }
 }

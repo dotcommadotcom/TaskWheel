@@ -9,13 +9,18 @@ struct TaskListModel: Identifiable, Hashable {
         self.id = id
         self.title = title
     }
+    
+    func edit(title: String? = nil) -> TaskListModel {
+        return TaskListModel(id: self.id,
+                             title: title ?? self.title)
+    }
 }
 
 extension TaskListModel {
     static let examples: Deque<TaskListModel> = [
         .init(title: "chores"),
         .init(title: "homework"),
-        .init(title: "job search"),
+        .init(title: "digital cleanse"),
         .init(title: "to buy"),
     ]
 }

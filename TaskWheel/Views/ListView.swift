@@ -6,15 +6,15 @@ struct ListView: View {
     
     var body: some View {
         ScrollView() {
-            ForEach(taskViewModel.getIncompleteTasks()) { task in
+            ForEach(taskViewModel.getCurrentTasks()) { task in
                 NavigationLink(value: task) {
-                    TaskRowView(task: task, action: taskViewModel.toggleComplete)
+                    TaskRowView(task: task, action: taskViewModel.toggleCompleteTask)
                 }
             }
             
-            ForEach(taskViewModel.getCompletedTasks()) { task in
+            ForEach(taskViewModel.getCurrentCompletedTasks()) { task in
                 NavigationLink(value: task) {
-                    TaskRowView(task: task, action: taskViewModel.toggleComplete)
+                    TaskRowView(task: task, action: taskViewModel.toggleCompleteTask)
                 }
             }
         }
