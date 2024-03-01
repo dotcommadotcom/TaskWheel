@@ -7,7 +7,7 @@ struct MainView: View {
     @State private var topSelection: TopTabItem = .list
     
     private let color = ColorSettings()
-        
+    
     var body: some View {
         NavigationStack(path: $navigation.path) {
             VStack(spacing: 0) {
@@ -35,7 +35,9 @@ struct MainView: View {
             }
         }
     }
-    
+}
+
+extension MainView {
     private func handleSwipe(translation: CGFloat) {
         if translation < -50 && topSelection == .list {
             topSelection = .wheel

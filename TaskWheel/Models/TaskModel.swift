@@ -39,7 +39,7 @@ extension TaskModel {
             .init(title: "laundry", ofTaskList: ofTaskList, isComplete: true),
             .init(title: "dishes", ofTaskList: ofTaskList, isComplete: true),
             .init(title: "vacuum", ofTaskList: ofTaskList, isComplete: true, priority: 1),
-            .init(title: "mop", ofTaskList: ofTaskList, isComplete: false, details: "where are the clean mop heads?"),
+            .init(title: "mop", ofTaskList: ofTaskList, isComplete: false, details: "where are the clean mop heads?", priority: 2),
             .init(title: "water plants", ofTaskList: ofTaskList, isComplete: false),
             .init(title: "throw out trash", ofTaskList: ofTaskList, isComplete: false, priority: 1),
             .init(title: "recycle plastic and paper, separate vinyl labels", ofTaskList: ofTaskList, isComplete: false),

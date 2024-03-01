@@ -20,14 +20,11 @@ struct ListView: View {
         }
     }
 }
-//
-//#Preview("main") {
-//    MainView()
-//        .environmentObject(TaskViewModel(TaskModel.examples))
-//        .environmentObject(NavigationCoordinator())
-//}
-//
-//#Preview {
-//    return ListView()
-//        .environmentObject(TaskViewModel(TaskModel.examples))
-//}
+
+#Preview {
+    let taskLists = TaskListModel.examples
+    let defaultTaskListID = taskLists[0].id
+    
+    return ListView()
+        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+}

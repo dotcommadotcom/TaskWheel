@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct BottomTabView: View {
+    
+    //    @Binding var currentTaskList: UUID
     @State private var selected: IconItem?
     @State private var sheetHeight: CGFloat = .zero
     

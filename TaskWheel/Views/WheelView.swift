@@ -18,14 +18,11 @@ struct WheelView: View {
         
     }
 }
-//
-//#Preview("main") {
-//    MainView()
-//        .environmentObject(TaskViewModel(TaskModel.examples))
-//        .environmentObject(NavigationCoordinator())
-//}
-//
-//#Preview {
-//    WheelView()
-//        .environmentObject(TaskViewModel(TaskModel.examples))
-//}
+
+#Preview {
+    let taskLists = TaskListModel.examples
+    let defaultTaskListID = taskLists[0].id
+    
+    return WheelView()
+        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+}

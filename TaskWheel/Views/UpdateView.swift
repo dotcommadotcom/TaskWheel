@@ -9,49 +9,37 @@ struct UpdateView: View {
     
     @State var titleInput: String
     @State var detailsInput: String
-    @State var priorityInput: Int
+    @State var priorityInput: PriorityItem
+    @State private var showPriority = false
     
     private let color = ColorSettings()
     private let textDefault: String = "What now?"
-    private let taskListTitle: String = "current task list"
     private let bottomTabs: [IconItem] = [.complete, .delete, .save]
     
     init(task: TaskModel) {
         self.task = task
         _titleInput = State(initialValue: task.title)
         _detailsInput = State(initialValue: task.details)
-        _priorityInput = State(initialValue: task.priority)
+        _priorityInput = State(initialValue: PriorityItem(task.priority))
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text(taskListTitle)
+            Text(taskViewModel.getCurrentTitle())
+                .fontWeight(.bold)
+                .foregroundStyle(color.text.opacity(0.6))
             
             TextField(titleInput.isEmpty ? textDefault : titleInput, text: $titleInput, axis: .vertical)
                 .lineLimit(5)
                 .font(.system(size: 30))
                 .strikethrough(task.isComplete ? true : false)
+                .frame(maxWidth: .infinity)
             
-            PropertyContainerView(task: task)
+            propertyContainerView(task: task)
             
             Spacer()
             
-            HStack(spacing: 30) {
-                
-                ForEach(bottomTabs, id: \.self) { tab in
-                    var action: () -> Void {
-                        switch tab {
-                        case .complete: return clickComplete
-                        case .delete: return clickDelete
-                        case .save: return clickSave
-                        default: return {}
-                        }
-                    }
-                    viewBottom(tab, isSpace: tab == bottomTabs.last, action: action)
-                }
-            }
-            .foregroundStyle(color.accent)
-            .font(.system(size: 25))
+            bottomTabView()
         }
         .padding(.horizontal, 30)
         .padding(.vertical, 15)
@@ -72,18 +60,36 @@ struct UpdateView: View {
         .foregroundStyle(color.text)
         
     }
+}
+
+extension UpdateView {
     
-    private func PropertyContainerView(task: TaskModel) -> some View {
+    private func propertyContainerView(task: TaskModel) -> some View {
         VStack(spacing: 20) {
-            viewProperty(.details, isEmpty: false, defaultText: "")
             
-            viewProperty(.schedule, isEmpty: true, defaultText: "Set schedule")
+            propertyView(.details, isEmpty: false)
             
-            viewProperty(.priority, isEmpty: task.priority == 4, defaultText: "Set priority")
+            Button {
+            } label: {
+                propertyView(.schedule, isEmpty: true, defaultText: "Set schedule")
+                
+            }
+            
+            Button {
+                showPriority.toggle()
+            } label: {
+                propertyView(.priority, isEmpty: task.priority == 4, defaultText: "Set priority")
+            }
+            .popover(isPresented: $showPriority) {
+                PriorityView(selected: $priorityInput)
+                    .presentationCompactAdaptation(.popover)
+                    .presentationBackground(color.background)
+            }
         }
     }
     
-    private func viewProperty(_ property: IconItem, isEmpty: Bool, defaultText: String) -> some View {
+    private func propertyView(_ property: IconItem, isEmpty: Bool, defaultText: String = "") -> some View {
+        
         HStack(spacing: 13) {
             Image(systemName: property.text)
                 .resizable()
@@ -94,29 +100,45 @@ struct UpdateView: View {
                 Text(defaultText)
                     .foregroundStyle(.gray.opacity(0.6))
             } else {
-                TaskPropertyView(property)
+                switch property {
+                case .details:
+                    TextField(detailsInput.isEmpty ? "Add details" : detailsInput, text: $detailsInput, axis: .vertical)
+                        .foregroundStyle(detailsInput.isEmpty ? .gray : color.text)
+                        .lineLimit(5)
+                    
+                case .priority:
+                    Text(priorityInput.text)
+                        
+                    
+                default:
+                    Text(property.text)
+                }
             }
             
             Spacer()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    private func TaskPropertyView(_ property: IconItem) -> some View {
-        switch property {
-        case .details:
-            return AnyView(
-                TextField(detailsInput.isEmpty ? "Add details" : detailsInput, text: $detailsInput)
-                    .foregroundStyle(detailsInput.isEmpty ? .gray : color.text)
-                    .lineLimit(5)
-            )
-        case .priority:
-            return AnyView(Text(PriorityItem(priorityInput).text))
-        default:
-            return AnyView(Text(property.text))
+    private func bottomTabView() -> some View {
+        HStack(spacing: 30) {
+            ForEach(bottomTabs, id: \.self) { tab in
+                var action: () -> Void {
+                    switch tab {
+                    case .complete: return clickComplete
+                    case .delete: return clickDelete
+                    case .save: return clickSave
+                    default: return {}
+                    }
+                }
+                tabView(tab, isSpace: tab == bottomTabs.last, action: action)
+            }
         }
+        .foregroundStyle(color.accent)
+        .font(.system(size: 25))
     }
     
-    private func viewBottom(_ tab: IconItem, isSpace: Bool, action: @escaping () -> Void) -> some View {
+    private func tabView(_ tab: IconItem, isSpace: Bool, action: @escaping () -> Void) -> some View {
         HStack {
             if isSpace {
                 Spacer()
@@ -128,6 +150,19 @@ struct UpdateView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 25, height: tab == .save ? 29 : 25)
             }
+        }
+    }
+    
+}
+
+extension UpdateView {
+    
+    private func clickProperty(_ property: IconItem) {
+        switch property {
+        case .priority:
+            showPriority.toggle()
+            print("cliked \(showPriority)")
+        default: return
         }
     }
     
@@ -148,17 +183,26 @@ struct UpdateView: View {
 }
 
 #Preview("empty task", traits: .sizeThatFitsLayout) {
-    let empty = TaskModel(title: "")
+    let taskViewModel = TaskViewModel()
+    let defaultTaskListID = taskViewModel.defaultTaskList.id
+    let empty = TaskModel(title: "this is an empty task", ofTaskList: defaultTaskListID)
+    
     return NavigationStack {
         UpdateView(task: empty)
     }
+    .environmentObject(taskViewModel)
     .environmentObject(NavigationCoordinator())
 }
 
 #Preview("full task", traits: .sizeThatFitsLayout) {
-    let full = TaskModel(title: "full task", isComplete: true, details: "i have details", priority: 2)
+    let taskLists = TaskListModel.examples
+    let defaultTaskListID = taskLists[0].id
+    let tasks = TaskModel.examples(ofTaskList: defaultTaskListID)
+    let full = tasks[3]
+    
     return NavigationStack {
         UpdateView(task: full)
     }
+    .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
     .environmentObject(NavigationCoordinator())
 }

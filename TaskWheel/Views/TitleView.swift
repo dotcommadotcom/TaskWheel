@@ -6,7 +6,7 @@ struct TitleView: View {
     
     var body: some View {
         HStack {
-            Text(taskViewModel.defaultTaskList.title)
+            Text(taskViewModel.currentTaskList.title)
                 .font(.system(size: 25, weight: .bold))
             
             Spacer()
@@ -19,14 +19,11 @@ struct TitleView: View {
         .padding(.vertical, 10)
     }
 }
-//
-//#Preview("main") {
-//    MainView()
-//        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
-//        .environmentObject(NavigationCoordinator())
-//}
-//
-//#Preview {
-//    TitleView()
-//        .environmentObject(TaskViewModel(TaskModel.examples, TaskListModel.examples))
-//}
+
+#Preview {
+    let taskLists = TaskListModel.examples
+    let defaultTaskListID = taskLists[0].id
+    
+    return TitleView()
+        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+}

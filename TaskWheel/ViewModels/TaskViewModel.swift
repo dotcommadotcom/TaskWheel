@@ -5,12 +5,14 @@ class TaskViewModel: ObservableObject {
     @Published var tasks: Deque<TaskModel>
     @Published var taskLists: Deque<TaskListModel>
     @Published var defaultTaskList: TaskListModel
+    @Published var currentTaskList: TaskListModel
     
     init(_ tasks: Deque<TaskModel> = [], _ taskLists: Deque<TaskListModel> = []) {
         self.tasks = tasks
         let backupTaskList = TaskListModel(title: "My Tasks")
         self.taskLists = taskLists.isEmpty ? [backupTaskList] : taskLists
         self.defaultTaskList = taskLists.first ?? backupTaskList
+        self.currentTaskList = taskLists.first ?? backupTaskList
     }
     
     func add(title: String = "", details: String = "", priority: Int = 4) {
@@ -51,6 +53,17 @@ class TaskViewModel: ObservableObject {
         return tasks.filter { $0.ofTaskList == defaultTaskList.id && $0.isComplete }
     }
     
+    func updateDefaultTaskList(taskList: TaskListModel) {
+        self.defaultTaskList = taskList
+    }
+    
+    func updateCurrentTaskList(taskList: TaskListModel) {
+        self.currentTaskList = taskList
+    }
+    
+    func getCurrentTitle() -> String {
+        return self.currentTaskList.title
+    }
     
     //    func showTasks() -> Deque<TaskModel> {
     //        return taskList.filter { !$0.isComplete }

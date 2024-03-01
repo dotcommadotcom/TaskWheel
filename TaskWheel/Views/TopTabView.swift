@@ -48,15 +48,18 @@ struct TopTabView: View {
     var body: some View {
         HStack(spacing: 0) {
             ForEach(tabs, id: \.self) { tab in
-                view(tab: tab)
+                tabView(tab: tab)
                     .onTapGesture {
                         click(tab: tab)
                     }
             }
         }
     }
+}
+
+extension TopTabView {
     
-    private func view(tab: TopTabItem) -> some View {
+    private func tabView(tab: TopTabItem) -> some View {
         VStack(spacing: 0) {
             ZStack(alignment: .center) {
                 Rectangle()

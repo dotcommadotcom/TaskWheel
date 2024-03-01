@@ -5,6 +5,7 @@ struct AddSheetView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
     
+//    @Binding var currentTaskList: UUID
     @State var titleInput: String = ""
     @State var detailsInput: String = ""
     @State var priorityInput: PriorityItem = .no

@@ -24,7 +24,7 @@ struct TaskRowView: View {
                 Text(task.title)
                     .lineLimit(1)
                     .truncationMode(.tail)
-                
+                    
                 if !task.details.isEmpty {
                     Text(task.details)
                         .font(.system(size: 17))
@@ -32,20 +32,22 @@ struct TaskRowView: View {
                         .lineLimit(2)
                         .truncationMode(.tail)
     
-                    PropertiesView(task: task)
+                    PropertiesRowView(task: task)
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
             
             Spacer()
         }
         .padding()
         .font(.system(size: 23))
         .check(isComplete: task.isComplete)
-       
+        
     }
 }
 
-struct PropertiesView: View {
+struct PropertiesRowView: View {
     
     let sampleProperties: [String] = [
         "due tomorrow 2/24",
@@ -61,26 +63,17 @@ struct PropertiesView: View {
         ScrollView(.horizontal) {
             HStack {
                 ForEach(sampleProperties, id: \.self) { property in
-                    view(property: property)
+                    propertyItemView(property: property)
                 }
             }
             .padding(.horizontal, 4)
         }
     }
+}
+
+extension PropertiesRowView {
     
-    private func viewPriority(_ priority: Int) -> some View {
-        var priorityItem: PriorityItem {
-            switch priority {
-            case 1: return .high
-            case 2: return .medium
-            case 3: return .low
-            default: return .no
-            }
-        }
-        return view(property: priorityItem.text)
-    }
-    
-    private func view(property: String) -> some View {
+    private func propertyItemView(property: String) -> some View {
         ZStack(alignment: .center) {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(color.accent, lineWidth: 2)
