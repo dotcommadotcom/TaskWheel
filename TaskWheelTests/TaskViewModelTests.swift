@@ -103,6 +103,12 @@ final class TaskViewModelTests: XCTestCase {
     
     // TEST - Current task list
     
+    func testCurrentTaskListDoneVisible() throws {
+        multipleTaskVM.toggleCurrentDoneVisible()
+
+        XCTAssertFalse(multipleTaskVM.currentTaskList.isDoneVisible)
+    }
+    
     func testUpdateCurrentTaskList() throws {
         let previousTaskList = multipleTaskVM.taskLists[2]
         

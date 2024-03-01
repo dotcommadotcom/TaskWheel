@@ -15,6 +15,21 @@ final class TaskListModelTests: XCTestCase {
         testTaskList = nil
     }
     
+    // TEST - isComplete
+    
+    func testToggleCompleteFalse() throws {
+        testTaskList = testTaskList.toggleDoneVisible()
+        testTaskList = testTaskList.toggleDoneVisible()
+        
+        XCTAssertTrue(testTaskList.isDoneVisible)
+    }
+    
+    func testToggleCompleteTrue() throws {
+        testTaskList = testTaskList.toggleDoneVisible()
+        
+        XCTAssertFalse(testTaskList.isDoneVisible)
+    }
+    
     // TEST - Title
     
     func testEditTitle() throws {
@@ -24,6 +39,16 @@ final class TaskListModelTests: XCTestCase {
     }
 
     // TEST - Edit Helper
+    
+    func testEditMultipleAttributes() throws {
+        let previousTitle = testTaskList.title
+        let previousIsDoneVisible = testTaskList.isDoneVisible
+        
+        testTaskList = testTaskList.edit(title: "new title", isDoneVisible: false)
+        
+        XCTAssertNotEqual(testTaskList.title, previousTitle)
+        XCTAssertNotEqual(testTaskList.isDoneVisible, previousIsDoneVisible)
+    }
     
     func testEmptyEditHelper() throws {
         XCTAssertEqual(testTaskList.edit(), testTaskList)

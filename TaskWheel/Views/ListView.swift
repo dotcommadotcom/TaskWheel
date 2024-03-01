@@ -12,9 +12,11 @@ struct ListView: View {
                 }
             }
             
-            ForEach(taskViewModel.getCurrentCompletedTasks()) { task in
-                NavigationLink(value: task) {
-                    TaskRowView(task: task, action: taskViewModel.toggleCompleteTask)
+            if taskViewModel.currentTaskList.isDoneVisible {
+                ForEach(taskViewModel.getCurrentCompletedTasks()) { task in
+                    NavigationLink(value: task) {
+                        TaskRowView(task: task, action: taskViewModel.toggleCompleteTask)
+                    }
                 }
             }
         }

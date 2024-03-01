@@ -49,9 +49,15 @@ extension MoreSheetView {
     
     private func click(option: OptionItem) {
         switch option {
+        case .showHide: clickShowHideCompleted()
         case .deleteCompleted: clickDeleteCompleted()
         default: do {}
         }
+    }
+    
+    private func clickShowHideCompleted() {
+        taskViewModel.toggleCurrentDoneVisible()
+        selected = nil
     }
     
     private func clickDeleteCompleted() {

@@ -58,7 +58,13 @@ class TaskViewModel: ObservableObject {
     func updateCurrentTaskList(taskList: TaskListModel) {
         self.currentTaskList = taskList
     }
-    
+
+    func toggleCurrentDoneVisible() {
+        if let index = taskLists.firstIndex(where: { $0.id == currentTaskList.id }) {
+            taskLists[index] = taskLists[index].toggleDoneVisible()
+            updateCurrentTaskList(taskList: taskLists[index])
+        }
+    }
     
     func updateDefaultTaskList(taskList: TaskListModel) {
         self.defaultTaskList = taskList

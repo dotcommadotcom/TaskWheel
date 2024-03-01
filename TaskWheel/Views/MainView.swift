@@ -5,6 +5,7 @@ struct MainView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
     @State private var topSelection: TopTabItem = .list
+    @State private var showCompleted: Bool = true
     
     private let color = ColorSettings()
     
