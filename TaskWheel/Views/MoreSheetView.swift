@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum OptionItem: Identifiable {
-    case rename, delete, showHide, deleteCompleted
+    case rename, deleteList, showHide, deleteCompleted
     
     var id: Self {
         self
@@ -10,7 +10,7 @@ enum OptionItem: Identifiable {
     var text: String {
         switch self {
         case .rename: return "Rename list"
-        case .delete: return "Delete list"
+        case .deleteList: return "Delete list"
         case .showHide: return "Show/Hide completed tasks"
         case .deleteCompleted: return "Delete all completed tasks"
         }
@@ -23,7 +23,7 @@ struct MoreSheetView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Binding var selected: IconItem?
     
-    let moreOptions: [OptionItem] = [.rename, .delete, .showHide, .deleteCompleted]
+    let moreOptions: [OptionItem] = [.rename, .deleteList, .showHide, .deleteCompleted]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
@@ -49,10 +49,16 @@ extension MoreSheetView {
     
     private func click(option: OptionItem) {
         switch option {
+        case .deleteList: clickDeleteList()
         case .showHide: clickShowHideCompleted()
         case .deleteCompleted: clickDeleteCompleted()
         default: do {}
         }
+    }
+    
+    private func clickDeleteList() {
+        taskViewModel.deleteTaskList( taskViewModel.currentTaskList)
+        selected = nil
     }
     
     private func clickShowHideCompleted() {

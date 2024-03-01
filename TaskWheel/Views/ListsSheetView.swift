@@ -105,7 +105,7 @@ extension ListsSheetView {
     }
     
     private func switchTaskList(_ taskList: TaskListModel) {
-        taskViewModel.updateCurrentTaskList(taskList: taskList)
+        taskViewModel.updateCurrentTaskList(taskList)
         selected = nil
     }
 

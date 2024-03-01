@@ -19,13 +19,13 @@ class TaskViewModel: ObservableObject {
         tasks.prepend(TaskModel(title: title, details: details, priority: priority))
     }
     
-    func toggleCompleteTask(task: TaskModel) {
+    func toggleCompleteTask(_ task: TaskModel) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.toggleComplete()
         }
     }
     
-    func deleteTask(task: TaskModel) {
+    func deleteTask(_ task: TaskModel) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks.remove(at: index)
         }
@@ -35,7 +35,7 @@ class TaskViewModel: ObservableObject {
         tasks.removeAll(where: condition)
     }
     
-    func updateTask(task: TaskModel, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
+    func updateTask(_ task: TaskModel, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.edit(title: title ?? task.title,
                                      details: details ?? task.details,
@@ -55,18 +55,18 @@ class TaskViewModel: ObservableObject {
         return self.currentTaskList.title
     }
     
-    func updateCurrentTaskList(taskList: TaskListModel) {
+    func updateCurrentTaskList(_ taskList: TaskListModel) {
         self.currentTaskList = taskList
     }
     
     func toggleCurrentDoneVisible() {
         if let index = taskLists.firstIndex(where: { $0.id == currentTaskList.id }) {
             taskLists[index] = taskLists[index].toggleDoneVisible()
-            updateCurrentTaskList(taskList: taskLists[index])
+            updateCurrentTaskList(taskLists[index])
         }
     }
     
-    func updateDefaultTaskList(taskList: TaskListModel) {
+    func updateDefaultTaskList(_ taskList: TaskListModel) {
         self.defaultTaskList = taskList
     }
     
@@ -75,16 +75,35 @@ class TaskViewModel: ObservableObject {
         
         taskLists.append(newTaskList)
         
-        updateCurrentTaskList(taskList: newTaskList)
+        updateCurrentTaskList(newTaskList)
     }
     
-    func deleteTaskList(taskList: TaskListModel) {
+    func deleteTaskList(_ taskList: TaskListModel) {
+        guard taskLists.count > 1 else {
+            return
+        }
+        
         if let index = taskLists.firstIndex(where: { $0.id == taskList.id }) {
+            let targetID = taskLists[index].id
+            
+            deleteMultipleTasks { $0.ofTaskList == targetID }
             taskLists.remove(at: index)
+            
+            if let firstTaskList = taskLists.first {
+                if targetID == defaultTaskList.id {
+                    updateDefaultTaskList(firstTaskList)
+                }
+                
+                if targetID == currentTaskList.id {
+                    updateCurrentTaskList(firstTaskList)
+                }
+            }
+            
         }
     }
+
     
-    func updateTaskList(taskList: TaskListModel, title: String? = nil) {
+    func updateTaskList(_ taskList: TaskListModel, title: String? = nil) {
         if let index = taskLists.firstIndex(where: { $0.id == taskList.id }) {
             taskLists[index] = taskList.edit(title: title ?? taskList.title)
         }
