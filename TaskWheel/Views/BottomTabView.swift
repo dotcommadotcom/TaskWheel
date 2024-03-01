@@ -2,7 +2,6 @@ import SwiftUI
 
 struct BottomTabView: View {
     
-    //    @Binding var currentTaskList: UUID
     @State private var selected: IconItem?
     @State private var sheetHeight: CGFloat = .zero
     
@@ -12,16 +11,19 @@ struct BottomTabView: View {
     var body: some View {
         HStack(spacing: 30) {
             ForEach(bottomTabs, id: \.self) { tab in
-                view(tab: tab, isSpace: tab == bottomTabs.last)
+                tabView(tab: tab, isSpace: tab == bottomTabs.last)
             }
         }
         .sheet(item: $selected) { tab in
-            viewSheet(tab: tab)
+            sheetView(tab: tab, selected: selected)
         }
         .padding(20)
     }
+}
+
+extension BottomTabView {
     
-    private func view(tab: IconItem, isSpace: Bool) -> some View {
+    private func tabView(tab: IconItem, isSpace: Bool) -> some View {
         HStack {
             if isSpace {
                 Spacer()
@@ -38,10 +40,10 @@ struct BottomTabView: View {
         }
     }
     
-    private func viewSheet(tab: IconItem) -> some View {
+    private func sheetView(tab: IconItem, selected: IconItem?) -> some View {
         VStack {
             switch tab {
-            case .lists: ListsSheetView()
+            case .lists: ListsSheetView(selected: $selected)
             case .order: OrderSheetView()
             case .more: MoreSheetView()
             case .add: AddSheetView()
@@ -58,9 +60,9 @@ struct BottomTabView: View {
         .presentationBackground(color.background)
     }
     
-    private func dismissSheet() {
-        selected = nil
-    }
+//    private func dismissSheet() {
+//        selected = nil
+//    }
 }
 
 struct GetHeightModifier: ViewModifier {
@@ -94,31 +96,28 @@ struct SheetHeightPreferenceKey: PreferenceKey {
         value = nextValue()
     }
 }
-//
-//#Preview("main") {
-//    MainView()
-//        .environmentObject(TaskViewModel(TaskModel.examples))
-//        .environmentObject(NavigationCoordinator())
-//}
 
 #Preview {
-    BottomTabView()
-}
-
-
-struct OldGetHeightModifier: ViewModifier {
-    @Binding var sheetHeight: CGFloat
+    let taskLists = TaskListModel.examples
+    let defaultTaskListID = taskLists[0].id
     
-    func body(content: Content) -> some View {
-        content
-            .overlay {
-                GeometryReader { geometry in
-                    Color.clear
-                        .preference(key: SheetHeightPreferenceKey.self, value: geometry.size.height)
-                }
-            }
-            .onPreferenceChange(SheetHeightPreferenceKey.self) { nextHeight in
-                sheetHeight = max(nextHeight, 50)
-            }
-    }
+    return BottomTabView()
+        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
 }
+
+//struct OldGetHeightModifier: ViewModifier {
+//    @Binding var sheetHeight: CGFloat
+//    
+//    func body(content: Content) -> some View {
+//        content
+//            .overlay {
+//                GeometryReader { geometry in
+//                    Color.clear
+//                        .preference(key: SheetHeightPreferenceKey.self, value: geometry.size.height)
+//                }
+//            }
+//            .onPreferenceChange(SheetHeightPreferenceKey.self) { nextHeight in
+//                sheetHeight = max(nextHeight, 50)
+//            }
+//    }
+//}

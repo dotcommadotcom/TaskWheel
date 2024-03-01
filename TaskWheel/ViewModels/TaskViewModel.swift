@@ -46,11 +46,11 @@ class TaskViewModel: ObservableObject {
     }
     
     func getIncompleteTasks() -> Deque<TaskModel> {
-        return tasks.filter { $0.ofTaskList == defaultTaskList.id && !$0.isComplete }
+        return tasks.filter { $0.ofTaskList == currentTaskList.id && !$0.isComplete }
     }
     
     func getCompletedTasks() -> Deque<TaskModel> {
-        return tasks.filter { $0.ofTaskList == defaultTaskList.id && $0.isComplete }
+        return tasks.filter { $0.ofTaskList == currentTaskList.id && $0.isComplete }
     }
     
     func updateDefaultTaskList(taskList: TaskListModel) {
@@ -63,6 +63,14 @@ class TaskViewModel: ObservableObject {
     
     func getCurrentTitle() -> String {
         return self.currentTaskList.title
+    }
+    
+    func addTaskList(title: String) {
+        let newTaskList = TaskListModel(title: title)
+        
+        taskLists.append(newTaskList)
+        
+        updateCurrentTaskList(taskList: newTaskList)
     }
     
     //    func showTasks() -> Deque<TaskModel> {
