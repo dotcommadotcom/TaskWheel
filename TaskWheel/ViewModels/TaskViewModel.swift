@@ -109,6 +109,9 @@ class TaskViewModel: ObservableObject {
         }
     }
     
+    func countCompleted() -> Int {
+        return tasks.filter { $0.isComplete }.count
+    }
     
     //    func showTasks() -> Deque<TaskModel> {
     //        return taskList.filter { !$0.isComplete }

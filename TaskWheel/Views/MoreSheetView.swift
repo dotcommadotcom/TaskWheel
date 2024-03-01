@@ -24,13 +24,12 @@ struct MoreSheetView: View {
     @Binding var selected: IconItem?
     
     let moreOptions: [OptionItem] = [.rename, .deleteList, .showHide, .deleteCompleted]
+    private let color = ColorSettings()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             ForEach(moreOptions) { option in
-                HStack {
-                    moreOptionsView(option: option)
-                }
+                moreOptionsView(option: option)
             }
         }
     }
@@ -39,12 +38,24 @@ struct MoreSheetView: View {
 extension MoreSheetView {
     
     private func moreOptionsView(option: OptionItem) -> some View {
-        Button {
+        
+        var isDisabled: Bool {
+            switch option {
+            case .deleteList: return taskViewModel.taskLists.count == 1
+            case .showHide, .deleteCompleted:
+                return taskViewModel.getCurrentCompletedTasks().count == 0
+            default: return false
+            }
+        }
+        
+        return Button {
             click(option: option)
         } label: {
             Text(option.text)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .disabled(isDisabled)
+        .foregroundStyle(isDisabled ? .gray : color.text)
     }
     
     private func click(option: OptionItem) {
