@@ -37,7 +37,7 @@ extension TaskModel {
     static func examples(ofTaskList: UUID) -> Deque<TaskModel> {
         [
             .init(title: "laundry", ofTaskList: ofTaskList, isComplete: true),
-            .init(title: "dishes", ofTaskList: ofTaskList, isComplete: true),
+            .init(title: "dishes", ofTaskList: ofTaskList, isComplete: false),
             .init(title: "vacuum", ofTaskList: ofTaskList, isComplete: true, priority: 1),
             .init(title: "mop", ofTaskList: ofTaskList, isComplete: false, details: "where are the clean mop heads?", priority: 2),
             .init(title: "water plants", ofTaskList: ofTaskList, isComplete: false),
@@ -45,12 +45,8 @@ extension TaskModel {
             .init(title: "recycle plastic and paper, separate vinyl labels", ofTaskList: ofTaskList, isComplete: false),
             .init(title: "wipe countertop", ofTaskList: ofTaskList, isComplete: false),
             .init(title: "fold laundry", ofTaskList: ofTaskList, isComplete: false),
-            .init(title: "clean bathroom", ofTaskList: ofTaskList, isComplete: false, priority: 2),
-            .init(title: "organize shelf", ofTaskList: ofTaskList, isComplete: false),
-            .init(title: "wipe mirror", ofTaskList: ofTaskList, isComplete: false, priority: 3),
-            .init(title: "wipe windowsill", ofTaskList: ofTaskList, isComplete: false),
-            .init(title: "sanitize toilet brushes", ofTaskList: ofTaskList, isComplete: false),
-            .init(title: "call water company", ofTaskList: ofTaskList, isComplete: false),
+            .init(title: "clean bathroom", ofTaskList: ofTaskList, isComplete: true, priority: 2),
+            .init(title: "organize shelf", ofTaskList: ofTaskList, isComplete: false, priority: 3)
         ]
     }
 }

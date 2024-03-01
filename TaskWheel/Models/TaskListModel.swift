@@ -22,12 +22,3 @@ struct TaskListModel: Identifiable, Hashable {
         return edit(isDoneVisible: !self.isDoneVisible)
     }
 }
-
-extension TaskListModel {
-    static let examples: Deque<TaskListModel> = [
-        .init(title: "chores"),
-        .init(title: "homework"),
-        .init(title: "digital cleanse"),
-        .init(title: "to buy"),
-    ]
-}

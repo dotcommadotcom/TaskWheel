@@ -21,7 +21,6 @@ final class TaskViewModelTests: XCTestCase {
         multipleTaskVM = nil
     }
     
-    
     // TEST - Update task list
     
     func testUpdateTaskListWithNothingChangesNothing() throws {

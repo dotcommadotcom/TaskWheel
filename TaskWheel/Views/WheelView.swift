@@ -20,9 +20,6 @@ struct WheelView: View {
 }
 
 #Preview {
-    let taskLists = TaskListModel.examples
-    let defaultTaskListID = taskLists[0].id
-    
-    return WheelView()
-        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+    WheelView()
+        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

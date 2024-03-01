@@ -29,6 +29,7 @@ struct TopTabContainerView<Content: View>: View {
             ZStack {
                 content
             }
+            .padding(.vertical, 10)
         }
         .onPreferenceChange(TopTabPreferenceKey.self, perform: { value in
             self.tabs = value

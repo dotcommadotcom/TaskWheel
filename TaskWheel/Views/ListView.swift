@@ -24,9 +24,6 @@ struct ListView: View {
 }
 
 #Preview {
-    let taskLists = TaskListModel.examples
-    let defaultTaskListID = taskLists[0].id
-    
     return ListView()
-        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

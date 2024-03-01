@@ -183,26 +183,23 @@ extension UpdateView {
 }
 
 #Preview("empty task", traits: .sizeThatFitsLayout) {
-    let taskViewModel = TaskViewModel()
-    let defaultTaskListID = taskViewModel.defaultTaskList.id
-    let empty = TaskModel(title: "this is an empty task", ofTaskList: defaultTaskListID)
+    let tasks = TaskViewModel.tasksExamples()
+    let empty = tasks[1]
     
     return NavigationStack {
         UpdateView(task: empty)
     }
-    .environmentObject(taskViewModel)
+    .environmentObject(TaskViewModel(tasks, TaskViewModel.examples))
     .environmentObject(NavigationCoordinator())
 }
 
 #Preview("full task", traits: .sizeThatFitsLayout) {
-    let taskLists = TaskListModel.examples
-    let defaultTaskListID = taskLists[0].id
-    let tasks = TaskModel.examples(ofTaskList: defaultTaskListID)
+    let tasks = TaskViewModel.tasksExamples()
     let full = tasks[3]
     
     return NavigationStack {
         UpdateView(task: full)
     }
-    .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+    .environmentObject(TaskViewModel(tasks, TaskViewModel.examples))
     .environmentObject(NavigationCoordinator())
 }

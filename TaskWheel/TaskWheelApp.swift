@@ -7,10 +7,10 @@ struct TaskWheelApp: App {
     @StateObject var navigation: NavigationCoordinator  = NavigationCoordinator()
     
     init() {
-        let taskLists = TaskListModel.examples
-        let defaultTaskListID = taskLists[0].id
-        
-        _taskViewModel = StateObject(wrappedValue: TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+        _taskViewModel = StateObject(wrappedValue: TaskViewModel(
+            TaskViewModel.tasksExamples(),
+            TaskViewModel.examples)
+        )
     }
     
     var body: some Scene {

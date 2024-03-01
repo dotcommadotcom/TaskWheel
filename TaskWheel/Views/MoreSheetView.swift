@@ -70,19 +70,13 @@ extension MoreSheetView {
 }
 
 #Preview("more sheet") {
-    let taskLists = TaskListModel.examples
-    let defaultTaskListID = taskLists[0].id
-    
-    return MoreSheetView(selected: .constant(.more))
-        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+    MoreSheetView(selected: .constant(.more))
+        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
 
 #Preview("bottom tab") {
-    let taskLists = TaskListModel.examples
-    let defaultTaskListID = taskLists[0].id
-    
-    return BottomTabView()
-        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+    BottomTabView()
+        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
 
 

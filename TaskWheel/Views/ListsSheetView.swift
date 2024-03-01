@@ -112,18 +112,12 @@ extension ListsSheetView {
 }
 
 #Preview("lists sheet") {
-    let taskLists = TaskListModel.examples
-    let defaultTaskListID = taskLists[0].id
-    
-    return ListsSheetView(selected: .constant(.lists))
-        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+    ListsSheetView(selected: .constant(.lists))
+        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
 
 #Preview("bottom tab") {
-    let taskLists = TaskListModel.examples
-    let defaultTaskListID = taskLists[0].id
-    
-    return BottomTabView()
-        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+    BottomTabView()
+        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
 

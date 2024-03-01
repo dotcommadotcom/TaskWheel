@@ -50,20 +50,14 @@ extension MainView {
 
 
 #Preview("main") {
-    let taskLists = TaskListModel.examples
-    let defaultTaskListID = taskLists[0].id
-    
-    return MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+    MainView()
+        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
         .environmentObject(NavigationCoordinator())
 }
 
 #Preview("dark") {
-    let taskLists = TaskListModel.examples
-    let defaultTaskListID = taskLists[0].id
-    
-    return MainView()
-        .environmentObject(TaskViewModel(TaskModel.examples(ofTaskList: defaultTaskListID), taskLists))
+    MainView()
+        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
         .environmentObject(NavigationCoordinator())
         .preferredColorScheme(.dark)
 }
