@@ -21,9 +21,9 @@ struct SheetView: View {
     var body: some View {
         VStack {
             switch selected {
-            case .lists: ListsSheetView(selected: $selected)
+            case .lists: ListsSheetView()
             case .order: OrderSheetView()
-            case .more: MoreSheetView(selected: $selected)
+            case .more: MoreSheetView()
             case .add: AddSheetView()
             default: EmptyView()
             }

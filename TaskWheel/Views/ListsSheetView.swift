@@ -3,7 +3,7 @@ import SwiftUI
 struct ListsSheetView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
-    @Binding var selected: IconItem?
+    @Environment(\.presentationMode) var presentationMode
     @State var newTitleInput: String = ""
     @State private var showNewList = false
     
@@ -85,19 +85,22 @@ extension ListsSheetView {
             }
         }
     }
+}
+
+extension ListsSheetView {
     
     private func switchTaskList(_ taskList: TaskListModel) {
         taskViewModel.updateCurrentTaskList(taskList)
-        selected = nil
+        presentationMode.wrappedValue.dismiss()
     }
     
     private func clickSave() {
-        selected = nil
         taskViewModel.addTaskList(title: newTitleInput)
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
 #Preview("lists sheet") {
-    ListsSheetView(selected: .constant(.lists))
+    ListsSheetView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

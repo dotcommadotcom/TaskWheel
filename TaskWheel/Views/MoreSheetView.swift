@@ -21,7 +21,7 @@ enum OptionItem: Identifiable {
 struct MoreSheetView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
-    @Binding var selected: IconItem?
+    @Environment(\.presentationMode) var presentationMode
     
     let moreOptions: [OptionItem] = [.rename, .deleteList, .showHide, .deleteCompleted]
     private let color = ColorSettings()
@@ -41,7 +41,7 @@ extension MoreSheetView {
         
         var isDisabled: Bool {
             switch option {
-            case .deleteList: 
+            case .deleteList:
                 return taskViewModel.currentTaskList.id == taskViewModel.defaultTaskList.id
             case .showHide, .deleteCompleted:
                 return taskViewModel.getCurrentCompletedTasks().count == 0
@@ -59,6 +59,10 @@ extension MoreSheetView {
         .foregroundStyle(isDisabled ? .gray : color.text)
     }
     
+}
+
+extension MoreSheetView {
+    
     private func click(option: OptionItem) {
         switch option {
         case .deleteList: clickDeleteList()
@@ -66,16 +70,15 @@ extension MoreSheetView {
         case .deleteCompleted: clickDeleteCompleted()
         default: do {}
         }
+        presentationMode.wrappedValue.dismiss()
     }
     
     private func clickDeleteList() {
         taskViewModel.deleteTaskList( taskViewModel.currentTaskList)
-        selected = nil
     }
     
     private func clickShowHideCompleted() {
         taskViewModel.toggleCurrentDoneVisible()
-        selected = nil
     }
     
     private func clickDeleteCompleted() {
@@ -83,12 +86,11 @@ extension MoreSheetView {
             $0.isComplete &&
             $0.ofTaskList == taskViewModel.currentTaskList.id
         }
-        selected = nil
     }
 }
 
 #Preview("more sheet") {
-    MoreSheetView(selected: .constant(.more))
+    MoreSheetView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
 //
