@@ -44,7 +44,7 @@ extension MainView {
     
     private func titleView() -> some View {
         HStack {
-            Text(taskViewModel.currentTaskList.title)
+            Text(taskViewModel.getCurrentTitle())
                 .font(.system(size: 25, weight: .bold))
                 .lineLimit(1)
                 .truncationMode(.tail)

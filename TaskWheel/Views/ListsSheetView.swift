@@ -34,7 +34,7 @@ extension ListsSheetView {
     
     private func taskListRowView(taskList: TaskListModel) -> some View {
         
-        let highlight = taskList.id == taskViewModel.currentTaskList.id
+        let highlight = taskList.id == taskViewModel.getCurrentId()
         
         return HStack(spacing: 15) {
             Image(systemName: highlight ? "record.circle" : "circle")
@@ -48,7 +48,7 @@ extension ListsSheetView {
     }
     
     private func newListView() -> some View {
-        return VStack {
+        VStack {
             HStack(spacing: 15) {
                 Button {
                     withAnimation(.easeInOut(duration: 0.2)) {

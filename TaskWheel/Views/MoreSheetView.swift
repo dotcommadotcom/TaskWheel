@@ -23,14 +23,39 @@ struct MoreSheetView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
+    @State var titleInput: String = ""
+    @State private var showRenameList = false
     
-    let moreOptions: [OptionItem] = [.rename, .defaultList, .deleteList, .showHide, .deleteCompleted]
+    let moreOptions: [OptionItem] = [.defaultList, .deleteList, .showHide, .deleteCompleted]
     private let color = ColorSettings()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             ForEach(moreOptions) { option in
                 moreOptionsView(option: option)
+            }
+            
+            HStack(spacing: 30) {
+                moreOptionsView(option: .rename)
+                
+                if showRenameList {
+                    Button {
+                        clickSave()
+                    } label: {
+                        Image(systemName: "square.and.arrow.down")
+                    }
+                }
+            }
+            .buttonStyle(NoAnimationStyle())
+            
+            if showRenameList {
+                TextField(titleInput, text: $titleInput)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(color.accent, lineWidth: 2)
+                    )
+                    .lineLimit(1)
             }
         }
     }
@@ -43,7 +68,7 @@ extension MoreSheetView {
         var isDisabled: Bool {
             switch option {
             case .defaultList, .deleteList:
-                return taskViewModel.currentTaskList.id == taskViewModel.defaultTaskList.id
+                return taskViewModel.getCurrentId() == taskViewModel.defaultTaskList.id
             case .showHide, .deleteCompleted:
                 return taskViewModel.getCurrentCompletedTasks().count == 0
             default: return false
@@ -58,6 +83,7 @@ extension MoreSheetView {
         }
         .disabled(isDisabled)
         .foregroundStyle(isDisabled ? .gray : color.text)
+        .buttonStyle(NoAnimationStyle())
     }
     
 }
@@ -70,28 +96,42 @@ extension MoreSheetView {
         case .deleteList: clickDeleteList()
         case .showHide: clickShowHideCompleted()
         case .deleteCompleted: clickDeleteCompleted()
-        default: do {}
+        case .rename: clickRenameList()
         }
-        presentationMode.wrappedValue.dismiss()
     }
     
     private func clickDefaultList() {
-        taskViewModel.updateDefaultTaskList(taskViewModel.currentTaskList)
+        taskViewModel.updateDefaultTaskList(taskViewModel.current)
+        presentationMode.wrappedValue.dismiss()
     }
     
     private func clickDeleteList() {
-        taskViewModel.deleteTaskList(taskViewModel.currentTaskList)
+        taskViewModel.deleteTaskList(taskViewModel.current)
+        presentationMode.wrappedValue.dismiss()
     }
     
     private func clickShowHideCompleted() {
         taskViewModel.toggleCurrentDoneVisible()
+        presentationMode.wrappedValue.dismiss()
     }
     
     private func clickDeleteCompleted() {
         taskViewModel.deleteMultipleTasks {
             $0.isComplete &&
-            $0.ofTaskList == taskViewModel.currentTaskList.id
+            $0.ofTaskList == taskViewModel.getCurrentId()
         }
+        presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func clickRenameList() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showRenameList.toggle()
+        }
+    }
+    
+    private func clickSave() {
+        taskViewModel.updateListTitle(title: titleInput)
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
@@ -99,10 +139,4 @@ extension MoreSheetView {
     MoreSheetView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
-//
-//#Preview("bottom tab") {
-//    BarView(tabs: [.lists, .order, .more, .add])
-//        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
-//}
-//
 
