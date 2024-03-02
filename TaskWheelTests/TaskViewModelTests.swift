@@ -98,7 +98,6 @@ final class TaskViewModelTests: XCTestCase {
     
     func testUpdateDefaultSetsCurrent() throws {
         multipleTaskVM.updateCurrentTo(this: multipleTaskVM.taskLists[2])
-        let previousCurrent = multipleTaskVM.current
         
         multipleTaskVM.updateDefault(with: 3)
         
@@ -198,6 +197,14 @@ final class TaskViewModelTests: XCTestCase {
     
     // TEST - Update task
     
+    func testUpdateTaskDoesNotChangeOfTaskList() throws {
+        let previousOfTaskList = multipleTaskVM.tasks[6].ofTaskList
+        
+        multipleTaskVM.update(this: multipleTaskVM.tasks[6], title: "new title", details: "lets add some more")
+        
+        XCTAssertEqual(multipleTaskVM.tasks[6].ofTaskList, previousOfTaskList)
+    }
+    
     func testUpdateMultipleProperties() throws {
         let previousTitle = multipleTaskVM.tasks[6].title
         let previousDetails = multipleTaskVM.tasks[6].details
@@ -265,6 +272,14 @@ final class TaskViewModelTests: XCTestCase {
     }
 
     // TEST - Add task
+    
+    func testAddTaskAddsToCurrent() throws {
+        let currentID = multipleTaskVM.currentTaskList().id
+        
+        multipleTaskVM.addTaskList(title: "new task")
+        
+        XCTAssertEqual(multipleTaskVM.tasks[0].ofTaskList, currentID)
+    }
     
     func testAddTaskWithProperties() throws {
         let title = "task title"

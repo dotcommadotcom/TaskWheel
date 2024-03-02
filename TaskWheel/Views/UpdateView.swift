@@ -32,6 +32,9 @@ struct UpdateView: View {
                 .font(.system(size: 30))
                 .strikethrough(task.isDone ? true : false)
                 .frame(maxWidth: .infinity)
+                .onSubmit {
+                    clickSave()
+                }
             
             propertyContainerView(task: task)
             
@@ -103,6 +106,9 @@ extension UpdateView {
                     TextField(detailsInput.isEmpty ? "Add details" : detailsInput, text: $detailsInput, axis: .vertical)
                         .foregroundStyle(detailsInput.isEmpty ? .gray : color.text)
                         .lineLimit(5)
+                        .onSubmit {
+                            clickSave()
+                        }
                     
                 case .priority:
                     Text(priorityInput.text)

@@ -19,7 +19,8 @@ class TaskViewModel: ObservableObject {
 extension TaskViewModel {
     
     func addTask(title: String = "", details: String = "", priority: Int = 4) {
-        tasks.prepend(TaskModel(title: title, details: details, priority: priority))
+        tasks.prepend(TaskModel(title: title, ofTaskList: currentTaskList().id, details: details, priority: priority))
+        objectWillChange.send()
     }
     
     func toggleDone(_ task: TaskModel) {
@@ -38,9 +39,10 @@ extension TaskViewModel {
         tasks.removeAll(where: condition)
     }
     
-    func update(this task: TaskModel, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
+    func update(this task: TaskModel, title: String? = nil, ofTaskList: UUID? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.edit(title: title ?? task.title,
+                                     ofTaskList: ofTaskList ?? task.ofTaskList,
                                      details: details ?? task.details,
                                      priority: priority ?? task.priority)
         }

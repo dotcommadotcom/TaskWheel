@@ -24,6 +24,16 @@ final class TaskModelTests: XCTestCase {
         XCTAssertTrue(true)
     }
     
+    // TEST - Move task list
+    
+    func testEditOfTaskList() throws {
+        let newTaskList = TaskListModel(title: "new task list")
+        
+        let testTask = testTask.edit(ofTaskList: newTaskList.id)
+        
+        XCTAssertNotEqual(testTask.ofTaskList, testTaskList.id)
+    }
+    
     // TEST - Priority
     
     func testEditPriority() throws {
@@ -40,16 +50,16 @@ final class TaskModelTests: XCTestCase {
         XCTAssertEqual(testTask.details, "new details")
     }
     
-    // TEST - isComplete
+    // TEST - isDone
     
-    func testToggleCompleteFalse() throws {
+    func testToggleDoneFalse() throws {
         testTask = testTask.toggleDone()
         testTask = testTask.toggleDone()
         
         XCTAssertFalse(testTask.isDone)
     }
     
-    func testToggleCompleteTrue() throws {
+    func testToggleDoneTrue() throws {
         testTask = testTask.toggleDone()
         
         XCTAssertTrue(testTask.isDone)
@@ -67,6 +77,14 @@ final class TaskModelTests: XCTestCase {
     
     func testEmptyEditHelper() throws {
         XCTAssertEqual(testTask.edit(), testTask)
+    }
+    
+    func testEditHelperDoesNotChangeTaskList() throws {
+        let previousOfTaskList = testTask.ofTaskList
+        
+        testTask = testTask.edit(title: "new title")
+        
+        XCTAssertEqual(testTask.ofTaskList, previousOfTaskList)
     }
     
     func testEditHelperDoesNotChangeId() throws {

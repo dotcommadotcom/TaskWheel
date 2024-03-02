@@ -56,10 +56,10 @@ extension ListsSheetView {
                     }
                 } label: {
                     Image(systemName: "plus")
+                        .rotationEffect(Angle(degrees: !showNewList ? 0 : 45))
+                    Text(newListText)
                 }
-                .rotationEffect(Angle(degrees: !showNewList ? 0 : 45))
                 
-                Text(newListText)
                 
                 Spacer()
                 
@@ -82,6 +82,9 @@ extension ListsSheetView {
                             .stroke(color.accent, lineWidth: 2)
                     )
                     .lineLimit(1)
+                    .onSubmit {
+                        clickSave()
+                    }
             }
         }
     }

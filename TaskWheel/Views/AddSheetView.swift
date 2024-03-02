@@ -20,6 +20,7 @@ struct AddSheetView: View {
             TextField(textDefault, text: $titleInput, axis: .vertical)
                 .lineLimit(20)
 //                .preventTextFieldError()
+                
             
             if showDetails {
                 TextField(detailDefault, text: $detailsInput, axis: .vertical)
@@ -31,6 +32,9 @@ struct AddSheetView: View {
                 .buttonStyle(NoAnimationStyle())
         }
         .fixedSize(horizontal: false, vertical: true)
+        .onSubmit {
+            clickSave()
+        }
     }
     
 }

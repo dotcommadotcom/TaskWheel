@@ -15,22 +15,30 @@ final class TaskListModelTests: XCTestCase {
         testTaskList = nil
     }
     
-    // TEST - isComplete
+    // TEST - isDone
     
-    func testToggleCompleteFalse() throws {
+    func testToggleDoneVisibleTrue() throws {
         testTaskList = testTaskList.toggleDoneVisible()
         testTaskList = testTaskList.toggleDoneVisible()
         
         XCTAssertTrue(testTaskList.isDoneVisible)
     }
     
-    func testToggleCompleteTrue() throws {
+    func testToggleDoneVisibleFalse() throws {
         testTaskList = testTaskList.toggleDoneVisible()
         
         XCTAssertFalse(testTaskList.isDoneVisible)
     }
     
     // TEST - Title
+    
+    func testEditTitleIsSameID() throws {
+        let previousID = testTaskList.id
+        
+        testTaskList = testTaskList.edit(title: "hello")
+        
+        XCTAssertEqual(testTaskList.id, previousID)
+    }
     
     func testEditTitle() throws {
         testTaskList = testTaskList.edit(title: "hello")

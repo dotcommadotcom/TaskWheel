@@ -50,16 +50,19 @@ struct MoreSheetView: View {
             
             if showRenameList {
                 TextField(titleInput, text: $titleInput, axis: .vertical)
-                    .onAppear {
-                        titleInput = taskViewModel.currentTitle()
-                    }
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(color.accent, lineWidth: 2)
-                    )
+                            .stroke(color.accent, lineWidth: 2))
                     .lineLimit(1)
                     .fixedSize(horizontal: false, vertical: true)
+                    .onAppear {
+                        titleInput = taskViewModel.currentTitle()
+                    }
+                    .onSubmit {
+                        clickSave()
+                    }
+                    
             }
         }
     }
