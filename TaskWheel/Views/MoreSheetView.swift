@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum OptionItem: Identifiable {
-    case rename, deleteList, showHide, deleteCompleted
+    case rename, defaultList, deleteList, showHide, deleteCompleted
     
     var id: Self {
         self
@@ -10,6 +10,7 @@ enum OptionItem: Identifiable {
     var text: String {
         switch self {
         case .rename: return "Rename list"
+        case .defaultList: return "Set as default"
         case .deleteList: return "Delete list"
         case .showHide: return "Show/Hide completed tasks"
         case .deleteCompleted: return "Delete all completed tasks"
@@ -23,7 +24,7 @@ struct MoreSheetView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
     
-    let moreOptions: [OptionItem] = [.rename, .deleteList, .showHide, .deleteCompleted]
+    let moreOptions: [OptionItem] = [.rename, .defaultList, .deleteList, .showHide, .deleteCompleted]
     private let color = ColorSettings()
     
     var body: some View {
@@ -41,7 +42,7 @@ extension MoreSheetView {
         
         var isDisabled: Bool {
             switch option {
-            case .deleteList:
+            case .defaultList, .deleteList:
                 return taskViewModel.currentTaskList.id == taskViewModel.defaultTaskList.id
             case .showHide, .deleteCompleted:
                 return taskViewModel.getCurrentCompletedTasks().count == 0
@@ -65,6 +66,7 @@ extension MoreSheetView {
     
     private func click(option: OptionItem) {
         switch option {
+        case .defaultList: clickDefaultList()
         case .deleteList: clickDeleteList()
         case .showHide: clickShowHideCompleted()
         case .deleteCompleted: clickDeleteCompleted()
@@ -73,8 +75,12 @@ extension MoreSheetView {
         presentationMode.wrappedValue.dismiss()
     }
     
+    private func clickDefaultList() {
+        taskViewModel.updateDefaultTaskList(taskViewModel.currentTaskList)
+    }
+    
     private func clickDeleteList() {
-        taskViewModel.deleteTaskList( taskViewModel.currentTaskList)
+        taskViewModel.deleteTaskList(taskViewModel.currentTaskList)
     }
     
     private func clickShowHideCompleted() {
