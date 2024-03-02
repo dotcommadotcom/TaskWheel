@@ -14,7 +14,8 @@ enum OrderItem {
 
 struct OrderSheetView: View {
     
-    @State private var selected: OrderItem = .manual
+    @Environment(\.presentationMode) var presentationMode
+    @Binding var selected: OrderItem
     
     let orders: [OrderItem] = [.manual, .date, .priority]
     private let color = ColorSettings()
@@ -26,9 +27,10 @@ struct OrderSheetView: View {
             
             VStack(spacing: 15) {
                 ForEach(orders, id: \.self) { order in
-                    view(order: order)
+                    orderRowView(order: order)
                         .onTapGesture {
-                            click(order: order)
+                            selected = order
+                            presentationMode.wrappedValue.dismiss()
                         }
                 }
                 
@@ -36,7 +38,7 @@ struct OrderSheetView: View {
         }
     }
     
-    private func view(order: OrderItem) -> some View {
+    private func orderRowView(order: OrderItem) -> some View {
         HStack(spacing: 15) {
             Image(systemName: selected == order ? "record.circle" : "circle")
                 .fontWeight(selected == order ? .bold : .regular)
@@ -46,21 +48,11 @@ struct OrderSheetView: View {
             Spacer()
         }
     }
-    
-    private func click(order: OrderItem) {
-        selected = order
-    }
 }
-//
-//#Preview("main") {
-//    MainView()
-//        .environmentObject(TaskViewModel(TaskModel.examples))
-//        .environmentObject(NavigationCoordinator())
-//}
 
 #Preview {
     ZStack {
         Color.gray.opacity(0.3)
-        OrderSheetView()
+        OrderSheetView(selected: .constant(.manual))
     }
 }

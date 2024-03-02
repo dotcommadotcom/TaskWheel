@@ -56,16 +56,30 @@ extension TaskViewModel {
         return self.taskLists[current].title
     }
     
-    func currentTasks() -> Deque<TaskModel> {
-        return tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
+    func currentTasks(by sort: OrderItem = .manual) -> Deque<TaskModel> {
+        let currentTasks = tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
+        
+        switch sort {
+        case .priority:
+            return Deque(currentTasks.sorted { $0.priority < $1.priority })
+        case .date, .manual:
+            return currentTasks
+        }
     }
     
-    func currentDoneTasks() -> Deque<TaskModel> {
+    func currentDoneTasks(by sort: OrderItem = .manual) -> Deque<TaskModel> {
         guard taskLists[current].isDoneVisible else {
             return []
         }
         
-        return tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }
+        let currentDoneTasks = tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
+        
+        switch sort {
+        case .priority:
+            return Deque(currentDoneTasks.sorted { $0.priority < $1.priority })
+        case .date, .manual:
+            return currentDoneTasks
+        }
     }
     
     func updateCurrentTo(this taskList: TaskListModel) {
@@ -100,7 +114,7 @@ extension TaskViewModel {
         }
         
         deleteIf { $0.ofTaskList == self.taskLists[index].id }
-
+        
         if index == self.current {
             updateCurrentTo(this: defaultTaskList)
         }
@@ -112,9 +126,14 @@ extension TaskViewModel {
         taskLists[current] = taskLists[current].edit(title: title)
     }
     
-//    func countDone() -> Int {
-//        return tasks.filter { $0.isDone }.count
+//    func sort(by priority: Int) -> Deque<TaskModel> {
+//        return tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
+//            .sorted { $0.priority < $1.priority }
 //    }
+    
+    //    func countDone() -> Int {
+    //        return tasks.filter { $0.isDone }.count
+    //    }
     
     //    func showTasks() -> Deque<TaskModel> {
     //        return taskList.filter { !$0.isComplete }
