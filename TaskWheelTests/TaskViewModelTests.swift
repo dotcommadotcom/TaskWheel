@@ -48,12 +48,11 @@ final class TaskViewModelTests: XCTestCase {
     // TEST - Delete task list
     
     func testDeleteCurrentUpdatesCurrentTaskList() throws {
-        multipleTaskVM.updateDefaultTaskList(multipleTaskVM.taskLists[3])
-        let nextFirstTaskList = multipleTaskVM.taskLists[1]
+        multipleTaskVM.updateCurrentTaskList(multipleTaskVM.taskLists[3])
         
         multipleTaskVM.deleteTaskList(multipleTaskVM.currentTaskList)
         
-        XCTAssertEqual(multipleTaskVM.currentTaskList, nextFirstTaskList)
+        XCTAssertEqual(multipleTaskVM.currentTaskList, multipleTaskVM.taskLists[0])
     }
     
     func testDeleteTaskListDeletesAllTasksInList() throws {
@@ -109,6 +108,30 @@ final class TaskViewModelTests: XCTestCase {
     }
     
     // TEST - Default task list
+    
+    func testUpdateDefaultTaskListMaintainsOrder() throws {
+        let previousFirst = multipleTaskVM.taskLists[0]
+        
+        multipleTaskVM.updateDefaultTaskList(multipleTaskVM.taskLists[2])
+        
+        XCTAssertEqual(multipleTaskVM.taskLists[1], previousFirst)
+    }
+    
+    func testUpdateDefaultTaskListRemoves() throws {
+        let previousTaskList = multipleTaskVM.taskLists[2]
+        
+        multipleTaskVM.updateDefaultTaskList(previousTaskList)
+        
+        XCTAssertNotEqual(multipleTaskVM.taskLists[2], previousTaskList)
+    }
+    
+    func testUpdateDefaultTaskListPrepends() throws {
+        let previousTaskList = multipleTaskVM.taskLists[2]
+        
+        multipleTaskVM.updateDefaultTaskList(previousTaskList)
+        
+        XCTAssertEqual(multipleTaskVM.taskLists[0], previousTaskList)
+    }
     
     func testUpdateDefaultTaskList() throws {
         let previousTaskList = multipleTaskVM.taskLists[2]

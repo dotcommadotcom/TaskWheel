@@ -5,9 +5,11 @@ struct MainView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
     @State private var topSelection: TopTabItem = .list
+    @State private var barSelection: IconItem? = nil
     @State private var showCompleted: Bool = true
     
     private let color = ColorSettings()
+    private let mainTabs: [IconItem] = [.lists, .order, .more, .add]
     
     var body: some View {
         NavigationStack(path: $navigation.path) {
@@ -24,9 +26,10 @@ struct MainView: View {
                 .highPriorityGesture(DragGesture().onEnded({
                     handleSwipe(translation: $0.translation.width)
                 }))
-                
-                BottomTabView()
+               
+                BarView(selected: $barSelection, tabs: mainTabs)
                     .background(color.text.opacity(0.05))
+                    .sheetItem(selected: $barSelection)
             }
             .background(color.background)
             .foregroundStyle(color.text)
@@ -39,6 +42,7 @@ struct MainView: View {
 }
 
 extension MainView {
+    
     private func handleSwipe(translation: CGFloat) {
         if translation < -50 && topSelection == .list {
             topSelection = .wheel
@@ -47,7 +51,6 @@ extension MainView {
         }
     }
 }
-
 
 #Preview("main") {
     MainView()

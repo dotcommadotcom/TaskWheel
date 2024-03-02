@@ -1,10 +1,3 @@
-//
-//  UpdateListView.swift
-//  TaskWheel
-//
-//  Created by Jiwoo on 2024-03-02.
-//
-
 import SwiftUI
 
 struct EditListView: View {
@@ -36,7 +29,7 @@ struct EditListView: View {
                         .frame(width: 14, height: 14)
                 }
                 
-                Text(newListText)
+//                Text(newListText)
                 
                 Spacer()
                 

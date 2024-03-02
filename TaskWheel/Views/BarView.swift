@@ -1,51 +1,18 @@
 import SwiftUI
 
-
-
-//struct BarContainerView<Content: View>: View {
-//    
-//    let content: Content
-//    
-//    @State var tabs: [IconItem] = []
-//    @Binding var selected: IconItem
-//    
-//    init(selected: Binding<IconItem>, @ViewBuilder content: () -> Content) {
-//        self._selected = selected
-//        self.content = content()
-//    }
-//    
-//    var body: some View {
-//        VStack(spacing: 0) {
-//            BarView(tabs: tabs, selected: $selected)
-//            
-//            ZStack {
-//                content
-//            }
-//            .padding(.vertical, 10)
-//        }
-////        .onPreferenceChange(TopTabPreferenceKey.self, perform: { value in
-////            self.tabs = value
-////        })
-//    }
-//}
-
 struct BarView: View {
-    
-    let tabs: [IconItem]
 
     @Binding var selected: IconItem?
-    //    @State private var sheetHeight: CGFloat = .zero
     
+    let tabs: [IconItem]
+    
+    var size: CGFloat = 25
     private let color = ColorSettings()
     
     var body: some View {
         HStack(spacing: 30) {
             ForEach(tabs, id: \.self) { tab in
-                tabView(tab: tab, isSpace: tab == tabs.last)
-                    .onTapGesture {
-                        print(tab.text)
-//                        click(tab: tab)
-                    }
+                tabView(tab: tab, isSpace: tab == tabs.last, size: size)
             }
         }
         .padding(20)
@@ -54,7 +21,7 @@ struct BarView: View {
 
 extension BarView {
     
-    private func tabView(tab: IconItem, isSpace: Bool) -> some View {
+    private func tabView(tab: IconItem, isSpace: Bool, size: CGFloat) -> some View {
         HStack {
             if isSpace {
                 Spacer()
@@ -66,14 +33,14 @@ extension BarView {
                 Image(systemName: tab.text)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
+                    .frame(width: size, height: tab == .save ? size + 4 : size)
             }
         }
     }
 }
 
 #Preview {
-    return BarView(tabs: [.lists, .order, .more, .add], selected: .constant(.lists))
+    return BarView(selected: .constant(nil), tabs: [.lists, .order, .more, .add])
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
 
