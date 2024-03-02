@@ -91,10 +91,10 @@ extension MoreSheetView {
     MoreSheetView(selected: .constant(.more))
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
-
-#Preview("bottom tab") {
-    BottomTabView()
-        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
-}
-
+//
+//#Preview("bottom tab") {
+//    BarView(tabs: [.lists, .order, .more, .add])
+//        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
+//}
+//
 
