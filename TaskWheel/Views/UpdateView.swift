@@ -4,17 +4,15 @@ struct UpdateView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
-    
-    let task: TaskModel
-    
     @State var titleInput: String
     @State var detailsInput: String
     @State var priorityInput: PriorityItem
     @State private var showPriority = false
+    @State private var barSelected: IconItem? = nil
     
+    let task: TaskModel
     private let color = ColorSettings()
-    private let textDefault: String = "What now?"
-    private let bottomTabs: [IconItem] = [.complete, .delete, .save]
+    private let updateTabs: [IconItem] = [.complete, .delete, .save]
     
     init(task: TaskModel) {
         self.task = task
@@ -27,9 +25,9 @@ struct UpdateView: View {
         VStack(alignment: .leading, spacing: 20) {
             Text(taskViewModel.getCurrentTitle())
                 .fontWeight(.bold)
-                .foregroundStyle(color.text.opacity(0.6))
+                .foregroundStyle(color.text.opacity(0.5))
             
-            TextField(titleInput.isEmpty ? textDefault : titleInput, text: $titleInput, axis: .vertical)
+            TextField(titleInput, text: $titleInput, axis: .vertical)
                 .lineLimit(5)
                 .font(.system(size: 30))
                 .strikethrough(task.isComplete ? true : false)
@@ -39,11 +37,12 @@ struct UpdateView: View {
             
             Spacer()
             
-            bottomTabView()
+            updateBarView()
         }
         .padding(.horizontal, 30)
         .padding(.vertical, 15)
         .font(.system(size: 20))
+        .foregroundStyle(color.text)
         .background(color.background)
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -57,7 +56,6 @@ struct UpdateView: View {
                 .fontWeight(.semibold)
             }
         }
-        .foregroundStyle(color.text)
         
     }
 }
@@ -115,40 +113,22 @@ extension UpdateView {
                 }
             }
             
-            Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    private func bottomTabView() -> some View {
-        HStack(spacing: 30) {
-            ForEach(bottomTabs, id: \.self) { tab in
-                var action: () -> Void {
-                    switch tab {
-                    case .complete: return clickComplete
-                    case .delete: return clickDelete
-                    case .save: return clickSave
-                    default: return {}
+    private func updateBarView() -> some View {
+        BarContainerView(selected: $barSelected, padding: 0) {
+            ForEach(updateTabs, id: \.self) { tab in
+                IconView(icon: tab, isSpace: tab == updateTabs.last, isAlt: true)
+                    .onTapGesture {
+                        switch tab {
+                        case .complete: clickComplete()
+                        case .delete: clickDelete()
+                        case .save: clickSave()
+                        default: {}()
+                        }
                     }
-                }
-                tabView(tab, isSpace: tab == bottomTabs.last, action: action)
-            }
-        }
-        .foregroundStyle(color.accent)
-        .font(.system(size: 25))
-    }
-    
-    private func tabView(_ tab: IconItem, isSpace: Bool, action: @escaping () -> Void) -> some View {
-        HStack {
-            if isSpace {
-                Spacer()
-            }
-            
-            Button (action: action) {
-                Image(systemName: tab.alternative)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: tab == .save ? 29 : 25)
             }
         }
     }
@@ -161,7 +141,6 @@ extension UpdateView {
         switch property {
         case .priority:
             showPriority.toggle()
-            print("cliked \(showPriority)")
         default: return
         }
     }

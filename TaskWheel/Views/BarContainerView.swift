@@ -22,8 +22,6 @@ struct BarContainerView<Content: View>: View {
     }
 }
 
-
-
 #Preview("container") {
     let mainTabs: [IconItem] = [.lists, .order, .more, .add]
     
