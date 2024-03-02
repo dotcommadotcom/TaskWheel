@@ -2,21 +2,17 @@ import SwiftUI
 
 struct TaskRowView: View {
     
-    let task: TaskModel
-    let action: (TaskModel) -> Void
+    @EnvironmentObject var taskViewModel: TaskViewModel
     
-    init(task: TaskModel, action: @escaping (TaskModel) -> Void = {_ in }) {
-        self.task = task
-        self.action = action
-    }
+    let task: TaskModel
     
     var body: some View {
         HStack(spacing: 10) {
             Button {
-                action(task)
+                taskViewModel.toggleDone(task)
             } label: {
-                IconView(icon: .complete, isAlt: task.isComplete, size: 22)
-                    .foregroundStyle(task.isComplete ? .gray : PriorityItem(task.priority).color)
+                IconView(icon: .complete, isAlt: task.isDone, size: 22)
+                    .foregroundStyle(task.isDone ? .gray : PriorityItem(task.priority).color)
             }
             
             VStack(alignment: .leading, spacing: 5) {
@@ -38,7 +34,7 @@ struct TaskRowView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .font(.system(size: 23))
-        .check(isComplete: task.isComplete)
+        .check(isComplete: task.isDone)
     }
 }
 
@@ -123,6 +119,7 @@ extension View {
         color.background.ignoresSafeArea()
         
         TaskRowView(task: complete)
+            .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
     }
     .preferredColorScheme(.dark)
 }

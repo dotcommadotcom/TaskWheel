@@ -9,7 +9,7 @@ struct WheelView: View {
             LazyVStack {
                 ForEach(taskViewModel.getCurrentTasks()) { task in
                     NavigationLink(value: task) {
-                        TaskRowView(task: task, action: taskViewModel.toggleCompleteTask)
+                        TaskRowView(task: task)
                             .frame(height: 100)
                     }
                 }

@@ -117,7 +117,7 @@ extension MoreSheetView {
     
     private func clickDeleteCompleted() {
         taskViewModel.deleteMultipleTasks {
-            $0.isComplete &&
+            $0.isDone &&
             $0.ofTaskList == taskViewModel.getCurrentId()
         }
         presentationMode.wrappedValue.dismiss()

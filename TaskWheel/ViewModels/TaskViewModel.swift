@@ -22,9 +22,9 @@ extension TaskViewModel {
         tasks.prepend(TaskModel(title: title, details: details, priority: priority))
     }
     
-    func toggleCompleteTask(_ task: TaskModel) {
+    func toggleDone(_ task: TaskModel) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
-            tasks[index] = task.toggleComplete()
+            tasks[index] = task.toggleDone()
         }
     }
     
@@ -47,11 +47,11 @@ extension TaskViewModel {
     }
 
     func getCurrentTasks() -> Deque<TaskModel> {
-        return tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isComplete }
+        return tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
     }
     
     func getCurrentCompletedTasks() -> Deque<TaskModel> {
-        return tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isComplete }
+        return tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }
     }
     
     func getCurrentId() -> UUID {
@@ -116,7 +116,7 @@ extension TaskViewModel {
     }
     
     func countCompleted() -> Int {
-        return tasks.filter { $0.isComplete }.count
+        return tasks.filter { $0.isDone }.count
     }
     
     //    func showTasks() -> Deque<TaskModel> {

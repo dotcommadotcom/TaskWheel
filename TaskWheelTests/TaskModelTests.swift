@@ -43,16 +43,16 @@ final class TaskModelTests: XCTestCase {
     // TEST - isComplete
     
     func testToggleCompleteFalse() throws {
-        testTask = testTask.toggleComplete()
-        testTask = testTask.toggleComplete()
+        testTask = testTask.toggleDone()
+        testTask = testTask.toggleDone()
         
-        XCTAssertFalse(testTask.isComplete)
+        XCTAssertFalse(testTask.isDone)
     }
     
     func testToggleCompleteTrue() throws {
-        testTask = testTask.toggleComplete()
+        testTask = testTask.toggleDone()
         
-        XCTAssertTrue(testTask.isComplete)
+        XCTAssertTrue(testTask.isDone)
     }
     
     // TEST - Title

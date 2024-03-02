@@ -252,43 +252,43 @@ final class TaskViewModelTests: XCTestCase {
 //        XCTAssertTrue(multipleTaskVM.tasks.allSatisfy { $0.id != previousTask.id })
 //    }
 //    
-//    // TEST - Toggle complete
-//
-//    func testToggleCompleteChangesTask() throws {
-//        let previousTask = multipleTaskVM.tasks[6]
-//        
-//        multipleTaskVM.toggleCompleteTask(previousTask)
-//        
-//        XCTAssertNotEqual(multipleTaskVM.tasks[6].isComplete, previousTask.isComplete)
-//    }
-//
-//    // TEST - Add task
-//    
-//    func testAddTaskWithProperties() throws {
-//        let title = "task title"
-//        let details = "task details"
-//        let priority = 3
-//        
-//        simpleTaskVM.addTask(title: title, details: details, priority: priority)
-//        
-//        XCTAssertEqual(simpleTaskVM.tasks[0].title, title)
-//        XCTAssertEqual(simpleTaskVM.tasks[0].details, details)
-//        XCTAssertEqual(simpleTaskVM.tasks[0].priority, priority)
-//    }
-//    
-//    func testAddTaskPrepends() throws {
-//        let testTitle = "this is a test"
-//        
-//        multipleTaskVM.addTask(title: testTitle)
-//        
-//        XCTAssertEqual(multipleTaskVM.tasks[0].title, testTitle)
-//    }
-//    
-//    func testAddTask() throws {
-//        simpleTaskVM.addTask(title: "this is a test")
-//        
-//        XCTAssertEqual(simpleTaskVM.tasks.count, 1)
-//    }
+    // TEST - Toggle done
+
+    func testToggleDoneChangesTask() throws {
+        let previousTask = multipleTaskVM.tasks[6]
+        
+        multipleTaskVM.toggleDone(previousTask)
+        
+        XCTAssertNotEqual(multipleTaskVM.tasks[6].isDone, previousTask.isDone)
+    }
+
+    // TEST - Add task
+    
+    func testAddTaskWithProperties() throws {
+        let title = "task title"
+        let details = "task details"
+        let priority = 3
+        
+        simpleTaskVM.addTask(title: title, details: details, priority: priority)
+        
+        XCTAssertEqual(simpleTaskVM.tasks[0].title, title)
+        XCTAssertEqual(simpleTaskVM.tasks[0].details, details)
+        XCTAssertEqual(simpleTaskVM.tasks[0].priority, priority)
+    }
+    
+    func testAddTaskPrepends() throws {
+        let testTitle = "this is a test"
+        
+        multipleTaskVM.addTask(title: testTitle)
+        
+        XCTAssertEqual(multipleTaskVM.tasks[0].title, testTitle)
+    }
+    
+    func testAddTask() throws {
+        simpleTaskVM.addTask(title: "this is a test")
+        
+        XCTAssertEqual(simpleTaskVM.tasks.count, 1)
+    }
 
     // TEST - Constructor
     

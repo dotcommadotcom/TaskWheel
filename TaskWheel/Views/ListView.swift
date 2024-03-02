@@ -9,14 +9,14 @@ struct ListView: View {
             VStack(spacing: 0) {
                 ForEach(taskViewModel.getCurrentTasks()) { task in
                     NavigationLink(value: task) {
-                        TaskRowView(task: task, action: taskViewModel.toggleCompleteTask)
+                        TaskRowView(task: task)
                     }
                 }
                 
                 if taskViewModel.getCurrentDoneVisible() {
                     ForEach(taskViewModel.getCurrentCompletedTasks()) { task in
                         NavigationLink(value: task) {
-                            TaskRowView(task: task, action: taskViewModel.toggleCompleteTask)
+                            TaskRowView(task: task)
                         }
                     }
                 }
@@ -27,6 +27,6 @@ struct ListView: View {
 }
 
 #Preview {
-    return ListView()
+    ListView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

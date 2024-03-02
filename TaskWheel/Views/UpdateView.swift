@@ -30,7 +30,7 @@ struct UpdateView: View {
             TextField(titleInput, text: $titleInput, axis: .vertical)
                 .lineLimit(5)
                 .font(.system(size: 30))
-                .strikethrough(task.isComplete ? true : false)
+                .strikethrough(task.isDone ? true : false)
                 .frame(maxWidth: .infinity)
             
             propertyContainerView(task: task)
@@ -146,7 +146,7 @@ extension UpdateView {
     }
     
     private func clickComplete() {
-        taskViewModel.toggleCompleteTask(task)
+        taskViewModel.toggleDone(task)
         navigation.goBack()
     }
     

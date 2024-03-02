@@ -5,7 +5,7 @@ struct TaskModel: Identifiable, Hashable {
     let id: UUID
     let title: String
     let ofTaskList: UUID
-    let isComplete: Bool
+    let isDone: Bool
     let details: String
     let priority: Int
     
@@ -13,7 +13,7 @@ struct TaskModel: Identifiable, Hashable {
         self.id = id
         self.title = title
         self.ofTaskList = ofTaskList
-        self.isComplete = isComplete
+        self.isDone = isComplete
         self.details = details
         self.priority = priority
     }
@@ -22,13 +22,13 @@ struct TaskModel: Identifiable, Hashable {
         return TaskModel(id: self.id,
                          title: title ?? self.title,
                          ofTaskList: ofTaskList ?? self.ofTaskList,
-                         isComplete: isComplete ?? self.isComplete,
+                         isComplete: isComplete ?? self.isDone,
                          details: details ?? self.details,
                          priority: priority ?? self.priority)
     }
     
-    func toggleComplete() -> TaskModel {
-        return edit(isComplete: !self.isComplete)
+    func toggleDone() -> TaskModel {
+        return edit(isComplete: !self.isDone)
     }
 }
 
