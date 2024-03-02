@@ -68,9 +68,9 @@ extension MoreSheetView {
         var isDisabled: Bool {
             switch option {
             case .defaultList, .deleteList:
-                return taskViewModel.getCurrentId() == taskViewModel.defaultTaskList.id
+                return taskViewModel.currentTaskList().id == taskViewModel.defaultTaskList.id
             case .showHide, .deleteCompleted:
-                return taskViewModel.getCurrentCompletedTasks().count == 0
+                return taskViewModel.currentDoneTasks().count == 0
             default: return false
             }
         }
@@ -101,12 +101,12 @@ extension MoreSheetView {
     }
     
     private func clickDefaultList() {
-        taskViewModel.updateDefaultTaskList(taskViewModel.current)
+        taskViewModel.updateDefault(with: taskViewModel.current)
         presentationMode.wrappedValue.dismiss()
     }
     
     private func clickDeleteList() {
-        taskViewModel.deleteTaskList(taskViewModel.current)
+        taskViewModel.deleteList(at: taskViewModel.current)
         presentationMode.wrappedValue.dismiss()
     }
     
@@ -116,9 +116,9 @@ extension MoreSheetView {
     }
     
     private func clickDeleteCompleted() {
-        taskViewModel.deleteMultipleTasks {
+        taskViewModel.deleteIf {
             $0.isDone &&
-            $0.ofTaskList == taskViewModel.getCurrentId()
+            $0.ofTaskList == taskViewModel.currentTaskList().id
         }
         presentationMode.wrappedValue.dismiss()
     }
@@ -130,7 +130,7 @@ extension MoreSheetView {
     }
     
     private func clickSave() {
-        taskViewModel.updateListTitle(title: titleInput)
+        taskViewModel.updateCurrentTitle(to: titleInput)
         presentationMode.wrappedValue.dismiss()
     }
 }

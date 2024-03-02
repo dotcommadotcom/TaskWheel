@@ -28,58 +28,55 @@ extension TaskViewModel {
         }
     }
     
-    func deleteTask(_ task: TaskModel) {
+    func delete(this task: TaskModel) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks.remove(at: index)
         }
     }
     
-    func deleteMultipleTasks(condition: @escaping (TaskModel) -> Bool) {
+    func deleteIf(condition: @escaping (TaskModel) -> Bool) {
         tasks.removeAll(where: condition)
     }
     
-    func updateTask(_ task: TaskModel, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
+    func update(this task: TaskModel, title: String? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.edit(title: title ?? task.title,
                                      details: details ?? task.details,
                                      priority: priority ?? task.priority)
         }
     }
-
-    func getCurrentTasks() -> Deque<TaskModel> {
-        return tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
+    
+    func currentTaskList() -> TaskListModel {
+        return self.taskLists[current]
     }
     
-    func getCurrentCompletedTasks() -> Deque<TaskModel> {
-        return tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }
-    }
-    
-    func getCurrentId() -> UUID {
-        return self.taskLists[current].id
-    }
-    
-    func getCurrentTitle() -> String {
+    func currentTitle() -> String {
         return self.taskLists[current].title
     }
     
-    func getCurrentDoneVisible() -> Bool {
-        return self.taskLists[current].isDoneVisible
+    func currentTasks() -> Deque<TaskModel> {
+        return tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
     }
     
-    func updateCurrentTaskList(_ taskList: TaskListModel) {
+    func currentDoneTasks() -> Deque<TaskModel> {
+        guard taskLists[current].isDoneVisible else {
+            return []
+        }
+        
+        return tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }
+    }
+    
+    func updateCurrentTo(this taskList: TaskListModel) {
         if let index = taskLists.firstIndex(where: { $0.id == taskList.id }) {
             self.current = index
         }
     }
     
     func toggleCurrentDoneVisible() {
-        if let index = taskLists.firstIndex(where: { $0.id == taskLists[current].id }) {
-            taskLists[index] = taskLists[index].toggleDoneVisible()
-            updateCurrentTaskList(taskLists[index])
-        }
+        taskLists[current] = taskLists[current].toggleDoneVisible()
     }
     
-    func updateDefaultTaskList(_ index: Int) {
+    func updateDefault(with index: Int) {
         guard taskLists[index].id != defaultTaskList.id else {
             return
         }
@@ -91,33 +88,31 @@ extension TaskViewModel {
     }
     
     func addTaskList(title: String) {
-        let newTaskList = TaskListModel(title: title)
-        
-        taskLists.append(newTaskList)
+        taskLists.append(TaskListModel(title: title))
         self.current = taskLists.count - 1
     }
     
-    func deleteTaskList(_ index: Int) {
+    func deleteList(at index: Int) {
         guard taskLists[index].id != defaultTaskList.id else {
             return
         }
         
-        deleteMultipleTasks { $0.ofTaskList == self.taskLists[index].id }
+        deleteIf { $0.ofTaskList == self.taskLists[index].id }
 
         if index == self.current {
-            updateCurrentTaskList(defaultTaskList)
+            updateCurrentTo(this: defaultTaskList)
         }
         
         taskLists.remove(at: index)
     }
     
-    func updateListTitle(title: String? = nil) {
+    func updateCurrentTitle(to title: String? = nil) {
         taskLists[current] = taskLists[current].edit(title: title)
     }
     
-    func countCompleted() -> Int {
-        return tasks.filter { $0.isDone }.count
-    }
+//    func countDone() -> Int {
+//        return tasks.filter { $0.isDone }.count
+//    }
     
     //    func showTasks() -> Deque<TaskModel> {
     //        return taskList.filter { !$0.isComplete }

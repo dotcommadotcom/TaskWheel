@@ -34,7 +34,7 @@ extension ListsSheetView {
     
     private func taskListRowView(taskList: TaskListModel) -> some View {
         
-        let highlight = taskList.id == taskViewModel.getCurrentId()
+        let highlight = taskList.id == taskViewModel.currentTaskList().id
         
         return HStack(spacing: 15) {
             Image(systemName: highlight ? "record.circle" : "circle")
@@ -90,7 +90,7 @@ extension ListsSheetView {
 extension ListsSheetView {
     
     private func switchTaskList(_ taskList: TaskListModel) {
-        taskViewModel.updateCurrentTaskList(taskList)
+        taskViewModel.updateCurrentTo(this: taskList)
         presentationMode.wrappedValue.dismiss()
     }
     

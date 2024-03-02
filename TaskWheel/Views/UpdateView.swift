@@ -23,7 +23,7 @@ struct UpdateView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text(taskViewModel.getCurrentTitle())
+            Text(taskViewModel.currentTitle())
                 .fontWeight(.bold)
                 .foregroundStyle(color.text.opacity(0.5))
             
@@ -151,12 +151,12 @@ extension UpdateView {
     }
     
     private func clickDelete() {
-        taskViewModel.deleteTask(task)
+        taskViewModel.delete(this: task)
         navigation.goBack()
     }
     
     private func clickSave() {
-        taskViewModel.updateTask(task, title: titleInput, details: detailsInput)
+        taskViewModel.update(this: task, title: titleInput, details: detailsInput)
         navigation.goBack()
     }
 }

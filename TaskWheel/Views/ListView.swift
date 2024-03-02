@@ -7,17 +7,15 @@ struct ListView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(taskViewModel.getCurrentTasks()) { task in
+                ForEach(taskViewModel.currentTasks()) { task in
                     NavigationLink(value: task) {
                         TaskRowView(task: task)
                     }
                 }
                 
-                if taskViewModel.getCurrentDoneVisible() {
-                    ForEach(taskViewModel.getCurrentCompletedTasks()) { task in
-                        NavigationLink(value: task) {
-                            TaskRowView(task: task)
-                        }
+                ForEach(taskViewModel.currentDoneTasks()) { task in
+                    NavigationLink(value: task) {
+                        TaskRowView(task: task)
                     }
                 }
             }
