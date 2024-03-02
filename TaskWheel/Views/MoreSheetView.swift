@@ -23,7 +23,7 @@ struct MoreSheetView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
-    @State var titleInput: String = ""
+    @State private var titleInput: String = ""
     @State private var showRenameList = false
     
     let moreOptions: [OptionItem] = [.defaultList, .deleteList, .showHide, .deleteCompleted]
@@ -49,13 +49,17 @@ struct MoreSheetView: View {
             .buttonStyle(NoAnimationStyle())
             
             if showRenameList {
-                TextField(titleInput, text: $titleInput)
+                TextField(titleInput, text: $titleInput, axis: .vertical)
+                    .onAppear {
+                        titleInput = taskViewModel.currentTitle()
+                    }
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(color.accent, lineWidth: 2)
                     )
                     .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }
@@ -139,4 +143,3 @@ extension MoreSheetView {
     MoreSheetView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
-

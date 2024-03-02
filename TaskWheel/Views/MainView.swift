@@ -51,8 +51,9 @@ extension MainView {
             
             Spacer()
             
-            IconView(icon: .settings, isSpace: true, size: 20)
+            IconView(icon: .settings, size: 20)
         }
+        .frame(maxWidth: .infinity)
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
     }
