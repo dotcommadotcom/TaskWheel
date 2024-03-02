@@ -15,10 +15,9 @@ struct TaskRowView: View {
             Button {
                 action(task)
             } label: {
-                Image(systemName: task.isComplete ? "checkmark.square" : "square")
+                IconView(icon: .complete, isAlt: task.isComplete, size: 22)
                     .foregroundStyle(task.isComplete ? .gray : PriorityItem(task.priority).color)
             }
-            .font(.system(size: 25))
             
             VStack(alignment: .leading, spacing: 5) {
                 Text(task.title)
@@ -47,7 +46,7 @@ struct PropertiesRowView: View {
     
     let sampleProperties: [String] = [
         "due tomorrow 2/24",
-        "high priority",
+        "every week",
         "school",
     ]
     
@@ -90,7 +89,7 @@ struct TaskRowModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         if isComplete {
-            return AnyView(content.strikethrough().foregroundStyle(.gray))
+            return AnyView(content.strikethrough().foregroundStyle(color.text.opacity(0.5)))
         } else {
             return AnyView(content.foregroundStyle(color.text))
         }

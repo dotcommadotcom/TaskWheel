@@ -14,7 +14,7 @@ struct MainView: View {
     var body: some View {
         NavigationStack(path: $navigation.path) {
             VStack(spacing: 0) {
-                TitleView()
+                titleView()
                 
                 TopTabContainerView(selected: $topSelected) {
                     ListView()
@@ -42,20 +42,31 @@ struct MainView: View {
 
 extension MainView {
     
+    private func titleView() -> some View {
+        HStack {
+            Text(taskViewModel.currentTaskList.title)
+                .font(.system(size: 25, weight: .bold))
+                .lineLimit(1)
+                .truncationMode(.tail)
+            
+            Spacer()
+            
+            IconView(icon: .settings, isSpace: true, size: 20)
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
+    }
+    
     private func mainBarView() -> some View {
         BarContainerView(selected: $barSelected) {
             ForEach(mainTabs, id: \.self) { tab in
-                BarIconView(icon: tab, isSpace: tab == mainTabs.last)
+                IconView(icon: tab, isSpace: tab == mainTabs.last)
                     .onTapGesture {
-                        click(tab: tab)
+                        barSelected = tab
                     }
             }
         }
         .sheetItem(selected: $barSelected)
-    }
-    
-    private func click(tab: IconItem) {
-        barSelected = tab
     }
     
     private func handleSwipe(translation: CGFloat) {

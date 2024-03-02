@@ -12,10 +12,11 @@ enum TopTabItem: Hashable {
 }
 
 struct TopTabContainerView<Content: View>: View {
-    let content: Content
     
-    @State var tabs: [TopTabItem] = []
     @Binding var selected: TopTabItem
+    @State var tabs: [TopTabItem] = []
+
+    let content: Content
     
     init(selected: Binding<TopTabItem>, @ViewBuilder content: () -> Content) {
         self._selected = selected
@@ -24,7 +25,7 @@ struct TopTabContainerView<Content: View>: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            TopTabView(tabs: tabs, selected: $selected)
+            TopTabView(selected: $selected, tabs: tabs)
             
             ZStack {
                 content
@@ -37,7 +38,6 @@ struct TopTabContainerView<Content: View>: View {
     
 }
 
-
 struct TopTabPreferenceKey: PreferenceKey {
     static var defaultValue: [TopTabItem] = []
     
@@ -48,10 +48,9 @@ struct TopTabPreferenceKey: PreferenceKey {
 
 struct TopTabView: View {
     
-    let tabs: [TopTabItem]
-    
     @Binding var selected: TopTabItem
-    
+
+    let tabs: [TopTabItem]
     private let color = ColorSettings()
     
     var body: some View {
@@ -81,11 +80,11 @@ extension TopTabView {
             
             Rectangle()
                 .frame(maxWidth: .infinity, maxHeight: 1.5)
-                .shadow(color: .gray.opacity(0.5), radius: 1, x: 0, y: 1)
+                .shadow(color: .gray.opacity(0.2), radius: 1, x: 0, y: 0.5)
             
         }
         .frame(maxWidth: .infinity, maxHeight: 35)
-        .foregroundStyle(selected == tab ? color.accent : .gray)
+        .foregroundStyle(selected == tab ? color.accent : color.text.opacity(0.3))
     }
     
     private func click(tab: TopTabItem) {
@@ -97,8 +96,8 @@ extension TopTabView {
 
 struct TopTabViewModifier: ViewModifier {
     
-    let tab: TopTabItem
     @Binding var selected: TopTabItem
+    let tab: TopTabItem
     
     func body(content: Content) -> some View {
         content
@@ -110,13 +109,13 @@ struct TopTabViewModifier: ViewModifier {
 extension View {
     func topTabItem(tab: TopTabItem, selected: Binding<TopTabItem>) -> some View {
         self
-            .modifier(TopTabViewModifier(tab: tab, selected: selected))
+            .modifier(TopTabViewModifier(selected: selected, tab: tab))
     }
 }
 
 #Preview("tabs") {
-    let tabs: [TopTabItem] = [.list, .wheel]
     @State var selected: TopTabItem = .list
+    let tabs: [TopTabItem] = [.list, .wheel]
     
-    return TopTabView(tabs: tabs, selected: $selected)
+    return TopTabView(selected: $selected, tabs: tabs)
 }

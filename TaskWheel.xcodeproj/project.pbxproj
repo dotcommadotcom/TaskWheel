@@ -14,7 +14,6 @@
 		B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81EF2B830F3800A8886F /* TaskModel.swift */; };
 		B72F692B2B8C296100525EF8 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F692A2B8C296100525EF8 /* ListView.swift */; };
 		B72F692D2B8C2DF000525EF8 /* WheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F692C2B8C2DF000525EF8 /* WheelView.swift */; };
-		B72F692F2B8C2ECA00525EF8 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F692E2B8C2ECA00525EF8 /* TitleView.swift */; };
 		B72F69312B8C2F4800525EF8 /* BarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F69302B8C2F4800525EF8 /* BarContainerView.swift */; };
 		B72F69332B8C32AE00525EF8 /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F69322B8C32AE00525EF8 /* TaskRowView.swift */; };
 		B72F69402B8C97AD00525EF8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B72F693F2B8C97AD00525EF8 /* .gitignore */; };
@@ -32,7 +31,7 @@
 		B7B71FE22B902F7500233641 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B71FE12B902F7500233641 /* ContentView.swift */; };
 		B7B71FE52B9190F000233641 /* TaskListModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B71FE42B9190F000233641 /* TaskListModelTests.swift */; };
 		B7DD374E2B8ECDBE008AD29D /* InfiniteScroller in Frameworks */ = {isa = PBXBuildFile; productRef = B7DD374D2B8ECDBE008AD29D /* InfiniteScroller */; };
-		B7DD37502B8ED87E008AD29D /* IconItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD374F2B8ED87E008AD29D /* IconItem.swift */; };
+		B7DD37502B8ED87E008AD29D /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD374F2B8ED87E008AD29D /* IconView.swift */; };
 		B7DD37522B8EE9BF008AD29D /* PriorityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD37512B8EE9BF008AD29D /* PriorityView.swift */; };
 		B7EAF45E2B92CBB9006732EE /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF45D2B92CBB9006732EE /* SheetView.swift */; };
 		B7F5B80A2B83721600F5CD9D /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */; };
@@ -59,7 +58,6 @@
 		B71A81EF2B830F3800A8886F /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		B72F692A2B8C296100525EF8 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		B72F692C2B8C2DF000525EF8 /* WheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelView.swift; sourceTree = "<group>"; };
-		B72F692E2B8C2ECA00525EF8 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		B72F69302B8C2F4800525EF8 /* BarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarContainerView.swift; sourceTree = "<group>"; };
 		B72F69322B8C32AE00525EF8 /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		B72F693F2B8C97AD00525EF8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -75,7 +73,7 @@
 		B7B71FB32B8F5A9400233641 /* TaskListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListModel.swift; sourceTree = "<group>"; };
 		B7B71FE12B902F7500233641 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B7B71FE42B9190F000233641 /* TaskListModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskListModelTests.swift; path = TaskWheelTests/TaskListModelTests.swift; sourceTree = SOURCE_ROOT; };
-		B7DD374F2B8ED87E008AD29D /* IconItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconItem.swift; sourceTree = "<group>"; };
+		B7DD374F2B8ED87E008AD29D /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		B7DD37512B8EE9BF008AD29D /* PriorityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityView.swift; sourceTree = "<group>"; };
 		B7EAF45D2B92CBB9006732EE /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
@@ -148,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				B71A81EA2B830E4B00A8886F /* MainView.swift */,
-				B72F692E2B8C2ECA00525EF8 /* TitleView.swift */,
 				B75F44012B8C253A00D0B182 /* TopTabView.swift */,
 				B72F692A2B8C296100525EF8 /* ListView.swift */,
 				B72F692C2B8C2DF000525EF8 /* WheelView.swift */,
@@ -161,7 +158,7 @@
 				B76905242B8DD6FD001DD077 /* MoreSheetView.swift */,
 				B76905282B8DDC33001DD077 /* AddSheetView.swift */,
 				B7DD37512B8EE9BF008AD29D /* PriorityView.swift */,
-				B7DD374F2B8ED87E008AD29D /* IconItem.swift */,
+				B7DD374F2B8ED87E008AD29D /* IconView.swift */,
 				B79D9AA32B885899009CA9FF /* ColorSettings.swift */,
 				B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */,
 				B7B71FE12B902F7500233641 /* ContentView.swift */,
@@ -307,12 +304,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */,
-				B72F692F2B8C2ECA00525EF8 /* TitleView.swift in Sources */,
 				B7DD37522B8EE9BF008AD29D /* PriorityView.swift in Sources */,
 				B72F692B2B8C296100525EF8 /* ListView.swift in Sources */,
 				B75F44022B8C253A00D0B182 /* TopTabView.swift in Sources */,
 				B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */,
-				B7DD37502B8ED87E008AD29D /* IconItem.swift in Sources */,
+				B7DD37502B8ED87E008AD29D /* IconView.swift in Sources */,
 				B76905292B8DDC33001DD077 /* AddSheetView.swift in Sources */,
 				B76905232B8D8BC3001DD077 /* OrderSheetView.swift in Sources */,
 				B7A97B1A2B85C6EB00C9E9AA /* TextFieldErrorView.swift in Sources */,

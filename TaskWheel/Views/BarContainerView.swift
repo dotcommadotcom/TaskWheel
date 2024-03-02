@@ -22,36 +22,15 @@ struct BarContainerView<Content: View>: View {
     }
 }
 
-struct BarIconView: View {
-    let icon: IconItem
-    let isSpace: Bool
-    var size: CGFloat = 25
-    
-    var body: some View {
-        HStack {
-            if isSpace {
-                Spacer()
-            }
-            
-            Image(systemName: icon.text)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: size, height: icon == .save ? size + 4 : size)
-        }
-    }
-}
+
 
 #Preview("container") {
     let mainTabs: [IconItem] = [.lists, .order, .more, .add]
     
     return BarContainerView(selected: .constant(.lists)) {
         ForEach(mainTabs, id: \.self) { tab in
-            BarIconView(icon: tab, isSpace: tab == mainTabs.last)
+            IconView(icon: tab, isSpace: tab == mainTabs.last)
         }
     }
-}
-
-#Preview("icon") {
-    BarIconView(icon: .lists, isSpace: false)
 }
 
