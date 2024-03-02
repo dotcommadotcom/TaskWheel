@@ -4,8 +4,8 @@ struct MainView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
-    @State private var topSelection: TopTabItem = .list
-    @State private var barSelection: IconItem? = nil
+    @State private var topSelected: TopTabItem = .list
+    @State private var barSelected: IconItem? = nil
     @State private var showCompleted: Bool = true
     
     private let color = ColorSettings()
@@ -16,24 +16,23 @@ struct MainView: View {
             VStack(spacing: 0) {
                 TitleView()
                 
-                TopTabContainerView(selected: $topSelection) {
+                TopTabContainerView(selected: $topSelected) {
                     ListView()
-                        .topTabItem(tab: .list, selected: $topSelection)
+                        .topTabItem(tab: .list, selected: $topSelected)
                     
                     WheelView()
-                        .topTabItem(tab: .wheel, selected: $topSelection)
+                        .topTabItem(tab: .wheel, selected: $topSelected)
                 }
                 .highPriorityGesture(DragGesture().onEnded({
                     handleSwipe(translation: $0.translation.width)
                 }))
-               
-                BarView(selected: $barSelection, tabs: mainTabs)
+                
+                mainBarView()
                     .background(color.text.opacity(0.05))
-                    .sheetItem(selected: $barSelection)
             }
             .background(color.background)
             .foregroundStyle(color.text)
-            .animation(.easeInOut, value: topSelection)
+            .animation(.easeInOut, value: topSelected)
             .navigationDestination(for: TaskModel.self) { task in
                 UpdateView(task: task)
             }
@@ -43,11 +42,27 @@ struct MainView: View {
 
 extension MainView {
     
+    private func mainBarView() -> some View {
+        BarContainerView(selected: $barSelected) {
+            ForEach(mainTabs, id: \.self) { tab in
+                BarIconView(icon: tab, isSpace: tab == mainTabs.last)
+                    .onTapGesture {
+                        click(tab: tab)
+                    }
+            }
+        }
+        .sheetItem(selected: $barSelected)
+    }
+    
+    private func click(tab: IconItem) {
+        barSelected = tab
+    }
+    
     private func handleSwipe(translation: CGFloat) {
-        if translation < -50 && topSelection == .list {
-            topSelection = .wheel
-        } else if translation > 50 && topSelection == .wheel {
-            topSelection = .list
+        if translation < -50 && topSelected == .list {
+            topSelected = .wheel
+        } else if translation > 50 && topSelected == .wheel {
+            topSelected = .list
         }
     }
 }

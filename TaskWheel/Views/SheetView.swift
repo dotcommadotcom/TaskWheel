@@ -1,11 +1,22 @@
 import SwiftUI
 
+struct SheetViewModifier: ViewModifier {
+    
+    @Binding var selected: IconItem?
+    
+    func body(content: Content) -> some View {
+        content
+            .popover(item: $selected) { _ in
+                SheetView(selected: $selected)
+            }
+    }
+}
+
 struct SheetView: View {
     
     @Binding var selected: IconItem?
     @State private var sheetHeight: CGFloat = .zero
-    
-    private let color = ColorSettings()
+    let color = ColorSettings()
     
     var body: some View {
         VStack {
@@ -19,27 +30,10 @@ struct SheetView: View {
         }
         .font(.system(size: 22))
         .padding(30)
-        .foregroundStyle(color.text)
-        .getSheetHeight($sheetHeight)
-        .presentationDetents([.height(sheetHeight)])
-        .presentationCornerRadius(25)
-        .presentationDragIndicator(.hidden)
-        .presentationBackground(color.background)
+        .presentSheet($sheetHeight)
     }
 }
-
-struct SheetViewModifier: ViewModifier {
     
-    @Binding var selected: IconItem?
-
-    func body(content: Content) -> some View {
-        content
-            .sheet(item: $selected) { _ in
-                SheetView(selected: $selected)
-            }
-    }
-}
-
 struct SheetHeightModifier: ViewModifier {
     
     @Binding var sheetHeight: CGFloat
@@ -57,6 +51,23 @@ struct SheetHeightModifier: ViewModifier {
     }
 }
 
+struct SheetPresentationModifier: ViewModifier {
+    
+    @Binding var sheetHeight: CGFloat
+    private let color = ColorSettings()
+    
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(color.text)
+            .presentationCompactAdaptation(.sheet)
+            .getSheetHeight($sheetHeight)
+            .presentationDetents([.height(sheetHeight)])
+            .presentationCornerRadius(25)
+            .presentationDragIndicator(.hidden)
+            .presentationBackground(color.background)
+    }
+}
+
 extension View {
     func sheetItem(selected: Binding<IconItem?>) -> some View {
         self
@@ -67,7 +78,13 @@ extension View {
         self
             .modifier(SheetHeightModifier(sheetHeight: sheetHeight))
     }
+    
+    func presentSheet(_ sheetHeight: Binding<CGFloat>) -> some View {
+        self
+            .modifier(SheetPresentationModifier(sheetHeight: sheetHeight))
+    }
 }
+
 
 #Preview {
     SheetView(selected: .constant(nil))

@@ -9,7 +9,7 @@ struct ListsSheetView: View {
     
     private let color = ColorSettings()
     private let newListText = "Create new list"
-    private let newTitleDefault = "Enter title of new list"
+    private let newTitleDefault = "Enter title"
     
     var body: some View {
         
@@ -35,7 +35,6 @@ extension ListsSheetView {
     private func taskListRowView(taskList: TaskListModel) -> some View {
         
         let highlight = taskList.id == taskViewModel.currentTaskList.id
-        let isDefault = taskList.id == taskViewModel.defaultTaskList.id
         
         return HStack(spacing: 15) {
             Image(systemName: highlight ? "record.circle" : "circle")
@@ -43,32 +42,47 @@ extension ListsSheetView {
                 .foregroundStyle(highlight ? color.accent : color.text)
             
             Text(taskList.title)
-                .fontWeight(isDefault ? .bold : .regular)
-            
-            if isDefault {
-                Text("[default]")
-                    .padding(.horizontal, -10)
-                    .foregroundStyle(.gray.opacity(0.6))
-            }
+                .fontWeight(highlight ? .bold : .regular)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private func newListView() -> some View {
-        Button {
-            showNewList.toggle()
-        } label: {
+        return VStack {
             HStack(spacing: 15) {
-                Image(systemName: "plus")
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showNewList.toggle()
+                    }
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .rotationEffect(Angle(degrees: !showNewList ? 0 : 45))
+                
                 Text(newListText)
+                
+                Spacer()
+                
+                if showNewList {
+                    Button {
+                        clickSave()
+                    } label: {
+                        Image(systemName: "square.and.arrow.down")
+                    }
+                    .buttonStyle(NoAnimationStyle())
+                }
             }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .popover(isPresented: $showNewList) {
-            EditListView(selected: $selected)
-                .presentationCompactAdaptation(.sheet)
-                .presentationDetents([.fraction(0.2)])
-                .presentationBackground(color.background)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            if showNewList {
+                TextField(newTitleDefault, text: $newTitleInput)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(color.accent, lineWidth: 2)
+                    )
+                    .lineLimit(1)
+            }
         }
     }
     
@@ -76,16 +90,14 @@ extension ListsSheetView {
         taskViewModel.updateCurrentTaskList(taskList)
         selected = nil
     }
-
+    
+    private func clickSave() {
+        selected = nil
+        taskViewModel.addTaskList(title: newTitleInput)
+    }
 }
 
 #Preview("lists sheet") {
     ListsSheetView(selected: .constant(.lists))
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
-
-//#Preview("bottom tab") {
-//    BarView(tabs: [.lists, .order, .more, .add])
-//        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
-//}
-//

@@ -10,7 +10,7 @@ import Observation
     let low: Color = .asparagus
 }
 
-struct EmptyView: View {
+struct ColorView: View {
     
     @State var color = ColorSettings()
     
@@ -35,7 +35,7 @@ struct EmptyView: View {
 }
 
 #Preview("light") {
-    EmptyView()
+    ColorView()
 }
 
 #Preview("dark") {

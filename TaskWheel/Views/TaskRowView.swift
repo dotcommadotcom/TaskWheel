@@ -35,15 +35,11 @@ struct TaskRowView: View {
                     PropertiesRowView(task: task)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            
-            Spacer()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .font(.system(size: 23))
         .check(isComplete: task.isComplete)
-        
     }
 }
 

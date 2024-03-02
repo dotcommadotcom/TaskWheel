@@ -29,13 +29,21 @@ struct TopTabContainerView<Content: View>: View {
             ZStack {
                 content
             }
-            .padding(.vertical, 10)
         }
         .onPreferenceChange(TopTabPreferenceKey.self, perform: { value in
             self.tabs = value
         })
     }
     
+}
+
+
+struct TopTabPreferenceKey: PreferenceKey {
+    static var defaultValue: [TopTabItem] = []
+    
+    static func reduce(value: inout [TopTabItem], nextValue: () -> [TopTabItem]) {
+        value += nextValue()
+    }
 }
 
 struct TopTabView: View {
@@ -103,14 +111,6 @@ extension View {
     func topTabItem(tab: TopTabItem, selected: Binding<TopTabItem>) -> some View {
         self
             .modifier(TopTabViewModifier(tab: tab, selected: selected))
-    }
-}
-
-struct TopTabPreferenceKey: PreferenceKey {
-    static var defaultValue: [TopTabItem] = []
-    
-    static func reduce(value: inout [TopTabItem], nextValue: () -> [TopTabItem]) {
-        value += nextValue()
     }
 }
 
