@@ -24,6 +24,7 @@ struct OrderSheetView: View {
         VStack(alignment: .leading, spacing: 22) {
             Text("Sort by")
                 .font(.system(size: 20, weight: .semibold))
+                .foregroundStyle(color.text.opacity(0.5))
             
             VStack(spacing: 15) {
                 ForEach(orders, id: \.self) { order in

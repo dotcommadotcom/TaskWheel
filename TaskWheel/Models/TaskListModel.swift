@@ -6,7 +6,11 @@ struct TaskListModel: Identifiable, Hashable {
     let title: String
     let isDoneVisible: Bool
     
-    init(id: UUID = UUID(), title: String, isDoneVisible: Bool = true) {
+    init(
+        id: UUID = UUID(),
+        title: String,
+        isDoneVisible: Bool = true
+    ) {
         self.id = id
         self.title = title
         self.isDoneVisible = isDoneVisible

@@ -7,7 +7,10 @@ class TaskViewModel: ObservableObject {
     @Published var defaultTaskList: TaskListModel
     @Published var current: Int
     
-    init(_ tasks: Deque<TaskModel> = [], _ taskLists: Deque<TaskListModel> = []) {
+    init(
+        _ tasks: Deque<TaskModel> = [],
+        _ taskLists: Deque<TaskListModel> = []
+    ) {
         self.tasks = tasks
         let backupTaskList = TaskListModel(title: "My Tasks")
         self.taskLists = taskLists.isEmpty ? [backupTaskList] : taskLists
@@ -72,7 +75,7 @@ extension TaskViewModel {
             return []
         }
         
-        let currentDoneTasks = tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
+        let currentDoneTasks = tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }
         
         switch sort {
         case .priority:

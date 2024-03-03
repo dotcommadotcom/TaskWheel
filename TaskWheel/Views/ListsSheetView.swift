@@ -12,14 +12,8 @@ struct ListsSheetView: View {
     private let newTitleDefault = "Enter title"
     
     var body: some View {
-        
         VStack(alignment: .leading, spacing: 22) {
-            ForEach(taskViewModel.taskLists) { taskList in
-                taskListRowView(taskList: taskList)
-                    .onTapGesture {
-                        switchTaskList(taskList)
-                    }
-            }
+            TaskListsView()
             
             Divider()
                 .padding(.horizontal, -10)
@@ -31,21 +25,6 @@ struct ListsSheetView: View {
 }
 
 extension ListsSheetView {
-    
-    private func taskListRowView(taskList: TaskListModel) -> some View {
-        
-        let highlight = taskList.id == taskViewModel.currentTaskList().id
-        
-        return HStack(spacing: 15) {
-            Image(systemName: highlight ? "record.circle" : "circle")
-                .fontWeight(highlight ? .bold : .regular)
-                .foregroundStyle(highlight ? color.accent : color.text)
-            
-            Text(taskList.title)
-                .fontWeight(highlight ? .bold : .regular)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
     
     private func newListView() -> some View {
         VStack {

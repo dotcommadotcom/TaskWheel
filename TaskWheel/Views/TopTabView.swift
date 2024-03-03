@@ -18,7 +18,10 @@ struct TopTabContainerView<Content: View>: View {
 
     let content: Content
     
-    init(selected: Binding<TopTabItem>, @ViewBuilder content: () -> Content) {
+    init(
+        selected: Binding<TopTabItem>,
+        @ViewBuilder content: () -> Content
+    ) {
         self._selected = selected
         self.content = content()
     }

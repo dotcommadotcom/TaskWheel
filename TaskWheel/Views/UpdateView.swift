@@ -7,12 +7,14 @@ struct UpdateView: View {
     @State var titleInput: String
     @State var detailsInput: String
     @State var priorityInput: PriorityItem
+    @State private var showLists = false
     @State private var showPriority = false
     @State private var barSelected: IconItem? = nil
+    @State private var sheetHeight: CGFloat = .zero
     
     let task: TaskModel
     private let color = ColorSettings()
-    private let updateTabs: [IconItem] = [.complete, .delete, .save]
+    private let updateTabs: [IconItem] = [.delete, .complete]
     
     init(task: TaskModel) {
         self.task = task
@@ -23,18 +25,9 @@ struct UpdateView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text(taskViewModel.currentTitle())
-                .fontWeight(.bold)
-                .foregroundStyle(color.text.opacity(0.5))
+            listTitleView()
             
-            TextField(titleInput, text: $titleInput, axis: .vertical)
-                .lineLimit(5)
-                .font(.system(size: 30))
-                .strikethrough(task.isDone ? true : false)
-                .frame(maxWidth: .infinity)
-                .onSubmit {
-                    clickSave()
-                }
+            taskTitleView()
             
             propertyContainerView(task: task)
             
@@ -51,7 +44,7 @@ struct UpdateView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action: {
-                    navigation.goBack()
+                    saveGoBack()
                 }) {
                     Image(systemName: "arrow.backward")
                 }
@@ -65,6 +58,44 @@ struct UpdateView: View {
 
 extension UpdateView {
     
+    private func listTitleView() -> some View {
+        Button {
+            showLists.toggle()
+        } label: {
+            HStack(alignment: .center) {
+                Image(systemName: "chevron.up.chevron.down")
+                    .font(.system(size: 15))
+                Text(taskViewModel.currentTitle())
+            }
+            .fontWeight(.bold)
+            .foregroundStyle(color.text.opacity(0.5))
+        }
+        .popover(isPresented: $showLists) {
+            VStack(alignment: .leading, spacing: 22) {
+                
+                Text("Move to")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(color.text.opacity(0.5))
+                
+                TaskListsView()
+            }
+            .font(.system(size: 22))
+            .padding(30)
+            .presentSheet($sheetHeight)
+        }
+    }
+    
+    private func taskTitleView() -> some View {
+        TextField(titleInput, text: $titleInput, axis: .vertical)
+            .lineLimit(5)
+            .font(.system(size: 30))
+            .strikethrough(task.isDone ? true : false)
+            .frame(maxWidth: .infinity)
+            .onSubmit {
+                saveGoBack()
+            }
+    }
+    
     private func propertyContainerView(task: TaskModel) -> some View {
         VStack(spacing: 20) {
             
@@ -73,7 +104,6 @@ extension UpdateView {
             Button {
             } label: {
                 propertyView(.schedule, isEmpty: true, defaultText: "Set schedule")
-                
             }
             
             Button {
@@ -107,12 +137,11 @@ extension UpdateView {
                         .foregroundStyle(detailsInput.isEmpty ? .gray : color.text)
                         .lineLimit(5)
                         .onSubmit {
-                            clickSave()
+                            saveGoBack()
                         }
                     
                 case .priority:
                     Text(priorityInput.text)
-                        
                     
                 default:
                     Text(property.text)
@@ -131,7 +160,6 @@ extension UpdateView {
                         switch tab {
                         case .complete: clickComplete()
                         case .delete: clickDelete()
-                        case .save: clickSave()
                         default: {}()
                         }
                     }
@@ -153,16 +181,24 @@ extension UpdateView {
     
     private func clickComplete() {
         taskViewModel.toggleDone(task)
-        navigation.goBack()
+        saveGoBack()
     }
     
     private func clickDelete() {
         taskViewModel.delete(this: task)
-        navigation.goBack()
+        saveGoBack()
     }
     
-    private func clickSave() {
-        taskViewModel.update(this: task, title: titleInput, details: detailsInput)
+    private func saveGoBack() {
+        if task.title != titleInput || task.ofTaskList !=  taskViewModel.currentTaskList().id || task.details != detailsInput || task.priority != priorityInput.rawValue {
+            taskViewModel.update(
+                this: task,
+                title: titleInput,
+                ofTaskList: taskViewModel.currentTaskList().id,
+                details: detailsInput,
+                priority: priorityInput.rawValue
+            )
+        }
         navigation.goBack()
     }
 }

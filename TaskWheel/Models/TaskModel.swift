@@ -9,7 +9,14 @@ struct TaskModel: Identifiable, Hashable {
     let details: String
     let priority: Int
     
-    init(id: UUID = UUID(), title: String, ofTaskList: UUID = UUID(), isComplete: Bool = false, details: String = "", priority: Int = 4) {
+    init(
+        id: UUID = UUID(),
+        title: String,
+        ofTaskList: UUID = UUID(),
+        isComplete: Bool = false,
+        details: String = "",
+        priority: Int = 4
+    ) {
         self.id = id
         self.title = title
         self.ofTaskList = ofTaskList

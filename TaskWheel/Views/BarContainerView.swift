@@ -7,7 +7,11 @@ struct BarContainerView<Content: View>: View {
     
     var padding: CGFloat
     
-    init(selected: Binding<IconItem?>, padding: CGFloat = 20, @ViewBuilder content: () -> Content) {
+    init(
+        selected: Binding<IconItem?>,
+        padding: CGFloat = 20,
+        @ViewBuilder content: () -> Content
+    ) {
         self._selected = selected
         self.padding = padding
         self.content = content()
