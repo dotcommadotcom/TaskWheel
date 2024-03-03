@@ -284,7 +284,7 @@ final class TaskViewModelTests: XCTestCase {
     func testAddTaskWithProperties() throws {
         let title = "task title"
         let details = "task details"
-        let priority = 3
+        let priority = 2
         
         simpleTaskVM.addTask(title: title, details: details, priority: priority)
         
@@ -298,7 +298,7 @@ final class TaskViewModelTests: XCTestCase {
         
         XCTAssertEqual(simpleTaskVM.tasks[0].title, "")
         XCTAssertEqual(simpleTaskVM.tasks[0].details, "")
-        XCTAssertEqual(simpleTaskVM.tasks[0].priority, 4)
+        XCTAssertEqual(simpleTaskVM.tasks[0].priority, 1)
     }
     
     func testAddTaskPrepends() throws {

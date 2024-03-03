@@ -111,11 +111,19 @@ extension UpdateView {
             } label: {
                 propertyView(.priority, isEmpty: task.priority == 4, defaultText: "Set priority")
             }
-            .popover(isPresented: $showPriority) {
-                PriorityView(selected: $priorityInput)
-                    .presentationCompactAdaptation(.popover)
-                    .presentationBackground(color.background)
+            .overlay(alignment: .top) {
+                if showPriority {
+                    PriorityView(selected: $priorityInput, showPriority: $showPriority)
+                        .offset(x: 20, y: 40)
+//                        .padding(40)
+                }
             }
+            
+//            .popover(isPresented: $showPriority) {
+//                PriorityView(selected: $priorityInput)
+//                    .presentationCompactAdaptation(.popover)
+//                    .presentationBackground(color.background)
+//            }
         }
     }
     

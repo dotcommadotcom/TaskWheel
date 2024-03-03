@@ -7,11 +7,12 @@ struct AddSheetView: View {
     
     @State var titleInput: String = ""
     @State var detailsInput: String = ""
-    @State var priorityInput: PriorityItem = .no
+    @State var priorityInput: Int = 3
     @State private var showDetails = false
-    @State private var showPriority = false
+    @State private var isPriorityReset = false
     
     private let color = ColorSettings()
+    private let iconSize: CGFloat = 22
     private let textDefault: String = "What now?"
     private let detailDefault: String = "Add details"
     
@@ -19,8 +20,6 @@ struct AddSheetView: View {
         VStack(alignment: .leading, spacing: 22) {
             TextField(textDefault, text: $titleInput, axis: .vertical)
                 .lineLimit(20)
-//                .preventTextFieldError()
-                
             
             if showDetails {
                 TextField(detailDefault, text: $detailsInput, axis: .vertical)
@@ -32,9 +31,7 @@ struct AddSheetView: View {
                 .buttonStyle(NoAnimationStyle())
         }
         .fixedSize(horizontal: false, vertical: true)
-        .onSubmit {
-            clickSave()
-        }
+        .onSubmit { clickSave() }
     }
     
 }
@@ -42,55 +39,68 @@ struct AddSheetView: View {
 extension AddSheetView {
     
     private func addBarView() -> some View {
-        let size: CGFloat = 22
-        
-        return HStack(spacing: 30) {
-            Button {
-                showDetails.toggle()
-            } label: {
-                IconView(icon: .details, size: size)
-            }
-            .foregroundStyle(!detailsInput.isEmpty ? color.accent : color.text)
+        HStack(spacing: 30) {
+            detailsButton()
             
-            Button {
-            } label: {
-                IconView(icon: .schedule, size: size)
-            }
+            scheduleButton()
             
-            Button {
-                showPriority.toggle()
-            } label: {
-                IconView(icon: .priority, isAlt: priorityInput.rawValue != 4, size: size)
-            }
-            .foregroundStyle(priorityInput.color)
-            .padding(.vertical, 8)
-            .popover(isPresented: $showPriority, attachmentAnchor: .point(.top), arrowEdge: .top) {
-                PriorityView(selected: $priorityInput)
-                    .presentationCompactAdaptation(.popover)
-                    .presentationBackground(color.background)
-            }
+            priorityButton()
             
-            Button {
-                clickSave()
-            } label: {
-                IconView(icon: .save, isSpace: true, size: size)
-            }
-            .disabled(isTaskEmpty() ? true : false)
-            .foregroundStyle(isTaskEmpty() ? .gray : color.text)
+            saveButton()
         }
+    }
+    
+    private func detailsButton() -> some View {
+        Button {
+            showDetails.toggle()
+        } label: {
+            IconView(icon: .details, size: iconSize)
+        }
+        .foregroundStyle(!detailsInput.isEmpty ? color.accent : color.text)
+    }
+    
+    private func scheduleButton() -> some View {
+        Button {
+        } label: {
+            IconView(icon: .schedule, size: iconSize)
+        }
+    }
+    
+    private func priorityButton() -> some View {
+        Button {
+            priorityInput = (priorityInput + 3) % 4
+        } label: {
+            IconView(icon: .priority, isAlt: priorityInput != 3, size: iconSize)
+        }
+        .foregroundStyle(PriorityItem(priorityInput).color)
+        .padding(.vertical, 8)
+        .onLongPressGesture(minimumDuration: 1) {
+            priorityInput = 3
+        }
+    }
+    
+    private func saveButton() -> some View {
+        Button {
+            clickSave()
+        } label: {
+            IconView(icon: .save, isSpace: true, size: iconSize)
+        }
+        .disabled(isTaskEmpty() ? true : false)
+        .foregroundStyle(isTaskEmpty() ? .gray : color.text)
     }
 }
 
 extension AddSheetView {
     
     private func clickSave() {
-        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput.rawValue)
+        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput)
         presentationMode.wrappedValue.dismiss()
     }
     
     private func isTaskEmpty() -> Bool {
-        return titleInput.isEmpty && detailsInput.isEmpty && priorityInput.rawValue == 4
+        return titleInput.isEmpty && detailsInput.isEmpty && priorityInput == 3
     }
+    
 }
 
 struct NoAnimationStyle: PrimitiveButtonStyle {
@@ -105,6 +115,8 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
     ZStack {
         Color.gray.opacity(0.3).ignoresSafeArea()
         AddSheetView()
+            .padding(30)
+            .background(.white)
     }
     .environmentObject(TaskViewModel())
 }

@@ -21,7 +21,7 @@ class TaskViewModel: ObservableObject {
 
 extension TaskViewModel {
     
-    func addTask(title: String = "", details: String = "", priority: Int = 4) {
+    func addTask(title: String = "", details: String = "", priority: Int = 3) {
         tasks.prepend(TaskModel(title: title, ofTaskList: currentTaskList().id, details: details, priority: priority))
         objectWillChange.send()
     }
@@ -164,18 +164,18 @@ extension TaskViewModel {
             .init(title: "laundry", ofTaskList: uuids[0], isComplete: true),
             .init(title: "research pkms", ofTaskList: uuids[2], isComplete: false),
             .init(title: "dishes", ofTaskList: uuids[0], isComplete: false),
-            .init(title: "mop", ofTaskList: uuids[0], isComplete: false, details: "where are the clean mop heads?", priority: 2),
-            .init(title: "i hope im not too late to set my demon straight", ofTaskList: uuids[1], isComplete: false, priority: 1),
+            .init(title: "mop", ofTaskList: uuids[0], isComplete: false, details: "where are the clean mop heads?", priority: 1),
+            .init(title: "i hope im not too late to set my demon straight", ofTaskList: uuids[1], isComplete: false, priority: 0),
             .init(title: "vacuum", ofTaskList: uuids[0], isComplete: true, priority: 1),
             .init(title: "its all a big circle jerk", ofTaskList: uuids[1], isComplete: false),
             .init(title: "water plants", ofTaskList: uuids[0], isComplete: false),
-            .init(title: "throw out trash", ofTaskList: uuids[0], isComplete: false, priority: 1),
+            .init(title: "throw out trash", ofTaskList: uuids[0], isComplete: false, priority: 0),
             .init(title: "recycle plastic and paper, separate vinyl labels", ofTaskList: uuids[0], isComplete: false),
             .init(title: "wipe countertop", ofTaskList: uuids[0], isComplete: false),
             .init(title: "fold laundry", ofTaskList: uuids[0], isComplete: false),
             .init(title: "change passwords", ofTaskList: uuids[2], isComplete: true),
-            .init(title: "clean bathroom", ofTaskList: uuids[0], isComplete: true, priority: 2),
-            .init(title: "organize shelf", ofTaskList: uuids[0], isComplete: false, priority: 3),
+            .init(title: "clean bathroom", ofTaskList: uuids[0], isComplete: true, priority: 1),
+            .init(title: "organize shelf", ofTaskList: uuids[0], isComplete: false, priority: 2),
             .init(title: "i want to make [] things, even if nobody cares", ofTaskList: uuids[1], isComplete: true),
         ]
     }

@@ -1,13 +1,13 @@
 import SwiftUI
 
 enum PriorityItem: Int {
-    case high = 1, medium = 2, low = 3, no = 4
+    case high = 0, medium = 1, low = 2, no = 3
     
     init(_ value: Int) {
         switch value {
-        case 1: self = .high
-        case 2: self = .medium
-        case 3: self = .low
+        case 0: self = .high
+        case 1: self = .medium
+        case 2: self = .low
         default: self = .no
         }
     }
@@ -33,23 +33,31 @@ enum PriorityItem: Int {
 
 struct PriorityView: View {
     @Binding var selected: PriorityItem
+    @Binding var showPriority: Bool
     let priority: [PriorityItem] = [.high, .medium, .low, .no]
     private let color = ColorSettings()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            ForEach(priority, id: \.self) { priority in
-                view(priority: priority)
-                    .onTapGesture {
-                        click(priority: priority)
-                    }
+        ZStack(alignment: .center) {
+            RoundedRectangle(cornerRadius: 5)
+                .fill(color.background)
+                .stroke(color.text)
+            
+            VStack(alignment: .leading, spacing: 15) {
+                ForEach(priority, id: \.self) { priority in
+                    priorityRowView(priority: priority)
+                        .onTapGesture {
+                            selected = priority
+                            showPriority.toggle()
+                        }
+                }
             }
+            .padding(15)
+            .font(.system(size: 22))
         }
-        .padding(30)
-        .font(.system(size: 22))
     }
     
-    private func view(priority: PriorityItem) -> some View {
+    private func priorityRowView(priority: PriorityItem) -> some View {
         HStack(spacing: 15) {
             Image(systemName: selected == priority ? "tag.fill" : "tag")
                 .fontWeight(selected == priority ? .bold : .regular)
@@ -59,17 +67,15 @@ struct PriorityView: View {
             Spacer()
         }
     }
-    
-    private func click(priority: PriorityItem) {
-        selected = priority
+}
+
+#Preview("priority") {
+    ZStack {
+        Color.pink
+        PriorityView(selected: .constant(.no), showPriority: .constant(false))
+            .background(.white)
     }
 }
-//
-//#Preview("main") {
-//    MainView()
-//        .environmentObject(TaskViewModel(TaskModel.examples))
-//        .environmentObject(NavigationCoordinator())
-//}
-//
-//
-//
+
+
+

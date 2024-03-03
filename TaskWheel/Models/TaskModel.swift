@@ -15,7 +15,7 @@ struct TaskModel: Identifiable, Hashable {
         ofTaskList: UUID = UUID(),
         isComplete: Bool = false,
         details: String = "",
-        priority: Int = 4
+        priority: Int = 3
     ) {
         self.id = id
         self.title = title
