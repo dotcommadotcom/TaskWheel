@@ -8,7 +8,7 @@ enum IconItem: Identifiable, Hashable {
         self
     }
     
-    var text: String {
+    var name: String {
         switch self {
         case .details: return "text.alignleft"
         case .schedule: return "alarm"
@@ -28,7 +28,7 @@ enum IconItem: Identifiable, Hashable {
         switch self {
         case .complete: return "checkmark.square"
         case .priority: return "tag.fill"
-        default: return self.text
+        default: return self.name
         }
     }
 }
@@ -45,7 +45,7 @@ struct IconView: View {
                 Spacer()
             }
             
-            Image(systemName: !isAlt ? icon.text : icon.alternative)
+            Image(systemName: !isAlt ? icon.name : icon.alternative)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: size, height: icon == .save ? size + 4 : size)

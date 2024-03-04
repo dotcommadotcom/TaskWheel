@@ -164,7 +164,7 @@ extension TaskViewModel {
             .init(title: "laundry", ofTaskList: uuids[0], isComplete: true),
             .init(title: "research pkms", ofTaskList: uuids[2], isComplete: false),
             .init(title: "dishes", ofTaskList: uuids[0], isComplete: false),
-            .init(title: "mop", ofTaskList: uuids[0], isComplete: false, details: "where are the clean mop heads?", priority: 1),
+            .init(title: "mop", ofTaskList: uuids[0], isComplete: false, details: "where are the clean mop heads?", date: Date(), priority: 1),
             .init(title: "i hope im not too late to set my demon straight", ofTaskList: uuids[1], isComplete: false, priority: 0),
             .init(title: "vacuum", ofTaskList: uuids[0], isComplete: true, priority: 1),
             .init(title: "its all a big circle jerk", ofTaskList: uuids[1], isComplete: false),

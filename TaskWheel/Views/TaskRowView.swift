@@ -27,7 +27,10 @@ struct TaskRowView: View {
                         .lineLimit(2)
                         .truncationMode(.tail)
     
-                    PropertiesRowView(task: task)
+                }
+                
+                if let date = task.date {
+                    DateItemsView(date: date)
                 }
             }
         }
@@ -35,47 +38,6 @@ struct TaskRowView: View {
         .padding()
         .font(.system(size: 23))
         .check(isComplete: task.isDone)
-    }
-}
-
-struct PropertiesRowView: View {
-    
-    let sampleProperties: [String] = [
-        "due tomorrow 2/24",
-        "every week",
-        "school",
-    ]
-    
-    let task: TaskModel
-    
-    let color = ColorSettings()
-    
-    var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(sampleProperties, id: \.self) { property in
-                    propertyItemView(property: property)
-                }
-            }
-            .padding(.horizontal, 4)
-        }
-    }
-}
-
-extension PropertiesRowView {
-    
-    private func propertyItemView(property: String) -> some View {
-        ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(color.accent, lineWidth: 2)
-            
-            Text(property)
-                .padding(7)
-        }
-        .padding(.vertical, 5)
-        .font(.system(size: 17))
-        .opacity(0.7)
-        .fixedSize()
     }
 }
 

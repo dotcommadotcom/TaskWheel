@@ -7,21 +7,24 @@ struct UpdateView: View {
     
     @State var titleInput: String
     @State var detailsInput: String
+    @State var dateInput: Date?
     @State var priorityInput: PriorityItem
     @State private var showLists = false
     @State private var showPriority = false
     @State private var barSelected: IconItem? = nil
-    @State private var selectedDate = Date()
+    @State private var selectedDate: Date? = nil
     @State private var sheetHeight: CGFloat = .zero
     
     let task: TaskModel
     private let color = ColorSettings()
     private let updateTabs: [IconItem] = [.delete, .complete]
+    private let half: Double = 0.5
     
     init(task: TaskModel) {
         self.task = task
         _titleInput = State(initialValue: task.title)
         _detailsInput = State(initialValue: task.details)
+        _dateInput = State(initialValue: task.date)
         _priorityInput = State(initialValue: PriorityItem(task.priority))
     }
     
@@ -70,14 +73,14 @@ extension UpdateView {
                 Text(taskViewModel.currentTitle())
             }
             .fontWeight(.bold)
-            .foregroundStyle(color.text.opacity(0.5))
+            .foregroundStyle(color.text.opacity(half))
         }
         .popover(isPresented: $showLists) {
             VStack(alignment: .leading, spacing: 22) {
                 
                 Text("Move to")
                     .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(color.text.opacity(0.5))
+                    .foregroundStyle(color.text.opacity(half))
                 
                 TaskListsView()
             }
@@ -101,66 +104,65 @@ extension UpdateView {
     private func propertyContainerView(task: TaskModel) -> some View {
         VStack(spacing: 20) {
             
-            propertyView(.details, isEmpty: false)
+            propertyView(.details)
             
-            Button {
-            } label: {
-                propertyView(.schedule, isEmpty: true, defaultText: "Set schedule")
-            }
+            propertyView(.schedule)
             
-            Button {
-                showPriority.toggle()
-            } label: {
-                propertyView(.priority, isEmpty: task.priority == 4, defaultText: "Set priority")
-            }
+            propertyView(.priority)
             .overlay(alignment: .top) {
                 if showPriority {
                     PriorityView(selected: $priorityInput, showPriority: $showPriority)
                         .offset(x: 20, y: 40)
-//                        .padding(40)
                 }
             }
-            
-//            .popover(isPresented: $showPriority) {
-//                PriorityView(selected: $priorityInput)
-//                    .presentationCompactAdaptation(.popover)
-//                    .presentationBackground(color.background)
-//            }
         }
     }
     
-    private func propertyView(_ property: IconItem, isEmpty: Bool, defaultText: String = "") -> some View {
+    private func propertyView(_ property: IconItem) -> some View {
         
         HStack(spacing: 13) {
-            Image(systemName: property.text)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 20, height: 20)
+            IconView(icon: property, size: 20)
             
-            if isEmpty {
-                Text(defaultText)
-                    .foregroundStyle(.gray.opacity(0.6))
-            } else {
-                switch property {
-                case .details:
-                    TextField(detailsInput.isEmpty ? "Add details" : detailsInput, text: $detailsInput, axis: .vertical)
-                        .foregroundStyle(detailsInput.isEmpty ? .gray : color.text)
-                        .lineLimit(5)
-                        .onSubmit {
-                            saveGoBack()
-                        }
-                case .schedule:
-                    dateView()
-                case .priority:
-                    Text(priorityInput.text)
-                    
-                default:
-                    Text(property.text)
-                }
+            switch property {
+            case .details: detailsView()
+            case .schedule: scheduleView()
+            case .priority: priorityView()
+            default: Text(property.name)
             }
-            
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .onSubmit {
+            saveGoBack()
+        }
+    }
+    
+    private func detailsView() -> some View {
+        ZStack(alignment: .leading) {
+            if detailsInput.isEmpty {
+                Text("Add details")
+                    .foregroundStyle(color.text.opacity(half))
+            }
+            TextField(detailsInput, text: $detailsInput, axis: .vertical)
+                .lineLimit(5)
+        }
+    }
+    
+    private func scheduleView() -> some View {
+        if let date = dateInput {
+            Text(string(from: date))
+        } else {
+            Text("Add date/time")
+                .foregroundStyle(color.text.opacity(half))
+        }
+    }
+    
+    private func priorityView() -> some View {
+        if priorityInput.rawValue != 3 {
+            Text(priorityInput.text)
+        } else {
+            Text("Add priority")
+                .foregroundStyle(color.text.opacity(half))
+        }
     }
     
     private func updateBarView() -> some View {
@@ -178,14 +180,16 @@ extension UpdateView {
         }
     }
     
-    private func dateView() -> some View {
-        DatePicker("date", selection: $selectedDate)
-            .datePickerStyle(.automatic)
-    }
-    
 }
 
 extension UpdateView {
+    
+    func string(from date: Date) -> String {
+        // Format the date as needed
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        return dateFormatter.string(from: date)
+    }
     
     private func clickProperty(_ property: IconItem) {
         switch property {

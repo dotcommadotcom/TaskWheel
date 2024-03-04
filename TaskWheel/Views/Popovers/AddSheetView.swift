@@ -69,10 +69,6 @@ extension AddSheetView {
         } label: {
             IconView(icon: .schedule, size: iconSize)
         }
-        .overlay(alignment: .bottom) {
-            DatePicker("Select a date", selection: $dateInput)
-                .datePickerStyle(.graphical)
-        }
     }
     
     private func priorityButton() -> some View {
