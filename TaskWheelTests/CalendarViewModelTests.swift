@@ -31,6 +31,65 @@ final class CalendarViewModelTests: XCTestCase {
         return dateFormatter.string(from: date)
     }
     
+
+    // TEST - Adjust month and year
+    
+    func testAdjustYearBackwards() throws {
+        vm.select(this: feb2821)
+        
+        vm.adjustYear(by: -20)
+        
+        XCTAssertEqual(vm.yearTitle(), "2001")
+    }
+    
+    func testAdjustYearForward() throws {
+        vm.select(this: dec1924)
+        
+        vm.adjustYear(by: 4)
+        
+        XCTAssertEqual(vm.yearTitle(), "2028")
+    }
+    
+    func testAdjustMonthBackwards() throws {
+        vm.select(this: feb2821)
+        
+        vm.adjustMonth(by: -2)
+        
+        XCTAssertEqual(vm.monthTitle(), "December")
+        XCTAssertEqual(vm.yearTitle(), "2020")
+    }
+    
+    func testAdjustMonthForward() throws {
+        vm.select(this: dec1924)
+        
+        vm.adjustMonth(by: 1)
+        
+        XCTAssertEqual(vm.monthTitle(), "January")
+        XCTAssertEqual(vm.yearTitle(), "2025")
+    }
+
+    // TEST - Selected
+    
+    func testIsSelectedDateIsFalse() throws {
+        vm.select(this: dec1924)
+        
+        XCTAssertFalse(vm.isSelected(this: feb2821))
+    }
+    
+    func testIsSelectedDateIsTrue() throws {
+        vm.select(this: dec1924)
+        
+        XCTAssertTrue(vm.isSelected(this: dec1924))
+    }
+    
+    func testSelectDate() throws {
+        vm.select(this: dec1924)
+        
+        XCTAssertEqual(string(from: vm.selectedDate), string(from: dec1924))
+    }
+    
+    // TEST - Weeks in month
+    
     func testWeeksInMonthFirstWeek() throws {
         let weeks = vm.weeksInMonth(for: dec1924)
         
@@ -58,14 +117,6 @@ final class CalendarViewModelTests: XCTestCase {
         XCTAssertEqual(vm.weeksInMonth(for: dec1924).count, 6)
     }
     
-    func testIsInMonthIsFalse() throws {
-        XCTAssertFalse(vm.isInMonth(from: date(2025, 1, 6), this: 12))
-    }
-    
-    func testIsInMonthIsTrue() throws {
-        XCTAssertTrue(vm.isInMonth(from: date(2024, 12, 1), this: 12))
-    }
-    
     func testNextWeek() throws {
         let date = vm.firstOfWeek(for: date(2024, 12, 1))
         
@@ -83,6 +134,22 @@ final class CalendarViewModelTests: XCTestCase {
         XCTAssertEqual(thisWeekString, ["2024.11.25", "2024.11.26", "2024.11.27", "2024.11.28", "2024.11.29", "2024.11.30", "2024.12.01"])
     }
     
+    // TEST - Is date in month
+    
+    func testIsInMonthIsTrueForSelectedDate() throws {
+        XCTAssertTrue(vm.isInMonth(this: Date()))
+    }
+    
+    func testIsInMonthIsFalse() throws {
+        XCTAssertFalse(vm.isInMonth(this: date(2025, 1, 1), in: dec1924))
+    }
+    
+    func testIsInMonthIsTrue() throws {
+        XCTAssertTrue(vm.isInMonth(this: date(2024, 12, 1), in: dec1924))
+    }
+    
+    // TEST - Start date of month
+    
     func testStartDateOfMonth() throws {
         XCTAssertEqual(string(from: vm.startDateOfMonth(for: dec1924)), "2024.11.25")
     }
@@ -95,11 +162,23 @@ final class CalendarViewModelTests: XCTestCase {
         XCTAssertEqual(string(from: vm.firstOfMonth(for: dec1924)), "2024.12.01")
     }
     
-    func testDays() throws {
+    // TEST - Constructor
+    
+    func testXdays() throws {
         XCTAssertEqual(vm.xdays, ["M", "T", "W", "T", "F", "S", "S"])
     }
 
     func testFirstDayOfTheWeek() throws {
         XCTAssertEqual(vm.calendar.firstWeekday, 2)
+    }
+    
+    func testSelectedDateCustom() throws {
+        let custom = CalendarViewModel(selectedDate: dec1924)
+        
+        XCTAssertEqual(string(from: custom.selectedDate), string(from: dec1924))
+    }
+    
+    func testSelectedDate() throws {
+        XCTAssertEqual(string(from: vm.selectedDate), string(from: Date()))
     }
 }

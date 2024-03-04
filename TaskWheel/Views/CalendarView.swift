@@ -82,17 +82,17 @@ extension CalendarView {
     
     private func dayButton(_ day: Date) -> some View {
         Button {
-            calendarVM.select(to: day)
+            calendarVM.select(this: day)
         } label: {
             ZStack {
                 Circle()
-                    .fill(calendarVM.isSelected(day) ? color.text : .clear)
+                    .fill(calendarVM.isSelected(this: day) ? color.text : .clear)
                 
                 Text("\(calendarVM.calendar.component(.day, from: day))")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .contentShape(Rectangle())
-                    .opacity(calendarVM.isInCurrentMonth(day) ? 1 : 0.5)
-                    .foregroundColor(calendarVM.isSelected(day) ? color.background : color.text)
+                    .opacity(calendarVM.isInMonth(this: day) ? 1 : 0.5)
+                    .foregroundColor(calendarVM.isSelected(this: day) ? color.background : color.text)
             }
         }
     }
