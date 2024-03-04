@@ -4,12 +4,14 @@ struct UpdateView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
+    
     @State var titleInput: String
     @State var detailsInput: String
     @State var priorityInput: PriorityItem
     @State private var showLists = false
     @State private var showPriority = false
     @State private var barSelected: IconItem? = nil
+    @State private var selectedDate = Date()
     @State private var sheetHeight: CGFloat = .zero
     
     let task: TaskModel
@@ -147,7 +149,8 @@ extension UpdateView {
                         .onSubmit {
                             saveGoBack()
                         }
-                    
+                case .schedule:
+                    dateView()
                 case .priority:
                     Text(priorityInput.text)
                     
@@ -173,6 +176,11 @@ extension UpdateView {
                     }
             }
         }
+    }
+    
+    private func dateView() -> some View {
+        DatePicker("date", selection: $selectedDate)
+            .datePickerStyle(.automatic)
     }
     
 }

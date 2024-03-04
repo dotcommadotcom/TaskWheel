@@ -5,6 +5,7 @@ final class TaskModelTests: XCTestCase {
     
     private var testTask: TaskModel!
     private var testTaskList: TaskListModel!
+    let dateFormatter = DateFormatter()
     
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -42,6 +43,12 @@ final class TaskModelTests: XCTestCase {
         XCTAssertEqual(testTask.priority, 1)
     }
     
+    // TEST - Date
+//    
+//    func testEditDate() throws {
+//        XCTAssertEqual(testTask.date, "")
+//    }
+//    
     // TEST - Details
     
     func testEditDetails() throws {
@@ -97,7 +104,7 @@ final class TaskModelTests: XCTestCase {
     
     // TEST - Constructor
     
-    func testConstructorIdIsNotOfTaskList() throws {
+    func testConstructorIdIsNotEqualToTaskListId() throws {
         let sampleTask = TaskModel(title: "test id")
         
         XCTAssertNotEqual(sampleTask.id, sampleTask.ofTaskList)

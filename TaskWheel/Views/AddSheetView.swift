@@ -8,8 +8,12 @@ struct AddSheetView: View {
     @State var titleInput: String = ""
     @State var detailsInput: String = ""
     @State var priorityInput: Int = 3
+    @State var dateInput: Date = Date()
+    
     @State private var showDetails = false
+    @State private var showDate = false
     @State private var isPriorityReset = false
+    @State private var sheetHeight: CGFloat = .zero
     
     private let color = ColorSettings()
     private let iconSize: CGFloat = 22
@@ -61,8 +65,13 @@ extension AddSheetView {
     
     private func scheduleButton() -> some View {
         Button {
+            showDate.toggle()
         } label: {
             IconView(icon: .schedule, size: iconSize)
+        }
+        .overlay(alignment: .bottom) {
+            DatePicker("Select a date", selection: $dateInput)
+                .datePickerStyle(.graphical)
         }
     }
     
@@ -124,7 +133,9 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
 #Preview("short text", traits: .sizeThatFitsLayout) {
     ZStack {
         Color.gray.opacity(0.3).ignoresSafeArea()
-        AddSheetView(titleInput: "Hello, World!", detailsInput: "Hiya")
+        AddSheetView(titleInput: "Hello, World!", detailsInput: "Hiya", priorityInput: 1)
+            .padding(30)
+            .background(.white)
     }
     .environmentObject(TaskViewModel())
 }

@@ -7,6 +7,7 @@ struct TaskModel: Identifiable, Hashable {
     let ofTaskList: UUID
     let isDone: Bool
     let details: String
+    let date: Date?
     let priority: Int
     
     init(
@@ -15,6 +16,7 @@ struct TaskModel: Identifiable, Hashable {
         ofTaskList: UUID = UUID(),
         isComplete: Bool = false,
         details: String = "",
+        date: Date? = nil,
         priority: Int = 3
     ) {
         self.id = id
@@ -22,15 +24,17 @@ struct TaskModel: Identifiable, Hashable {
         self.ofTaskList = ofTaskList
         self.isDone = isComplete
         self.details = details
+        self.date = date
         self.priority = priority
     }
     
-    func edit(title: String? = nil, ofTaskList: UUID? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) -> TaskModel {
+    func edit(title: String? = nil, ofTaskList: UUID? = nil, isComplete: Bool? = nil, details: String? = nil, date: Date? = nil, priority: Int? = nil) -> TaskModel {
         return TaskModel(id: self.id,
                          title: title ?? self.title,
                          ofTaskList: ofTaskList ?? self.ofTaskList,
                          isComplete: isComplete ?? self.isDone,
                          details: details ?? self.details,
+                         date: date ?? self.date,
                          priority: priority ?? self.priority)
     }
     
