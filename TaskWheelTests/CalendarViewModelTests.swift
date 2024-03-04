@@ -96,7 +96,7 @@ final class CalendarViewModelTests: XCTestCase {
     }
     
     func testDays() throws {
-        XCTAssertEqual(vm.days, ["M", "T", "W", "T", "F", "S", "S"])
+        XCTAssertEqual(vm.xdays, ["M", "T", "W", "T", "F", "S", "S"])
     }
 
     func testFirstDayOfTheWeek() throws {

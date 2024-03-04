@@ -5,6 +5,7 @@ struct MainView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
     
+    
     @State private var topSelected: TopTabItem = .list
     @State private var barSelected: IconItem? = nil
     @State private var order: OrderItem = .manual
@@ -16,6 +17,8 @@ struct MainView: View {
     var body: some View {
         NavigationStack(path: $navigation.path) {
             VStack(spacing: 0) {
+                
+                
                 titleView()
                 
                 TopTabContainerView(selected: $topSelected) {
