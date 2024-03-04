@@ -1,11 +1,18 @@
 import SwiftUI
 
 struct CalendarView: View {
-    
+    @Environment(\.presentationMode) var presentationMode
     @StateObject var calendarVM = CalendarViewModel()
-    @Binding var selectedDate: Date
+    @Binding var selected: Date?
+    @Binding var showSchedule: Bool
     
     private let color = ColorSettings()
+    
+    init(selected: Binding<Date?>, showSchedule: Binding<Bool>) {
+        self._calendarVM = StateObject(wrappedValue: CalendarViewModel(selectedDate: selected.wrappedValue ?? Date()))
+        self._selected = selected
+        self._showSchedule = showSchedule
+    }
     
     var body: some View {
         ZStack {
@@ -23,10 +30,9 @@ struct CalendarView: View {
                 
                 weeksView()
             }
-            .padding()
         }
         .onReceive(calendarVM.datePublisher) { date in
-            self.selectedDate = date
+            selected = date
         }
         .foregroundStyle(color.text)
         .font(.system(size: 18))
@@ -56,6 +62,7 @@ extension CalendarView {
         }
         .padding(.horizontal, 10)
         .frame(maxWidth: .infinity)
+        .buttonStyle(NoAnimationStyle())
     }
     
     private func daysView() -> some View {
@@ -82,7 +89,10 @@ extension CalendarView {
     
     private func dayButton(_ day: Date) -> some View {
         Button {
+            selected = day
             calendarVM.select(this: day)
+            showSchedule.toggle()
+            presentationMode.wrappedValue.dismiss()
         } label: {
             ZStack {
                 Circle()
@@ -99,10 +109,10 @@ extension CalendarView {
 }
 
 #Preview("calendar") {
-    CalendarView(selectedDate: .constant(Date()))
+    CalendarView(selected: .constant(Date()), showSchedule: .constant(true))
 }
 
 #Preview("dark calendar") {
-    CalendarView(selectedDate: .constant(Date()))
+    CalendarView(selected: .constant(Date()), showSchedule: .constant(true))
         .preferredColorScheme(.dark)
 }

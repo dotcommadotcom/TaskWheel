@@ -23,14 +23,14 @@ struct TaskRowView: View {
                 if !task.details.isEmpty {
                     Text(task.details)
                         .font(.system(size: 17))
-                        .opacity(0.7)
+                        .opacity(0.9)
                         .lineLimit(2)
                         .truncationMode(.tail)
     
                 }
                 
                 if let date = task.date {
-                    DateItemsView(date: date)
+                    DateRowView(date: date)
                 }
             }
         }
@@ -38,6 +38,26 @@ struct TaskRowView: View {
         .padding()
         .font(.system(size: 23))
         .check(isComplete: task.isDone)
+    }
+}
+
+struct DateRowView: View {
+    let date: Date
+    
+    private var dateItems: [Date] {
+        return [date]
+    }
+    
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(dateItems, id: \.self) { item in
+                    PropertyItemView(item: item)
+                }
+            }
+            .padding(.horizontal, 4)
+            .font(.system(size: 17))
+        }
     }
 }
 

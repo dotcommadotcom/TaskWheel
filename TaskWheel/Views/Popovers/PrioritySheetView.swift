@@ -14,10 +14,10 @@ enum PriorityItem: Int {
     
     var text: String {
         switch self {
-        case .high: return "High Priority"
-        case .medium: return "Medium Priority"
-        case .low: return "Low Priority"
-        case .no: return "No Priority"
+        case .high: return "High"
+        case .medium: return "Medium"
+        case .low: return "Low"
+        case .no: return "None"
         }
     }
     
@@ -31,37 +31,34 @@ enum PriorityItem: Int {
     }
 }
 
-struct PriorityView: View {
+struct PrioritySheetView: View {
+    
+    @Environment(\.presentationMode) var presentationMode
+    
     @Binding var selected: PriorityItem
     @Binding var showPriority: Bool
+    
     let priority: [PriorityItem] = [.high, .medium, .low, .no]
     private let color = ColorSettings()
     
     var body: some View {
-        ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 5)
-                .fill(color.background)
-                .stroke(color.text)
-            
-            VStack(alignment: .leading, spacing: 15) {
-                ForEach(priority, id: \.self) { priority in
-                    priorityRowView(priority: priority)
-                        .onTapGesture {
-                            selected = priority
-                            showPriority.toggle()
-                        }
-                }
+        VStack(alignment: .leading, spacing: 15) {
+            ForEach(priority, id: \.self) { priority in
+                priorityRowView(priority: priority)
+                    .onTapGesture {
+                        selected = priority
+                        showPriority.toggle()
+                        presentationMode.wrappedValue.dismiss()
+                    }
             }
-            .padding(15)
-            .font(.system(size: 22))
         }
     }
     
     private func priorityRowView(priority: PriorityItem) -> some View {
         HStack(spacing: 15) {
-            Image(systemName: selected == priority ? "tag.fill" : "tag")
+            Image(systemName: selected == priority ? "record.circle" : "circle")
                 .fontWeight(selected == priority ? .bold : .regular)
-                .foregroundStyle(selected == priority ? priority.color : color.text)
+                .foregroundStyle(selected == priority ? color.accent : color.text)
             
             Text(priority.text)
             Spacer()
@@ -72,7 +69,7 @@ struct PriorityView: View {
 #Preview("priority") {
     ZStack {
         Color.pink
-        PriorityView(selected: .constant(.no), showPriority: .constant(false))
+        PrioritySheetView(selected: .constant(.no), showPriority: .constant(false))
             .background(.white)
     }
 }

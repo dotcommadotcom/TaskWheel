@@ -42,12 +42,13 @@ extension TaskViewModel {
         tasks.removeAll(where: condition)
     }
     
-    func update(this task: TaskModel, title: String? = nil, ofTaskList: UUID? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil) {
+    func update(this task: TaskModel, title: String? = nil, ofTaskList: UUID? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil, date: Date? = nil) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.edit(title: title ?? task.title,
                                      ofTaskList: ofTaskList ?? task.ofTaskList,
                                      details: details ?? task.details,
-                                     priority: priority ?? task.priority)
+                                     priority: priority ?? task.priority,
+                                     date: date ?? task.date)
         }
     }
     
@@ -164,7 +165,7 @@ extension TaskViewModel {
             .init(title: "laundry", ofTaskList: uuids[0], isComplete: true),
             .init(title: "research pkms", ofTaskList: uuids[2], isComplete: false),
             .init(title: "dishes", ofTaskList: uuids[0], isComplete: false),
-            .init(title: "mop", ofTaskList: uuids[0], isComplete: false, details: "where are the clean mop heads?", date: Date(), priority: 1),
+            .init(title: "mop", ofTaskList: uuids[0], isComplete: false, details: "where are the clean mop heads?", priority: 1, date: Calendar.current.date(from: DateComponents(year: 2024, month: 2, day: 29))!),
             .init(title: "i hope im not too late to set my demon straight", ofTaskList: uuids[1], isComplete: false, priority: 0),
             .init(title: "vacuum", ofTaskList: uuids[0], isComplete: true, priority: 1),
             .init(title: "its all a big circle jerk", ofTaskList: uuids[1], isComplete: false),

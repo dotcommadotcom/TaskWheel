@@ -7,12 +7,15 @@ struct UpdateView: View {
     
     @State var titleInput: String
     @State var detailsInput: String
-    @State var dateInput: Date?
     @State var priorityInput: PriorityItem
+    @State var dateInput: Date?
+    
     @State private var showLists = false
     @State private var showPriority = false
+    @State private var showSchedule = false
+    
     @State private var barSelected: IconItem? = nil
-    @State private var selectedDate: Date? = nil
+    @State private var dateSelected: Date? = nil
     @State private var sheetHeight: CGFloat = .zero
     
     let task: TaskModel
@@ -72,8 +75,8 @@ extension UpdateView {
                     .font(.system(size: 15))
                 Text(taskViewModel.currentTitle())
             }
-            .fontWeight(.bold)
-            .foregroundStyle(color.text.opacity(half))
+            .fontWeight(.semibold)
+            .foregroundStyle(color.text.opacity(0.8))
         }
         .popover(isPresented: $showLists) {
             VStack(alignment: .leading, spacing: 22) {
@@ -102,38 +105,42 @@ extension UpdateView {
     }
     
     private func propertyContainerView(task: TaskModel) -> some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 15) {
             
             propertyView(.details)
             
-            propertyView(.schedule)
-            
             propertyView(.priority)
-            .overlay(alignment: .top) {
-                if showPriority {
-                    PriorityView(selected: $priorityInput, showPriority: $showPriority)
-                        .offset(x: 20, y: 40)
+                .onTapGesture {
+                    showPriority.toggle()
                 }
-            }
+            
+            propertyView(.schedule)
+                .onTapGesture {
+                    showSchedule.toggle()
+                }
+            
         }
     }
     
     private func propertyView(_ property: IconItem) -> some View {
         
-        HStack(spacing: 13) {
-            IconView(icon: property, size: 20)
-            
-            switch property {
-            case .details: detailsView()
-            case .schedule: scheduleView()
-            case .priority: priorityView()
-            default: Text(property.name)
+        ZStack(alignment: .center) {
+            HStack(spacing: 20) {
+                IconView(icon: property, size: 20)
+                
+                switch property {
+                case .details: detailsView()
+                case .schedule: scheduleView()
+                case .priority: priorityView()
+                default: Text(property.name)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .onSubmit {
+                saveGoBack()
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .onSubmit {
-            saveGoBack()
-        }
+        .frame(height: 40)
     }
     
     private func detailsView() -> some View {
@@ -147,21 +154,53 @@ extension UpdateView {
         }
     }
     
-    private func scheduleView() -> some View {
-        if let date = dateInput {
-            Text(string(from: date))
-        } else {
-            Text("Add date/time")
+    private func priorityView() -> some View {
+        ZStack(alignment: .leading) {
+            Text("Add priority")
                 .foregroundStyle(color.text.opacity(half))
+                .opacity(priorityInput.rawValue == 3 ? 1 : 0)
+            
+            ZStack(alignment: .center) {
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(priorityInput.color.opacity(half))
+                
+                Text(priorityInput.text)
+                    .padding(8)
+                    .padding(.horizontal, 8)
+            }
+            .foregroundStyle(color.text)
+            .opacity(0.9)
+            .fixedSize()
+            .opacity(priorityInput.rawValue == 3 ? 0 : 1)
+        }
+        .popover(isPresented: $showPriority) {
+            VStack(alignment: .leading, spacing: 22) {
+                PrioritySheetView(selected: $priorityInput, showPriority: $showPriority)
+            }
+            .font(.system(size: 22))
+            .padding(30)
+            .presentSheet($sheetHeight)
         }
     }
     
-    private func priorityView() -> some View {
-        if priorityInput.rawValue != 3 {
-            Text(priorityInput.text)
-        } else {
-            Text("Add priority")
+    private func scheduleView() -> some View {
+        ZStack(alignment: .leading) {
+            Text("Add date/time")
                 .foregroundStyle(color.text.opacity(half))
+                .opacity(dateInput == nil ? 1 : 0)
+            
+            if let date = dateInput {
+                PropertyItemView(item: date)
+                    .background(color.background)
+            }
+        }
+        .popover(isPresented: $showSchedule) {
+            VStack(alignment: .leading, spacing: 22) {
+                CalendarView(selected: $dateInput, showSchedule: $showSchedule)
+            }
+            .font(.system(size: 22))
+            .padding(30)
+            .presentSheet($sheetHeight)
         }
     }
     
@@ -210,13 +249,18 @@ extension UpdateView {
     }
     
     private func saveGoBack() {
-        if task.title != titleInput || task.ofTaskList !=  taskViewModel.currentTaskList().id || task.details != detailsInput || task.priority != priorityInput.rawValue {
+        if task.title != titleInput || 
+            task.ofTaskList !=  taskViewModel.currentTaskList().id ||
+            task.details != detailsInput ||
+            task.priority != priorityInput.rawValue ||
+            task.date != dateInput {
             taskViewModel.update(
                 this: task,
                 title: titleInput,
                 ofTaskList: taskViewModel.currentTaskList().id,
                 details: detailsInput,
-                priority: priorityInput.rawValue
+                priority: priorityInput.rawValue,
+                date: dateInput
             )
         }
         navigation.goBack()

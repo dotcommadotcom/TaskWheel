@@ -16,26 +16,26 @@ struct TaskModel: Identifiable, Hashable {
         ofTaskList: UUID = UUID(),
         isComplete: Bool = false,
         details: String = "",
-        date: Date? = nil,
-        priority: Int = 3
+        priority: Int = 3,
+        date: Date? = nil
     ) {
         self.id = id
         self.title = title
         self.ofTaskList = ofTaskList
         self.isDone = isComplete
         self.details = details
-        self.date = date
         self.priority = priority
+        self.date = date
     }
     
-    func edit(title: String? = nil, ofTaskList: UUID? = nil, isComplete: Bool? = nil, details: String? = nil, date: Date? = nil, priority: Int? = nil) -> TaskModel {
+    func edit(title: String? = nil, ofTaskList: UUID? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil, date: Date? = nil) -> TaskModel {
         return TaskModel(id: self.id,
                          title: title ?? self.title,
                          ofTaskList: ofTaskList ?? self.ofTaskList,
                          isComplete: isComplete ?? self.isDone,
                          details: details ?? self.details,
-                         date: date ?? self.date,
-                         priority: priority ?? self.priority)
+                         priority: priority ?? self.priority,
+                         date: date ?? self.date)
     }
     
     func toggleDone() -> TaskModel {
