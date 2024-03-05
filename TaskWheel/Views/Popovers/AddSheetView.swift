@@ -8,10 +8,10 @@ struct AddSheetView: View {
     @State var titleInput: String = ""
     @State var detailsInput: String = ""
     @State var priorityInput: Int = 3
-    @State var dateInput: Date = Date()
+    @State var dateInput: Date?
     
     @State private var showDetails = false
-    @State private var showDate = false
+    @State private var showSchedule = false
     @State private var isPriorityReset = false
     @State private var sheetHeight: CGFloat = .zero
     
@@ -33,6 +33,7 @@ struct AddSheetView: View {
             
             addBarView()
                 .buttonStyle(NoAnimationStyle())
+                
         }
         .fixedSize(horizontal: false, vertical: true)
         .onSubmit { clickSave() }
@@ -65,9 +66,18 @@ extension AddSheetView {
     
     private func scheduleButton() -> some View {
         Button {
-            showDate.toggle()
+            showSchedule.toggle()
         } label: {
             IconView(icon: .schedule, size: iconSize)
+        }
+        .foregroundStyle(dateInput == nil ? .pink : color.accent)
+        .popover(isPresented: $showSchedule) {
+            VStack(alignment: .leading, spacing: 22) {
+                CalendarView(selected: $dateInput, showSchedule: $showSchedule)
+            }
+            .font(.system(size: 22))
+            .padding(30)
+            .presentSheet($sheetHeight)
         }
     }
     
@@ -98,12 +108,12 @@ extension AddSheetView {
 extension AddSheetView {
     
     private func clickSave() {
-        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput)
+        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput, date: dateInput)
         presentationMode.wrappedValue.dismiss()
     }
     
     private func isTaskEmpty() -> Bool {
-        return titleInput.isEmpty && detailsInput.isEmpty && priorityInput == 3
+        return titleInput.isEmpty && detailsInput.isEmpty && priorityInput == 3 && dateInput == nil
     }
     
 }

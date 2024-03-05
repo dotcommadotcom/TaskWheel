@@ -21,8 +21,8 @@ class TaskViewModel: ObservableObject {
 
 extension TaskViewModel {
     
-    func addTask(title: String = "", details: String = "", priority: Int = 3) {
-        tasks.prepend(TaskModel(title: title, ofTaskList: currentTaskList().id, details: details, priority: priority))
+    func addTask(title: String = "", details: String = "", priority: Int = 3, date: Date? = nil) {
+        tasks.prepend(TaskModel(title: title, ofTaskList: currentTaskList().id, details: details, priority: priority, date: date))
         objectWillChange.send()
     }
     
@@ -66,9 +66,23 @@ extension TaskViewModel {
         switch sort {
         case .priority:
             return Deque(currentTasks.sorted { $0.priority < $1.priority })
-        case .date, .manual:
+        case .date:
+            return Deque(currentTasks.sorted(by: compareDates))
+        case .manual:
             return currentTasks
         }
+    }
+    
+    func compareDates(_ lhs: TaskModel, _ rhs: TaskModel) -> Bool {
+        guard let lhsDate = lhs.date else {
+            return rhs.date == nil
+        }
+        
+        guard let rhsDate = rhs.date else {
+            return false
+        }
+
+        return lhsDate < rhsDate
     }
     
     func currentDoneTasks(by sort: OrderItem = .manual) -> Deque<TaskModel> {

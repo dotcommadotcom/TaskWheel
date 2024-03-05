@@ -41,6 +41,8 @@ struct TaskModel: Identifiable, Hashable {
     func toggleDone() -> TaskModel {
         return edit(isComplete: !self.isDone)
     }
+    
+    
 }
 
 extension TaskModel {
