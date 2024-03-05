@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B71482102B96BF9100CA8511 /* TaskVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B714820F2B96BF9100CA8511 /* TaskVMTests.swift */; };
 		B71482122B96E41100CA8511 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71482112B96E41100CA8511 /* DateExtension.swift */; };
+		B71482162B9722CE00CA8511 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71482152B9722CE00CA8511 /* TaskView.swift */; };
 		B71A81DA2B830BB000A8886F /* TaskWheelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81D92B830BB000A8886F /* TaskWheelApp.swift */; };
 		B71A81DE2B830BB100A8886F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71A81DD2B830BB100A8886F /* Assets.xcassets */; };
 		B71A81E12B830BB100A8886F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71A81E02B830BB100A8886F /* Preview Assets.xcassets */; };
@@ -58,6 +59,7 @@
 /* Begin PBXFileReference section */
 		B714820F2B96BF9100CA8511 /* TaskVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskVMTests.swift; sourceTree = "<group>"; };
 		B71482112B96E41100CA8511 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		B71482152B9722CE00CA8511 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		B71A81D62B830BB000A8886F /* TaskWheel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskWheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71A81D92B830BB000A8886F /* TaskWheelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskWheelApp.swift; sourceTree = "<group>"; };
 		B71A81DD2B830BB100A8886F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				B72F692A2B8C296100525EF8 /* ListView.swift */,
 				B72F692C2B8C2DF000525EF8 /* WheelView.swift */,
 				B72F69322B8C32AE00525EF8 /* TaskRowView.swift */,
+				B71482152B9722CE00CA8511 /* TaskView.swift */,
 				B7B02C1E2B878772000B8A7C /* UpdateView.swift */,
 				B72F69302B8C2F4800525EF8 /* BarContainerView.swift */,
 				B7EAF45D2B92CBB9006732EE /* SheetView.swift */,
@@ -337,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71482162B9722CE00CA8511 /* TaskView.swift in Sources */,
 				B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */,
 				B7DD37522B8EE9BF008AD29D /* PrioritySheetView.swift in Sources */,
 				B7EAF4622B948F2F006732EE /* CalendarView.swift in Sources */,

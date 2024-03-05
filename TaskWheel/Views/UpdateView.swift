@@ -32,221 +32,42 @@ struct UpdateView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            listTitleView()
-            
-            taskTitleView()
-            
-            propertyContainerView(task: task)
-            
-            Spacer()
-            
-            updateBarView()
-        }
-        .padding(.horizontal, 30)
-        .padding(.vertical, 15)
-        .font(.system(size: 20))
-        .foregroundStyle(color.text)
-        .background(color.background)
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button(action: {
-                    saveGoBack()
-                }) {
-                    Image(systemName: "arrow.backward")
-                }
-                .padding([.horizontal])
-                .fontWeight(.semibold)
-            }
-        }
+        Text("hi")
+//        VStack(alignment: .leading, spacing: 20) {
+//            listTitleView()
+//            
+//            taskTitleView()
+//            
+//            propertyContainerView(task: task)
+//            
+//            Spacer()
+//            
+//            updateBarView()
+//        }
+//        .padding(.horizontal, 30)
+//        .padding(.vertical, 15)
+//        .font(.system(size: 20))
+//        .foregroundStyle(color.text)
+//        .background(color.background)
+//        .navigationBarBackButtonHidden()
+//        .toolbar {
+//            ToolbarItem(placement: .topBarLeading) {
+//                Button(action: {
+//                    saveGoBack()
+//                }) {
+//                    Image(systemName: "arrow.backward")
+//                }
+//                .padding([.horizontal])
+//                .fontWeight(.semibold)
+//            }
+//        }
         
     }
 }
 
-extension UpdateView {
-    
-    private func listTitleView() -> some View {
-        Button {
-            showLists.toggle()
-        } label: {
-            HStack(alignment: .center) {
-                Image(systemName: "chevron.up.chevron.down")
-                    .font(.system(size: 15))
-                Text(taskViewModel.currentTitle())
-            }
-            .fontWeight(.semibold)
-            .foregroundStyle(color.text.opacity(0.8))
-        }
-        .popover(isPresented: $showLists) {
-            VStack(alignment: .leading, spacing: 22) {
-                
-                Text("Move to")
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(color.text.opacity(half))
-                
-                TaskListsView()
-            }
-            .padding(30)
-            .presentSheet($sheetHeight)
-        }
-    }
-    
-    private func taskTitleView() -> some View {
-        TextField(titleInput, text: $titleInput, axis: .vertical)
-            .lineLimit(5)
-            .font(.system(size: 30))
-            .strikethrough(task.isDone ? true : false)
-            .frame(maxWidth: .infinity)
-            .onSubmit {
-                saveGoBack()
-            }
-    }
-    
-    private func propertyContainerView(task: TaskModel) -> some View {
-        VStack(spacing: 15) {
-            
-            propertyView(.details)
-            
-            propertyView(.priority)
-                .onTapGesture {
-                    showPriority.toggle()
-                }
-            
-            propertyView(.schedule)
-                .onTapGesture {
-                    showSchedule.toggle()
-                }
-            
-        }
-    }
-    
-    private func propertyView(_ property: IconItem) -> some View {
-        
-        ZStack(alignment: .center) {
-            HStack(spacing: 20) {
-                IconView(icon: property, size: 20)
-                
-                switch property {
-                case .details: detailsView()
-                case .schedule: scheduleView()
-                case .priority: priorityView()
-                default: Text(property.name)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .onSubmit {
-                saveGoBack()
-            }
-        }
-        .frame(height: 40)
-    }
-    
-    private func detailsView() -> some View {
-        ZStack(alignment: .leading) {
-            if detailsInput.isEmpty {
-                Text("Add details")
-                    .foregroundStyle(color.text.opacity(half))
-            }
-            TextField(detailsInput, text: $detailsInput, axis: .vertical)
-                .lineLimit(5)
-        }
-    }
-    
-    private func priorityView() -> some View {
-        ZStack(alignment: .leading) {
-            Text("Add priority")
-                .foregroundStyle(color.text.opacity(half))
-                .opacity(priorityInput.rawValue == 3 ? 1 : 0)
-            
-            TextButtonView(item: .priority(priorityInput))
-            .opacity(priorityInput.rawValue == 3 ? 0 : 1)
-        }
-        .popover(isPresented: $showPriority) {
-            VStack(alignment: .leading, spacing: 22) {
-                PrioritySheetView(selected: $priorityInput, showPriority: $showPriority)
-            }
-            .font(.system(size: 22))
-            .padding(30)
-            .presentSheet($sheetHeight)
-        }
-    }
-    
-    private func scheduleView() -> some View {
-        ZStack(alignment: .leading) {
-            Text("Add date/time")
-                .foregroundStyle(color.text.opacity(half))
-                .opacity(dateInput == nil ? 1 : 0)
-            
-            if let date = dateInput {
-                TextButtonView(item: .date(date.string()))
-            }
-        }
-        .popover(isPresented: $showSchedule) {
-            VStack(alignment: .leading, spacing: 22) {
-                CalendarView(selected: $dateInput, showSchedule: $showSchedule)
-            }
-            .font(.system(size: 22))
-            .padding(30)
-            .presentSheet($sheetHeight)
-        }
-    }
-    
-    private func updateBarView() -> some View {
-        BarContainerView(selected: $barSelected, padding: 0) {
-            ForEach(updateTabs, id: \.self) { tab in
-                IconView(icon: tab, isSpace: tab == updateTabs.last, isAlt: true)
-                    .onTapGesture {
-                        switch tab {
-                        case .complete: clickComplete()
-                        case .delete: clickDelete()
-                        default: {}()
-                        }
-                    }
-            }
-        }
-    }
-    
-}
 
-extension UpdateView {
-    
-    private func clickProperty(_ property: IconItem) {
-        switch property {
-        case .priority:
-            showPriority.toggle()
-        default: return
-        }
-    }
-    
-    private func clickComplete() {
-        taskViewModel.toggleDone(task)
-        saveGoBack()
-    }
-    
-    private func clickDelete() {
-        taskViewModel.delete(this: task)
-        saveGoBack()
-    }
-    
-    private func saveGoBack() {
-        if task.title != titleInput || 
-            task.ofTaskList !=  taskViewModel.currentTaskList().id ||
-            task.details != detailsInput ||
-            task.priority != priorityInput.rawValue ||
-            task.date != dateInput {
-            taskViewModel.update(
-                this: task,
-                title: titleInput,
-                ofTaskList: taskViewModel.currentTaskList().id,
-                details: detailsInput,
-                priority: priorityInput.rawValue,
-                date: dateInput
-            )
-        }
-        navigation.goBack()
-    }
-}
+
+
 
 #Preview("empty task", traits: .sizeThatFitsLayout) {
     let tasks = TaskViewModel.tasksExamples()

@@ -118,13 +118,7 @@ extension AddSheetView {
     
 }
 
-struct NoAnimationStyle: PrimitiveButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .contentShape(Rectangle())
-            .onTapGesture(perform: configuration.trigger)
-    }
-}
+
 
 #Preview("empty", traits: .sizeThatFitsLayout) {
     ZStack {
