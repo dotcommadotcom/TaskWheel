@@ -40,7 +40,7 @@ struct OrderSheetView: View {
     }
     
     private func orderRowView(order: OrderItem) -> some View {
-        let highlight = order == taskViewModel.currentTaskList().order
+        let highlight = order == taskViewModel.currentOrder()
         
         return HStack(spacing: 15) {
             Image(systemName: highlight ? "record.circle" : "circle")

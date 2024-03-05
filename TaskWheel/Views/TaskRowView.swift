@@ -7,57 +7,44 @@ struct TaskRowView: View {
     let task: TaskModel
     
     var body: some View {
-        HStack(spacing: 10) {
-            Button {
-                taskViewModel.toggleDone(task)
-            } label: {
-                IconView(icon: .complete, isAlt: task.isDone, size: 22)
-                    .foregroundStyle(task.isDone ? .gray : PriorityItem(task.priority).color)
-            }
+        VStack(alignment: .leading) {
             
-            VStack(alignment: .leading, spacing: 5) {
+            HStack(spacing: 10) {
+                Button {
+                    taskViewModel.toggleDone(task)
+                } label: {
+                    IconView(icon: .complete, isAlt: task.isDone, size: 22)
+                        .foregroundStyle(task.isDone ? .gray : PriorityItem(task.priority).color)
+                }
+                
                 Text(task.title)
                     .lineLimit(1)
                     .truncationMode(.tail)
-                    
+            }
+            
+            VStack(alignment: .leading) {
                 if !task.details.isEmpty {
                     Text(task.details)
-                        .font(.system(size: 17))
-                        .opacity(0.9)
                         .lineLimit(2)
                         .truncationMode(.tail)
-    
+                        .fontWeight(.light)
+
                 }
                 
                 if let date = task.date {
-                    DateRowView(date: date)
+                    let dateTextButton: TextButtonItem = .date(date)
+                    TextButtonView(item: dateTextButton)
+                        .frame(height: 30)
                 }
             }
+            .padding(.leading, 30)
+            .font(.system(size: 20))
         }
+        
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .font(.system(size: 23))
         .check(isComplete: task.isDone)
-    }
-}
-
-struct DateRowView: View {
-    let date: Date
-    
-    private var dateItems: [Date] {
-        return [date]
-    }
-    
-    var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(dateItems, id: \.self) { item in
-                    PropertyItemView(item: item)
-                }
-            }
-            .padding(.horizontal, 4)
-            .font(.system(size: 17))
-        }
     }
 }
 

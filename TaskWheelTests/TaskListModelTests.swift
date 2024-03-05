@@ -23,7 +23,6 @@ final class TaskListModelTests: XCTestCase {
         XCTAssertEqual(testTaskList.order, .priority)
     }
     
-    
     // TEST - isDoneVisible
     
     func testToggleDoneVisibleTrue() throws {

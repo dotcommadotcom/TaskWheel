@@ -62,6 +62,16 @@ final class TaskVMTests: XCTestCase {
         XCTAssertNotEqual(multipleTaskVM.tasks[6].priority, previousPriority)
     }
     
+    // TEST - Toggle done
+
+    func testToggleDone() throws {
+        let notDone = multipleTaskVM.tasks[6]
+        
+        multipleTaskVM.toggleDone(notDone)
+        
+        XCTAssertNotEqual(multipleTaskVM.tasks[6].isDone, notDone.isDone)
+    }
+    
     // TEST - Delete task
     
     func testDeleteIfDone() throws {
@@ -82,16 +92,6 @@ final class TaskVMTests: XCTestCase {
         multipleTaskVM.delete(this: deleted)
         
         XCTAssertTrue(multipleTaskVM.tasks.allSatisfy { $0.id != deleted.id })
-    }
-    
-    // TEST - Toggle done
-
-    func testToggleDoneChangesTask() throws {
-        let notDone = multipleTaskVM.tasks[6]
-        
-        multipleTaskVM.toggleDone(notDone)
-        
-        XCTAssertNotEqual(multipleTaskVM.tasks[6].isDone, notDone.isDone)
     }
 
     // TEST - Add task

@@ -87,7 +87,6 @@ extension UpdateView {
                 
                 TaskListsView()
             }
-            .font(.system(size: 22))
             .padding(30)
             .presentSheet($sheetHeight)
         }
@@ -160,17 +159,7 @@ extension UpdateView {
                 .foregroundStyle(color.text.opacity(half))
                 .opacity(priorityInput.rawValue == 3 ? 1 : 0)
             
-            ZStack(alignment: .center) {
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(priorityInput.color.opacity(half))
-                
-                Text(priorityInput.text)
-                    .padding(8)
-                    .padding(.horizontal, 8)
-            }
-            .foregroundStyle(color.text)
-            .opacity(0.9)
-            .fixedSize()
+            TextButtonView(item: .priority(priorityInput))
             .opacity(priorityInput.rawValue == 3 ? 0 : 1)
         }
         .popover(isPresented: $showPriority) {
@@ -190,8 +179,7 @@ extension UpdateView {
                 .opacity(dateInput == nil ? 1 : 0)
             
             if let date = dateInput {
-                PropertyItemView(item: date)
-                    .background(color.background)
+                TextButtonView(item: .date(date))
             }
         }
         .popover(isPresented: $showSchedule) {
@@ -222,13 +210,6 @@ extension UpdateView {
 }
 
 extension UpdateView {
-    
-    func string(from date: Date) -> String {
-        // Format the date as needed
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        return dateFormatter.string(from: date)
-    }
     
     private func clickProperty(_ property: IconItem) {
         switch property {

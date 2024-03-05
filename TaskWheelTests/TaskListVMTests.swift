@@ -1,31 +1,84 @@
 import XCTest
+import DequeModule
 @testable import TaskWheel
 
 final class TaskListVMTests: XCTestCase {
     
     private var simpleTaskVM: TaskViewModel!
     private var multipleTaskVM: TaskViewModel!
+    private var orderVM: TaskViewModel!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
         simpleTaskVM = TaskViewModel()
         multipleTaskVM = TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples)
+        
+        let taskList = TaskListModel(title: "my tasks")
+        let tasks: Deque<TaskModel> = [
+            TaskModel(title: "0", ofTaskList: taskList.id, priority: 3, date: date(2023, 6, 28)),
+            TaskModel(title: "1", ofTaskList: taskList.id, priority: 0, date: date(2023, 3, 4)),
+            TaskModel(title: "2", ofTaskList: taskList.id, priority: 2),
+            TaskModel(title: "3", ofTaskList: taskList.id, priority: 1, date: date(2023, 3, 4)),
+            TaskModel(title: "4", ofTaskList: taskList.id, priority: 0, date: date(2023, 3, 3)),
+        ]
+        orderVM = TaskViewModel(tasks, Deque([taskList]))
     }
     
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         simpleTaskVM = nil
         multipleTaskVM = nil
+        orderVM = nil
     }
     
-    // TEST - Update current title
+    private func date(_ year: Int, _ month: Int, _ day: Int) -> Date {
+        var calendar = Calendar.current
+        calendar.firstWeekday = 2
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        return calendar.date(from: dateComponents)!
+    }
     
-    func testUpdateCurrentIsStillSame() throws {
-        let previousID = multipleTaskVM.currentTaskList().id
+    // TEST - Ordering
+    
+    func testDateOrder() throws {
+        let expected = [4, 1, 3, 0, 2]
+        orderVM.updateCurrentOrder(to: .date)
         
-        multipleTaskVM.updateCurrentTitle(to: "whats up")
+        let ordered = orderVM.currentTasks().map { Int($0.title) ?? 0 }
         
-        XCTAssertEqual(multipleTaskVM.currentTaskList().id, previousID)
+        XCTAssertEqual(ordered, expected)
+    }
+    
+    func testPriorityOrder() throws {
+        let expected = [1, 4, 3, 2, 0]
+        orderVM.updateCurrentOrder(to: .priority)
+        
+        let ordered = orderVM.currentTasks().map { Int($0.title) ?? 0 }
+        
+        XCTAssertEqual(ordered, expected)
+    }
+    
+    func testManualOrder() throws {
+        let expected = [0, 1, 2, 3, 4]
+        orderVM.updateCurrentOrder(to: .manual)
+        
+        let ordered = orderVM.currentTasks().map { Int($0.title) ?? 0 }
+        
+        XCTAssertEqual(ordered, expected)
+    }
+    
+    // TEST - Update current task list
+    
+    func testUpdateCurrentOrder() throws {
+        multipleTaskVM.updateCurrentTo(this: multipleTaskVM.taskLists[2])
+        let previousOrder = multipleTaskVM.currentOrder()
+        
+        multipleTaskVM.updateCurrentOrder(to: .priority)
+        
+        XCTAssertNotEqual(multipleTaskVM.currentOrder(), previousOrder)
     }
     
     func testUpdateCurrentTitle() throws {
@@ -35,6 +88,32 @@ final class TaskListVMTests: XCTestCase {
         multipleTaskVM.updateCurrentTitle(to: "whats up")
         
         XCTAssertNotEqual(multipleTaskVM.currentTitle(), previousTitle)
+    }
+    
+    func testUpdateCurrentIsStillSameTaskList() throws {
+        let previousID = multipleTaskVM.currentTaskList().id
+        
+        multipleTaskVM.updateCurrentTitle(to: "whats up")
+        
+        XCTAssertEqual(multipleTaskVM.currentTaskList().id, previousID)
+    }
+    
+    // TEST - Toggle isDoneVisible
+    
+    func testGetCurrentDoneTasksIsEmpty() throws {
+        multipleTaskVM.toggleCurrentDoneVisible()
+
+        let currentTasks = multipleTaskVM.currentDoneTasks()
+        
+        XCTAssertTrue(currentTasks.isEmpty)
+    }
+    
+    func testCurrentTaskListDoneVisible() throws {
+        let previousDoneVisible = multipleTaskVM.currentTaskList().isDoneVisible
+        
+        multipleTaskVM.toggleCurrentDoneVisible()
+
+        XCTAssertNotEqual(multipleTaskVM.currentTaskList().isDoneVisible,  previousDoneVisible)
     }
     
     // TEST - Delete task list
@@ -152,23 +231,7 @@ final class TaskListVMTests: XCTestCase {
     }
     
     // TEST - Current task list
-    
-    func testGetCurrentDoneTasksIsEmpty() throws {
-        multipleTaskVM.toggleCurrentDoneVisible()
 
-        let currentTasks = multipleTaskVM.currentDoneTasks()
-        
-        XCTAssertTrue(currentTasks.isEmpty)
-    }
-    
-    func testCurrentTaskListDoneVisible() throws {
-        let previousDoneVisible = multipleTaskVM.currentTaskList().isDoneVisible
-        
-        multipleTaskVM.toggleCurrentDoneVisible()
-
-        XCTAssertNotEqual(multipleTaskVM.currentTaskList().isDoneVisible,  previousDoneVisible)
-    }
-    
     func testUpdateCurrentTaskList() throws {
         let previousTaskList = multipleTaskVM.taskLists[2]
         
@@ -176,8 +239,6 @@ final class TaskListVMTests: XCTestCase {
         
         XCTAssertEqual(multipleTaskVM.current, 2)
     }
-    
-    // TEST - Current task list
     
     func testCurrentDoneTasks() throws {
         let currentTasks = multipleTaskVM.currentDoneTasks()

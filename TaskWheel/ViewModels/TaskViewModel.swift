@@ -63,19 +63,12 @@ extension TaskViewModel {
         return self.taskLists[current].title
     }
     
-    func currentOrder() -> (TaskModel, TaskModel) -> Bool {
-        switch currentTaskList().order {
-        case .priority:
-            return { $0.priority < $1.priority }
-        case .date:
-            return compareDates
-        case .manual:
-            return { _, _ in return false }
-        }
+    func currentOrder() -> OrderItem {
+        return self.taskLists[current].order
     }
             
     func currentTasks() -> Deque<TaskModel> {
-        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }.sorted(by: currentOrder()))
+        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }.sorted(by: ordering()))
     }
 
     func currentDoneTasks() -> Deque<TaskModel> {
@@ -83,17 +76,13 @@ extension TaskViewModel {
             return []
         }
         
-        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }.sorted(by: currentOrder()))
+        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }.sorted(by: ordering()))
     }
     
     func updateCurrentTo(this taskList: TaskListModel) {
         if let index = taskLists.firstIndex(where: { $0.id == taskList.id }) {
             self.current = index
         }
-    }
-    
-    func toggleCurrentDoneVisible() {
-        taskLists[current] = taskLists[current].toggleDoneVisible()
     }
     
     func updateDefault(with index: Int) {
@@ -126,6 +115,10 @@ extension TaskViewModel {
         taskLists.remove(at: index)
     }
     
+    func toggleCurrentDoneVisible() {
+        taskLists[current] = taskLists[current].toggleDoneVisible()
+    }
+    
     func updateCurrentTitle(to title: String? = nil) {
         taskLists[current] = taskLists[current].edit(title: title)
     }
@@ -134,16 +127,15 @@ extension TaskViewModel {
         taskLists[current] = taskLists[current].edit(order: order)
     }
     
-    func compareDates(_ lhs: TaskModel, _ rhs: TaskModel) -> Bool {
-        guard let lhsDate = lhs.date else {
-            return rhs.date == nil
+    func ordering() -> (TaskModel, TaskModel) -> Bool {
+        switch currentOrder() {
+        case .priority:
+            return { $0.priority < $1.priority }
+        case .date:
+            return { ($0.date ?? .distantFuture) < ($1.date ?? .distantFuture) }
+        case .manual:
+            return { _, _ in return false }
         }
-        
-        guard let rhsDate = rhs.date else {
-            return false
-        }
-
-        return lhsDate < rhsDate
     }
 }
 
