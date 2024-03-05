@@ -16,6 +16,7 @@ struct SheetView: View {
     
     @Binding var selected: IconItem?
     @State private var sheetHeight: CGFloat = .zero
+    @State var task: TaskModel?
     let color = ColorSettings()
     
     var body: some View {
@@ -25,6 +26,39 @@ struct SheetView: View {
             case .order: OrderSheetView()
             case .more: MoreSheetView()
             case .add: AddSheetView()
+            default: EmptyView()
+            }
+        }
+        .font(.system(size: 22))
+        .padding(30)
+        .presentSheet($sheetHeight)
+    }
+}
+
+struct SheetOnTaskViewModifier: ViewModifier {
+    
+    @Binding var selected: IconItem?
+    
+    func body(content: Content) -> some View {
+        content
+            .popover(item: $selected) { _ in
+                SheetOnTaskView(selected: $selected)
+            }
+    }
+}
+
+struct SheetOnTaskView: View {
+    
+    @Binding var selected: IconItem?
+    @State private var sheetHeight: CGFloat = .zero
+    @State var task: TaskModel?
+    let color = ColorSettings()
+    
+    var body: some View {
+        VStack {
+            switch selected {
+            case .priority: Prior()
+            case .schedule: OrderSheetView()
             default: EmptyView()
             }
         }
