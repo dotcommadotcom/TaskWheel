@@ -3,12 +3,11 @@ import SwiftUI
 struct SheetViewModifier: ViewModifier {
     
     @Binding var selected: IconItem?
-    @Binding var order: OrderItem
     
     func body(content: Content) -> some View {
         content
             .popover(item: $selected) { _ in
-                SheetView(selected: $selected, order: $order)
+                SheetView(selected: $selected)
             }
     }
 }
@@ -16,7 +15,6 @@ struct SheetViewModifier: ViewModifier {
 struct SheetView: View {
     
     @Binding var selected: IconItem?
-    @Binding var order: OrderItem
     @State private var sheetHeight: CGFloat = .zero
     let color = ColorSettings()
     
@@ -24,7 +22,7 @@ struct SheetView: View {
         VStack {
             switch selected {
             case .lists: ListsSheetView()
-            case .order: OrderSheetView(selected: $order)
+            case .order: OrderSheetView()
             case .more: MoreSheetView()
             case .add: AddSheetView()
             default: EmptyView()
@@ -71,9 +69,9 @@ struct SheetPresentationModifier: ViewModifier {
 }
 
 extension View {
-    func sheetItem(selected: Binding<IconItem?>, order: Binding<OrderItem>) -> some View {
+    func sheetItem(selected: Binding<IconItem?>) -> some View {
         self
-            .modifier(SheetViewModifier(selected: selected, order: order))
+            .modifier(SheetViewModifier(selected: selected))
     }
     
     func getSheetHeight(_ sheetHeight: Binding<CGFloat>) -> some View {
@@ -89,5 +87,5 @@ extension View {
 
 
 #Preview {
-    SheetView(selected: .constant(nil), order: .constant(.manual))
+    SheetView(selected: .constant(nil))
 }

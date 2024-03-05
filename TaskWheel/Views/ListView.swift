@@ -4,22 +4,16 @@ struct ListView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     
-    let order: OrderItem
-    
-    init(order: OrderItem) {
-        self.order = order
-    }
-    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(taskViewModel.currentTasks(by: order)) { task in
+                ForEach(taskViewModel.currentTasks()) { task in
                     NavigationLink(value: task) {
                         TaskRowView(task: task)
                     }
                 }
                 
-                ForEach(taskViewModel.currentDoneTasks(by: order)) { task in
+                ForEach(taskViewModel.currentDoneTasks()) { task in
                     NavigationLink(value: task) {
                         TaskRowView(task: task)
                     }
@@ -31,6 +25,6 @@ struct ListView: View {
 }
 
 #Preview {
-    ListView(order: .manual)
+    ListView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

@@ -15,7 +15,16 @@ final class TaskListModelTests: XCTestCase {
         testTaskList = nil
     }
     
-    // TEST - isDone
+    // TEST - Order
+    
+    func testEditOrder() throws {
+        testTaskList = testTaskList.edit(order: .priority)
+        
+        XCTAssertEqual(testTaskList.order, .priority)
+    }
+    
+    
+    // TEST - isDoneVisible
     
     func testToggleDoneVisibleTrue() throws {
         testTaskList = testTaskList.toggleDoneVisible()
@@ -32,14 +41,6 @@ final class TaskListModelTests: XCTestCase {
     
     // TEST - Title
     
-    func testEditTitleIsSameID() throws {
-        let previousID = testTaskList.id
-        
-        testTaskList = testTaskList.edit(title: "hello")
-        
-        XCTAssertEqual(testTaskList.id, previousID)
-    }
-    
     func testEditTitle() throws {
         testTaskList = testTaskList.edit(title: "hello")
         
@@ -51,14 +52,16 @@ final class TaskListModelTests: XCTestCase {
     func testEditMultipleAttributes() throws {
         let previousTitle = testTaskList.title
         let previousIsDoneVisible = testTaskList.isDoneVisible
+        let previousOrder = testTaskList.order
         
-        testTaskList = testTaskList.edit(title: "new title", isDoneVisible: false)
+        testTaskList = testTaskList.edit(title: "new title", isDoneVisible: false, order: .date)
         
         XCTAssertNotEqual(testTaskList.title, previousTitle)
         XCTAssertNotEqual(testTaskList.isDoneVisible, previousIsDoneVisible)
+        XCTAssertNotEqual(testTaskList.order, previousOrder)
     }
     
-    func testEmptyEditHelper() throws {
+    func testEmptyEditHelperDoesNothing() throws {
         XCTAssertEqual(testTaskList.edit(), testTaskList)
     }
     

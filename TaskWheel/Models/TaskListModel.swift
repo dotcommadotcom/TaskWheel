@@ -5,21 +5,25 @@ struct TaskListModel: Identifiable, Hashable {
     let id: UUID
     let title: String
     let isDoneVisible: Bool
+    let order: OrderItem
     
     init(
         id: UUID = UUID(),
         title: String,
-        isDoneVisible: Bool = true
+        isDoneVisible: Bool = true,
+        order: OrderItem = .manual
     ) {
         self.id = id
         self.title = title
         self.isDoneVisible = isDoneVisible
+        self.order = order
     }
     
-    func edit(title: String? = nil, isDoneVisible: Bool? = nil) -> TaskListModel {
+    func edit(title: String? = nil, isDoneVisible: Bool? = nil, order: OrderItem? = .manual) -> TaskListModel {
         return TaskListModel(id: self.id,
                              title: title ?? self.title,
-                             isDoneVisible: isDoneVisible ?? self.isDoneVisible)
+                             isDoneVisible: isDoneVisible ?? self.isDoneVisible,
+                             order: order ?? self.order)
     }
     
     func toggleDoneVisible()  -> TaskListModel {

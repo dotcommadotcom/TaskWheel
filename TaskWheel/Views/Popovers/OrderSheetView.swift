@@ -14,9 +14,9 @@ enum OrderItem {
 
 struct OrderSheetView: View {
     
+    @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
-    @Binding var selected: OrderItem
-    
+
     let orders: [OrderItem] = [.manual, .date, .priority]
     private let color = ColorSettings()
     
@@ -30,7 +30,7 @@ struct OrderSheetView: View {
                 ForEach(orders, id: \.self) { order in
                     orderRowView(order: order)
                         .onTapGesture {
-                            selected = order
+                            taskViewModel.updateCurrentOrder(to: order)
                             presentationMode.wrappedValue.dismiss()
                         }
                 }
@@ -40,10 +40,12 @@ struct OrderSheetView: View {
     }
     
     private func orderRowView(order: OrderItem) -> some View {
-        HStack(spacing: 15) {
-            Image(systemName: selected == order ? "record.circle" : "circle")
-                .fontWeight(selected == order ? .bold : .regular)
-                .foregroundStyle(selected == order ? color.accent : color.text)
+        let highlight = order == taskViewModel.currentTaskList().order
+        
+        return HStack(spacing: 15) {
+            Image(systemName: highlight ? "record.circle" : "circle")
+                .fontWeight(highlight ? .bold : .regular)
+                .foregroundStyle(highlight ? color.accent : color.text)
             
             Text(order.text)
             Spacer()
@@ -54,6 +56,6 @@ struct OrderSheetView: View {
 #Preview {
     ZStack {
         Color.gray.opacity(0.3)
-        OrderSheetView(selected: .constant(.manual))
+        OrderSheetView()
     }
 }

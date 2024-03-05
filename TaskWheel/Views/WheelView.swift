@@ -5,15 +5,9 @@ struct WheelView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @State var selected: Int = 0
     
-    let order: OrderItem
-    
-    init(order: OrderItem) {
-        self.order = order
-    }
-    
     var body: some View {
         Picker("wheel", selection: $selected) {
-            ForEach(taskViewModel.currentTasks(by: order)) { task in
+            ForEach(taskViewModel.currentTasks()) { task in
                 HStack {
                     Text(task.title)
                         .font(.system(size: 23))
@@ -30,6 +24,6 @@ struct WheelView: View {
 
 
 #Preview {
-    WheelView(order: .manual)
+    WheelView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

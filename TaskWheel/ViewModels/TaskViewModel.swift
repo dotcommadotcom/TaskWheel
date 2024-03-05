@@ -51,6 +51,9 @@ extension TaskViewModel {
                                      date: date ?? task.date)
         }
     }
+}
+
+extension TaskViewModel {
     
     func currentTaskList() -> TaskListModel {
         return self.taskLists[current]
@@ -60,44 +63,27 @@ extension TaskViewModel {
         return self.taskLists[current].title
     }
     
-    func currentTasks(by sort: OrderItem = .manual) -> Deque<TaskModel> {
-        let currentTasks = tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
-        
-        switch sort {
+    func currentOrder() -> (TaskModel, TaskModel) -> Bool {
+        switch currentTaskList().order {
         case .priority:
-            return Deque(currentTasks.sorted { $0.priority < $1.priority })
+            return { $0.priority < $1.priority }
         case .date:
-            return Deque(currentTasks.sorted(by: compareDates))
+            return compareDates
         case .manual:
-            return currentTasks
+            return { _, _ in return false }
         }
     }
-    
-    func compareDates(_ lhs: TaskModel, _ rhs: TaskModel) -> Bool {
-        guard let lhsDate = lhs.date else {
-            return rhs.date == nil
-        }
-        
-        guard let rhsDate = rhs.date else {
-            return false
-        }
+            
+    func currentTasks() -> Deque<TaskModel> {
+        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }.sorted(by: currentOrder()))
+    }
 
-        return lhsDate < rhsDate
-    }
-    
-    func currentDoneTasks(by sort: OrderItem = .manual) -> Deque<TaskModel> {
+    func currentDoneTasks() -> Deque<TaskModel> {
         guard taskLists[current].isDoneVisible else {
             return []
         }
         
-        let currentDoneTasks = tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }
-        
-        switch sort {
-        case .priority:
-            return Deque(currentDoneTasks.sorted { $0.priority < $1.priority })
-        case .date, .manual:
-            return currentDoneTasks
-        }
+        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }.sorted(by: currentOrder()))
     }
     
     func updateCurrentTo(this taskList: TaskListModel) {
@@ -144,23 +130,21 @@ extension TaskViewModel {
         taskLists[current] = taskLists[current].edit(title: title)
     }
     
-//    func sort(by priority: Int) -> Deque<TaskModel> {
-//        return tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }
-//            .sorted { $0.priority < $1.priority }
-//    }
+    func updateCurrentOrder(to order: OrderItem) {
+        taskLists[current] = taskLists[current].edit(order: order)
+    }
     
-    //    func countDone() -> Int {
-    //        return tasks.filter { $0.isDone }.count
-    //    }
-    
-    //    func showTasks() -> Deque<TaskModel> {
-    //        return taskList.filter { !$0.isComplete }
-    //    }
-    
-    
-    //    func filter(_ condition: (TaskModel) -> Bool) -> Deque<TaskModel> {
-    //        return taskList.filter { task in condition(task) }
-    //    }
+    func compareDates(_ lhs: TaskModel, _ rhs: TaskModel) -> Bool {
+        guard let lhsDate = lhs.date else {
+            return rhs.date == nil
+        }
+        
+        guard let rhsDate = rhs.date else {
+            return false
+        }
+
+        return lhsDate < rhsDate
+    }
 }
 
 extension TaskViewModel {

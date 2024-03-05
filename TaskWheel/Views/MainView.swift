@@ -7,7 +7,6 @@ struct MainView: View {
     
     @State private var topSelected: TopTabItem = .list
     @State private var barSelected: IconItem? = nil
-    @State private var order: OrderItem = .manual
     @State private var showCompleted: Bool = true
     
     private let color = ColorSettings()
@@ -20,10 +19,10 @@ struct MainView: View {
                 titleView()
                 
                 TopTabContainerView(selected: $topSelected) {
-                    ListView(order: order)
+                    ListView()
                         .topTabItem(tab: .list, selected: $topSelected)
                     
-                    WheelView(order: order)
+                    WheelView()
                         .topTabItem(tab: .wheel, selected: $topSelected)
                 }
                 .highPriorityGesture(DragGesture().onEnded({
@@ -39,11 +38,6 @@ struct MainView: View {
             .navigationDestination(for: TaskModel.self) { task in
                 UpdateView(task: task)
             }
-            
-//            .popover(isPresented: $showSchedule) {
-//                CalendarView(selectedDate: .constant(Date()))
-//                    .presentationCompactAdaptation(.sheet)
-//            }
         }
     }
 }
@@ -75,7 +69,7 @@ extension MainView {
                     }
             }
         }
-        .sheetItem(selected: $barSelected, order: $order)
+        .sheetItem(selected: $barSelected)
     }
     
     private func handleSwipe(translation: CGFloat) {
