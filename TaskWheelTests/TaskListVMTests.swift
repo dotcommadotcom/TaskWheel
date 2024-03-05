@@ -1,7 +1,7 @@
 import XCTest
 @testable import TaskWheel
 
-final class TaskVMListTests: XCTestCase {
+final class TaskListVMTests: XCTestCase {
     
     private var simpleTaskVM: TaskViewModel!
     private var multipleTaskVM: TaskViewModel!
