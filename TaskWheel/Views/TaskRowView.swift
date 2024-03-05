@@ -1,4 +1,5 @@
 import SwiftUI
+import DequeModule
 
 struct TaskRowView: View {
     
@@ -7,45 +8,42 @@ struct TaskRowView: View {
     let task: TaskModel
     
     var body: some View {
-        VStack(alignment: .leading) {
-            
-            HStack(spacing: 10) {
-                Button {
-                    taskViewModel.toggleDone(task)
-                } label: {
-                    IconView(icon: .complete, isAlt: task.isDone, size: 22)
-                        .foregroundStyle(task.isDone ? .gray : PriorityItem(task.priority).color)
-                }
-                
-                Text(task.title)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
+        HStack(alignment: .firstTextBaseline, spacing: 20) {
+            Button {
+                taskViewModel.toggleDone(task)
+            } label: {
+                IconView(icon: .complete, isAlt: task.isDone, size: 22)
+                    .foregroundStyle(task.isDone ? .gray : PriorityItem(task.priority).color)
+            }
+            .alignmentGuide(.firstTextBaseline) { dimension in
+                return dimension[.bottom] - 3
             }
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(task.title.isEmpty ? " " : task.title)
+                    .lineLimit(1)
+                    
+
                 if !task.details.isEmpty {
                     Text(task.details)
+                        .font(.system(size: 20, weight: .light))
                         .lineLimit(2)
-                        .truncationMode(.tail)
-                        .fontWeight(.light)
-
+                        .multilineTextAlignment(.leading)
+                    
                 }
                 
-                if let date = task.date {
-                    let dateTextButton: TextButtonItem = .date(date)
-                    TextButtonView(item: dateTextButton)
-                        .frame(height: 30)
+                if !task.isDone, let date = task.date {
+                    TextButtonView(item: .date(date.string()))
+                        .font(.system(size: 20))
                 }
             }
-            .padding(.leading, 30)
-            .font(.system(size: 20))
         }
-        
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(10)
         .font(.system(size: 23))
-        .check(isComplete: task.isDone)
+        .mark(isComplete: task.isDone)
     }
+    
 }
 
 struct TaskRowModifier: ViewModifier {
@@ -62,35 +60,36 @@ struct TaskRowModifier: ViewModifier {
 }
 
 extension View {
-    func check(isComplete: Bool) -> some View {
+    func mark(isComplete: Bool) -> some View {
         self
             .modifier(TaskRowModifier(isComplete: isComplete))
     }
 }
 
-#Preview("incomplete task", traits: .sizeThatFitsLayout) {
+#Preview {
     let color = ColorSettings()
-    let incomplete = TaskModel(title: "incomplete task", isComplete: false, details: "i'm not completed", priority: 3)
+    let taskList = TaskListModel(title: "my tasks")
+    let tasks: Deque<TaskModel> = [
+        TaskModel(title: "this is the most simple task", ofTaskList: taskList.id, priority: 0),
+        TaskModel(title: "this is the most simple task", ofTaskList: taskList.id, priority: 0),
+        TaskModel(title: "this is the most simple task", ofTaskList: taskList.id, priority: 0),
+        TaskModel(title: "this is the most simple task", ofTaskList: taskList.id, priority: 0),
+        TaskModel(title: "", ofTaskList: taskList.id, priority: 1),
+        TaskModel(title: "", ofTaskList: taskList.id, details: "just details", priority: 2),
+        TaskModel(title: "", ofTaskList: taskList.id, date: date(2023, 3, 4)),
+        TaskModel(title: "task with date", ofTaskList: taskList.id, priority: 0, date: date(2023, 3, 4)),
+        TaskModel(title: "this is a long text hat i am hoping will overflow", ofTaskList: taskList.id, details: "these are details that should also overflow just to show the fullest version of a task", priority: 1, date: date(2023, 6, 28)),
+        TaskModel(title: "", ofTaskList: taskList.id, details: "these are details that does not overflow ", priority: 0, date: date(2023, 3, 4)),
+        TaskModel(title: "full but completed", ofTaskList: taskList.id, isComplete: true, details: "again, full but completed but want to show how details can overflow", priority: 0, date: date(2023, 3, 3)),
+    ]
     
     return ZStack {
         color.background.ignoresSafeArea()
         
-        TaskRowView(task: incomplete)
+        ListView()
+            .environmentObject(TaskViewModel(tasks, Deque([taskList])))
+            .preferredColorScheme(.dark)
     }
-}
-
-#Preview("completed task", traits: .sizeThatFitsLayout) {
-    let color = ColorSettings()
-    let complete = TaskModel(title: "completed task", isComplete: true, details: "i'm completed")
-    
-    
-    return ZStack {
-        color.background.ignoresSafeArea()
-        
-        TaskRowView(task: complete)
-            .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
-    }
-    .preferredColorScheme(.dark)
 }
 
 

@@ -70,7 +70,7 @@ extension AddSheetView {
         } label: {
             IconView(icon: .schedule, size: iconSize)
         }
-        .foregroundStyle(dateInput == nil ? .pink : color.accent)
+        .foregroundStyle(dateInput == nil ? color.text : color.accent)
         .popover(isPresented: $showSchedule) {
             VStack(alignment: .leading, spacing: 22) {
                 CalendarView(selected: $dateInput, showSchedule: $showSchedule)

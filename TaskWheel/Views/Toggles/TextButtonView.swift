@@ -1,14 +1,12 @@
 import SwiftUI
 
 enum TextButtonItem {
-    case date(Date), priority(PriorityItem)
+    case date(String), priority(PriorityItem)
     
     var text: String {
         switch self {
-        case .date(let date):
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .long
-            return dateFormatter.string(from: date)
+        case .date(let dateString):
+            return dateString
         case .priority(let priority):
             return priority.text
         }
@@ -41,7 +39,7 @@ struct TextButtonView: View {
 }
 
 #Preview("date") {
-    TextButtonView(item: .date(Date()))
+    TextButtonView(item: .date(Date().string()))
 }
 
 #Preview("priority") {

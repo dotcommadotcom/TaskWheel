@@ -179,7 +179,7 @@ extension UpdateView {
                 .opacity(dateInput == nil ? 1 : 0)
             
             if let date = dateInput {
-                TextButtonView(item: .date(date))
+                TextButtonView(item: .date(date.string()))
             }
         }
         .popover(isPresented: $showSchedule) {

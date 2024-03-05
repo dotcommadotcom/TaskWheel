@@ -49,7 +49,6 @@ extension MainView {
             Text(taskViewModel.currentTitle())
                 .font(.system(size: 25, weight: .bold))
                 .lineLimit(1)
-                .truncationMode(.tail)
             
             Spacer()
             
