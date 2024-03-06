@@ -253,7 +253,7 @@ extension TaskView {
     }
     
     private func scheduleTextButton() -> some View {
-        if let date = dateInput {
+        if dateInput != nil {
             return AnyView(ScheduleButton(date: $dateInput))
         } else {
             return AnyView(EmptyView())

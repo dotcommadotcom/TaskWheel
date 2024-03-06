@@ -33,33 +33,6 @@ struct SheetView: View {
     }
 }
 
-struct PropertyViewModifer: ViewModifier {
-    
-    @State private var sheetHeight: CGFloat = .zero
-
-    @Binding var show: Bool
-    @Binding var dateInput: Date?
-    @Binding var priorityInput: PriorityItem
-    
-    let isDate: Bool
-    
-    func body(content: Content) -> some View {
-        content
-            .popover(isPresented: $show) {
-                VStack(alignment: .leading, spacing: 22) {
-                    if isDate {
-                        CalendarView(dateInput: $dateInput, showSchedule: $show)
-                    } else {
-                        PrioritySheetView(selected: $priorityInput, showPriority: $show)
-                    }
-                }
-                .font(.system(size: 22))
-                .padding(30)
-                .presentSheet($sheetHeight)
-            }
-    }
-}
-
 struct PriorityViewModifer: ViewModifier {
     
     @State private var sheetHeight: CGFloat = .zero
@@ -91,7 +64,7 @@ struct ScheduleViewModifer: ViewModifier {
         content
             .popover(isPresented: $show) {
                 VStack(alignment: .leading, spacing: 22) {
-                    CalendarView(dateInput: $input, showSchedule: $show)
+                    CalendarView(dateInput: $input)
                 }
                 .padding(30)
                 .presentSheet($sheetHeight)
@@ -159,14 +132,6 @@ extension View {
     func popSchedule(show: Binding<Bool>, input: Binding<Date?>) -> some View {
         self
             .modifier(ScheduleViewModifer(show: show, input: input))
-    }
-    
-    func popProperty(show: Binding<Bool>, dateInput: Binding<Date?>, priorityInput: Binding<PriorityItem>) -> some View {
-        
-        let isDate = dateInput.wrappedValue == nil ? false: true
-        
-        return self
-            .modifier(PropertyViewModifer(show: show, dateInput: dateInput, priorityInput: priorityInput, isDate: isDate))
     }
 }
 

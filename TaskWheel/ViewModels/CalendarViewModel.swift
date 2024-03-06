@@ -22,6 +22,10 @@ class CalendarViewModel: ObservableObject {
 
 extension CalendarViewModel {
     
+    func isSameDay(this lhs: Date, as rhs: Date) -> Bool {
+        return calendar.isDate(lhs, equalTo: rhs, toGranularity: .day)
+    }
+    
     func firstOfWeek(for date: Date) -> Date {
         let weekday = calendar.component(.weekday, from: date)
         let daysToSubtract = (weekday - calendar.firstWeekday + 7) % 7
@@ -89,9 +93,4 @@ extension CalendarViewModel {
     func adjustMonth(by value: Int) {
         selectedDate = calendar.date(byAdding: .month, value: value, to: selectedDate) ?? Date()
     }
-    
-    func adjustYear(by value: Int) {
-        selectedDate = calendar.date(byAdding: .year, value: value, to: selectedDate) ?? Date()
-    }
-    
 }

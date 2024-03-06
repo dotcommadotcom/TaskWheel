@@ -7,14 +7,14 @@ struct CalendarView: View {
     @State var optionSelected: IconItem? = nil
     
     @Binding var dateInput: Date?
-    @Binding var showSchedule: Bool
     
     private let optionTabs: [IconItem] = [.cancel, .save]
     
-    init(dateInput: Binding<Date?>, showSchedule: Binding<Bool>) {
+    init(dateInput: Binding<Date?>) {
         self._dateInput = dateInput
         self._calendarVM = StateObject(wrappedValue: CalendarViewModel(selectedDate: dateInput.wrappedValue ?? Date()))
-        self._showSchedule = showSchedule
+        
+//                                                                        dateInput.wrappedValue ?? Date()))
     }
     
     var body: some View {
@@ -90,13 +90,13 @@ extension CalendarView {
         } label: {
             ZStack {
                 Circle()
-                    .fill(calendarVM.selectedDate == day ? Color.text : .clear)
+                    .fill(isHighlight(day) ? Color.text : .clear)
                 
                 Text("\(calendarVM.calendar.component(.day, from: day))")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .contentShape(Rectangle())
                     .opacity(calendarVM.isInMonth(this: day) ? 1 : 0.5)
-                    .foregroundColor(calendarVM.selectedDate == day ? Color.background : Color.text)
+                    .foregroundColor(isHighlight(day) ? Color.background : Color.text)
             }
         }
     }
@@ -120,6 +120,10 @@ extension CalendarView {
 
 extension CalendarView {
     
+    private func isHighlight(_ day: Date) -> Bool {
+        return calendarVM.isSameDay(this: day, as: calendarVM.selectedDate)
+    }
+    
     private func clickCancel() {
         presentationMode.wrappedValue.dismiss()
     }
@@ -139,11 +143,11 @@ extension CalendarView {
 }
 
 #Preview("calendar") {
-    CalendarView(dateInput: .constant(date(2024, 12, 16)), showSchedule: .constant(true))
+    CalendarView(dateInput: .constant(date(2024, 12, 16)))
 }
 
 #Preview("dark calendar") {
-    CalendarView(dateInput: .constant(Date()), showSchedule: .constant(true))
+    CalendarView(dateInput: .constant(Date()))
         .preferredColorScheme(.dark)
 }
 

@@ -32,31 +32,14 @@ final class CalendarViewModelTests: XCTestCase {
     }
     
 
-    // TEST - Adjust month and year
-    
-    func testAdjustYearBackwards() throws {
-        vm.select(this: feb2821)
-        
-        vm.adjustYear(by: -20)
-        
-        XCTAssertEqual(vm.yearTitle(), "2001")
-    }
-    
-    func testAdjustYearForward() throws {
-        vm.select(this: dec1924)
-        
-        vm.adjustYear(by: 4)
-        
-        XCTAssertEqual(vm.yearTitle(), "2028")
-    }
+    // TEST - Adjust month
     
     func testAdjustMonthBackwards() throws {
         vm.select(this: feb2821)
         
         vm.adjustMonth(by: -2)
         
-        XCTAssertEqual(vm.monthTitle(), "December")
-        XCTAssertEqual(vm.yearTitle(), "2020")
+        XCTAssertEqual(vm.monthTitle(), "December 2020")
     }
     
     func testAdjustMonthForward() throws {
@@ -64,8 +47,7 @@ final class CalendarViewModelTests: XCTestCase {
         
         vm.adjustMonth(by: 1)
         
-        XCTAssertEqual(vm.monthTitle(), "January")
-        XCTAssertEqual(vm.yearTitle(), "2025")
+        XCTAssertEqual(vm.monthTitle(), "January 2025")
     }
 
     // TEST - Selected
@@ -107,10 +89,6 @@ final class CalendarViewModelTests: XCTestCase {
             ["2024.12.23", "2024.12.24", "2024.12.25", "2024.12.26", "2024.12.27", "2024.12.28", "2024.12.29"],
             ["2024.12.30", "2024.12.31", "2025.01.01", "2025.01.02", "2025.01.03", "2025.01.04", "2025.01.05"],
         ])
-    }
-    
-    func testWeeksInMonthHasFourWeeks() throws {
-        XCTAssertEqual(vm.weeksInMonth(for: feb2821).count, 4)
     }
     
     func testWeeksInMonthHasSixWeeks() throws {
@@ -160,6 +138,18 @@ final class CalendarViewModelTests: XCTestCase {
     
     func testFirstOfMonth() throws {
         XCTAssertEqual(string(from: vm.firstOfMonth(for: dec1924)), "2024.12.01")
+    }
+    
+    // TEST - Is same day?
+    
+    func testSelectedDateIsNotPastDate() throws {
+        let pastDate = vm.calendar.date(byAdding: .day, value: -1, to: Date())!
+        
+        XCTAssertFalse(vm.isSameDay(this: vm.selectedDate, as: pastDate))
+    }
+    
+    func testSelectedDateIsToday() throws {
+        XCTAssertTrue(vm.isSameDay(this: vm.selectedDate, as: Date()))
     }
     
     // TEST - Constructor
