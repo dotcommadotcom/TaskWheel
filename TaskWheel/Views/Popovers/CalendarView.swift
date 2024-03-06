@@ -13,8 +13,6 @@ struct CalendarView: View {
     init(dateInput: Binding<Date?>) {
         self._dateInput = dateInput
         self._calendarVM = StateObject(wrappedValue: CalendarViewModel(selectedDate: dateInput.wrappedValue ?? Date()))
-        
-//                                                                        dateInput.wrappedValue ?? Date()))
     }
     
     var body: some View {

@@ -260,7 +260,6 @@ extension TaskView {
         }
     }
 
-    
     private func saveButton() -> some View {
         Button {
             clickSave()

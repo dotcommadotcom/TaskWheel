@@ -43,7 +43,8 @@ struct ScheduleButton: View {
                 .stroke(Color.text.opacity(0.7), lineWidth: 2)
 
             HStack(spacing: 10) {
-                Text(date?.string() ?? "")
+                Text(date?.relative() ?? "")
+                    .foregroundStyle(isPast(date) ? Color.high : Color.text)
                 
                 Button {
                     date = nil
@@ -61,6 +62,13 @@ struct ScheduleButton: View {
             show.toggle()
         }
         .popSchedule(show: $show, input: $date)
+    }
+    
+    private func isPast(_ date: Date?) -> Bool {
+        if let date = date {
+            return date.isPast()
+        }
+        return false
     }
 }
 

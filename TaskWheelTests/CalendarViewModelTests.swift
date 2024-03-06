@@ -16,21 +16,6 @@ final class CalendarViewModelTests: XCTestCase {
         try super.tearDownWithError()
         vm = nil
     }
-    
-    private func date(_ year: Int, _ month: Int, _ day: Int) -> Date {
-        var dateComponents = DateComponents()
-        dateComponents.year = year
-        dateComponents.month = month
-        dateComponents.day = day
-        return vm.calendar.date(from: dateComponents)!
-    }
-    
-    private func string(from date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd"
-        return dateFormatter.string(from: date)
-    }
-    
 
     // TEST - Adjust month
     
@@ -67,7 +52,7 @@ final class CalendarViewModelTests: XCTestCase {
     func testSelectDate() throws {
         vm.select(this: dec1924)
         
-        XCTAssertEqual(string(from: vm.selectedDate), string(from: dec1924))
+        XCTAssertEqual(vm.selectedDate.string(), dec1924.string())
     }
     
     // TEST - Weeks in month
@@ -77,7 +62,7 @@ final class CalendarViewModelTests: XCTestCase {
         
         let weeksString = weeks.map { week in
             week.map { day in
-                string(from: day)
+                day.string()
             }
         }
         
@@ -98,7 +83,7 @@ final class CalendarViewModelTests: XCTestCase {
     func testNextWeek() throws {
         let date = vm.firstOfWeek(for: date(2024, 12, 1))
         
-        XCTAssertEqual(string(from: vm.nextWeek(from: date)), "2024.12.02")
+        XCTAssertEqual(vm.nextWeek(from: date).string(), "2024.12.02")
     }
     
     func testThisWeek() throws {
@@ -106,7 +91,7 @@ final class CalendarViewModelTests: XCTestCase {
         
         let thisWeek = vm.thisWeek(startsOn: date)
         let thisWeekString = (0..<7).map { index in
-            string(from: thisWeek[index])
+            thisWeek[index].string()
         }
         
         XCTAssertEqual(thisWeekString, ["2024.11.25", "2024.11.26", "2024.11.27", "2024.11.28", "2024.11.29", "2024.11.30", "2024.12.01"])
@@ -129,15 +114,15 @@ final class CalendarViewModelTests: XCTestCase {
     // TEST - Start date of month
     
     func testStartDateOfMonth() throws {
-        XCTAssertEqual(string(from: vm.startDateOfMonth(for: dec1924)), "2024.11.25")
+        XCTAssertEqual(vm.startDateOfMonth(for: dec1924).string(), "2024.11.25")
     }
     
     func testFirstOfWeek() throws {
-        XCTAssertEqual(string(from: vm.firstOfWeek(for: dec1924)), "2024.12.16")
+        XCTAssertEqual(vm.firstOfWeek(for: dec1924).string(), "2024.12.16")
     }
     
     func testFirstOfMonth() throws {
-        XCTAssertEqual(string(from: vm.firstOfMonth(for: dec1924)), "2024.12.01")
+        XCTAssertEqual(vm.firstOfMonth(for: dec1924).string(), "2024.12.01")
     }
     
     // TEST - Is same day?
@@ -165,10 +150,10 @@ final class CalendarViewModelTests: XCTestCase {
     func testSelectedDateCustom() throws {
         let custom = CalendarViewModel(selectedDate: dec1924)
         
-        XCTAssertEqual(string(from: custom.selectedDate), string(from: dec1924))
+        XCTAssertEqual(custom.selectedDate.string(), dec1924.string())
     }
     
     func testSelectedDate() throws {
-        XCTAssertEqual(string(from: vm.selectedDate), string(from: Date()))
+        XCTAssertEqual(vm.selectedDate.string(), Date().string())
     }
 }
