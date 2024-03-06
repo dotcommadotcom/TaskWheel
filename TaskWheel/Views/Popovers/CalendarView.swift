@@ -6,8 +6,6 @@ struct CalendarView: View {
     @Binding var selected: Date?
     @Binding var showSchedule: Bool
     
-    private let color = ColorSettings()
-    
     init(selected: Binding<Date?>, showSchedule: Binding<Bool>) {
         self._calendarVM = StateObject(wrappedValue: CalendarViewModel(selectedDate: selected.wrappedValue ?? Date()))
         self._selected = selected
@@ -17,7 +15,7 @@ struct CalendarView: View {
     var body: some View {
         ZStack {
             
-            Color(color.background)
+            Color(Color.background)
             
             VStack(spacing: 30) {
                 HStack(spacing: 20) {
@@ -34,7 +32,7 @@ struct CalendarView: View {
         .onReceive(calendarVM.datePublisher) { date in
             selected = date
         }
-        .foregroundStyle(color.text)
+        .foregroundStyle(Color.text)
         .font(.system(size: 18))
     }
     
@@ -70,7 +68,7 @@ extension CalendarView {
             ForEach(calendarVM.xdays, id: \.self) { xday in
                 Text("\(xday)")
                     .frame(maxWidth: .infinity)
-                    .foregroundStyle(color.text.opacity(0.75))
+                    .foregroundStyle(Color.text.opacity(0.75))
                     .fontWeight(.semibold)
             }
             .frame(maxWidth: .infinity)
@@ -96,13 +94,13 @@ extension CalendarView {
         } label: {
             ZStack {
                 Circle()
-                    .fill(calendarVM.isSelected(this: day) ? color.text : .clear)
+                    .fill(calendarVM.isSelected(this: day) ? Color.text : .clear)
                 
                 Text("\(calendarVM.calendar.component(.day, from: day))")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .contentShape(Rectangle())
                     .opacity(calendarVM.isInMonth(this: day) ? 1 : 0.5)
-                    .foregroundColor(calendarVM.isSelected(this: day) ? color.background : color.text)
+                    .foregroundColor(calendarVM.isSelected(this: day) ? Color.background : Color.text)
             }
         }
     }

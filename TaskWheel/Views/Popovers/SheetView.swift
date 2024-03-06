@@ -16,7 +16,6 @@ struct SheetView: View {
     
     @Binding var selected: IconItem?
     @State private var sheetHeight: CGFloat = .zero
-    let color = ColorSettings()
     
     var body: some View {
         VStack {
@@ -54,18 +53,17 @@ struct SheetHeightModifier: ViewModifier {
 struct SheetPresentationModifier: ViewModifier {
     
     @Binding var sheetHeight: CGFloat
-    private let color = ColorSettings()
     
     func body(content: Content) -> some View {
         content
             .fixedSize(horizontal: false, vertical: true)
-            .foregroundStyle(color.text)
+            .foregroundStyle(Color.text)
             .presentationCompactAdaptation(.sheet)
             .getSheetHeight($sheetHeight)
             .presentationDetents([.height(sheetHeight)])
             .presentationCornerRadius(25)
             .presentationDragIndicator(.hidden)
-            .presentationBackground(color.background)
+            .presentationBackground(Color.background)
     }
 }
 

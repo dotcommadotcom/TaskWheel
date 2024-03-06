@@ -24,7 +24,6 @@
 		B76905232B8D8BC3001DD077 /* OrderSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905222B8D8BC3001DD077 /* OrderSheetView.swift */; };
 		B76905252B8DD6FD001DD077 /* MoreSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905242B8DD6FD001DD077 /* MoreSheetView.swift */; };
 		B76905272B8DD8D8001DD077 /* ListsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905262B8DD8D8001DD077 /* ListsSheetView.swift */; };
-		B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA32B885899009CA9FF /* ColorSettings.swift */; };
 		B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */; };
 		B7A97B1A2B85C6EB00C9E9AA /* TextFieldErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */; };
 		B7A97B1D2B85D26500C9E9AA /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = B7A97B1C2B85D26500C9E9AA /* DequeModule */; };
@@ -73,7 +72,6 @@
 		B76905222B8D8BC3001DD077 /* OrderSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSheetView.swift; sourceTree = "<group>"; };
 		B76905242B8DD6FD001DD077 /* MoreSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreSheetView.swift; sourceTree = "<group>"; };
 		B76905262B8DD8D8001DD077 /* ListsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsSheetView.swift; sourceTree = "<group>"; };
-		B79D9AA32B885899009CA9FF /* ColorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSettings.swift; sourceTree = "<group>"; };
 		B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldErrorView.swift; sourceTree = "<group>"; };
 		B7B71FB32B8F5A9400233641 /* TaskListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListModel.swift; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 				B72F69322B8C32AE00525EF8 /* TaskRowView.swift */,
 				B71482152B9722CE00CA8511 /* TaskView.swift */,
 				B72F69302B8C2F4800525EF8 /* BarContainerView.swift */,
-				B79D9AA32B885899009CA9FF /* ColorSettings.swift */,
 				B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */,
 			);
 			path = Views;
@@ -335,7 +332,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71482162B9722CE00CA8511 /* TaskView.swift in Sources */,
-				B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */,
 				B7DD37522B8EE9BF008AD29D /* PrioritySheetView.swift in Sources */,
 				B7EAF4622B948F2F006732EE /* CalendarView.swift in Sources */,
 				B72F692B2B8C296100525EF8 /* ListView.swift in Sources */,

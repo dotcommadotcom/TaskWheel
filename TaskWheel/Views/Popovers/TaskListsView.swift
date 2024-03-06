@@ -4,7 +4,6 @@ struct TaskListsView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
-    private let color = ColorSettings()
     
     var body: some View {
         LazyVStack(spacing: 22) {
@@ -28,7 +27,7 @@ extension TaskListsView {
         return HStack(spacing: 15) {
             Image(systemName: highlight ? "record.circle" : "circle")
                 .fontWeight(highlight ? .bold : .regular)
-                .foregroundStyle(highlight ? color.accent : color.text)
+                .foregroundStyle(highlight ? Color.accent : Color.text)
             
             Text(taskList.title)
                 .fontWeight(highlight ? .bold : .regular)

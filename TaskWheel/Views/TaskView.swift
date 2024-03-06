@@ -24,7 +24,6 @@ struct TaskView: View {
     
     let task: TaskModel
     let isAdd: Bool
-    private let color = ColorSettings()
     private let updateTabs: [IconItem] = [.delete, .complete]
     private let half: Double = 0.5
     private let iconSize: CGFloat = 22
@@ -112,8 +111,8 @@ extension TaskView {
         .padding(.horizontal, 30)
         .padding(.vertical, 15)
         .font(.system(size: 20))
-        .foregroundStyle(color.text)
-        .background(color.background)
+        .foregroundStyle(Color.text)
+        .background(Color.background)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -142,7 +141,7 @@ extension TaskView {
                 Text(taskViewModel.currentTitle())
             }
             .font(.system(size: 18, weight: .medium))
-            .foregroundStyle(color.text.opacity(0.8))
+            .foregroundStyle(Color.text.opacity(0.8))
         }
         .sheetItem(selected: $listsSelected)
     }
@@ -151,7 +150,7 @@ extension TaskView {
         ZStack(alignment: .leading) {
             if titleInput.isEmpty {
                 Text("What now?")
-                    .foregroundStyle(color.text.opacity(0.5))
+                    .foregroundStyle(Color.text.opacity(0.5))
             }
             
             TextField(titleInput, text: $titleInput, axis: .vertical)
@@ -175,7 +174,7 @@ extension TaskView {
             ZStack(alignment: .leading) {
                 if detailsInput.isEmpty {
                     Text("Add details")
-                        .foregroundStyle(color.text.opacity(0.5))
+                        .foregroundStyle(Color.text.opacity(0.5))
                 }
                 TextField(detailsInput, text: $detailsInput, axis: .vertical)
                     .focused($detailsFocused)
@@ -206,7 +205,7 @@ extension TaskView {
             
             ZStack(alignment: .leading) {
                 Text("Add priority")
-                    .foregroundStyle(color.text.opacity(half))
+                    .foregroundStyle(Color.text.opacity(half))
                     .opacity(priorityInput.rawValue == 3 ? 1 : 0)
                 
                 TextButtonView(item: .priority(priorityInput))
@@ -246,7 +245,7 @@ extension TaskView {
             if !isAdd {
                 ZStack(alignment: .leading) {
                     Text("Add date/time")
-                        .foregroundStyle(color.text.opacity(half))
+                        .foregroundStyle(Color.text.opacity(half))
                         .opacity(dateInput == nil ? 1 : 0)
                     
                     if let date = dateInput {
@@ -282,7 +281,7 @@ extension TaskView {
             IconView(icon: .save, isSpace: true, size: iconSize)
         }
         .disabled(isTaskEmpty() ? true : false)
-        .foregroundStyle(isTaskEmpty() ? .gray : color.text)
+        .foregroundStyle(isTaskEmpty() ? Color.text.opacity(0.5) : Color.text)
     }
 }
 

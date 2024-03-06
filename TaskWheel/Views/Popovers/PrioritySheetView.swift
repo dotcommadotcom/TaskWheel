@@ -23,10 +23,10 @@ enum PriorityItem: Int {
     
     var color: Color {
         switch self {
-        case .high: return ColorSettings().high
-        case .medium: return ColorSettings().medium
-        case .low: return ColorSettings().low
-        default: return ColorSettings().text
+        case .high: return Color.high
+        case .medium: return Color.medium
+        case .low: return Color.low
+        default: return Color.text
         }
     }
 }
@@ -39,8 +39,7 @@ struct PrioritySheetView: View {
     @Binding var showPriority: Bool
     
     let priority: [PriorityItem] = [.high, .medium, .low, .no]
-    private let color = ColorSettings()
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             ForEach(priority, id: \.self) { priority in
@@ -58,7 +57,7 @@ struct PrioritySheetView: View {
         HStack(spacing: 15) {
             Image(systemName: selected == priority ? "record.circle" : "circle")
                 .fontWeight(selected == priority ? .bold : .regular)
-                .foregroundStyle(selected == priority ? color.accent : color.text)
+                .foregroundStyle(selected == priority ? Color.accent : Color.text)
             
             Text(priority.text)
             Spacer()
@@ -70,7 +69,7 @@ struct PrioritySheetView: View {
     ZStack {
         Color.pink
         PrioritySheetView(selected: .constant(.no), showPriority: .constant(false))
-            .background(.white)
+            .background(Color.background)
     }
 }
 

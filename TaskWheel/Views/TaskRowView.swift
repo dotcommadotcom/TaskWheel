@@ -48,13 +48,12 @@ struct TaskRowView: View {
 
 struct TaskRowModifier: ViewModifier {
     let isComplete: Bool
-    let color = ColorSettings()
     
     func body(content: Content) -> some View {
         if isComplete {
-            return AnyView(content.strikethrough().foregroundStyle(color.text.opacity(0.5)))
+            return AnyView(content.strikethrough().foregroundStyle(Color.text.opacity(0.5)))
         } else {
-            return AnyView(content.foregroundStyle(color.text))
+            return AnyView(content.foregroundStyle(Color.text))
         }
     }
 }
@@ -67,7 +66,6 @@ extension View {
 }
 
 #Preview {
-    let color = ColorSettings()
     let taskList = TaskListModel(title: "my tasks")
     let tasks: Deque<TaskModel> = [
         TaskModel(title: "this is the most simple task", ofTaskList: taskList.id, priority: 0),
@@ -84,7 +82,7 @@ extension View {
     ]
     
     return ZStack {
-        color.background.ignoresSafeArea()
+        Color.background.ignoresSafeArea()
         
         ListView()
             .environmentObject(TaskViewModel(tasks, Deque([taskList])))

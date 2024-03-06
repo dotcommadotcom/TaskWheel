@@ -18,13 +18,12 @@ struct OrderSheetView: View {
     @Environment(\.presentationMode) var presentationMode
 
     let orders: [OrderItem] = [.manual, .date, .priority]
-    private let color = ColorSettings()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             Text("Sort by")
                 .font(.system(size: 20, weight: .semibold))
-                .foregroundStyle(color.text.opacity(0.5))
+                .foregroundStyle(Color.text.opacity(0.5))
             
             VStack(spacing: 15) {
                 ForEach(orders, id: \.self) { order in
@@ -45,7 +44,7 @@ struct OrderSheetView: View {
         return HStack(spacing: 15) {
             Image(systemName: highlight ? "record.circle" : "circle")
                 .fontWeight(highlight ? .bold : .regular)
-                .foregroundStyle(highlight ? color.accent : color.text)
+                .foregroundStyle(highlight ? Color.accent : Color.text)
             
             Text(order.text)
             Spacer()
