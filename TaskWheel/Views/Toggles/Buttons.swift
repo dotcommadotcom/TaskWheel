@@ -44,7 +44,7 @@ struct ScheduleButton: View {
 
             HStack(spacing: 10) {
                 Text(date?.relative() ?? "")
-                    .foregroundStyle(isPast(date) ? Color.high : Color.text)
+                    .foregroundStyle(isPast(date) ? Color.past : Color.text)
                 
                 Button {
                     date = nil
@@ -94,6 +94,39 @@ struct ScheduleButton: View {
 }
 
 
-#Preview("date") {
-    ScheduleButton(date: .constant(Date()))
+#Preview("future") {
+    VStack {
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -1, to: Date())!))
+        ScheduleButton(date: .constant(Date()))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 1, to: Date())!))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 2, to: Date())!))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 3, to: Date())!))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 4, to: Date())!))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 5, to: Date())!))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 6, to: Date())!))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 7, to: Date())!))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 8, to: Date())!))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 9, to: Date())!))
+        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 400, to: Date())!))
+    }
+}
+
+#Preview("past") {
+    ZStack {
+        Color.background.ignoresSafeArea()
+        
+        VStack {
+            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -21, to: Date())!))
+            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -9, to: Date())!))
+            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -7, to: Date())!))
+            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -6, to: Date())!))
+            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -5, to: Date())!))
+            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -4, to: Date())!))
+            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -3, to: Date())!))
+            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -2, to: Date())!))
+            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -1, to: Date())!))
+            ScheduleButton(date: .constant(Date()))
+        }
+    }
+    .preferredColorScheme(.dark)
 }

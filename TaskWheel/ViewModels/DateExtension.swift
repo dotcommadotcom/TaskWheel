@@ -36,9 +36,9 @@ extension Date {
             case (-364)...(-8): return "\(Int(ceil(Double(-days)/7.0))) weeks ago"
             case -7: return "1 week ago"
             case (-6)...(-2): return "\(-days) days ago"
-            case 1: return "Tomorrow"
-            case 2...6: return "\(days) days from now"
-            case 7: return "1 week from now"
+            case 0: return "Tomorrow"
+            case 1...5: return "\(days + 1) days from now"
+            case 6: return "1 week from now"
             default:
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = Calendar.current.isDate(self, equalTo: now, toGranularity: .year) ? "E, MMM d" : "E, MMM d, yyyy"

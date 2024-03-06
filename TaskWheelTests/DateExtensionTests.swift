@@ -33,7 +33,7 @@ final class DateExtensionTests: XCTestCase {
     }
     
     func testRelativeIsOneWeekFromNow() throws {
-        let days = 8
+        let days = 7
         
         let date = calendar.date(byAdding: .day, value: days, to: Date())!
         
@@ -45,7 +45,15 @@ final class DateExtensionTests: XCTestCase {
         
         let date = calendar.date(byAdding: .day, value: days, to: Date())!
         
-        XCTAssertEqual(date.relative(), "\(days - 1) days from now")
+        XCTAssertEqual(date.relative(), "\(days) days from now")
+    }
+    
+    func testRelativeIsTomorrow() throws {
+        let days = 1
+        
+        let date = calendar.date(byAdding: .day, value: days, to: Date())!
+        
+        XCTAssertEqual(date.relative(), "Tomorrow")
     }
     
     func testRelativeIsMoreThanOneWeekAgo() throws {
@@ -53,7 +61,7 @@ final class DateExtensionTests: XCTestCase {
         
         let date = calendar.date(byAdding: .day, value: days, to: Date())!
         
-        XCTAssertEqual(date.relative(), "6 weeks ago")
+        XCTAssertEqual(date.relative(), "7 weeks ago")
     }
     
     func testRelativeIsTenDaysAgo() throws {
