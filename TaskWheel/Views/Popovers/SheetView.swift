@@ -16,8 +16,11 @@ struct SheetView: View {
     
     @Binding var selected: IconItem?
     @State private var sheetHeight: CGFloat = .zero
+<<<<<<< HEAD:TaskWheel/Views/SheetView.swift
     @State var task: TaskModel?
     let color = ColorSettings()
+=======
+>>>>>>> 0306:TaskWheel/Views/Popovers/SheetView.swift
     
     var body: some View {
         VStack {
@@ -25,7 +28,7 @@ struct SheetView: View {
             case .lists: ListsSheetView()
             case .order: OrderSheetView()
             case .more: MoreSheetView()
-            case .add: AddSheetView()
+            case .add: TaskView()
             default: EmptyView()
             }
         }
@@ -88,17 +91,17 @@ struct SheetHeightModifier: ViewModifier {
 struct SheetPresentationModifier: ViewModifier {
     
     @Binding var sheetHeight: CGFloat
-    private let color = ColorSettings()
     
     func body(content: Content) -> some View {
         content
-            .foregroundStyle(color.text)
+            .fixedSize(horizontal: false, vertical: true)
+            .foregroundStyle(Color.text)
             .presentationCompactAdaptation(.sheet)
             .getSheetHeight($sheetHeight)
             .presentationDetents([.height(sheetHeight)])
             .presentationCornerRadius(25)
             .presentationDragIndicator(.hidden)
-            .presentationBackground(color.background)
+            .presentationBackground(Color.background)
     }
 }
 

@@ -15,33 +15,72 @@ enum TextButtonItem {
 
 struct TextButtonView: View {
     
-    let item: TextButtonItem
-    private let color = ColorSettings()
+    let date: Date?
+    let priority: PriorityItem
+    let isDate: Bool
+    private let text: String
+    
+    init(date: Date?, priority: PriorityItem?, isDate: Bool = false) {
+        self.date = date ?? nil
+        self.priority = priority ?? PriorityItem(3)
+        self.isDate = isDate
+        
+        if isDate {
+            self.text = date?.string() ?? ""
+        } else {
+            self.text = priority?.text ?? ""
+        }
+    }
+    
+    init(date: Date) {
+        self.init(date: date, priority: nil, isDate: true)
+    }
+    
+    init(priority: PriorityItem) {
+        self.init(date: nil, priority: priority)
+    }
     
     var body: some View {
         ZStack(alignment: .center) {
-            switch item {
-            case .date(_):
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(color.text.opacity(0.7), lineWidth: 2)
-            case .priority(let priority):
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(priority.color.opacity(0.5))
-            }
-            
-            Text(item.text)
+            RoundedRectangle(cornerRadius: 5)
+                .foregroundColor(isDate ? Color.clear : priority.background)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.text.opacity(0.7), lineWidth: 2)
+                        .opacity(isDate ? 1 : 0) 
+                )
+
+            Text(text)
                 .padding(8)
                 .padding(.horizontal, 8)
         }
-        .foregroundStyle(color.text)
+        .fontWeight(.medium)
+        .foregroundStyle(Color.text)
         .fixedSize()
     }
 }
 
 #Preview("date") {
-    TextButtonView(item: .date(Date().string()))
+    TextButtonView(date: Date())
 }
 
 #Preview("priority") {
-    TextButtonView(item: .priority(.high))
+    VStack {
+        TextButtonView(priority: .high)
+        TextButtonView(priority: .medium)
+        TextButtonView(priority: .low)
+    }
+}
+
+#Preview("priority dark") {
+    ZStack {
+        Color.background.ignoresSafeArea()
+        
+        VStack {
+            TextButtonView(priority: .high)
+            TextButtonView(priority: .medium)
+            TextButtonView(priority: .low)
+        }
+    }
+    .preferredColorScheme(.dark)
 }

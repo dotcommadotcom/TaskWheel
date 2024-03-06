@@ -9,7 +9,6 @@ struct MainView: View {
     @State private var barSelected: IconItem? = nil
     @State private var showCompleted: Bool = true
     
-    private let color = ColorSettings()
     private let mainTabs: [IconItem] = [.lists, .order, .more, .add]
     
     var body: some View {
@@ -30,13 +29,13 @@ struct MainView: View {
                 }))
                 
                 mainBarView()
-                    .background(color.text.opacity(0.05))
+                    .background(Color.text.opacity(0.05))
             }
-            .background(color.background)
-            .foregroundStyle(color.text)
+            .background(Color.background)
+            .foregroundStyle(Color.text)
             .animation(.easeInOut, value: topSelected)
             .navigationDestination(for: TaskModel.self) { task in
-                UpdateView(task: task)
+                TaskView(task: task)
             }
         }
     }

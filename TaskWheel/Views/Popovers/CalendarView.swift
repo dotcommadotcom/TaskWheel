@@ -2,60 +2,54 @@ import SwiftUI
 
 struct CalendarView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var calendarVM = CalendarViewModel()
-    @Binding var selected: Date?
+    
+    @StateObject var calendarVM: CalendarViewModel
+    @State var optionSelected: IconItem? = nil
+    
+    @Binding var dateInput: Date?
     @Binding var showSchedule: Bool
     
-    private let color = ColorSettings()
+    private let optionTabs: [IconItem] = [.cancel, .save]
     
-    init(selected: Binding<Date?>, showSchedule: Binding<Bool>) {
-        self._calendarVM = StateObject(wrappedValue: CalendarViewModel(selectedDate: selected.wrappedValue ?? Date()))
-        self._selected = selected
+    init(dateInput: Binding<Date?>, showSchedule: Binding<Bool>) {
+        self._dateInput = dateInput
+        self._calendarVM = StateObject(wrappedValue: CalendarViewModel(selectedDate: dateInput.wrappedValue ?? Date()))
         self._showSchedule = showSchedule
     }
     
     var body: some View {
-        ZStack {
+        VStack(spacing: 20) {
+            monthYearView()
             
-            Color(color.background)
+            daysView()
             
-            VStack(spacing: 30) {
-                HStack(spacing: 20) {
-                    monthYearView(calendarVM.monthTitle(), action: calendarVM.adjustMonth)
-                    
-                    monthYearView(calendarVM.yearTitle(), action: calendarVM.adjustYear)
-                }
-                
-                daysView()
-                
-                weeksView()
-            }
+            weeksView()
+            
+            calendarBarView()
         }
-        .onReceive(calendarVM.datePublisher) { date in
-            selected = date
-        }
-        .foregroundStyle(color.text)
         .font(.system(size: 18))
+        .background(Color.background)
+        .foregroundStyle(Color.text)
     }
     
 }
 
 extension CalendarView {
     
-    private func monthYearView(_ title: String, action: @escaping (Int) -> Void) -> some View {
+    private func monthYearView() -> some View {
         HStack {
             Button {
-                action(-1)
+                calendarVM.adjustMonth(by: -1)
             } label: {
                 Image(systemName: "chevron.left")
             }
             
-            Text(title)
+            Text(calendarVM.monthTitle())
                 .frame(maxWidth: .infinity)
                 .fontWeight(.semibold)
             
             Button{
-                action(1)
+                calendarVM.adjustMonth(by: 1)
             } label: {
                 Image(systemName: "chevron.right")
             }
@@ -70,7 +64,7 @@ extension CalendarView {
             ForEach(calendarVM.xdays, id: \.self) { xday in
                 Text("\(xday)")
                     .frame(maxWidth: .infinity)
-                    .foregroundStyle(color.text.opacity(0.75))
+                    .foregroundStyle(Color.text.opacity(0.75))
                     .fontWeight(.semibold)
             }
             .frame(maxWidth: .infinity)
@@ -89,30 +83,56 @@ extension CalendarView {
     
     private func dayButton(_ day: Date) -> some View {
         Button {
-            selected = day
             calendarVM.select(this: day)
-            showSchedule.toggle()
-            presentationMode.wrappedValue.dismiss()
         } label: {
             ZStack {
                 Circle()
-                    .fill(calendarVM.isSelected(this: day) ? color.text : .clear)
+                    .fill(calendarVM.selectedDate == day ? Color.text : .clear)
                 
                 Text("\(calendarVM.calendar.component(.day, from: day))")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .contentShape(Rectangle())
                     .opacity(calendarVM.isInMonth(this: day) ? 1 : 0.5)
-                    .foregroundColor(calendarVM.isSelected(this: day) ? color.background : color.text)
+                    .foregroundColor(calendarVM.selectedDate == day ? Color.background : Color.text)
             }
         }
+    }
+    
+    private func calendarBarView() -> some View {
+        
+        HStack {
+            IconView(icon: .cancel, size: 20)
+                .onTapGesture {
+                    clickCancel()
+                }
+            
+            IconView(icon: .save, isSpace: true, size: 20)
+                .onTapGesture {
+                    clickSave()
+                }
+        }
+        .padding(.horizontal, 10)
+    }
+}
+
+extension CalendarView {
+    
+    private func clickCancel() {
+        presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func clickSave() {
+        dateInput = calendarVM.selectedDate
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
 #Preview("calendar") {
-    CalendarView(selected: .constant(Date()), showSchedule: .constant(true))
+    CalendarView(dateInput: .constant(date(2024, 12, 16)), showSchedule: .constant(true))
 }
 
 #Preview("dark calendar") {
-    CalendarView(selected: .constant(Date()), showSchedule: .constant(true))
+    CalendarView(dateInput: .constant(Date()), showSchedule: .constant(true))
         .preferredColorScheme(.dark)
 }
+

@@ -27,7 +27,6 @@ struct MoreSheetView: View {
     @State private var showRenameList = false
     
     let moreOptions: [OptionItem] = [.defaultList, .deleteList, .showHide, .deleteCompleted]
-    private let color = ColorSettings()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
@@ -53,7 +52,7 @@ struct MoreSheetView: View {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(color.accent, lineWidth: 2))
+                            .stroke(Color.accent, lineWidth: 2))
                     .lineLimit(1)
                     .fixedSize(horizontal: false, vertical: true)
                     .onAppear {
@@ -89,7 +88,7 @@ extension MoreSheetView {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .disabled(isDisabled)
-        .foregroundStyle(isDisabled ? .gray : color.text)
+        .foregroundStyle(isDisabled ? Color.text.opacity(0.5) : Color.text)
         .buttonStyle(NoAnimationStyle())
     }
     

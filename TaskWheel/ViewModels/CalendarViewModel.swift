@@ -4,8 +4,6 @@ class CalendarViewModel: ObservableObject {
     
     @Published var selectedDate: Date
     
-    var datePublisher: Published<Date>.Publisher { $selectedDate }
-    
     let dateFormatter = DateFormatter()
     
     let calendar: Calendar = {
@@ -69,10 +67,6 @@ extension CalendarViewModel {
         for _ in 0..<6 {
             weeks.append(thisWeek(startsOn: start))
             start = nextWeek(from: start)
-            
-            if !isInMonth(this: start, in: date) {
-                break
-            }
         }
         
         return weeks
@@ -87,14 +81,8 @@ extension CalendarViewModel {
     }
     
     func monthTitle() -> String {
-        dateFormatter.dateFormat = "MMMM"
+        dateFormatter.dateFormat = "MMMM yyyy"
         
-        return dateFormatter.string(from: selectedDate)
-    }
-    
-    func yearTitle() -> String {
-        dateFormatter.dateFormat = "yyyy"
-
         return dateFormatter.string(from: selectedDate)
     }
     

@@ -7,7 +7,6 @@ struct ListsSheetView: View {
     @State var newTitleInput: String = ""
     @State private var showNewList = false
     
-    private let color = ColorSettings()
     private let newListText = "Create new list"
     private let newTitleDefault = "Enter title"
     
@@ -46,7 +45,7 @@ extension ListsSheetView {
                     Button {
                         clickSave()
                     } label: {
-                        Image(systemName: "square.and.arrow.down")
+                        IconView(icon: .save)
                     }
                     .buttonStyle(NoAnimationStyle())
                 }
@@ -58,7 +57,7 @@ extension ListsSheetView {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(color.accent, lineWidth: 2)
+                            .stroke(Color.accent, lineWidth: 2)
                     )
                     .lineLimit(1)
                     .onSubmit {

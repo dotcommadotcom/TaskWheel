@@ -54,7 +54,6 @@ struct TopTabView: View {
     @Binding var selected: TopTabItem
 
     let tabs: [TopTabItem]
-    private let color = ColorSettings()
     
     var body: some View {
         HStack(spacing: 0) {
@@ -87,7 +86,7 @@ extension TopTabView {
             
         }
         .frame(maxWidth: .infinity, maxHeight: 35)
-        .foregroundStyle(selected == tab ? color.accent : color.text.opacity(0.3))
+        .foregroundStyle(selected == tab ? Color.accent : Color.text.opacity(0.3))
     }
     
     private func click(tab: TopTabItem) {
