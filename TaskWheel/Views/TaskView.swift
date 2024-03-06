@@ -208,7 +208,7 @@ extension TaskView {
                     .foregroundStyle(Color.text.opacity(half))
                     .opacity(priorityInput.rawValue == 3 ? 1 : 0)
                 
-                TextButtonView(item: .priority(priorityInput))
+                TextButtonView(priority: priorityInput)
                     .opacity(priorityInput.rawValue == 3 ? 0 : 1)
             }
         }
@@ -248,9 +248,7 @@ extension TaskView {
                         .foregroundStyle(Color.text.opacity(half))
                         .opacity(dateInput == nil ? 1 : 0)
                     
-                    if let date = dateInput {
-                        TextButtonView(item: .date(date.string()))
-                    }
+                    scheduleTextButton()
                 }
             }
         }
@@ -269,7 +267,7 @@ extension TaskView {
     
     private func scheduleTextButton() -> some View {
         if let date = dateInput {
-            return AnyView(TextButtonView(item: .date(date.string())))
+            return AnyView(TextButtonView(date: date))
         }
         return AnyView(EmptyView())
     }
@@ -368,4 +366,5 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
     }
     .environmentObject(TaskViewModel(tasks, TaskViewModel.examples))
     .environmentObject(NavigationCoordinator())
+    .preferredColorScheme(.dark)
 }

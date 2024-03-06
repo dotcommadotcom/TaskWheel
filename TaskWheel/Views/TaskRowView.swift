@@ -33,7 +33,7 @@ struct TaskRowView: View {
                 }
                 
                 if !task.isDone, let date = task.date {
-                    TextButtonView(item: .date(date.string()))
+                    TextButtonView(date: date)
                         .font(.system(size: 20))
                 }
             }

@@ -72,6 +72,3 @@ struct PrioritySheetView: View {
             .background(Color.background)
     }
 }
-
-
-
