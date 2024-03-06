@@ -37,7 +37,7 @@
 		B7EAF4622B948F2F006732EE /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4612B948F2F006732EE /* CalendarView.swift */; };
 		B7EAF4642B949300006732EE /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4632B949300006732EE /* CalendarViewModel.swift */; };
 		B7EAF4662B94A013006732EE /* CalendarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4652B94A013006732EE /* CalendarViewModelTests.swift */; };
-		B7EAF46A2B95DC6F006732EE /* TextButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4692B95DC6F006732EE /* TextButtonView.swift */; };
+		B7EAF46A2B95DC6F006732EE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4692B95DC6F006732EE /* Buttons.swift */; };
 		B7F5B80A2B83721600F5CD9D /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */; };
 		B7F5B81B2B8374AE00F5CD9D /* TaskListVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5B81A2B8374AE00F5CD9D /* TaskListVMTests.swift */; };
 		B7F5B81D2B83852000F5CD9D /* TaskModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5B81C2B83852000F5CD9D /* TaskModelTests.swift */; };
@@ -83,7 +83,7 @@
 		B7EAF4612B948F2F006732EE /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		B7EAF4632B949300006732EE /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		B7EAF4652B94A013006732EE /* CalendarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModelTests.swift; sourceTree = "<group>"; };
-		B7EAF4692B95DC6F006732EE /* TextButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButtonView.swift; sourceTree = "<group>"; };
+		B7EAF4692B95DC6F006732EE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		B7F5B8112B83746300F5CD9D /* TaskWheelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaskWheelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7F5B81A2B8374AE00F5CD9D /* TaskListVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListVMTests.swift; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				B7DD374F2B8ED87E008AD29D /* IconView.swift */,
-				B7EAF4692B95DC6F006732EE /* TextButtonView.swift */,
+				B7EAF4692B95DC6F006732EE /* Buttons.swift */,
 			);
 			path = Toggles;
 			sourceTree = "<group>";
@@ -351,7 +351,7 @@
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
 				B76905252B8DD6FD001DD077 /* MoreSheetView.swift in Sources */,
 				B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */,
-				B7EAF46A2B95DC6F006732EE /* TextButtonView.swift in Sources */,
+				B7EAF46A2B95DC6F006732EE /* Buttons.swift in Sources */,
 				B7EAF4602B940EE3006732EE /* TaskListsView.swift in Sources */,
 				B7EAF45E2B92CBB9006732EE /* SheetView.swift in Sources */,
 				B71A81DA2B830BB000A8886F /* TaskWheelApp.swift in Sources */,

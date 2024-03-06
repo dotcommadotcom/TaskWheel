@@ -16,7 +16,6 @@ struct SheetView: View {
     
     @Binding var selected: IconItem?
     @State private var sheetHeight: CGFloat = .zero
-    @State var task: TaskModel?
     
     var body: some View {
         VStack {
@@ -33,7 +32,73 @@ struct SheetView: View {
         .presentSheet($sheetHeight)
     }
 }
+
+struct PropertyViewModifer: ViewModifier {
     
+    @State private var sheetHeight: CGFloat = .zero
+
+    @Binding var show: Bool
+    @Binding var dateInput: Date?
+    @Binding var priorityInput: PriorityItem
+    
+    let isDate: Bool
+    
+    func body(content: Content) -> some View {
+        content
+            .popover(isPresented: $show) {
+                VStack(alignment: .leading, spacing: 22) {
+                    if isDate {
+                        CalendarView(dateInput: $dateInput, showSchedule: $show)
+                    } else {
+                        PrioritySheetView(selected: $priorityInput, showPriority: $show)
+                    }
+                }
+                .font(.system(size: 22))
+                .padding(30)
+                .presentSheet($sheetHeight)
+            }
+    }
+}
+
+struct PriorityViewModifer: ViewModifier {
+    
+    @State private var sheetHeight: CGFloat = .zero
+
+    @Binding var show: Bool
+    @Binding var input: PriorityItem
+    
+    func body(content: Content) -> some View {
+        content
+            .popover(isPresented: $show) {
+                VStack(alignment: .leading, spacing: 22) {
+                    PrioritySheetView(selected: $input, showPriority: $show)
+                }
+                .font(.system(size: 22))
+                .padding(30)
+                .presentSheet($sheetHeight)
+            }
+    }
+}
+
+struct ScheduleViewModifer: ViewModifier {
+    
+    @State private var sheetHeight: CGFloat = .zero
+
+    @Binding var show: Bool
+    @Binding var input: Date?
+    
+    func body(content: Content) -> some View {
+        content
+            .popover(isPresented: $show) {
+                VStack(alignment: .leading, spacing: 22) {
+                    CalendarView(dateInput: $input, showSchedule: $show)
+                }
+                .padding(30)
+                .presentSheet($sheetHeight)
+            }
+    }
+}
+
 struct SheetHeightModifier: ViewModifier {
     
     @Binding var sheetHeight: CGFloat
@@ -68,6 +133,8 @@ struct SheetPresentationModifier: ViewModifier {
     }
 }
 
+
+
 extension View {
     func sheetItem(selected: Binding<IconItem?>) -> some View {
         self
@@ -82,6 +149,24 @@ extension View {
     func presentSheet(_ sheetHeight: Binding<CGFloat>) -> some View {
         self
             .modifier(SheetPresentationModifier(sheetHeight: sheetHeight))
+    }
+    
+    func popPriority(show: Binding<Bool>, input: Binding<PriorityItem>) -> some View {
+        self
+            .modifier(PriorityViewModifer(show: show, input: input))
+    }
+    
+    func popSchedule(show: Binding<Bool>, input: Binding<Date?>) -> some View {
+        self
+            .modifier(ScheduleViewModifer(show: show, input: input))
+    }
+    
+    func popProperty(show: Binding<Bool>, dateInput: Binding<Date?>, priorityInput: Binding<PriorityItem>) -> some View {
+        
+        let isDate = dateInput.wrappedValue == nil ? false: true
+        
+        return self
+            .modifier(PropertyViewModifer(show: show, dateInput: dateInput, priorityInput: priorityInput, isDate: isDate))
     }
 }
 

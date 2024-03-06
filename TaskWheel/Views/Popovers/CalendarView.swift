@@ -30,6 +30,9 @@ struct CalendarView: View {
         .font(.system(size: 18))
         .background(Color.background)
         .foregroundStyle(Color.text)
+        .highPriorityGesture(DragGesture().onEnded({
+            handleSwipe(translation: $0.translation.width)
+        }))
     }
     
 }
@@ -124,6 +127,14 @@ extension CalendarView {
     private func clickSave() {
         dateInput = calendarVM.selectedDate
         presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func handleSwipe(translation: CGFloat) {
+        if translation < -50 {
+            calendarVM.adjustMonth(by: 1)
+        } else if translation > 50 {
+            calendarVM.adjustMonth(by: -1)
+        }
     }
 }
 

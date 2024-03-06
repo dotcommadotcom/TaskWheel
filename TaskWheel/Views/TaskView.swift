@@ -208,7 +208,7 @@ extension TaskView {
                     .foregroundStyle(Color.text.opacity(half))
                     .opacity(priorityInput.rawValue == 3 ? 1 : 0)
                 
-                TextButtonView(priority: priorityInput)
+                PriorityButton(priority: $priorityInput)
                     .opacity(priorityInput.rawValue == 3 ? 0 : 1)
             }
         }
@@ -216,14 +216,7 @@ extension TaskView {
         .onTapGesture {
             showPriority.toggle()
         }
-        .popover(isPresented: $showPriority) {
-            VStack(alignment: .leading, spacing: 22) {
-                PrioritySheetView(selected: $priorityInput, showPriority: $showPriority)
-            }
-            .font(.system(size: 22))
-            .padding(30)
-            .presentSheet($sheetHeight)
-        }
+        .popPriority(show: $showPriority, input: $priorityInput)
     }
     
     private func priorityButton() -> some View {
@@ -256,21 +249,17 @@ extension TaskView {
         .onTapGesture {
             showSchedule.toggle()
         }
-        .popover(isPresented: $showSchedule) {
-            VStack(alignment: .leading, spacing: 22) {
-                CalendarView(dateInput: $dateInput, showSchedule: $showSchedule)
-            }
-            .padding(30)
-            .presentSheet($sheetHeight)
-        }
+        .popSchedule(show: $showSchedule, input: $dateInput)
     }
     
     private func scheduleTextButton() -> some View {
         if let date = dateInput {
-            return AnyView(TextButtonView(date: date))
+            return AnyView(ScheduleButton(date: $dateInput))
+        } else {
+            return AnyView(EmptyView())
         }
-        return AnyView(EmptyView())
     }
+
     
     private func saveButton() -> some View {
         Button {

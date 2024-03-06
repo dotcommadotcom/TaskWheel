@@ -33,8 +33,13 @@ struct TaskRowView: View {
                 }
                 
                 if !task.isDone, let date = task.date {
-                    TextButtonView(date: date)
-                        .font(.system(size: 20))
+                    ScheduleButton(date: Binding<Date?>(
+                        get: { date },
+                        set: { newDate in
+                            taskViewModel.update(this: task, date: newDate)
+                        }
+                    ))
+                    .font(.system(size: 20))
                 }
             }
         }
