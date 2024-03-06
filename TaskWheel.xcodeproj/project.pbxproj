@@ -24,12 +24,10 @@
 		B76905232B8D8BC3001DD077 /* OrderSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905222B8D8BC3001DD077 /* OrderSheetView.swift */; };
 		B76905252B8DD6FD001DD077 /* MoreSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905242B8DD6FD001DD077 /* MoreSheetView.swift */; };
 		B76905272B8DD8D8001DD077 /* ListsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905262B8DD8D8001DD077 /* ListsSheetView.swift */; };
-		B76905292B8DDC33001DD077 /* AddSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905282B8DDC33001DD077 /* AddSheetView.swift */; };
 		B79D9AA42B885899009CA9FF /* ColorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA32B885899009CA9FF /* ColorSettings.swift */; };
 		B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */; };
 		B7A97B1A2B85C6EB00C9E9AA /* TextFieldErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */; };
 		B7A97B1D2B85D26500C9E9AA /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = B7A97B1C2B85D26500C9E9AA /* DequeModule */; };
-		B7B02C1F2B878772000B8A7C /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B02C1E2B878772000B8A7C /* UpdateView.swift */; };
 		B7B71FB42B8F5A9400233641 /* TaskListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B71FB32B8F5A9400233641 /* TaskListModel.swift */; };
 		B7B71FE52B9190F000233641 /* TaskListModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B71FE42B9190F000233641 /* TaskListModelTests.swift */; };
 		B7DD374E2B8ECDBE008AD29D /* InfiniteScroller in Frameworks */ = {isa = PBXBuildFile; productRef = B7DD374D2B8ECDBE008AD29D /* InfiniteScroller */; };
@@ -75,11 +73,9 @@
 		B76905222B8D8BC3001DD077 /* OrderSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSheetView.swift; sourceTree = "<group>"; };
 		B76905242B8DD6FD001DD077 /* MoreSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreSheetView.swift; sourceTree = "<group>"; };
 		B76905262B8DD8D8001DD077 /* ListsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsSheetView.swift; sourceTree = "<group>"; };
-		B76905282B8DDC33001DD077 /* AddSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSheetView.swift; sourceTree = "<group>"; };
 		B79D9AA32B885899009CA9FF /* ColorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSettings.swift; sourceTree = "<group>"; };
 		B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldErrorView.swift; sourceTree = "<group>"; };
-		B7B02C1E2B878772000B8A7C /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 		B7B71FB32B8F5A9400233641 /* TaskListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListModel.swift; sourceTree = "<group>"; };
 		B7B71FE42B9190F000233641 /* TaskListModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskListModelTests.swift; path = TaskWheelTests/TaskListModelTests.swift; sourceTree = SOURCE_ROOT; };
 		B7DD374F2B8ED87E008AD29D /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
@@ -167,9 +163,7 @@
 				B72F692C2B8C2DF000525EF8 /* WheelView.swift */,
 				B72F69322B8C32AE00525EF8 /* TaskRowView.swift */,
 				B71482152B9722CE00CA8511 /* TaskView.swift */,
-				B7B02C1E2B878772000B8A7C /* UpdateView.swift */,
 				B72F69302B8C2F4800525EF8 /* BarContainerView.swift */,
-				B7EAF45D2B92CBB9006732EE /* SheetView.swift */,
 				B79D9AA32B885899009CA9FF /* ColorSettings.swift */,
 				B7A97B192B85C6EB00C9E9AA /* TextFieldErrorView.swift */,
 			);
@@ -197,10 +191,10 @@
 		B7EAF46B2B95DCD7006732EE /* Popovers */ = {
 			isa = PBXGroup;
 			children = (
+				B7EAF45D2B92CBB9006732EE /* SheetView.swift */,
 				B76905262B8DD8D8001DD077 /* ListsSheetView.swift */,
 				B76905222B8D8BC3001DD077 /* OrderSheetView.swift */,
 				B76905242B8DD6FD001DD077 /* MoreSheetView.swift */,
-				B76905282B8DDC33001DD077 /* AddSheetView.swift */,
 				B7EAF45F2B940EE3006732EE /* TaskListsView.swift */,
 				B7EAF4612B948F2F006732EE /* CalendarView.swift */,
 				B7DD37512B8EE9BF008AD29D /* PrioritySheetView.swift */,
@@ -350,7 +344,6 @@
 				B75F44022B8C253A00D0B182 /* TopTabView.swift in Sources */,
 				B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */,
 				B7DD37502B8ED87E008AD29D /* IconView.swift in Sources */,
-				B76905292B8DDC33001DD077 /* AddSheetView.swift in Sources */,
 				B76905232B8D8BC3001DD077 /* OrderSheetView.swift in Sources */,
 				B7A97B1A2B85C6EB00C9E9AA /* TextFieldErrorView.swift in Sources */,
 				B76905272B8DD8D8001DD077 /* ListsSheetView.swift in Sources */,
@@ -361,7 +354,6 @@
 				B7B71FB42B8F5A9400233641 /* TaskListModel.swift in Sources */,
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
 				B76905252B8DD6FD001DD077 /* MoreSheetView.swift in Sources */,
-				B7B02C1F2B878772000B8A7C /* UpdateView.swift in Sources */,
 				B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */,
 				B7EAF46A2B95DC6F006732EE /* TextButtonView.swift in Sources */,
 				B7EAF4602B940EE3006732EE /* TaskListsView.swift in Sources */,

@@ -24,7 +24,7 @@ struct SheetView: View {
             case .lists: ListsSheetView()
             case .order: OrderSheetView()
             case .more: MoreSheetView()
-            case .add: AddSheetView()
+            case .add: TaskView()
             default: EmptyView()
             }
         }
@@ -58,6 +58,7 @@ struct SheetPresentationModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
+            .fixedSize(horizontal: false, vertical: true)
             .foregroundStyle(color.text)
             .presentationCompactAdaptation(.sheet)
             .getSheetHeight($sheetHeight)

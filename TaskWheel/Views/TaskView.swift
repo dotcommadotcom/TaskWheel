@@ -11,6 +11,7 @@ struct TaskView: View {
     @State var priorityInput: PriorityItem
     @State var dateInput: Date?
     
+    @FocusState private var detailsFocused: Bool
     @State private var showDetails = false
     @State private var showPriority = false
     @State private var showSchedule = false
@@ -53,36 +54,60 @@ struct TaskView: View {
 }
 
 extension TaskView {
-    private func addTaskView() -> some View {
-        VStack(alignment: .leading, spacing: 22) {
-            TextField(textDefault, text: $titleInput, axis: .vertical)
-                .lineLimit(20)
-            
-            if showDetails {
-                TextField(detailDefault, text: $detailsInput, axis: .vertical)
-                    .lineLimit(5)
-                    .font(.system(size: 17))
-            }
-            
-            addBarView()
-                .buttonStyle(NoAnimationStyle())
-                
-        }
-        .fixedSize(horizontal: false, vertical: true)
-        .onSubmit { clickSave() }
-    }
     
-    private func updateTaskView() -> some View {
+    private func addTaskView() -> some View {
         VStack(alignment: .leading, spacing: 20) {
             listTitleView()
             
             taskTitleView()
             
-            propertyContainerView(task: task)
+            if showDetails {
+                detailsView()
+            }
+            
+            scheduleTextButton()
+            
+            HStack(spacing: 30) {
+                detailsButton()
+                
+                priorityButton()
+                
+                scheduleView()
+                
+                saveButton()
+            }
+            .buttonStyle(NoAnimationStyle())
+        }
+        .font(.system(size: 20))
+        .onSubmit { clickSave() }
+    }
+    
+    private func updateTaskView() -> some View {
+        VStack(alignment: .leading, spacing: 18) {
+            listTitleView()
+            
+            taskTitleView()
+            
+            detailsView()
+            
+            priorityView()
+            
+            scheduleView()
             
             Spacer()
             
-            updateBarView()
+            BarContainerView(selected: $barSelected, padding: 0) {
+                ForEach(updateTabs, id: \.self) { tab in
+                    IconView(icon: tab, isSpace: tab == updateTabs.last, isAlt: true)
+                        .onTapGesture {
+                            switch tab {
+                            case .complete: clickComplete()
+                            case .delete: clickDelete()
+                            default: {}()
+                            }
+                        }
+                }
+            }
         }
         .padding(.horizontal, 30)
         .padding(.vertical, 15)
@@ -102,41 +127,99 @@ extension TaskView {
             }
         }
     }
+    
 }
 
 extension TaskView {
     
-    private func addBarView() -> some View {
-        HStack(spacing: 30) {
-            detailsButton()
-            
-            scheduleButton()
-            
-            priorityButton()
-            
-            saveButton()
+    private func listTitleView() -> some View {
+        Button {
+            listsSelected = .lists
+        } label: {
+            HStack(alignment: .center) {
+                IconView(icon: .move, size: 15)
+                
+                Text(taskViewModel.currentTitle())
+            }
+            .font(.system(size: 18, weight: .medium))
+            .foregroundStyle(color.text.opacity(0.8))
         }
+        .sheetItem(selected: $listsSelected)
+    }
+    
+    private func taskTitleView() -> some View {
+        ZStack(alignment: .leading) {
+            if titleInput.isEmpty {
+                Text("What now?")
+                    .foregroundStyle(color.text.opacity(0.5))
+            }
+            
+            TextField(titleInput, text: $titleInput, axis: .vertical)
+                .lineLimit(5)
+                .strikethrough(task.isDone ? true : false)
+            
+        }
+        .font(.system(size: 25))
+        .frame(maxWidth: .infinity)
+        .onSubmit {
+            saveGoBack()
+        }
+    }
+    
+    private func detailsView() -> some View {
+        HStack(spacing: 20) {
+            if !isAdd {
+                IconView(icon: .details, size: iconSize)
+            }
+            
+            ZStack(alignment: .leading) {
+                if detailsInput.isEmpty {
+                    Text("Add details")
+                        .foregroundStyle(color.text.opacity(0.5))
+                }
+                TextField(detailsInput, text: $detailsInput, axis: .vertical)
+                    .focused($detailsFocused)
+                    .lineLimit(10)
+            }
+        }
+        .frame(height: 40)
+        .onTapGesture {
+            detailsFocused = true
+        }
+        .onSubmit {
+            saveGoBack()
+        }
+        
     }
     
     private func detailsButton() -> some View {
         Button {
-            showDetails.toggle()
+            showDetails = true
         } label: {
             IconView(icon: .details, size: iconSize)
         }
-        .foregroundStyle(!detailsInput.isEmpty ? color.accent : color.text)
     }
     
-    private func scheduleButton() -> some View {
-        Button {
-            showSchedule.toggle()
-        } label: {
-            IconView(icon: .schedule, size: iconSize)
+    private func priorityView() -> some View {
+        HStack(spacing: 20) {
+            IconView(icon: .priority, size: iconSize)
+            
+            ZStack(alignment: .leading) {
+                Text("Add priority")
+                    .foregroundStyle(color.text.opacity(half))
+                    .opacity(priorityInput.rawValue == 3 ? 1 : 0)
+                
+                TextButtonView(item: .priority(priorityInput))
+                    .opacity(priorityInput.rawValue == 3 ? 0 : 1)
+            }
         }
-        .foregroundStyle(dateInput == nil ? color.text : color.accent)
-        .popover(isPresented: $showSchedule) {
+        .frame(height: 40)
+        .onTapGesture {
+            showPriority.toggle()
+        }
+        .popover(isPresented: $showPriority) {
             VStack(alignment: .leading, spacing: 22) {
-                CalendarView(selected: $dateInput, showSchedule: $showSchedule)
+                PrioritySheetView(selected: $priorityInput, showPriority: $showPriority)
             }
             .font(.system(size: 22))
             .padding(30)
@@ -151,10 +234,45 @@ extension TaskView {
             IconView(icon: .priority, isAlt: priorityInput.rawValue != 3, size: iconSize)
         }
         .foregroundStyle(priorityInput.color)
-        .padding(.vertical, 8)
         .onLongPressGesture(minimumDuration: 1) {
             priorityInput = PriorityItem(3)
         }
+    }
+    
+    private func scheduleView() -> some View {
+        HStack(spacing: 20) {
+            IconView(icon: .schedule, size: iconSize)
+            
+            if !isAdd {
+                ZStack(alignment: .leading) {
+                    Text("Add date/time")
+                        .foregroundStyle(color.text.opacity(half))
+                        .opacity(dateInput == nil ? 1 : 0)
+                    
+                    if let date = dateInput {
+                        TextButtonView(item: .date(date.string()))
+                    }
+                }
+            }
+        }
+        .frame(height: 40)
+        .onTapGesture {
+            showSchedule.toggle()
+        }
+        .popover(isPresented: $showSchedule) {
+            VStack(alignment: .leading, spacing: 22) {
+                CalendarView(selected: $dateInput, showSchedule: $showSchedule)
+            }
+            .padding(30)
+            .presentSheet($sheetHeight)
+        }
+    }
+    
+    private func scheduleTextButton() -> some View {
+        if let date = dateInput {
+            return AnyView(TextButtonView(item: .date(date.string())))
+        }
+        return AnyView(EmptyView())
     }
     
     private func saveButton() -> some View {
@@ -166,137 +284,6 @@ extension TaskView {
         .disabled(isTaskEmpty() ? true : false)
         .foregroundStyle(isTaskEmpty() ? .gray : color.text)
     }
-    
-    private func listTitleView() -> some View {
-        Button {
-            listsSelected = .lists
-        } label: {
-            HStack(alignment: .center) {
-                Image(systemName: "chevron.up.chevron.down")
-                    .font(.system(size: 15))
-                Text(taskViewModel.currentTitle())
-            }
-            .fontWeight(.semibold)
-            .foregroundStyle(color.text.opacity(0.8))
-        }
-        .sheetItem(selected: $listsSelected)
-    }
-    
-    private func taskTitleView() -> some View {
-        TextField(titleInput, text: $titleInput, axis: .vertical)
-            .lineLimit(5)
-            .font(.system(size: 30))
-            .strikethrough(task.isDone ? true : false)
-            .frame(maxWidth: .infinity)
-            .onSubmit {
-                saveGoBack()
-            }
-    }
-    
-    private func propertyContainerView(task: TaskModel) -> some View {
-        VStack(spacing: 15) {
-            
-            propertyView(.details)
-            
-            propertyView(.priority)
-                .onTapGesture {
-                    showPriority.toggle()
-                }
-            
-            propertyView(.schedule)
-                .onTapGesture {
-                    showSchedule.toggle()
-                }
-            
-        }
-    }
-    
-    private func propertyView(_ property: IconItem) -> some View {
-        
-        ZStack(alignment: .center) {
-            HStack(spacing: 20) {
-                IconView(icon: property, size: 20)
-                
-                switch property {
-                case .details: detailsView()
-                case .schedule: scheduleView()
-                case .priority: priorityView()
-                default: Text(property.name)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .onSubmit {
-                saveGoBack()
-            }
-        }
-        .frame(height: 40)
-    }
-    
-    private func detailsView() -> some View {
-        ZStack(alignment: .leading) {
-            if detailsInput.isEmpty {
-                Text("Add details")
-                    .foregroundStyle(color.text.opacity(half))
-            }
-            TextField(detailsInput, text: $detailsInput, axis: .vertical)
-                .lineLimit(5)
-        }
-    }
-    
-    private func priorityView() -> some View {
-        ZStack(alignment: .leading) {
-            Text("Add priority")
-                .foregroundStyle(color.text.opacity(half))
-                .opacity(priorityInput.rawValue == 3 ? 1 : 0)
-            
-            TextButtonView(item: .priority(priorityInput))
-                .opacity(priorityInput.rawValue == 3 ? 0 : 1)
-        }
-        .popover(isPresented: $showPriority) {
-            VStack(alignment: .leading, spacing: 22) {
-                PrioritySheetView(selected: $priorityInput, showPriority: $showPriority)
-            }
-            .font(.system(size: 22))
-            .padding(30)
-            .presentSheet($sheetHeight)
-        }
-    }
-    
-    private func scheduleView() -> some View {
-        ZStack(alignment: .leading) {
-            Text("Add date/time")
-                .foregroundStyle(color.text.opacity(half))
-                .opacity(dateInput == nil ? 1 : 0)
-            
-            if let date = dateInput {
-                TextButtonView(item: .date(date.string()))
-            }
-        }
-        .popover(isPresented: $showSchedule) {
-            VStack(alignment: .leading, spacing: 22) {
-                CalendarView(selected: $dateInput, showSchedule: $showSchedule)
-            }
-            .font(.system(size: 22))
-            .padding(30)
-            .presentSheet($sheetHeight)
-        }
-    }
-    
-    private func updateBarView() -> some View {
-        BarContainerView(selected: $barSelected, padding: 0) {
-            ForEach(updateTabs, id: \.self) { tab in
-                IconView(icon: tab, isSpace: tab == updateTabs.last, isAlt: true)
-                    .onTapGesture {
-                        switch tab {
-                        case .complete: clickComplete()
-                        case .delete: clickDelete()
-                        default: {}()
-                        }
-                    }
-            }
-        }
-    }
-    
 }
 
 extension TaskView {
@@ -308,14 +295,6 @@ extension TaskView {
     
     private func isTaskEmpty() -> Bool {
         return titleInput.isEmpty && detailsInput.isEmpty && priorityInput.rawValue == 3 && dateInput == nil
-    }
-    
-    private func clickProperty(_ property: IconItem) {
-        switch property {
-        case .priority:
-            showPriority.toggle()
-        default: return
-        }
     }
     
     private func clickComplete() {
@@ -358,8 +337,13 @@ struct NoAnimationStyle: PrimitiveButtonStyle {
 #Preview("add task", traits: .sizeThatFitsLayout) {
     let tasks = TaskViewModel.tasksExamples()
     
-    return NavigationStack {
-        TaskView()
+    return ZStack {
+        Color.gray.opacity(0.5).ignoresSafeArea()
+        
+        NavigationStack {
+            TaskView()
+        }
+        .padding()
     }
     .environmentObject(TaskViewModel(tasks, TaskViewModel.examples))
     .environmentObject(NavigationCoordinator())

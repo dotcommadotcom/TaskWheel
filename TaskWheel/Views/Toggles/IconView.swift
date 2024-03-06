@@ -2,7 +2,12 @@ import SwiftUI
 
 enum IconItem: Identifiable, Hashable {
     
-    case details, schedule, priority, complete, delete, save, lists, order, more, add, settings
+    case complete, details, priority, schedule
+    
+    case lists, order, more, add, settings
+
+    case cancel, delete, save, move
+         
     
     var id: Self {
         self
@@ -10,16 +15,20 @@ enum IconItem: Identifiable, Hashable {
     
     var name: String {
         switch self {
-        case .details: return "text.alignleft"
-        case .schedule: return "alarm"
-        case .priority: return "tag"
         case .complete: return "square"
-        case .delete: return "trash"
-        case .save: return "square.and.arrow.down"
+        case .details: return "text.alignleft"
+        case .priority: return "tag"
+        case .schedule: return "alarm"
+            
         case .lists: return "list.dash"
         case .order: return "arrow.up.arrow.down"
         case .more: return "ellipsis"
         case .add: return "plus.square"
+            
+        case .cancel: return "xmark"
+        case .delete: return "trash"
+        case .save: return "square.and.arrow.down"
+        case .move: return "chevron.up.chevron.down"
         case .settings: return "gearshape.fill"
         }
     }
