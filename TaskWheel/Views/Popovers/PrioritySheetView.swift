@@ -29,6 +29,15 @@ enum PriorityItem: Int {
         default: return Color.text
         }
     }
+    
+    var background: Color {
+        switch self {
+        case .high: return Color.highBackground
+        case .medium: return Color.mediumBackground
+        case .low: return Color.lowBackground
+        default: return Color.text
+        }
+    }
 }
 
 struct PrioritySheetView: View {

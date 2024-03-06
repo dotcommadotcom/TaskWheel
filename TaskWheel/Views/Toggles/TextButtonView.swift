@@ -43,7 +43,7 @@ struct TextButtonView: View {
     var body: some View {
         ZStack(alignment: .center) {
             RoundedRectangle(cornerRadius: 5)
-                .foregroundColor(isDate ? Color.clear : priority.color)
+                .foregroundColor(isDate ? Color.clear : priority.background)
                 .overlay(
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(Color.text.opacity(0.7), lineWidth: 2)
@@ -65,5 +65,22 @@ struct TextButtonView: View {
 }
 
 #Preview("priority") {
-    TextButtonView(priority: .high)
+    VStack {
+        TextButtonView(priority: .high)
+        TextButtonView(priority: .medium)
+        TextButtonView(priority: .low)
+    }
+}
+
+#Preview("priority dark") {
+    ZStack {
+        Color.background.ignoresSafeArea()
+        
+        VStack {
+            TextButtonView(priority: .high)
+            TextButtonView(priority: .medium)
+            TextButtonView(priority: .low)
+        }
+    }
+    .preferredColorScheme(.dark)
 }

@@ -7,7 +7,6 @@ enum IconItem: Identifiable, Hashable {
     case lists, order, more, add, settings
 
     case cancel, delete, save, move
-         
     
     var id: Self {
         self
@@ -46,6 +45,7 @@ struct IconView: View {
     let icon: IconItem
     var isSpace: Bool = false
     var isAlt: Bool = false
+    var isFill: Bool = false
     var size: CGFloat = 25
     
     var body: some View {
@@ -54,10 +54,18 @@ struct IconView: View {
                 Spacer()
             }
             
-            Image(systemName: !isAlt ? icon.name : icon.alternative)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: size, height: icon == .save ? size + 4 : size)
+            ZStack {
+                if isFill {
+                    Image(systemName: icon.name + ".fill")
+                        .opacity(0.2)
+                }
+                
+                Image(systemName: !isAlt ? icon.name : icon.alternative)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            }
+            .frame(width: size, height: icon == .save ? size + 4 : size)
+            
         }
     }
 }
