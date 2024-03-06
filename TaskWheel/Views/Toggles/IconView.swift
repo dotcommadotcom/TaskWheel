@@ -64,12 +64,19 @@ struct IconView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
-            .frame(width: size, height: icon == .save ? size + 4 : size)
+            .frame(width: icon == .cancel ? size * 0.8 : size,
+                   height: icon == .cancel ? size * 0.8 : icon == .save ? size * 1.1 : size)
             
         }
     }
 }
 
-#Preview("icon") {
-    IconView(icon: .lists)
+#Preview("icons") {
+    let icons: [IconItem] = [.lists, .order, .more, .add, .settings, .cancel, .delete, .save, .move]
+    
+    return HStack {
+        ForEach(icons, id: \.self) { icon in
+            IconView(icon: icon)
+        }
+    }
 }
