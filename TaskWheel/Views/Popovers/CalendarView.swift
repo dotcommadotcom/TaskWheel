@@ -18,7 +18,6 @@ struct CalendarView: View {
     }
     
     var body: some View {
-        
         VStack(spacing: 20) {
             monthYearView()
             
