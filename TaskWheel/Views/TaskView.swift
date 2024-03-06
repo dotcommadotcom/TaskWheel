@@ -258,7 +258,7 @@ extension TaskView {
         }
         .popover(isPresented: $showSchedule) {
             VStack(alignment: .leading, spacing: 22) {
-                CalendarView(selected: $dateInput, showSchedule: $showSchedule)
+                CalendarView(dateInput: $dateInput, showSchedule: $showSchedule)
             }
             .padding(30)
             .presentSheet($sheetHeight)

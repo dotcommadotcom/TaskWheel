@@ -3,17 +3,17 @@ import SwiftUI
 struct CalendarView: View {
     @Environment(\.presentationMode) var presentationMode
     
-    @StateObject var calendarVM = CalendarViewModel()
+    @StateObject var calendarVM: CalendarViewModel
     @State var optionSelected: IconItem? = nil
     
-    @Binding var selected: Date?
+    @Binding var dateInput: Date?
     @Binding var showSchedule: Bool
     
     private let optionTabs: [IconItem] = [.cancel, .save]
     
-    init(selected: Binding<Date?>, showSchedule: Binding<Bool>) {
-        self._calendarVM = StateObject(wrappedValue: CalendarViewModel(selectedDate: selected.wrappedValue ?? Date()))
-        self._selected = selected
+    init(dateInput: Binding<Date?>, showSchedule: Binding<Bool>) {
+        self._dateInput = dateInput
+        self._calendarVM = StateObject(wrappedValue: CalendarViewModel(selectedDate: dateInput.wrappedValue ?? Date()))
         self._showSchedule = showSchedule
     }
     
@@ -31,9 +31,6 @@ struct CalendarView: View {
         .font(.system(size: 18))
         .background(Color.background)
         .foregroundStyle(Color.text)
-        .onReceive(calendarVM.datePublisher) { date in
-            selected = date
-        }
     }
     
 }
@@ -87,59 +84,56 @@ extension CalendarView {
     
     private func dayButton(_ day: Date) -> some View {
         Button {
-            selected = day
+            calendarVM.select(this: day)
         } label: {
             ZStack {
                 Circle()
-                    .fill(selected == day ? Color.text : .clear)
+                    .fill(calendarVM.selectedDate == day ? Color.text : .clear)
                 
                 Text("\(calendarVM.calendar.component(.day, from: day))")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .contentShape(Rectangle())
                     .opacity(calendarVM.isInMonth(this: day) ? 1 : 0.5)
-                    .foregroundColor(selected == day ? Color.background : Color.text)
+                    .foregroundColor(calendarVM.selectedDate == day ? Color.background : Color.text)
             }
         }
     }
     
     private func calendarBarView() -> some View {
-        BarContainerView(selected: $optionSelected, padding: 10) {
-            ForEach(optionTabs, id: \.self) { tab in
-                IconView(icon: tab, isSpace: tab == optionTabs.last, size: 20)
-                    .onTapGesture {
-                        optionSelected = tab
-                        
-                        if optionSelected == .cancel {
-                            clickCancel()
-                        } else if optionSelected == .save {
-                            clickSave()
-                        }
-                    }
-            }
+        
+        HStack {
+            IconView(icon: .cancel, size: 20)
+                .onTapGesture {
+                    clickCancel()
+                }
+            
+            IconView(icon: .save, isSpace: true, size: 20)
+                .onTapGesture {
+                    clickSave()
+                }
         }
+        .padding(.horizontal, 10)
     }
 }
 
 extension CalendarView {
     
     private func clickCancel() {
-//        showSchedule.toggle()
-//        presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
     
     private func clickSave() {
-//        calendarVM.select(this: selected ?? Date())
-//        showSchedule.toggle()
-//        presentationMode.wrappedValue.dismiss()
+        dateInput = calendarVM.selectedDate
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
 #Preview("calendar") {
-    CalendarView(selected: .constant(date(2024, 12, 16)), showSchedule: .constant(true))
+    CalendarView(dateInput: .constant(date(2024, 12, 16)), showSchedule: .constant(true))
 }
 
 #Preview("dark calendar") {
-    CalendarView(selected: .constant(Date()), showSchedule: .constant(true))
+    CalendarView(dateInput: .constant(Date()), showSchedule: .constant(true))
         .preferredColorScheme(.dark)
 }
 

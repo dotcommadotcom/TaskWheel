@@ -4,8 +4,6 @@ class CalendarViewModel: ObservableObject {
     
     @Published var selectedDate: Date
     
-    var datePublisher: Published<Date>.Publisher { $selectedDate }
-    
     let dateFormatter = DateFormatter()
     
     let calendar: Calendar = {
