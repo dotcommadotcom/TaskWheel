@@ -42,7 +42,7 @@ extension TaskViewModel {
         tasks.removeAll(where: condition)
     }
     
-    func update(this task: TaskModel, title: String? = nil, ofTaskList: UUID? = nil, isComplete: Bool? = nil, details: String? = nil, priority: Int? = nil, date: Date? = nil) {
+    func update(this task: TaskModel, title: String? = nil, ofTaskList: UUID? = nil, isDone: Bool? = nil, details: String? = nil, priority: Int? = nil, date: Date? = nil) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.edit(title: title ?? task.title,
                                      ofTaskList: ofTaskList ?? task.ofTaskList,
@@ -152,22 +152,22 @@ extension TaskViewModel {
     
     static func tasksExamples() -> Deque<TaskModel> {
         [
-            .init(title: "laundry", ofTaskList: uuids[0], isComplete: true),
-            .init(title: "research pkms", ofTaskList: uuids[2], isComplete: false),
-            .init(title: "dishes", ofTaskList: uuids[0], isComplete: false),
-            .init(title: "mop", ofTaskList: uuids[0], isComplete: false, details: "where are the clean mop heads?", priority: 1, date: Calendar.current.date(from: DateComponents(year: 2024, month: 2, day: 29))!),
-            .init(title: "i hope im not too late to set my demon straight", ofTaskList: uuids[1], isComplete: false, priority: 0),
-            .init(title: "vacuum", ofTaskList: uuids[0], isComplete: true, priority: 1),
-            .init(title: "its all a big circle jerk", ofTaskList: uuids[1], isComplete: false),
-            .init(title: "water plants", ofTaskList: uuids[0], isComplete: false),
-            .init(title: "throw out trash", ofTaskList: uuids[0], isComplete: false, priority: 0),
-            .init(title: "recycle plastic and paper, separate vinyl labels", ofTaskList: uuids[0], isComplete: false),
-            .init(title: "wipe countertop", ofTaskList: uuids[0], isComplete: false),
-            .init(title: "fold laundry", ofTaskList: uuids[0], isComplete: false),
-            .init(title: "change passwords", ofTaskList: uuids[2], isComplete: true),
-            .init(title: "clean bathroom", ofTaskList: uuids[0], isComplete: true, priority: 1),
-            .init(title: "organize shelf", ofTaskList: uuids[0], isComplete: false, priority: 2),
-            .init(title: "i want to make [] things, even if nobody cares", ofTaskList: uuids[1], isComplete: true),
+            .init(title: "laundry", ofTaskList: uuids[0], isDone: true),
+            .init(title: "research pkms", ofTaskList: uuids[2], isDone: false),
+            .init(title: "dishes", ofTaskList: uuids[0], isDone: false),
+            .init(title: "mop", ofTaskList: uuids[0], isDone: false, details: "where are the clean mop heads?", priority: 1, date: Calendar.current.date(from: DateComponents(year: 2024, month: 2, day: 29))!),
+            .init(title: "i hope im not too late to set my demon straight", ofTaskList: uuids[1], isDone: false, priority: 0),
+            .init(title: "vacuum", ofTaskList: uuids[0], isDone: true, priority: 1),
+            .init(title: "its all a big circle jerk", ofTaskList: uuids[1], isDone: false),
+            .init(title: "water plants", ofTaskList: uuids[0], isDone: false),
+            .init(title: "throw out trash", ofTaskList: uuids[0], isDone: false, priority: 0),
+            .init(title: "recycle plastic and paper, separate vinyl labels", ofTaskList: uuids[0], isDone: false),
+            .init(title: "wipe countertop", ofTaskList: uuids[0], isDone: false),
+            .init(title: "fold laundry", ofTaskList: uuids[0], isDone: false),
+            .init(title: "change passwords", ofTaskList: uuids[2], isDone: true),
+            .init(title: "clean bathroom", ofTaskList: uuids[0], isDone: true, priority: 1),
+            .init(title: "organize shelf", ofTaskList: uuids[0], isDone: false, priority: 2),
+            .init(title: "i want to make [] things, even if nobody cares", ofTaskList: uuids[1], isDone: true),
         ]
     }
     

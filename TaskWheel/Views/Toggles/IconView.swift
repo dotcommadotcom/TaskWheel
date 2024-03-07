@@ -4,9 +4,9 @@ enum IconItem: Identifiable, Hashable {
     
     case complete, details, priority, schedule
     
-    case lists, order, more, add, settings
+    case shuffle, lists, order, more, add
 
-    case cancel, delete, save, move
+    case cancel, delete, save, move, settings
     
     var id: Self {
         self
@@ -19,6 +19,7 @@ enum IconItem: Identifiable, Hashable {
         case .priority: return "tag"
         case .schedule: return "alarm"
             
+        case .shuffle: return "checkmark.gobackward"
         case .lists: return "list.dash"
         case .order: return "arrow.up.arrow.down"
         case .more: return "ellipsis"

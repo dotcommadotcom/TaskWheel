@@ -46,16 +46,16 @@ struct TaskRowView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(10)
         .font(.system(size: 23))
-        .mark(isComplete: task.isDone)
+        .mark(isDone: task.isDone)
     }
     
 }
 
 struct TaskRowModifier: ViewModifier {
-    let isComplete: Bool
+    let isDone: Bool
     
     func body(content: Content) -> some View {
-        if isComplete {
+        if isDone {
             return AnyView(content.strikethrough().foregroundStyle(Color.text.opacity(0.5)))
         } else {
             return AnyView(content.foregroundStyle(Color.text))
@@ -64,9 +64,9 @@ struct TaskRowModifier: ViewModifier {
 }
 
 extension View {
-    func mark(isComplete: Bool) -> some View {
+    func mark(isDone: Bool) -> some View {
         self
-            .modifier(TaskRowModifier(isComplete: isComplete))
+            .modifier(TaskRowModifier(isDone: isDone))
     }
 }
 
@@ -83,7 +83,7 @@ extension View {
         TaskModel(title: "task with date", ofTaskList: taskList.id, priority: 0, date: date(2023, 3, 4)),
         TaskModel(title: "this is a long text hat i am hoping will overflow", ofTaskList: taskList.id, details: "these are details that should also overflow just to show the fullest version of a task", priority: 1, date: date(2023, 6, 28)),
         TaskModel(title: "", ofTaskList: taskList.id, details: "these are details that does not overflow ", priority: 0, date: date(2023, 3, 4)),
-        TaskModel(title: "full but completed", ofTaskList: taskList.id, isComplete: true, details: "again, full but completed but want to show how details can overflow", priority: 0, date: date(2023, 3, 3)),
+        TaskModel(title: "full but completed", ofTaskList: taskList.id, isDone: true, details: "again, full but completed but want to show how details can overflow", priority: 0, date: date(2023, 3, 3)),
     ]
     
     return ZStack {

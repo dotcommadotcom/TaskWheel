@@ -22,6 +22,8 @@
 		B72F69402B8C97AD00525EF8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B72F693F2B8C97AD00525EF8 /* .gitignore */; };
 		B75F44022B8C253A00D0B182 /* TopTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75F44012B8C253A00D0B182 /* TopTabView.swift */; };
 		B768297A2B98B2F000F73055 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76829772B98A77400F73055 /* DateExtensionTests.swift */; };
+		B768297C2B98B5F000F73055 /* SampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768297B2B98B5F000F73055 /* SampleView.swift */; };
+		B768297E2B99494600F73055 /* SpinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768297D2B99494600F73055 /* SpinViewModel.swift */; };
 		B76905232B8D8BC3001DD077 /* OrderSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905222B8D8BC3001DD077 /* OrderSheetView.swift */; };
 		B76905252B8DD6FD001DD077 /* MoreSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905242B8DD6FD001DD077 /* MoreSheetView.swift */; };
 		B76905272B8DD8D8001DD077 /* ListsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905262B8DD8D8001DD077 /* ListsSheetView.swift */; };
@@ -71,6 +73,8 @@
 		B72F693F2B8C97AD00525EF8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		B75F44012B8C253A00D0B182 /* TopTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabView.swift; sourceTree = "<group>"; };
 		B76829772B98A77400F73055 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
+		B768297B2B98B5F000F73055 /* SampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SampleView.swift; path = TaskWheel/Views/SampleView.swift; sourceTree = "<group>"; };
+		B768297D2B99494600F73055 /* SpinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinViewModel.swift; sourceTree = "<group>"; };
 		B76905222B8D8BC3001DD077 /* OrderSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSheetView.swift; sourceTree = "<group>"; };
 		B76905242B8DD6FD001DD077 /* MoreSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreSheetView.swift; sourceTree = "<group>"; };
 		B76905262B8DD8D8001DD077 /* ListsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsSheetView.swift; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 		B71A81CD2B830BB000A8886F = {
 			isa = PBXGroup;
 			children = (
+				B768297B2B98B5F000F73055 /* SampleView.swift */,
 				B72F693F2B8C97AD00525EF8 /* .gitignore */,
 				B71A81D82B830BB000A8886F /* TaskWheel */,
 				B7F5B8122B83746300F5CD9D /* TaskWheelTests */,
@@ -208,6 +213,7 @@
 				B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */,
 				B7EAF4632B949300006732EE /* CalendarViewModel.swift */,
 				B71482112B96E41100CA8511 /* DateExtension.swift */,
+				B768297D2B99494600F73055 /* SpinViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -354,6 +360,8 @@
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
 				B76905252B8DD6FD001DD077 /* MoreSheetView.swift in Sources */,
 				B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */,
+				B768297E2B99494600F73055 /* SpinViewModel.swift in Sources */,
+				B768297C2B98B5F000F73055 /* SampleView.swift in Sources */,
 				B7EAF46A2B95DC6F006732EE /* Buttons.swift in Sources */,
 				B7EAF4602B940EE3006732EE /* TaskListsView.swift in Sources */,
 				B7EAF45E2B92CBB9006732EE /* SheetView.swift in Sources */,

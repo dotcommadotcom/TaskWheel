@@ -16,6 +16,22 @@ final class DateExtensionTests: XCTestCase {
         calendar = nil
     }
     
+    // TEST - Past
+    
+    func testIsPastIsFalse() throws {
+        let date = Date()
+        
+        XCTAssertFalse(date.isPast())
+    }
+    
+    func testIsPastIsTrue() throws {
+        let date = calendar.date(byAdding: .day, value: -1, to: Date())!
+        
+        XCTAssertTrue(date.isPast())
+    }
+    
+    // TEST - Relative date
+    
     func testRelativeIsNextYear() throws {
         let firstDate = date(2021, 9, 1)
 

@@ -28,6 +28,7 @@ struct MainView: View {
                     handleSwipe(translation: $0.translation.width)
                 }))
                 
+                
                 mainBarView()
                     .background(Color.text.opacity(0.05))
             }
@@ -63,7 +64,9 @@ extension MainView {
             ForEach(mainTabs, id: \.self) { tab in
                 IconView(icon: tab, isSpace: tab == mainTabs.last)
                     .onTapGesture {
-                        barSelected = tab
+                        if tab != .shuffle {
+                            barSelected = tab
+                        }
                     }
             }
         }
