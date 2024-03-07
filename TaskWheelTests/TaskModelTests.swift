@@ -47,7 +47,7 @@ final class TaskModelTests: XCTestCase {
     
 
     func testEditDateIsNil() throws {
-        XCTAssertEqual(testTask.date, nil)
+        XCTAssertNil(testTask.date)
     }
     
     // TEST - Priority
@@ -94,7 +94,7 @@ final class TaskModelTests: XCTestCase {
     func testEmptyEditHelper() throws {
         let empty = testTask.edit()
         
-        XCTAssertEqual(empty.id, testTask.id)
+        XCTAssertEqual(empty, testTask)
         XCTAssertEqual(empty.title, testTask.title)
         XCTAssertEqual(empty.ofTaskList, testTask.ofTaskList)
         XCTAssertEqual(empty.isDone, testTask.isDone)

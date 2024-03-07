@@ -47,3 +47,14 @@ struct TaskModel: Identifiable, Hashable {
     
     
 }
+
+extension TaskModel: Equatable {
+    static func == (lhs: TaskModel, rhs: TaskModel) -> Bool {
+        return lhs.id == rhs.id &&
+        lhs.title == rhs.title &&
+        lhs.ofTaskList == rhs.ofTaskList &&
+        lhs.isDone == rhs.isDone &&
+        lhs.details == rhs.details &&
+        lhs.date?.string() == rhs.date?.string()
+    }
+}

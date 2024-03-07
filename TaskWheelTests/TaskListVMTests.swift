@@ -31,16 +31,6 @@ final class TaskListVMTests: XCTestCase {
         orderVM = nil
     }
     
-    private func date(_ year: Int, _ month: Int, _ day: Int) -> Date {
-        var calendar = Calendar.current
-        calendar.firstWeekday = 2
-        var dateComponents = DateComponents()
-        dateComponents.year = year
-        dateComponents.month = month
-        dateComponents.day = day
-        return calendar.date(from: dateComponents)!
-    }
-    
     // TEST - Ordering
     
     func testDateOrder() throws {

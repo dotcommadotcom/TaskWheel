@@ -5,7 +5,14 @@ class TaskViewModel: ObservableObject {
     @Published var tasks: Deque<TaskModel>
     @Published var taskLists: Deque<TaskListModel>
     @Published var defaultTaskList: TaskListModel
-    @Published var current: Int
+    
+    // TODO TEST
+    @Published var current: Int {
+        didSet {
+            updateCurrentCount()
+        }
+    }
+    @Published var currentCount: Int
     
     init(
         _ tasks: Deque<TaskModel> = [],
@@ -16,6 +23,7 @@ class TaskViewModel: ObservableObject {
         self.taskLists = taskLists.isEmpty ? [backupTaskList] : taskLists
         self.defaultTaskList = taskLists.first ?? backupTaskList
         self.current = 0
+        self.currentCount = currentTasks().count
     }
 }
 
@@ -70,6 +78,10 @@ extension TaskViewModel {
     func currentTasks() -> Deque<TaskModel> {
         return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }.sorted(by: ordering()))
     }
+    
+    func updateCurrentCount() {
+        self.currentCount = currentTasks().count
+    }
 
     func currentDoneTasks() -> Deque<TaskModel> {
         guard taskLists[current].isDoneVisible else {
@@ -82,6 +94,7 @@ extension TaskViewModel {
     func updateCurrentTo(this taskList: TaskListModel) {
         if let index = taskLists.firstIndex(where: { $0.id == taskList.id }) {
             self.current = index
+            self.currentCount = currentTasks().count
         }
     }
     
