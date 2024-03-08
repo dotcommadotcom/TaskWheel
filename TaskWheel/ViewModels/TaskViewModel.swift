@@ -23,7 +23,7 @@ class TaskViewModel: ObservableObject {
         self.taskLists = taskLists.isEmpty ? [backupTaskList] : taskLists
         self.defaultTaskList = taskLists.first ?? backupTaskList
         self.current = 0
-        self.currentCount = currentTasks().count
+        self.currentCount = 0
     }
 }
 

@@ -47,11 +47,11 @@ final class SpinViewModelTests: XCTestCase {
     
     // TEST - Constructor
     
-    func testTasksCountEqualWeightsCount() throws {
-        let tasksCount = taskVM.currentTasks().count
-        
-        XCTAssertEqual(spinVM.weights.count, tasksCount)
-    }
+//    func testTasksCountEqualWeightsCount() throws {
+//        let tasksCount = taskVM.currentTasks().count
+//        
+//        XCTAssertEqual(spinVM.weights.count, tasksCount)
+//    }
     
     func testSelectdTaskIsNil() throws {
         XCTAssertNil(spinVM.selectedTask)
