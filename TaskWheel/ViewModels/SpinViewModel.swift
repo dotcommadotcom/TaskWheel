@@ -3,55 +3,52 @@ import DequeModule
 
 class SpinViewModel: ObservableObject {
     
-    @Published var selectedTask: TaskModel?
+    @Published var selectedIndex: Int?
     
     let taskVM: TaskViewModel
     let tasks: Deque<TaskModel>
     
     init(taskVM: TaskViewModel) {
-        self.selectedTask = nil
+        self.selectedIndex = nil
         self.taskVM = taskVM
         self.tasks = taskVM.currentTasks()
     }
     
-    
-    func scoreImportance(of task: TaskModel) -> Int {
-        return 4 - task.priority
+    func scoreImportance(of task: TaskModel) -> Double {
+        return 4.0 - Double(task.priority)
     }
     
-    func scoreUrgency(of task: TaskModel) -> Int {
+    func scoreUrgency(of task: TaskModel) -> Double {
         if let date = task.date {
-            return date.calculateDays()
+            return -Double(date.calculateDays()) / 10.0
         }
-        return 0
+        return Double(task.creation.calculateDays()) / 10.0
     }
     
-    func getWeights(count: Int) -> [Double]{
-        let weights = Array(repeating: 0.0, count: count)
-        
-        return weights
-    }
-    
-    func selectRandomTaskWithWeights() -> TaskModel? {
-        guard !tasks.isEmpty else {
-            return nil
-        }
-        
-        let weights = getWeights(count: self.tasks.count)
-        
-        let totalWeight = weights.reduce(0, +)
-        let randomValue = Double.random(in: 0.0..<totalWeight)
-        
-        var cumulativeWeight = 0.0
-        for (index, task) in tasks.enumerated() {
-            cumulativeWeight += weights[index]
-            if randomValue < cumulativeWeight {
-                return task
-            }
-        }
-        
-        return nil
-    }
+//    func weights() -> [Double]{
+//        return tasks.map { scoreImportance(of: $0) + scoreUrgency(of: $0) }
+//    }
+//    
+//    func selectRandomTaskWithWeights() -> TaskModel? {
+//        guard !tasks.isEmpty else {
+//            return nil
+//        }
+//        
+//        let weights = weights()
+//        
+//        let totalWeight = weights.reduce(0, +)
+//        let randomValue = Double.random(in: 0.0..<totalWeight)
+//        
+//        var cumulativeWeight = 0.0
+//        for (index, task) in tasks.enumerated() {
+//            cumulativeWeight += weights[index]
+//            if randomValue < cumulativeWeight {
+//                return task
+//            }
+//        }
+//        
+//        return nil
+//    }
 
 }
 

@@ -6,20 +6,61 @@ struct WheelView: View {
     @State var selected: Int = 0
     
     var body: some View {
-        Picker("wheel", selection: $selected) {
-            ForEach(taskViewModel.currentTasks()) { task in
+        HStack(alignment: .center) {
+            GeometryReader { geometry in
                 HStack {
-                    Text(task.title)
-                        .font(.system(size: 23))
-                    Spacer()
+                    ZStack(alignment: .center) {
+                        Circle().fill(.lowBackground)
+                            .frame(width: geometry.size.width * 2, height: geometry.size.width * 2)
+                        
+                        Rectangle().fill(.pink)
+                            .frame(width: 5, height: geometry.size.width * 2)
+                    }
+                    .position(CGPoint(x: 0, y: geometry.size.height / 2))
+                    
+                    Triangle().fill(.high)
+                        .rotationEffect(.degrees(-90))
+                        .frame(width: 20, height: 30)
+                        .shadow(radius: 4)
                 }
-                .padding()
             }
+            .background(.text.opacity(0.1))
+            
+            spinButton()
+                .padding(25)
         }
-        .pickerStyle(.wheel)
-        .frame(maxHeight: .infinity, alignment: .leading)
     }
     
+    private func spinButton() -> some View {
+        Button {
+            print("spinning")
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 25)
+                    .fill(.accent)
+                
+                Text("Spin").foregroundStyle(.textAlt)
+                    .padding(8)
+                    .padding(.horizontal, 8)
+            }
+            .frame(height: 30)
+            .fixedSize()
+        }
+    }
+    
+}
+
+struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.closeSubpath()
+
+        return path
+    }
 }
 
 
