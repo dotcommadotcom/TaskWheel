@@ -5,7 +5,7 @@ struct MainView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
     
-    @State private var topSelected: TopTabItem = .list
+    @State private var topSelected: TopTabItem = .wheel
     @State private var barSelected: IconItem? = nil
     @State private var showCompleted: Bool = true
     

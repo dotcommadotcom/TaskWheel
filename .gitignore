@@ -17,3 +17,5 @@ playground.xcworkspace
 
 
 .build/
+
+ContentView.swift
