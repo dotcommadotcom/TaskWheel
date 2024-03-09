@@ -3,10 +3,13 @@ import SwiftUI
 struct WheelView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
-    @State var selected: Int = 0
-    @State var rotateBy: Double = 0.0
+    @State var selected: Int = -1
+    @State var rotateBy: CGFloat = 0.0
     
-    private var sliceSize: CGFloat { 1 / CGFloat(alphabet.count) }
+    private var numSlices: Int { alphabet.count }
+    private var sliceSize: CGFloat {
+        return 360.0 / CGFloat(numSlices) // Angle in degrees
+    }
     
     let alphabet = ["All the complications in the ", "Back to back long texts will look like this", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "This is going to be long", "U", "V", "W", "X", "Y", "Z"]
     
@@ -38,8 +41,9 @@ extension WheelView {
                         WheelSegmentView(
                             text: alphabet[index],
                             index: index,
-                            size: sliceSize,
-                            textOffset: geometry.size.width - 25
+                            angle: angle(at: index),
+                            textOffset: geometry.size.width - 25,
+                            selectedIndex: $selected
                         )
                     }
                     .rotationEffect(.degrees(rotateBy))
@@ -47,19 +51,23 @@ extension WheelView {
                 }
                 .frame(width: diameter, height: diameter)
                 .position(CGPoint(x: 0, y: geometry.size.height / 2))
-                
-               
             }
         }
     }
     
     private func spinButton() -> some View {
         Button {
-            let randomIndex = Int.random(in: 0..<alphabet.count)
-            let angleDifference = angleForLetter(at: randomIndex) - rotateBy
-            withAnimation(.linear(duration: 2)) {
-                rotateBy += 360 * 5 + Double(Int.random(in: 10..<360))
+            selected = Int.random(in: 0..<numSlices)
+
+            let currentAngle = fmod(rotateBy, 360)
+            let targetAngle = 360 - Double(selected) * 360.0 / Double(numSlices)
+            let angleDifference = fmod(360 - currentAngle + targetAngle, 360)
+
+            // Apply the rotation with animation
+            withAnimation(.easeInOut(duration: 6)) {
+                rotateBy += 360 * 5 + angleDifference
             }
+
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 25)
@@ -74,9 +82,12 @@ extension WheelView {
         }
     }
     
+    private func angle(at index: Int) -> CGFloat {
+        return sliceSize * CGFloat(index)
+    }
+    
     private func angleForLetter(at index: Int) -> Double {
-        let anglePerLetter = 360.0 / Double(alphabet.count)
-        return -Double(index) * anglePerLetter
+        return Double(index) * 360.0 / Double(numSlices)
     }
     
 }
@@ -85,16 +96,17 @@ struct WheelSegmentView: View {
     
     @State var text: String
     @State var index: Int
-    @State var size: CGFloat
+    @State var angle: CGFloat
     @State var textOffset: CGFloat
-    @State var textWidth: CGFloat = .zero
+    @State var textWidth: CGFloat = 20
+    
+    @Binding var selectedIndex: Int
     
     var fontSize: CGFloat = 20
     
     var body: some View {
-        let angle = .pi * (2 * size * (CGFloat(index)))
-        let xOffset = cos(angle) * (textOffset - textWidth / 2)
-        let yOffset = sin(angle) * (textOffset - textWidth / 2)
+        let xOffset = cos(angle * .pi / 180.0) * (textOffset - textWidth / 2)
+        let yOffset = sin(angle * .pi / 180.0) * (textOffset - textWidth / 2)
         
         Text(text)
             .lineLimit(1)
@@ -107,9 +119,10 @@ struct WheelSegmentView: View {
                         }
                 }
             }
-            .rotationEffect(.radians(angle))
+            .rotationEffect(.degrees(angle))
             .offset(x: xOffset, y: yOffset)
             .frame(maxWidth: 150)
+            .fontWeight(selectedIndex == index ? .bold : .regular)
     }
 }
 
