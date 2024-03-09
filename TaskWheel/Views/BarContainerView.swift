@@ -31,7 +31,7 @@ struct BarContainerView<Content: View>: View {
     
     return BarContainerView(selected: .constant(.lists)) {
         ForEach(mainTabs, id: \.self) { tab in
-            IconView(icon: tab, isSpace: tab == mainTabs.last)
+            Icon(this: tab, isSpace: tab == mainTabs.last)
         }
     }
 }

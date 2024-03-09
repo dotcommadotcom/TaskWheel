@@ -52,7 +52,7 @@ extension MainView {
             
             Spacer()
             
-            IconView(icon: .settings, size: 20)
+            Icon(this: .settings, size: 20)
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 20)
@@ -62,7 +62,7 @@ extension MainView {
     private func mainBarView() -> some View {
         BarContainerView(selected: $barSelected) {
             ForEach(mainTabs, id: \.self) { tab in
-                IconView(icon: tab, isSpace: tab == mainTabs.last)
+                Icon(this: tab, isSpace: tab == mainTabs.last)
                     .onTapGesture {
                         if tab != .shuffle {
                             barSelected = tab

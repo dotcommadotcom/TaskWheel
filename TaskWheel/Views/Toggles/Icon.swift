@@ -6,7 +6,7 @@ enum IconItem: Identifiable, Hashable {
     
     case shuffle, lists, order, more, add
 
-    case cancel, delete, save, move, settings
+    case cancel, delete, save, move, settings, ticker
     
     var id: Self {
         self
@@ -30,6 +30,7 @@ enum IconItem: Identifiable, Hashable {
         case .save: return "square.and.arrow.down"
         case .move: return "chevron.up.chevron.down"
         case .settings: return "gearshape.fill"
+        case .ticker: return "arrowtriangle.backward.fill"
         }
     }
     
@@ -42,8 +43,8 @@ enum IconItem: Identifiable, Hashable {
     }
 }
 
-struct IconView: View {
-    let icon: IconItem
+struct Icon: View {
+    let this: IconItem
     var isSpace: Bool = false
     var isAlt: Bool = false
     var isFill: Bool = false
@@ -57,16 +58,16 @@ struct IconView: View {
             
             ZStack {
                 if isFill {
-                    Image(systemName: icon.name + ".fill")
+                    Image(systemName: this.name + ".fill")
                         .opacity(0.2)
                 }
                 
-                Image(systemName: !isAlt ? icon.name : icon.alternative)
+                Image(systemName: !isAlt ? this.name : this.alternative)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
-            .frame(width: icon == .cancel ? size * 0.8 : size,
-                   height: icon == .cancel ? size * 0.8 : icon == .save ? size * 1.1 : size)
+            .frame(width: this == .cancel ? size * 0.8 : size,
+                   height: this == .cancel ? size * 0.8 : this == .save ? size * 1.1 : size)
             
         }
     }
@@ -77,7 +78,7 @@ struct IconView: View {
     
     return HStack {
         ForEach(icons, id: \.self) { icon in
-            IconView(icon: icon)
+            Icon(this: icon)
         }
     }
 }

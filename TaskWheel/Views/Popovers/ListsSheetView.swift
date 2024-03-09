@@ -45,7 +45,7 @@ extension ListsSheetView {
                     Button {
                         clickSave()
                     } label: {
-                        IconView(icon: .save)
+                        Icon(this: .save)
                     }
                     .buttonStyle(NoAnimationStyle())
                 }

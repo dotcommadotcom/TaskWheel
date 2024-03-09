@@ -97,7 +97,7 @@ extension TaskView {
             
             BarContainerView(selected: $barSelected, padding: 0) {
                 ForEach(updateTabs, id: \.self) { tab in
-                    IconView(icon: tab, isSpace: tab == updateTabs.last, isAlt: true)
+                    Icon(this: tab, isSpace: tab == updateTabs.last, isAlt: true)
                         .onTapGesture {
                             switch tab {
                             case .complete: clickComplete()
@@ -136,7 +136,7 @@ extension TaskView {
             listsSelected = .lists
         } label: {
             HStack(alignment: .center) {
-                IconView(icon: .move, size: 15)
+                Icon(this: .move, size: 15)
                 
                 Text(taskViewModel.currentTitle())
             }
@@ -168,7 +168,7 @@ extension TaskView {
     private func detailsView() -> some View {
         HStack(spacing: 20) {
             if !isAdd {
-                IconView(icon: .details, size: iconSize)
+                Icon(this: .details, size: iconSize)
             }
             
             ZStack(alignment: .leading) {
@@ -195,13 +195,13 @@ extension TaskView {
         Button {
             showDetails = true
         } label: {
-            IconView(icon: .details, size: iconSize)
+            Icon(this: .details, size: iconSize)
         }
     }
     
     private func priorityView() -> some View {
         HStack(spacing: 20) {
-            IconView(icon: .priority, size: iconSize)
+            Icon(this: .priority, size: iconSize)
             
             ZStack(alignment: .leading) {
                 Text("Add priority")
@@ -223,7 +223,7 @@ extension TaskView {
         Button {
             priorityInput = PriorityItem((priorityInput.rawValue + 3) % 4)
         } label: {
-            IconView(icon: .priority, isAlt: priorityInput.rawValue != 3, size: iconSize)
+            Icon(this: .priority, isAlt: priorityInput.rawValue != 3, size: iconSize)
         }
         .foregroundStyle(priorityInput.color)
         .onLongPressGesture(minimumDuration: 1) {
@@ -233,7 +233,7 @@ extension TaskView {
     
     private func scheduleView() -> some View {
         HStack(spacing: 20) {
-            IconView(icon: .schedule, size: iconSize)
+            Icon(this: .schedule, size: iconSize)
             
             if !isAdd {
                 ZStack(alignment: .leading) {
@@ -264,7 +264,7 @@ extension TaskView {
         Button {
             clickSave()
         } label: {
-            IconView(icon: .save, isSpace: true, size: iconSize)
+            Icon(this: .save, isSpace: true, size: iconSize)
         }
         .disabled(isTaskEmpty() ? true : false)
         .foregroundStyle(isTaskEmpty() ? Color.text.opacity(0.5) : Color.text)
