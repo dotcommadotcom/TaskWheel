@@ -24,9 +24,10 @@ struct MainView: View {
                     WheelView(taskViewModel: taskViewModel)
                         .topTabItem(tab: .wheel, selected: $topSelected)
                 }
-                .highPriorityGesture(DragGesture().onEnded({
-                    handleSwipe(translation: $0.translation.width)
-                }))
+                .gesture(
+                    DragGesture().onEnded({
+                        handleSwipe(translation: $0.translation.width)
+                    }))
                 
                 
                 mainBarView()

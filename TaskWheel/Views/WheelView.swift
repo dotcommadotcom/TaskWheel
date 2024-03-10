@@ -37,16 +37,15 @@ struct WheelView: View {
         .onReceive(taskViewModel.$current) { _ in
             self.isSpinDisabled = taskViewModel.currentCount() == 0
         }
+        .onLongPressGesture {
+            spin()
+        }
     }
-    
-    
 }
 
 extension WheelView {
     
     private func wheelCircleView() -> some View {
-        
-        
         ZStack {
             Circle().fill(Color.text.opacity(0.1))
         
@@ -78,12 +77,7 @@ extension WheelView {
     
     private func spinButton() -> some View {
         Button {
-            selected = Int.random(in: 0..<taskViewModel.currentCount())
-            
-            withAnimation(.easeInOut(duration: 6)) {
-                spinAngle += 360 * 5 + angleDifference(from: selected)
-            }
-            
+            spin()
         } label: {
             Icon(this: .ticker, size: 15)
         }
@@ -93,6 +87,16 @@ extension WheelView {
 }
 
 extension WheelView {
+    
+    private func spin() {
+        guard !isSpinDisabled else { return }
+        
+        selected = Int.random(in: 0..<taskViewModel.currentCount())
+        
+        withAnimation(.easeInOut(duration: 6)) {
+            spinAngle += 360 * 5 + angleDifference(from: selected)
+        }
+    }
 
     private func angle(at index: Int) -> CGFloat {
         return 360.0 / CGFloat(taskViewModel.currentCount()) * CGFloat(index)
