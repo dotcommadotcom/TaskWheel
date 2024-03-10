@@ -7,9 +7,14 @@ struct WheelView: View {
     
     @State var selected: Int = -1
     @State var spinAngle: CGFloat = 0.0
-    @State var isSpinDisabled: Bool = false
+    @State var isSpinDisabled: Bool
     
     private let diameter: CGFloat = 300
+    
+    init(taskViewModel: TaskViewModel) {
+        self.taskViewModel = taskViewModel
+        _isSpinDisabled = State(initialValue: taskViewModel.currentCount() == 0)
+    }
 
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
@@ -24,12 +29,12 @@ struct WheelView: View {
         .offset(x: -80, y: 0)
         .scaleEffect(1.9)
         .padding()
-        .onAppear() {
-            self.isSpinDisabled = taskViewModel.currentCount() == 0
-        }
         .onReceive(taskViewModel.$tasks) { _ in
             self.selected = -1
             self.spinAngle = 0
+            self.isSpinDisabled = taskViewModel.currentCount() == 0
+        }
+        .onReceive(taskViewModel.$current) { _ in
             self.isSpinDisabled = taskViewModel.currentCount() == 0
         }
     }

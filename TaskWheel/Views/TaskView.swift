@@ -294,14 +294,14 @@ extension TaskView {
     
     private func saveGoBack() {
         if task.title != titleInput ||
-            task.ofTaskList !=  taskViewModel.currentTaskList().id ||
+            task.ofTaskList !=  taskViewModel.currentId() ||
             task.details != detailsInput ||
             task.priority != priorityInput.rawValue ||
             task.date != dateInput {
             taskViewModel.update(
                 this: task,
                 title: titleInput,
-                ofTaskList: taskViewModel.currentTaskList().id,
+                ofTaskList: taskViewModel.currentId(),
                 details: detailsInput,
                 priority: priorityInput.rawValue,
                 date: dateInput

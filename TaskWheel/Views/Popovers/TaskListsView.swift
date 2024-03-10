@@ -22,7 +22,7 @@ extension TaskListsView {
     
     private func taskListRowView(taskList: TaskListModel) -> some View {
         
-        let highlight = taskList.id == taskViewModel.currentTaskList().id
+        let highlight = taskList.id == taskViewModel.currentId()
         
         return HStack(spacing: 15) {
             Image(systemName: highlight ? "record.circle" : "circle")

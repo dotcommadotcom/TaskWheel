@@ -4,14 +4,14 @@ import DequeModule
 
 final class TaskListVMTests: XCTestCase {
     
-    private var simpleTaskVM: TaskViewModel!
-    private var multipleTaskVM: TaskViewModel!
+    private var simpleVM: TaskViewModel!
+    private var multipleVM: TaskViewModel!
     private var orderVM: TaskViewModel!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        simpleTaskVM = TaskViewModel()
-        multipleTaskVM = TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples)
+        simpleVM = TaskViewModel()
+        multipleVM = TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples)
         
         let taskList = TaskListModel(title: "my tasks")
         let tasks: Deque<TaskModel> = [
@@ -26,10 +26,50 @@ final class TaskListVMTests: XCTestCase {
     
     override func tearDownWithError() throws {
         try super.tearDownWithError()
-        simpleTaskVM = nil
-        multipleTaskVM = nil
+        simpleVM = nil
+        multipleVM = nil
         orderVM = nil
     }
+    
+    // TEST - Count
+    
+    func testDeleteCallsDecrement() throws {
+        multipleVM.toggleDone(multipleVM.tasks[6])
+        
+        XCTAssertEqual(multipleVM.taskLists[0].count, 7)
+    }
+    
+    func testToggleDoneCallsIncrementIfIsNotDone() throws {
+        multipleVM.toggleDone(multipleVM.tasks[6])
+        multipleVM.toggleDone(multipleVM.tasks[6])
+        
+        XCTAssertEqual(multipleVM.taskLists[0].count, 8)
+    }
+    
+    func testToggleDoneCallsDecrementIfIsDone() throws {
+        multipleVM.toggleDone(multipleVM.tasks[6])
+        
+        XCTAssertEqual(multipleVM.taskLists[0].count, 7)
+    }
+    
+    func testAddTaskCallsIncrement() throws {
+        multipleVM.addTask(title: "ninth task")
+        
+        XCTAssertEqual(multipleVM.taskLists[0].count, 9)
+    }
+    
+    func testDecrement() throws {
+        multipleVM.decrementListCount()
+        
+        XCTAssertEqual(multipleVM.taskLists[0].count, 7)
+    }
+    
+    func testIncrement() throws {
+        multipleVM.incrementListCount()
+        
+        XCTAssertEqual(multipleVM.taskLists[0].count, 9)
+    }
+    
     
     // TEST - Ordering
     
@@ -63,198 +103,198 @@ final class TaskListVMTests: XCTestCase {
     // TEST - Update current task list
     
     func testUpdateCurrentOrder() throws {
-        multipleTaskVM.updateCurrentTo(this: multipleTaskVM.taskLists[2])
-        let previousOrder = multipleTaskVM.currentOrder()
+        multipleVM.updateCurrentTo(this: multipleVM.taskLists[2])
+        let previousOrder = multipleVM.currentOrder()
         
-        multipleTaskVM.updateCurrentOrder(to: .priority)
+        multipleVM.updateCurrentOrder(to: .priority)
         
-        XCTAssertNotEqual(multipleTaskVM.currentOrder(), previousOrder)
+        XCTAssertNotEqual(multipleVM.currentOrder(), previousOrder)
     }
     
     func testUpdateCurrentTitle() throws {
-        multipleTaskVM.updateCurrentTo(this: multipleTaskVM.taskLists[2])
-        let previousTitle = multipleTaskVM.currentTitle()
+        multipleVM.updateCurrentTo(this: multipleVM.taskLists[2])
+        let previousTitle = multipleVM.currentTitle()
         
-        multipleTaskVM.updateCurrentTitle(to: "whats up")
+        multipleVM.updateCurrentTitle(to: "whats up")
         
-        XCTAssertNotEqual(multipleTaskVM.currentTitle(), previousTitle)
+        XCTAssertNotEqual(multipleVM.currentTitle(), previousTitle)
     }
     
     func testUpdateCurrentIsStillSameTaskList() throws {
-        let previousID = multipleTaskVM.currentTaskList().id
+        let previousID = multipleVM.currentId()
         
-        multipleTaskVM.updateCurrentTitle(to: "whats up")
+        multipleVM.updateCurrentTitle(to: "whats up")
         
-        XCTAssertEqual(multipleTaskVM.currentTaskList().id, previousID)
+        XCTAssertEqual(multipleVM.currentId(), previousID)
     }
     
     // TEST - Toggle isDoneVisible
     
     func testGetCurrentDoneTasksIsEmpty() throws {
-        multipleTaskVM.toggleCurrentDoneVisible()
+        multipleVM.toggleCurrentDoneVisible()
 
-        let currentTasks = multipleTaskVM.currentDoneTasks()
+        let currentTasks = multipleVM.currentDoneTasks()
         
         XCTAssertTrue(currentTasks.isEmpty)
     }
     
     func testCurrentTaskListDoneVisible() throws {
-        let previousDoneVisible = multipleTaskVM.currentTaskList().isDoneVisible
+        let previousDoneVisible = multipleVM.taskLists[multipleVM.current].isDoneVisible
         
-        multipleTaskVM.toggleCurrentDoneVisible()
+        multipleVM.toggleCurrentDoneVisible()
 
-        XCTAssertNotEqual(multipleTaskVM.currentTaskList().isDoneVisible,  previousDoneVisible)
+        XCTAssertNotEqual(multipleVM.taskLists[multipleVM.current].isDoneVisible,  previousDoneVisible)
     }
     
     // TEST - Delete task list
     
     func testDeleteCurrentUpdatesCurrentTaskList() throws {
-        let current = multipleTaskVM.current
-        multipleTaskVM.updateCurrentTo(this: multipleTaskVM.taskLists[3])
+        let current = multipleVM.current
+        multipleVM.updateCurrentTo(this: multipleVM.taskLists[3])
         
-        multipleTaskVM.deleteList(at: multipleTaskVM.current)
+        multipleVM.deleteList(at: multipleVM.current)
         
-        XCTAssertEqual(multipleTaskVM.taskLists[current], multipleTaskVM.taskLists[0])
+        XCTAssertEqual(multipleVM.taskLists[current], multipleVM.taskLists[0])
     }
     
     func testDeleteListDeletesAllTasksInList() throws {
-        let previousTaskList = multipleTaskVM.taskLists[2]
+        let previousTaskList = multipleVM.taskLists[2]
         
-        multipleTaskVM.deleteList(at: 2)
+        multipleVM.deleteList(at: 2)
         
-        XCTAssertTrue(multipleTaskVM.tasks.allSatisfy { $0.ofTaskList != previousTaskList.id })
+        XCTAssertTrue(multipleVM.tasks.allSatisfy { $0.ofTaskList != previousTaskList.id })
     }
 
     func testDeleteListPreventsDeletingDefault() throws {
-        let defaultTaskList = multipleTaskVM.defaultTaskList
+        let defaultTaskList = multipleVM.defaultTaskList
         
-        multipleTaskVM.deleteList(at: 0)
+        multipleVM.deleteList(at: 0)
         
-        XCTAssertTrue(multipleTaskVM.taskLists.contains(defaultTaskList))
+        XCTAssertTrue(multipleVM.taskLists.contains(defaultTaskList))
     }
 
     func testDeleteList() throws {
-        let deleted = multipleTaskVM.taskLists[2]
+        let deleted = multipleVM.taskLists[2]
         
-        multipleTaskVM.deleteList(at: 2)
+        multipleVM.deleteList(at: 2)
         
-        XCTAssertTrue(multipleTaskVM.taskLists.allSatisfy { $0.id != deleted.id })
+        XCTAssertTrue(multipleVM.taskLists.allSatisfy { $0.id != deleted.id })
     }
     
     // TEST - Add task list
     
     func testAddTaskListUpdatesCurrent() throws {
-        simpleTaskVM.addTaskList(title: "new task list")
+        simpleVM.addTaskList(title: "new task list")
         
-        let lastTaskList = simpleTaskVM.taskLists.last?.id
+        let lastTaskList = simpleVM.taskLists.last?.id
         
-        XCTAssertEqual(simpleTaskVM.currentTaskList().id, lastTaskList)
+        XCTAssertEqual(simpleVM.currentId(), lastTaskList)
     }
     
     func testAddTaskListAppends() throws {
-        multipleTaskVM.addTaskList(title: "new task list")
+        multipleVM.addTaskList(title: "new task list")
         
-        XCTAssertEqual(multipleTaskVM.taskLists[4].title, "new task list")
+        XCTAssertEqual(multipleVM.taskLists[4].title, "new task list")
     }
     
     func testAddTaskList() throws {
-        simpleTaskVM.addTaskList(title: "new task list")
+        simpleVM.addTaskList(title: "new task list")
         
-        XCTAssertEqual(simpleTaskVM.taskLists.count, 2)
+        XCTAssertEqual(simpleVM.taskLists.count, 2)
     }
     
     // TEST - Default task list
     
     func testUpdateDefaultSetsCurrent() throws {
-        multipleTaskVM.updateCurrentTo(this: multipleTaskVM.taskLists[2])
+        multipleVM.updateCurrentTo(this: multipleVM.taskLists[2])
         
-        multipleTaskVM.updateDefault(with: 3)
+        multipleVM.updateDefault(with: 3)
         
-        XCTAssertEqual(multipleTaskVM.current, 0)
+        XCTAssertEqual(multipleVM.current, 0)
     }
 
     func testUpdateDefaultWithIndex() throws {
-        let targetTaskList = multipleTaskVM.taskLists[2]
+        let targetTaskList = multipleVM.taskLists[2]
         
-        multipleTaskVM.updateDefault(with: 2)
+        multipleVM.updateDefault(with: 2)
         
-        XCTAssertEqual(multipleTaskVM.defaultTaskList, targetTaskList)
+        XCTAssertEqual(multipleVM.defaultTaskList, targetTaskList)
     }
     
     func testUpdateDefaultMaintainsOrder() throws {
         let targetIndex = 1
-        let previousFirst = multipleTaskVM.taskLists[0]
+        let previousFirst = multipleVM.taskLists[0]
         
-        multipleTaskVM.updateDefault(with: targetIndex)
+        multipleVM.updateDefault(with: targetIndex)
         
-        XCTAssertEqual(multipleTaskVM.taskLists[1], previousFirst)
+        XCTAssertEqual(multipleVM.taskLists[1], previousFirst)
     }
     
     func testUpdateDefaultRemoves() throws {
         let targetIndex = 3
-        let targetTaskList = multipleTaskVM.taskLists[targetIndex]
+        let targetTaskList = multipleVM.taskLists[targetIndex]
         
-        multipleTaskVM.updateDefault(with: targetIndex)
+        multipleVM.updateDefault(with: targetIndex)
         
-        XCTAssertNotEqual(multipleTaskVM.taskLists[targetIndex], targetTaskList)
+        XCTAssertNotEqual(multipleVM.taskLists[targetIndex], targetTaskList)
     }
     
     func testUpdateDefaultPrepends() throws {
         let targetIndex = 2
-        let targetTaskList = multipleTaskVM.taskLists[targetIndex]
+        let targetTaskList = multipleVM.taskLists[targetIndex]
         
-        multipleTaskVM.updateDefault(with: targetIndex)
+        multipleVM.updateDefault(with: targetIndex)
         
-        XCTAssertEqual(multipleTaskVM.taskLists[0], targetTaskList)
+        XCTAssertEqual(multipleVM.taskLists[0], targetTaskList)
     }
     
     func testUpdateDefaultDoesNothing() throws {
-        let previousDefault = multipleTaskVM.defaultTaskList
+        let previousDefault = multipleVM.defaultTaskList
         
-        multipleTaskVM.updateDefault(with: 0)
+        multipleVM.updateDefault(with: 0)
         
-        XCTAssertEqual(multipleTaskVM.defaultTaskList, previousDefault)
+        XCTAssertEqual(multipleVM.defaultTaskList, previousDefault)
     }
     
     func testInitialDefaultIsFirst() throws {
-        XCTAssertEqual(simpleTaskVM.defaultTaskList, simpleTaskVM.taskLists[0])
+        XCTAssertEqual(simpleVM.defaultTaskList, simpleVM.taskLists[0])
     }
     
     // TEST - Current task list
 
     func testUpdateCurrentTaskList() throws {
-        let previousTaskList = multipleTaskVM.taskLists[2]
+        let previousTaskList = multipleVM.taskLists[2]
         
-        multipleTaskVM.updateCurrentTo(this: previousTaskList)
+        multipleVM.updateCurrentTo(this: previousTaskList)
         
-        XCTAssertEqual(multipleTaskVM.current, 2)
+        XCTAssertEqual(multipleVM.current, 2)
     }
     
     func testCurrentDoneTasks() throws {
-        let currentTasks = multipleTaskVM.currentDoneTasks()
+        let currentTasks = multipleVM.currentDoneTasks()
         
         XCTAssertTrue(currentTasks.allSatisfy { 
-            $0.ofTaskList == multipleTaskVM.currentTaskList().id && $0.isDone })
+            $0.ofTaskList == multipleVM.currentId() && $0.isDone })
     }
     
     func testCurrentTasks() throws {
-        let currentTasks = multipleTaskVM.currentTasks()
+        let currentTasks = multipleVM.currentTasks()
         
         XCTAssertTrue(currentTasks.allSatisfy { 
-            $0.ofTaskList == multipleTaskVM.currentTaskList().id && !$0.isDone })
+            $0.ofTaskList == multipleVM.currentId() && !$0.isDone })
     }
     
     func testInitialCurrentIsFirst() throws {
-        XCTAssertEqual(simpleTaskVM.currentTaskList().id, simpleTaskVM.taskLists[0].id)
+        XCTAssertEqual(simpleVM.currentId(), simpleVM.taskLists[0].id)
     }
 
     // TEST - Constructor
     
     func testMultipleTaskLists() throws {
-        XCTAssertEqual(multipleTaskVM.taskLists.count, 4)
+        XCTAssertEqual(multipleVM.taskLists.count, 4)
     }
     
     func testTaskListsIsNeverEmpty() throws {
-        XCTAssertEqual(simpleTaskVM.taskLists[0].title, "My Tasks")
+        XCTAssertEqual(simpleVM.taskLists[0].title, "My Tasks")
     }
 }

@@ -5,7 +5,6 @@ class TaskViewModel: ObservableObject {
     @Published var tasks: Deque<TaskModel>
     @Published var taskLists: Deque<TaskListModel>
     @Published var defaultTaskList: TaskListModel
-    
     @Published var current: Int
     
     init(
@@ -13,6 +12,7 @@ class TaskViewModel: ObservableObject {
         _ taskLists: Deque<TaskListModel> = []
     ) {
         self.tasks = tasks
+        
         let backupTaskList = TaskListModel(title: "My Tasks")
         self.taskLists = taskLists.isEmpty ? [backupTaskList] : taskLists
         self.defaultTaskList = taskLists.first ?? backupTaskList
@@ -23,19 +23,26 @@ class TaskViewModel: ObservableObject {
 extension TaskViewModel {
     
     func addTask(title: String = "", details: String = "", priority: Int = 3, date: Date? = nil) {
-        tasks.prepend(TaskModel(title: title, ofTaskList: currentTaskList().id, details: details, priority: priority, date: date))
+        tasks.prepend(TaskModel(title: title, ofTaskList: taskLists[current].id, details: details, priority: priority, date: date))
+        incrementListCount()
         objectWillChange.send()
     }
     
     func toggleDone(_ task: TaskModel) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.toggleDone()
+            if tasks[index].isDone {
+                decrementListCount()
+            } else {
+                incrementListCount()
+            }
         }
     }
     
     func delete(this task: TaskModel) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks.remove(at: index)
+            decrementListCount()
         }
     }
     
@@ -56,14 +63,18 @@ extension TaskViewModel {
 
 extension TaskViewModel {
     
-    func currentTaskList() -> TaskListModel {
-        return self.taskLists[current]
-    }
-    
     func currentTitle() -> String {
         return self.taskLists[current].title
     }
     
+    func currentId() -> UUID {
+        return self.taskLists[current].id
+    }
+    
+    func currentCount() -> Int {
+        return self.taskLists[current].count
+    }
+
     func currentOrder() -> OrderItem {
         return self.taskLists[current].order
     }
@@ -72,10 +83,6 @@ extension TaskViewModel {
         return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }.sorted(by: ordering()))
     }
     
-    func currentCount() -> Int {
-        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }).count
-    }
-
     func currentDoneTasks() -> Deque<TaskModel> {
         guard taskLists[current].isDoneVisible else {
             return []
@@ -142,15 +149,23 @@ extension TaskViewModel {
             return { _, _ in return false }
         }
     }
+    
+    func incrementListCount() {
+        taskLists[current] = taskLists[current].incrementCount()
+    }
+    
+    func decrementListCount() {
+        taskLists[current] = taskLists[current].decrementCount()
+    }
 }
 
 extension TaskViewModel {
     
     static let examples: Deque<TaskListModel> = [
-        .init(title: "chores"),
-        .init(title: "notes"),
-        .init(title: "digital cleanse"),
-        .init(title: "to buy"),
+        .init(title: "chores", count: 8),
+        .init(title: "notes", count: 2),
+        .init(title: "digital cleanse", count: 1),
+        .init(title: "to buy", count: 0),
     ]
     
     static let uuids = examples.map { $0.id }

@@ -3,105 +3,105 @@ import XCTest
 
 final class TaskVMTests: XCTestCase {
     
-    private var simpleTaskVM: TaskViewModel!
-    private var multipleTaskVM: TaskViewModel!
+    private var simpleVM: TaskViewModel!
+    private var multipleVM: TaskViewModel!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        simpleTaskVM = TaskViewModel()
-        multipleTaskVM = TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples)
+        simpleVM = TaskViewModel()
+        multipleVM = TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples)
     }
     
     override func tearDownWithError() throws {
         try super.tearDownWithError()
-        simpleTaskVM = nil
-        multipleTaskVM = nil
+        simpleVM = nil
+        multipleVM = nil
     }
     
     // TEST - Update task
     
     func testUpdateTaskDoesNotChangeOfTaskList() throws {
-        let previousOfTaskList = multipleTaskVM.tasks[6].ofTaskList
+        let previousOfTaskList = multipleVM.tasks[6].ofTaskList
         
-        multipleTaskVM.update(this: multipleTaskVM.tasks[6], title: "new title", details: "lets add some more")
+        multipleVM.update(this: multipleVM.tasks[6], title: "new title", details: "lets add some more")
         
-        XCTAssertEqual(multipleTaskVM.tasks[6].ofTaskList, previousOfTaskList)
+        XCTAssertEqual(multipleVM.tasks[6].ofTaskList, previousOfTaskList)
     }
     
     func testUpdateMultipleProperties() throws {
-        let previousTitle = multipleTaskVM.tasks[6].title
-        let previousDetails = multipleTaskVM.tasks[6].details
+        let previousTitle = multipleVM.tasks[6].title
+        let previousDetails = multipleVM.tasks[6].details
         
-        multipleTaskVM.update(this: multipleTaskVM.tasks[6], title: "new title", details: "lets add some more")
+        multipleVM.update(this: multipleVM.tasks[6], title: "new title", details: "lets add some more")
         
-        XCTAssertNotEqual(multipleTaskVM.tasks[6].title, previousTitle)
-        XCTAssertNotEqual(multipleTaskVM.tasks[6].details, previousDetails)
+        XCTAssertNotEqual(multipleVM.tasks[6].title, previousTitle)
+        XCTAssertNotEqual(multipleVM.tasks[6].details, previousDetails)
     }
     
     func testUpdateTaskWithNothingChangesNothing() throws {
-        let noUpdates = multipleTaskVM.tasks[6]
+        let noUpdates = multipleVM.tasks[6]
         
-        multipleTaskVM.update(this: noUpdates)
+        multipleVM.update(this: noUpdates)
         
-        XCTAssertEqual(multipleTaskVM.tasks[6], noUpdates)
+        XCTAssertEqual(multipleVM.tasks[6], noUpdates)
     }
     
     func testUpdateTaskIsStillSameTask() throws {
-        let targetTask = multipleTaskVM.tasks[6]
+        let targetTask = multipleVM.tasks[6]
         
-        multipleTaskVM.update(this: targetTask, priority: 2)
+        multipleVM.update(this: targetTask, priority: 2)
         
-        XCTAssertEqual(multipleTaskVM.tasks[6].id, targetTask.id)
+        XCTAssertEqual(multipleVM.tasks[6].id, targetTask.id)
     }
     
     func testUpdateTask() throws {
-        let previousPriority = multipleTaskVM.tasks[6].priority
+        let previousPriority = multipleVM.tasks[6].priority
         
-        multipleTaskVM.update(this: multipleTaskVM.tasks[6], priority: 2)
+        multipleVM.update(this: multipleVM.tasks[6], priority: 2)
         
-        XCTAssertNotEqual(multipleTaskVM.tasks[6].priority, previousPriority)
+        XCTAssertNotEqual(multipleVM.tasks[6].priority, previousPriority)
     }
     
     // TEST - Toggle done
 
     func testToggleDone() throws {
-        let notDone = multipleTaskVM.tasks[6]
+        let notDone = multipleVM.tasks[6]
         
-        multipleTaskVM.toggleDone(notDone)
+        multipleVM.toggleDone(notDone)
         
-        XCTAssertNotEqual(multipleTaskVM.tasks[6].isDone, notDone.isDone)
+        XCTAssertNotEqual(multipleVM.tasks[6].isDone, notDone.isDone)
     }
     
     // TEST - Delete task
     
     func testDeleteIfDone() throws {
-        multipleTaskVM.deleteIf { $0.isDone }
+        multipleVM.deleteIf { $0.isDone }
         
-        XCTAssertTrue(multipleTaskVM.tasks.allSatisfy { !$0.isDone })
+        XCTAssertTrue(multipleVM.tasks.allSatisfy { !$0.isDone })
     }
     
     func testDeleteIf() throws {
-        multipleTaskVM.deleteIf { $0.title == "laundry" }
+        multipleVM.deleteIf { $0.title == "laundry" }
         
-        XCTAssertTrue(multipleTaskVM.tasks.allSatisfy { $0.title != "laundry" })
+        XCTAssertTrue(multipleVM.tasks.allSatisfy { $0.title != "laundry" })
     }
     
     func testDeleteTask() throws {
-        let deleted = multipleTaskVM.tasks[6]
+        let deleted = multipleVM.tasks[6]
         
-        multipleTaskVM.delete(this: deleted)
+        multipleVM.delete(this: deleted)
         
-        XCTAssertTrue(multipleTaskVM.tasks.allSatisfy { $0.id != deleted.id })
+        XCTAssertTrue(multipleVM.tasks.allSatisfy { $0.id != deleted.id })
     }
 
     // TEST - Add task
     
     func testAddTaskAddsToCurrent() throws {
-        let currentID = multipleTaskVM.currentTaskList().id
+        let currentID = multipleVM.currentId()
         
-        multipleTaskVM.addTaskList(title: "new task")
+        multipleVM.addTaskList(title: "new task")
         
-        XCTAssertEqual(multipleTaskVM.tasks[0].ofTaskList, currentID)
+        XCTAssertEqual(multipleVM.tasks[0].ofTaskList, currentID)
     }
     
     func testAddTaskWithProperties() throws {
@@ -109,37 +109,37 @@ final class TaskVMTests: XCTestCase {
         let details = "task details"
         let priority = 2
         
-        simpleTaskVM.addTask(title: title, details: details, priority: priority)
+        simpleVM.addTask(title: title, details: details, priority: priority)
         
-        XCTAssertEqual(simpleTaskVM.tasks[0].title, title)
-        XCTAssertEqual(simpleTaskVM.tasks[0].details, details)
-        XCTAssertEqual(simpleTaskVM.tasks[0].priority, priority)
+        XCTAssertEqual(simpleVM.tasks[0].title, title)
+        XCTAssertEqual(simpleVM.tasks[0].details, details)
+        XCTAssertEqual(simpleVM.tasks[0].priority, priority)
     }
     
     func testAddEmptyTask() throws {
-        simpleTaskVM.addTask()
+        simpleVM.addTask()
         
-        XCTAssertEqual(simpleTaskVM.tasks[0].title, "")
-        XCTAssertEqual(simpleTaskVM.tasks[0].details, "")
-        XCTAssertEqual(simpleTaskVM.tasks[0].priority, 3)
+        XCTAssertEqual(simpleVM.tasks[0].title, "")
+        XCTAssertEqual(simpleVM.tasks[0].details, "")
+        XCTAssertEqual(simpleVM.tasks[0].priority, 3)
     }
     
     func testAddTaskPrepends() throws {
         let testTitle = "this is a test"
         
-        multipleTaskVM.addTask(title: testTitle)
+        multipleVM.addTask(title: testTitle)
         
-        XCTAssertEqual(multipleTaskVM.tasks[0].title, testTitle)
+        XCTAssertEqual(multipleVM.tasks[0].title, testTitle)
     }
     
     // TEST - Constructor
     
     func testMultipleTasks() throws {
-        XCTAssertEqual(multipleTaskVM.tasks.count, 16)
+        XCTAssertEqual(multipleVM.tasks.count, 16)
     }
     
     func testEmptyTasks() throws {
-        XCTAssertTrue(simpleTaskVM.tasks.isEmpty)
+        XCTAssertTrue(simpleVM.tasks.isEmpty)
     }
 
 }
