@@ -21,7 +21,7 @@ struct MainView: View {
                     ListView()
                         .topTabItem(tab: .list, selected: $topSelected)
                     
-                    WheelView()
+                    WheelView(taskViewModel: taskViewModel)
                         .topTabItem(tab: .wheel, selected: $topSelected)
                 }
                 .highPriorityGesture(DragGesture().onEnded({

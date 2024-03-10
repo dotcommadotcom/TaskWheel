@@ -71,6 +71,10 @@ extension TaskViewModel {
     func currentTasks() -> Deque<TaskModel> {
         return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }.sorted(by: ordering()))
     }
+    
+    func currentCount() -> Int {
+        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && !$0.isDone }).count
+    }
 
     func currentDoneTasks() -> Deque<TaskModel> {
         guard taskLists[current].isDoneVisible else {
