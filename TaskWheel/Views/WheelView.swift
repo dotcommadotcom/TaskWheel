@@ -9,10 +9,12 @@ struct WheelView: View {
     @State var rotating: CGFloat = 0.0
     @State var spinAngle: CGFloat = 0.0
     @State var textWidth: CGFloat = 20
+    
+    private let diameter: CGFloat = 350
 
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
-            wheelCircleView(diameter: 300)
+            wheelCircleView()
                 .rotationEffect(.degrees(spinAngle))
                 .animation(.easeInOut(duration: 4), value: spinAngle)
             
@@ -35,40 +37,35 @@ struct WheelView: View {
 
 extension WheelView {
     
-    private func wheelCircleView(diameter: CGFloat) -> some View {
+    private func wheelCircleView() -> some View {
         ZStack {
             Circle().fill(Color.text.opacity(0.1))
             
             ForEach(Array(taskViewModel.currentTasks().enumerated()), id: \.1.id) { index, task in
-                let textOffset: CGFloat = CGFloat((0.9 * diameter) / 2.0)
-                let angle = angle(at: index)
-                let xOffset = cos(angle * .pi / 180.0) * (textOffset - textWidth / 2.0)
-                let yOffset = sin(angle * .pi / 180.0) * (textOffset - textWidth / 2.0)
-                
-                Text(task.title)
-                    .lineLimit(1)
-                    .font(.system(size: 10))
-                    .background {
-                        GeometryReader { proxy in
-                            Color.clear
-                                .onAppear {
-                                    textWidth = proxy.size.width
-                                }
-                        }
-                    }
-                    .rotationEffect(.degrees(angle))
-                    .offset(x: xOffset, y: yOffset)
-                    .frame(maxWidth: 80)
-                    .fontWeight(selected == index ? .bold : .regular)
-//                sliceView(task: task, index: index, diameter: diameter)
+                sliceView(task: task, index: index)
             }
         }
         .frame(width: diameter, height: diameter)
     }
     
-//    private func sliceView(task: TaskModel, index: Int, diameter: CGFloat) -> some View {
-//        
-//    }
+    private func sliceView(task: TaskModel, index: Int) -> some View {
+        let sizeOffset: CGFloat = CGFloat(0.9 * diameter / 2)
+        let angle = angle(at: index)
+        let angleRads = angle * .pi / 180.0
+        
+        return Text(task.title)
+            .lineLimit(1)
+            .font(.system(size: 10))
+            .visualEffect { content, proxy in
+                content
+                    .rotationEffect(.degrees(angle))
+                    .offset(
+                        x: cos(angleRads) * (sizeOffset - proxy.size.width / 2),
+                        y: sin(angleRads) * (sizeOffset - proxy.size.width / 2))
+            }
+            .frame(maxWidth: 80)
+            .fontWeight(selected == index ? .bold : .regular)
+    }
     
     private func spinButton() -> some View {
         Button {
@@ -82,6 +79,9 @@ extension WheelView {
             Icon(this: .ticker, size: 15)
         }
     }
+}
+
+extension WheelView {
 
     private func angle(at index: Int) -> CGFloat {
         return 360.0 / CGFloat(taskViewModel.currentCount()) * CGFloat(index)
@@ -91,40 +91,6 @@ extension WheelView {
         let currentAngle = fmod(spinAngle, 360)
         let targetAngle = 360 - Double(selected) * 360.0 / Double(taskViewModel.currentCount())
         return fmod(360 - currentAngle + targetAngle, 360)
-    }
-}
-
-struct WheelSegmentView: View {
-    
-    @State var text: String
-    @State var index: Int
-    @State var angle: CGFloat
-    @State var textOffset: CGFloat
-    @State var textWidth: CGFloat = 20
-    
-    @Binding var selectedIndex: Int
-    
-    var fontSize: CGFloat = 10
-    
-    var body: some View {
-        let xOffset = cos(angle * .pi / 180.0) * (textOffset - textWidth / 2.0)
-        let yOffset = sin(angle * .pi / 180.0) * (textOffset - textWidth / 2.0)
-        
-        Text(text)
-            .lineLimit(1)
-            .font(.system(size: fontSize))
-            .background {
-                GeometryReader { proxy in
-                    Color.clear
-                        .onAppear {
-                            textWidth = proxy.size.width
-                        }
-                }
-            }
-            .rotationEffect(.degrees(angle))
-            .offset(x: xOffset, y: yOffset)
-            .frame(maxWidth: 80)
-            .fontWeight(selectedIndex == index ? .bold : .regular)
     }
 }
 
