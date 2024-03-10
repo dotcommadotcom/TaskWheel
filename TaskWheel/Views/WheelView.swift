@@ -24,6 +24,9 @@ struct WheelView: View {
         .offset(x: -80, y: 0)
         .scaleEffect(1.9)
         .padding()
+        .onAppear() {
+            self.isSpinDisabled = taskViewModel.currentCount() == 0
+        }
         .onReceive(taskViewModel.$tasks) { _ in
             self.selected = -1
             self.spinAngle = 0
@@ -64,7 +67,7 @@ extension WheelView {
                         x: cos(angleRads) * (sizeOffset - proxy.size.width / 2),
                         y: sin(angleRads) * (sizeOffset - proxy.size.width / 2))
             }
-            .frame(maxWidth: diameter / 2 * 0.8)
+            .frame(maxWidth: diameter / 2 * 0.6)
             .fontWeight(selected == index ? .bold : .regular)
     }
     

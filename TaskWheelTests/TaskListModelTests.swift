@@ -23,6 +23,20 @@ final class TaskListModelTests: XCTestCase {
         XCTAssertEqual(testTaskList.order, .priority)
     }
     
+    // TEST - Count
+    
+    func testDecrementCount() throws {
+        testTaskList = testTaskList.decrementCount()
+        
+        XCTAssertEqual(testTaskList.count, -1)
+    }
+    
+    func testIncrementCount() throws {
+        testTaskList = testTaskList.incrementCount()
+        
+        XCTAssertEqual(testTaskList.count, 1)
+    }
+    
     // TEST - isDoneVisible
     
     func testToggleDoneVisibleTrue() throws {
@@ -51,12 +65,14 @@ final class TaskListModelTests: XCTestCase {
     func testEditMultipleAttributes() throws {
         let previousTitle = testTaskList.title
         let previousIsDoneVisible = testTaskList.isDoneVisible
+        let previousCount = testTaskList.count
         let previousOrder = testTaskList.order
         
-        testTaskList = testTaskList.edit(title: "new title", isDoneVisible: false, order: .date)
+        testTaskList = testTaskList.edit(title: "new title", isDoneVisible: false, count: 3, order: .date)
         
         XCTAssertNotEqual(testTaskList.title, previousTitle)
         XCTAssertNotEqual(testTaskList.isDoneVisible, previousIsDoneVisible)
+        XCTAssertNotEqual(testTaskList.count, previousCount)
         XCTAssertNotEqual(testTaskList.order, previousOrder)
     }
     
