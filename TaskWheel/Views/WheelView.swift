@@ -6,17 +6,15 @@ struct WheelView: View {
     @ObservedObject var taskViewModel: TaskViewModel
     
     @State var selected: Int = -1
-    @State var rotating: CGFloat = 0.0
     @State var spinAngle: CGFloat = 0.0
-    @State var textWidth: CGFloat = 20
+    @State var isSpinDisabled: Bool = false
     
-    private let diameter: CGFloat = 350
+    private let diameter: CGFloat = 300
 
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
             wheelCircleView()
                 .rotationEffect(.degrees(spinAngle))
-                .animation(.easeInOut(duration: 4), value: spinAngle)
             
             spinButton()
                 .padding(.horizontal, -10)
@@ -27,8 +25,9 @@ struct WheelView: View {
         .scaleEffect(1.9)
         .padding()
         .onReceive(taskViewModel.$tasks) { _ in
-            self.spinAngle = 0
             self.selected = -1
+            self.spinAngle = 0
+            self.isSpinDisabled = taskViewModel.currentCount() == 0
         }
     }
     
@@ -38,9 +37,11 @@ struct WheelView: View {
 extension WheelView {
     
     private func wheelCircleView() -> some View {
+        
+        
         ZStack {
             Circle().fill(Color.text.opacity(0.1))
-            
+        
             ForEach(Array(taskViewModel.currentTasks().enumerated()), id: \.1.id) { index, task in
                 sliceView(task: task, index: index)
             }
@@ -53,7 +54,7 @@ extension WheelView {
         let angle = angle(at: index)
         let angleRads = angle * .pi / 180.0
         
-        return Text(task.title)
+        return Text(task.title.isEmpty ? "Empty task" : task.title)
             .lineLimit(1)
             .font(.system(size: 10))
             .visualEffect { content, proxy in
@@ -63,7 +64,7 @@ extension WheelView {
                         x: cos(angleRads) * (sizeOffset - proxy.size.width / 2),
                         y: sin(angleRads) * (sizeOffset - proxy.size.width / 2))
             }
-            .frame(maxWidth: 80)
+            .frame(maxWidth: diameter / 2 * 0.8)
             .fontWeight(selected == index ? .bold : .regular)
     }
     
@@ -78,6 +79,8 @@ extension WheelView {
         } label: {
             Icon(this: .ticker, size: 15)
         }
+        .disabled(isSpinDisabled)
+        .foregroundStyle(isSpinDisabled ? Color.text.opacity(0.5) : .accent)
     }
 }
 
