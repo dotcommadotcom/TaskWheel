@@ -147,7 +147,7 @@ extension TaskViewModel {
         switch currentOrder() {
         case .dofirst:
             let spin = SpinViewModel()
-            return { spin.score(of: $0) < spin.score(of: $1) }
+            return { spin.score(of: $0) > spin.score(of: $1) }
         case .priority:
             return { $0.priority < $1.priority }
         case .date:

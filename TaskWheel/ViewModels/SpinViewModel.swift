@@ -33,13 +33,19 @@ class SpinViewModel: ObservableObject {
         return round(scoreImportance(of: task) + scoreUrgency(of: task))
     }
     
+    func weights(from tasks: Deque<TaskModel>) -> [Double] {
+        let weights = tasks.map { score(of: $0) }
+        let minWeight = weights.min() ?? 0
+        return weights.map { round($0 + 0.001 + (minWeight < 0 ? -minWeight : 0)) }
+    }
+    
     func selectRandomIndex(from tasks: Deque<TaskModel>) -> Int {
         guard !tasks.isEmpty else {
             return -1
         }
-            let weights = tasks.map { score(of: $0) }
-        let totalWeight = weights.reduce(0, +)
-        let randomTarget = Double.random(in: 0.0..<totalWeight)
+        
+        let weights = weights(from: tasks)
+        let randomTarget = Double.random(in: 0.0..<weights.reduce(0, +))
         
         var cumulativeWeight = 0.0
         for (index, weights) in weights.enumerated() {
@@ -48,7 +54,7 @@ class SpinViewModel: ObservableObject {
                 return index
             }
         }
-        return -1
+        return 0
     }
 }
 

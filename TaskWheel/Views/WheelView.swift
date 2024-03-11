@@ -61,9 +61,13 @@ extension WheelView {
         let sizeOffset: CGFloat = CGFloat(0.9 * diameter / 2)
         let angle = angle(at: index)
         let angleRads = angle * .pi / 180.0
+        let spin = SpinViewModel()
         
         return NavigationLink(value: task) {
-            Text(task.title.isEmpty ? "Empty task" : task.title)
+            VStack {
+                Text(task.title.isEmpty ? "Empty title" : task.title)
+                Text(String(spin.score(of: task)))
+            }
         }
         .lineLimit(1)
         .font(.system(size: 10))
@@ -94,6 +98,8 @@ extension WheelView {
         guard !isSpinDisabled else { return }
         
         selected = spinVM.selectRandomIndex(from: taskViewModel.currentTasks())
+        
+        guard selected >= 0 else { return }
         
         withAnimation(.easeInOut(duration: 6)) {
             spinAngle += 360 * 5 + angleDifference(from: selected)

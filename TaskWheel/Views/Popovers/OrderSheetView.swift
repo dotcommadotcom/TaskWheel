@@ -30,8 +30,7 @@ struct OrderSheetView: View {
                 ForEach(orders, id: \.self) { order in
                     orderRowView(order: order)
                         .onTapGesture {
-                            taskViewModel.updateCurrentOrder(to: order)
-                            presentationMode.wrappedValue.dismiss()
+                            selectOrder(this: order)
                         }
                 }
                 
@@ -50,6 +49,11 @@ struct OrderSheetView: View {
             Text(order.text)
             Spacer()
         }
+    }
+    
+    private func selectOrder(this order: OrderItem) {
+        taskViewModel.updateCurrentOrder(to: order)
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

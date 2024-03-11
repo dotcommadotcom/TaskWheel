@@ -26,7 +26,7 @@ struct TaskListModel: Identifiable, Hashable {
         title: String? = nil,
         isDoneVisible: Bool? = nil,
         count: Int? = nil,
-        order: OrderItem? = .manual
+        order: OrderItem? = nil
     ) -> TaskListModel {
         return TaskListModel(
             id: self.id,

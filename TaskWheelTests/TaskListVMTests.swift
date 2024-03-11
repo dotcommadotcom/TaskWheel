@@ -30,46 +30,49 @@ final class TaskListVMTests: XCTestCase {
         multipleVM = nil
         orderVM = nil
     }
-    
+
     // TEST - Count
     
     func testDeleteCallsDecrement() throws {
         multipleVM.toggleDone(multipleVM.tasks[6])
         
-        XCTAssertEqual(multipleVM.taskLists[0].count, 7)
+        XCTAssertEqual(multipleVM.taskLists[0].count, 8)
     }
     
     func testToggleDoneCallsIncrementIfIsNotDone() throws {
         multipleVM.toggleDone(multipleVM.tasks[6])
         multipleVM.toggleDone(multipleVM.tasks[6])
         
-        XCTAssertEqual(multipleVM.taskLists[0].count, 8)
+        XCTAssertEqual(multipleVM.taskLists[0].count, 9)
     }
     
     func testToggleDoneCallsDecrementIfIsDone() throws {
         multipleVM.toggleDone(multipleVM.tasks[6])
         
-        XCTAssertEqual(multipleVM.taskLists[0].count, 7)
+        XCTAssertEqual(multipleVM.taskLists[0].count, 8)
     }
     
     func testAddTaskCallsIncrement() throws {
         multipleVM.addTask(title: "ninth task")
         
-        XCTAssertEqual(multipleVM.taskLists[0].count, 9)
+        XCTAssertEqual(multipleVM.taskLists[0].count, 10)
     }
     
     func testDecrement() throws {
         multipleVM.decrementListCount()
         
-        XCTAssertEqual(multipleVM.taskLists[0].count, 7)
+        XCTAssertEqual(multipleVM.taskLists[0].count, 8)
     }
     
     func testIncrement() throws {
         multipleVM.incrementListCount()
         
-        XCTAssertEqual(multipleVM.taskLists[0].count, 9)
+        XCTAssertEqual(multipleVM.taskLists[0].count, 10)
     }
     
+    func testCountIsCorrect() throws {
+        XCTAssertEqual(multipleVM.taskLists[0].count, multipleVM.currentTasks().count)
+    }
     
     // TEST - Ordering
     
