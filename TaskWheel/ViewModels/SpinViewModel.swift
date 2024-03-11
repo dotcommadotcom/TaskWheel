@@ -5,17 +5,16 @@ class SpinViewModel: ObservableObject {
     
     @Published var selectedIndex: Int?
     
-    let taskVM: TaskViewModel
-    let tasks: Deque<TaskModel>
-    
-    init(taskVM: TaskViewModel) {
+    init() {
         self.selectedIndex = nil
-        self.taskVM = taskVM
-        self.tasks = taskVM.currentTasks()
+    }
+    
+    private func round(_ output: Double) -> Double {
+        return (output * 1000).rounded() / 1000
     }
     
     func scoreImportance(of task: TaskModel) -> Double {
-        return 4.0 - Double(task.priority)
+        return 3.0 * (3.0 - Double(task.priority))
     }
     
     func scoreUrgency(of task: TaskModel) -> Double {
@@ -27,12 +26,12 @@ class SpinViewModel: ObservableObject {
             urgency = sqrt(-Double(task.creation.calculateDays())) - 10
         }
         
-        return (urgency * 1000).rounded() / 1000
+        return round(urgency)
     }
     
-//    func weights() -> [Double]{
-//        return tasks.map { scoreImportance(of: $0) + scoreUrgency(of: $0) }
-//    }
+    func weights(of tasks: Deque<TaskModel>) -> [Double] {
+        return tasks.map { round(scoreImportance(of: $0) + scoreUrgency(of: $0)) }
+    }
 //    
 //    func selectRandomTaskWithWeights() -> TaskModel? {
 //        guard !tasks.isEmpty else {

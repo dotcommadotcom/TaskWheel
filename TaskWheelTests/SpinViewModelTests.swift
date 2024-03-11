@@ -24,16 +24,35 @@ final class SpinViewModelTests: XCTestCase {
         today = nil
     }
     
-    // TEST - Weights
+    // TEST - Weights of task with due dates
     
-    //    func testWeights() throws {
-    //        XCTAssertEqual(spinVM.weights(), [])
-    //    }
+    func testWeightOfFutureDates() throws {
+        let high = TaskModel(title: "", priority: 0, date: fromNow(days: 7))
+        let medium = TaskModel(title: "", priority: 1, date: fromNow(days: 7))
+        let low = TaskModel(title: "", priority: 2, date: fromNow(days: 7))
+        let none = TaskModel(title: "", priority: 3, date: fromNow(days: 7))
+        
+        XCTAssertEqual(spinVM.scoreUrgency(of: high) + spinVM.scoreImportance(of: high), 10.978)
+        XCTAssertEqual(spinVM.scoreUrgency(of: medium) + spinVM.scoreImportance(of: medium), 7.978)
+        XCTAssertEqual(spinVM.scoreUrgency(of: low) + spinVM.scoreImportance(of: low), 4.978)
+        XCTAssertEqual(spinVM.scoreUrgency(of: none) + spinVM.scoreImportance(of: none), 1.978)
+    }
     
+    // TEST - Weights of task created today
     
-    
-    
-    
+    func testWeightOfTasksCreatedToday() throws {
+        let basic = TaskModel(title: "i'm basic")
+        let onlyImportant = TaskModel(title: "i'm important", priority: 0)
+        let onlyUrgent = TaskModel(title: "i'm urgent", date: Date())
+        let both = TaskModel(title: "i'm important and urgent", priority: 0, date: Date())
+        
+        
+        XCTAssertEqual(spinVM.scoreUrgency(of: basic) + spinVM.scoreImportance(of: basic), -10.0)
+        XCTAssertEqual(spinVM.scoreUrgency(of: onlyImportant) + spinVM.scoreImportance(of: onlyImportant), -1.0)
+        XCTAssertEqual(spinVM.scoreUrgency(of: onlyUrgent) + spinVM.scoreImportance(of: onlyUrgent), 5.0)
+        XCTAssertEqual(spinVM.scoreUrgency(of: both) + spinVM.scoreImportance(of: both), 14.0)
+    }
+
     // TEST - Urgency score of due date
     
     func testDueThreeWeeksUrgency() throws {
@@ -126,31 +145,30 @@ final class SpinViewModelTests: XCTestCase {
         XCTAssertEqual(done, [5, 13])
     }
     
-    
     // TEST - Importance score
     
     func testImportanceOfNone() throws {
         let task = TaskModel(title: "none")
         
-        XCTAssertEqual(spinVM.scoreImportance(of: task), 1)
+        XCTAssertEqual(spinVM.scoreImportance(of: task), 0)
     }
     
     func testImportanceOfLow() throws {
         let task = TaskModel(title: "low", priority: 2)
         
-        XCTAssertEqual(spinVM.scoreImportance(of: task), 2)
+        XCTAssertEqual(spinVM.scoreImportance(of: task), 3)
     }
     
     func testImportanceOfMedium() throws {
         let task = TaskModel(title: "medium", priority: 1)
         
-        XCTAssertEqual(spinVM.scoreImportance(of: task), 3)
+        XCTAssertEqual(spinVM.scoreImportance(of: task), 6)
     }
     
     func testImportanceOfHigh() throws {
         let task = TaskModel(title: "high", priority: 0)
         
-        XCTAssertEqual(spinVM.scoreImportance(of: task), 4)
+        XCTAssertEqual(spinVM.scoreImportance(of: task), 9)
     }
     
     // TEST - Constructor

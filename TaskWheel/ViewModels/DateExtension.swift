@@ -10,6 +10,18 @@ func date(_ year: Int, _ month: Int, _ day: Int) -> Date {
     return calendar.date(from: dateComponents)!
 }
 
+func ago(days: Int) -> Date {
+    var calendar = Calendar.current
+    calendar.firstWeekday = 2
+    return calendar.date(byAdding: .day, value: -days, to: Date())!
+}
+
+func fromNow(days: Int) -> Date {
+    var calendar = Calendar.current
+    calendar.firstWeekday = 2
+    return calendar.date(byAdding: .day, value: days, to: Date())!
+}
+
 extension Date {
 
     func string() -> String {

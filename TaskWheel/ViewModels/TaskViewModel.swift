@@ -174,56 +174,19 @@ extension TaskViewModel {
     
     static let uuids = examples.map { $0.id }
     
-    static let creations: [Date] = {
-        var dateArray = [Date]()
-        let calendar = Calendar.current
-        let today = Date()
-
-        dateArray.append(Date())
-        
-        for i in [2, 52, 365] {
-            if let pastDate = calendar.date(byAdding: .day, value: -i, to: today) {
-                dateArray.append(pastDate)
-            }
-        }
-        return dateArray
-    }()
-    
-    static let due: [Date] = {
-        var dateArray = [Date]()
-        let calendar = Calendar.current
-        let today = Date()
-
-        for i in [14, 1] {
-            if let pastDate = calendar.date(byAdding: .day, value: -i, to: today) {
-                dateArray.append(pastDate)
-            }
-        }
-
-        dateArray.append(today)
-
-        for i in [3, 16] {
-            if let futureDate = calendar.date(byAdding: .day, value: i, to: today) {
-                dateArray.append(futureDate)
-            }
-        }
-
-        return dateArray
-    }()
-    
     static func tasksExamples() -> Deque<TaskModel> {
         [
             .init(
                   title: "laundry", 
                   ofTaskList: uuids[0],
                   isDone: false,
-                  date: due[0]),
+                  date: ago(days: 14)),
             
             .init(title: "research pkms", 
                   ofTaskList: uuids[2],
                   isDone: false),
             
-            .init(creation: creations[0],
+            .init(creation: Date(),
                   title: "dishes",
                   ofTaskList: uuids[0],
                   isDone: false,
@@ -235,7 +198,7 @@ extension TaskViewModel {
                   isDone: false,
                   details: "where are the clean mop heads?", 
                   priority: 1,
-                  date: due[1]),
+                  date: ago(days: 1)),
             
             .init(title: "i hope im not too late to set my demon straight", 
                   ofTaskList: uuids[1], isDone: false, priority: 0),
@@ -248,7 +211,7 @@ extension TaskViewModel {
                   ofTaskList: uuids[1], 
                   isDone: false),
             
-            .init(creation: creations[1],
+            .init(creation: ago(days: 2),
                   title: "water plants",
                   ofTaskList: uuids[0],
                   isDone: false,
@@ -259,19 +222,19 @@ extension TaskViewModel {
                   ofTaskList: uuids[0],
                   isDone: false, 
                   priority: 0,
-                  date: due[2]),
+                  date: Date()),
             
-            .init(creation: creations[2],
+            .init(creation: ago(days: 52),
                   title: "recycle plastic and paper, separate vinyl labels",
                   ofTaskList: uuids[0], isDone: false),
             
-            .init(creation: creations[3],
+            .init(creation: ago(days: 365),
                   title: "wipe countertop", ofTaskList: uuids[0],
                   isDone: false),
             
             .init(
                   title: "fold laundry", ofTaskList: uuids[0], isDone: false,
-                  date: due[3]),
+                  date: fromNow(days: 3)),
             
             .init(title: "change passwords", ofTaskList: uuids[2], isDone: true),
             
@@ -279,14 +242,14 @@ extension TaskViewModel {
                   title: "clean bathroom", ofTaskList: uuids[0], 
                   isDone: true,
                   priority: 1,
-                  date: due[4]),
+                  date: fromNow(days: 16)),
             
             .init(
                   title: "organize shelf",
                   ofTaskList: uuids[0],
                   isDone: false,
                   priority: 2,
-                  date: due[4]),
+                  date: fromNow(days: 16)),
             
             .init(title: "i want to make [] things, even if nobody cares", ofTaskList: uuids[1], isDone: true),
         ]
