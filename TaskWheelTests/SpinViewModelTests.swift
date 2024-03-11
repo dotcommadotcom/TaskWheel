@@ -67,7 +67,7 @@ final class SpinViewModelTests: XCTestCase {
         let tasks = Deque([TaskModel(title: "i'm alone")])
         let weights = spinVM.weights(from: tasks)
         
-        XCTAssertEqual(weights, [0])
+        XCTAssertEqual(weights, [0.001])
     }
     
     func testWeightsAreAllPositive() throws {

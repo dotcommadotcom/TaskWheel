@@ -54,7 +54,7 @@ class SpinViewModel: ObservableObject {
                 return index
             }
         }
-        return 0
+        return -1
     }
 }
 
