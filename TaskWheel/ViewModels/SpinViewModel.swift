@@ -19,10 +19,15 @@ class SpinViewModel: ObservableObject {
     }
     
     func scoreUrgency(of task: TaskModel) -> Double {
+        var urgency: Double
+        
         if let date = task.date {
-            return -Double(date.calculateDays()) 
+            urgency = 10.0 - (10.0 / (1.0 + exp(0.2 * (-Double(date.calculateDays())))))
+        } else {
+            urgency = sqrt(-Double(task.creation.calculateDays())) - 10
         }
-        return sqrt(-Double(task.creation.calculateDays())) - 10
+        
+        return (urgency * 1000).rounded() / 1000
     }
     
 //    func weights() -> [Double]{

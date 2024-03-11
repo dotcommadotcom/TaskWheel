@@ -194,7 +194,7 @@ extension TaskViewModel {
         let calendar = Calendar.current
         let today = Date()
 
-        for i in [1, 6] {
+        for i in [14, 1] {
             if let pastDate = calendar.date(byAdding: .day, value: -i, to: today) {
                 dateArray.append(pastDate)
             }

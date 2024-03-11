@@ -36,30 +36,34 @@ final class SpinViewModelTests: XCTestCase {
     
     // TEST - Urgency score of due date
     
-    func testUrgencyOfYesterday() throws {
-        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
-        let task = TaskModel(title: "", date: yesterday)
+    func testDueThreeWeeksUrgency() throws {
+        let task = taskVM.tasks[14]
         
-        XCTAssertEqual(spinVM.scoreUrgency(of: task), 0.1)
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), 0.392)
     }
     
-    func testUrgencyOfTomorrow() throws {
-        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
-        let task = TaskModel(title: "", date: tomorrow)
+    func testDueThreeDaysUrgency() throws {
+        let task = taskVM.tasks[11]
         
-        XCTAssertEqual(spinVM.scoreUrgency(of: task), -0.1)
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), 3.543)
     }
     
-    func testUrgencyOfToday() throws {
-        let task = TaskModel(title: "", date: today)
+    func testDueTodayUrgency() throws {
+        let task = taskVM.tasks[8]
         
-        XCTAssertEqual(spinVM.scoreUrgency(of: task), 0)
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), 5.0)
     }
     
-    func testUrgencyOfCreatedToday() throws {
-        let task = TaskModel(title: "")
+    func testDueYesterdayUrgency() throws {
+        let task = taskVM.tasks[3]
         
-        XCTAssertEqual(spinVM.scoreUrgency(of: task), 0)
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), 5.498)
+    }
+    
+    func testDueTwoWeeksAgoUrgency() throws {
+        let task = taskVM.tasks[0]
+        
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), 9.427)
     }
     
     func testTasksDueDate() throws {
@@ -75,19 +79,19 @@ final class SpinViewModelTests: XCTestCase {
     func testCreatedOneYear() throws {
         let task = taskVM.tasks[10]
         
-        XCTAssertEqual(spinVM.scoreUrgency(of: task), 9.104, accuracy: 0.001)
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), 9.105)
     }
     
     func testCreatedTwoMonths() throws {
         let task = taskVM.tasks[9]
         
-        XCTAssertEqual(spinVM.scoreUrgency(of: task), -2.788, accuracy: 0.001)
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), -2.789)
     }
     
     func testCreatedTwoDaysAgoUrgency() throws {
         let task = taskVM.tasks[7]
         
-        XCTAssertEqual(spinVM.scoreUrgency(of: task), -8.585, accuracy: 0.001)
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), -8.586)
     }
     
     func testCreatedTodayUrgency() throws {
