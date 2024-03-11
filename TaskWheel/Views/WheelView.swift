@@ -9,10 +9,12 @@ struct WheelView: View {
     @State var spinAngle: CGFloat = 0.0
     @State var isSpinDisabled: Bool
     private let diameter: CGFloat = 300
+    private let spinVM: SpinViewModel
     
     init(taskViewModel: TaskViewModel) {
         self.taskViewModel = taskViewModel
         _isSpinDisabled = State(initialValue: taskViewModel.currentCount() == 0)
+        self.spinVM = SpinViewModel()
     }
     
     var body: some View {
@@ -91,7 +93,7 @@ extension WheelView {
     private func spin() {
         guard !isSpinDisabled else { return }
         
-        selected = Int.random(in: 0..<taskViewModel.currentCount())
+        selected = spinVM.selectRandomIndex(from: taskViewModel.currentTasks())
         
         withAnimation(.easeInOut(duration: 6)) {
             spinAngle += 360 * 5 + angleDifference(from: selected)

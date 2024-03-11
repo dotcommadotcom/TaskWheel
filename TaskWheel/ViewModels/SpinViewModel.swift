@@ -26,33 +26,29 @@ class SpinViewModel: ObservableObject {
             urgency = sqrt(-Double(task.creation.calculateDays())) - 10
         }
         
-        return round(urgency)
+        return urgency
     }
     
-    func weights(of tasks: Deque<TaskModel>) -> [Double] {
-        return tasks.map { round(scoreImportance(of: $0) + scoreUrgency(of: $0)) }
+    func score(of task: TaskModel) -> Double {
+        return round(scoreImportance(of: task) + scoreUrgency(of: task))
     }
-//    
-//    func selectRandomTaskWithWeights() -> TaskModel? {
-//        guard !tasks.isEmpty else {
-//            return nil
-//        }
-//        
-//        let weights = weights()
-//        
-//        let totalWeight = weights.reduce(0, +)
-//        let randomValue = Double.random(in: 0.0..<totalWeight)
-//        
-//        var cumulativeWeight = 0.0
-//        for (index, task) in tasks.enumerated() {
-//            cumulativeWeight += weights[index]
-//            if randomValue < cumulativeWeight {
-//                return task
-//            }
-//        }
-//        
-//        return nil
-//    }
-
+    
+    func selectRandomIndex(from tasks: Deque<TaskModel>) -> Int {
+        guard !tasks.isEmpty else {
+            return -1
+        }
+            let weights = tasks.map { score(of: $0) }
+        let totalWeight = weights.reduce(0, +)
+        let randomTarget = Double.random(in: 0.0..<totalWeight)
+        
+        var cumulativeWeight = 0.0
+        for (index, weights) in weights.enumerated() {
+            cumulativeWeight += weights
+            if cumulativeWeight > randomTarget {
+                return index
+            }
+        }
+        return -1
+    }
 }
 

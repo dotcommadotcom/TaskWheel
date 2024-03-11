@@ -1,13 +1,14 @@
 import SwiftUI
 
 enum OrderItem {
-    case manual, date, priority
+    case manual, priority, date, dofirst
     
     var text: String {
         switch self {
         case .manual: return "Manual (default)"
         case .date: return "Date"
         case .priority: return "Priority"
+        case .dofirst: return "Do First"
         }
     }
 }
@@ -17,7 +18,7 @@ struct OrderSheetView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
 
-    let orders: [OrderItem] = [.manual, .date, .priority]
+    let orders: [OrderItem] = [.manual, .dofirst, .priority, .date]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {

@@ -11,7 +11,7 @@ final class SpinViewModelTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         taskVM = TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples)
-        spinVM = SpinViewModel(taskVM: taskVM)
+        spinVM = SpinViewModel()
         calendar = Calendar.current
         today = Date()
     }

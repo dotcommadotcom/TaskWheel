@@ -145,11 +145,14 @@ extension TaskViewModel {
     
     func ordering() -> (TaskModel, TaskModel) -> Bool {
         switch currentOrder() {
+        case .dofirst:
+            let spin = SpinViewModel()
+            return { spin.score(of: $0) < spin.score(of: $1) }
         case .priority:
             return { $0.priority < $1.priority }
         case .date:
             return { ($0.date ?? .distantFuture) < ($1.date ?? .distantFuture) }
-        case .manual:
+        default:
             return { _, _ in return false }
         }
     }
