@@ -8,14 +8,13 @@ struct WheelView: View {
     @State var selected: Int = -1
     @State var spinAngle: CGFloat = 0.0
     @State var isSpinDisabled: Bool
-    
     private let diameter: CGFloat = 300
     
     init(taskViewModel: TaskViewModel) {
         self.taskViewModel = taskViewModel
         _isSpinDisabled = State(initialValue: taskViewModel.currentCount() == 0)
     }
-
+    
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
             wheelCircleView()
@@ -48,7 +47,7 @@ extension WheelView {
     private func wheelCircleView() -> some View {
         ZStack {
             Circle().fill(Color.text.opacity(0.1))
-        
+            
             ForEach(Array(taskViewModel.currentTasks().enumerated()), id: \.1.id) { index, task in
                 sliceView(task: task, index: index)
             }
@@ -61,18 +60,19 @@ extension WheelView {
         let angle = angle(at: index)
         let angleRads = angle * .pi / 180.0
         
-        return Text(task.title.isEmpty ? "Empty task" : task.title)
-            .lineLimit(1)
-            .font(.system(size: 10))
-            .visualEffect { content, proxy in
-                content
-                    .rotationEffect(.degrees(angle))
-                    .offset(
-                        x: cos(angleRads) * (sizeOffset - proxy.size.width / 2),
-                        y: sin(angleRads) * (sizeOffset - proxy.size.width / 2))
-            }
-            .frame(maxWidth: diameter / 2 * 0.6)
-            .fontWeight(selected == index ? .bold : .regular)
+        return NavigationLink(value: task) {
+            Text(task.title.isEmpty ? "Empty task" : task.title)
+        }
+        .lineLimit(1)
+        .font(.system(size: 10))
+        .visualEffect { content, proxy in
+            content
+                .rotationEffect(.degrees(angle))
+                .offset(
+                    x: cos(angleRads) * (sizeOffset - proxy.size.width / 2),
+                    y: sin(angleRads) * (sizeOffset - proxy.size.width / 2))
+        }
+        .frame(maxWidth: diameter / 2 * 0.6)
     }
     
     private func spinButton() -> some View {
@@ -97,11 +97,11 @@ extension WheelView {
             spinAngle += 360 * 5 + angleDifference(from: selected)
         }
     }
-
+    
     private func angle(at index: Int) -> CGFloat {
         return 360.0 / CGFloat(taskViewModel.currentCount()) * CGFloat(index)
     }
-
+    
     private func angleDifference(from index: Int) -> Double {
         let currentAngle = fmod(spinAngle, 360)
         let targetAngle = 360 - Double(selected) * 360.0 / Double(taskViewModel.currentCount())

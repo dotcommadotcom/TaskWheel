@@ -146,6 +146,21 @@ final class TaskListVMTests: XCTestCase {
         XCTAssertNotEqual(multipleVM.taskLists[multipleVM.current].isDoneVisible,  previousDoneVisible)
     }
     
+    // TEST - Delete done
+    
+    func testDeleteDone() throws {
+        let doneDeleted = multipleVM.taskLists[0]
+        
+        multipleVM.deleteDone()
+        
+        XCTAssertTrue(multipleVM.tasks.contains(where: { task in
+            if task.id == doneDeleted.id {
+                return !task.isDone
+            }
+            return true
+        }))
+    }
+    
     // TEST - Delete task list
     
     func testDeleteCurrentUpdatesCurrentTaskList() throws {

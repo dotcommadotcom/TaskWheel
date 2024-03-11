@@ -5,7 +5,7 @@ struct MainView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
     
-    @State private var topSelected: TopTabItem = .wheel
+    @State private var topSelected: TopTabItem = .list
     @State private var barSelected: IconItem? = nil
     @State private var showCompleted: Bool = true
     
@@ -52,8 +52,6 @@ extension MainView {
                 .lineLimit(1)
             
             Spacer()
-            
-            Icon(this: .settings, size: 20)
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 20)
@@ -65,9 +63,7 @@ extension MainView {
             ForEach(mainTabs, id: \.self) { tab in
                 Icon(this: tab, isSpace: tab == mainTabs.last)
                     .onTapGesture {
-                        if tab != .shuffle {
-                            barSelected = tab
-                        }
+                        barSelected = tab
                     }
             }
         }
