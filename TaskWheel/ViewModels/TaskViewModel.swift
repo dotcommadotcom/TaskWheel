@@ -166,7 +166,7 @@ extension TaskViewModel {
 extension TaskViewModel {
     
     static let examples: Deque<TaskListModel> = [
-        .init(title: "chores", count: 8),
+        .init(title: "chores", count: 9),
         .init(title: "notes", count: 2),
         .init(title: "digital cleanse", count: 1),
         .init(title: "to buy", count: 0),
@@ -179,14 +179,13 @@ extension TaskViewModel {
         let calendar = Calendar.current
         let today = Date()
 
-        for i in [1, 2, 3, 10, 14, 17, 31, 52, 365] {
+        dateArray.append(Date())
+        
+        for i in [2, 52, 365] {
             if let pastDate = calendar.date(byAdding: .day, value: -i, to: today) {
                 dateArray.append(pastDate)
             }
         }
-
-        dateArray.append(today)
-
         return dateArray
     }()
     
@@ -195,7 +194,7 @@ extension TaskViewModel {
         let calendar = Calendar.current
         let today = Date()
 
-        for i in [1, 6, 60] {
+        for i in [1, 6] {
             if let pastDate = calendar.date(byAdding: .day, value: -i, to: today) {
                 dateArray.append(pastDate)
             }
@@ -203,7 +202,7 @@ extension TaskViewModel {
 
         dateArray.append(today)
 
-        for i in [1, 3, 7, 16, 20] {
+        for i in [3, 16] {
             if let futureDate = calendar.date(byAdding: .day, value: i, to: today) {
                 dateArray.append(futureDate)
             }
@@ -214,80 +213,80 @@ extension TaskViewModel {
     
     static func tasksExamples() -> Deque<TaskModel> {
         [
-            .init(creation: creations[0], 
+            .init(
                   title: "laundry", 
                   ofTaskList: uuids[0],
-                  isDone: true,
+                  isDone: false,
                   date: due[0]),
             
             .init(title: "research pkms", 
                   ofTaskList: uuids[2],
                   isDone: false),
             
-            .init(creation: creations[1], 
-                  title: "dishes", 
+            .init(creation: creations[0],
+                  title: "dishes",
                   ofTaskList: uuids[0],
                   isDone: false,
-                  priority: 0,
-                  date: due[1]),
+                  priority: 0),
             
-            .init(creation: creations[2],
+            .init(
                   title: "mop", 
                   ofTaskList: uuids[0],
                   isDone: false,
                   details: "where are the clean mop heads?", 
                   priority: 1,
-                  date: due[2]),
+                  date: due[1]),
             
             .init(title: "i hope im not too late to set my demon straight", 
                   ofTaskList: uuids[1], isDone: false, priority: 0),
             
-            .init(creation: creations[3], 
-                  title: "vacuum", ofTaskList: uuids[0], isDone: true, priority: 1,
-                  date: due[3]),
+            .init(
+                  title: "vacuum", ofTaskList: uuids[0], isDone: true, 
+                  priority: 1),
             
             .init(title: "its all a big circle jerk", 
                   ofTaskList: uuids[1], 
                   isDone: false),
             
-            .init(creation: creations[3], 
-                  title: "water plants", 
+            .init(creation: creations[1],
+                  title: "water plants",
                   ofTaskList: uuids[0],
                   isDone: false,
-                  priority: 2,
-                  date: due[4]),
+                  priority: 2),
             
-            .init(creation: creations[4], 
+            .init(
                   title: "throw out trash", 
                   ofTaskList: uuids[0],
                   isDone: false, 
                   priority: 0,
-                  date: due[5]),
+                  date: due[2]),
             
-            .init(creation: creations[5], 
+            .init(creation: creations[2],
                   title: "recycle plastic and paper, separate vinyl labels",
                   ofTaskList: uuids[0], isDone: false),
             
-            .init(creation: creations[6], 
-                  title: "wipe countertop", ofTaskList: uuids[0], isDone: false,
-                  date: due[6]),
+            .init(creation: creations[3],
+                  title: "wipe countertop", ofTaskList: uuids[0],
+                  isDone: false),
             
-            .init(creation: creations[7], 
+            .init(
                   title: "fold laundry", ofTaskList: uuids[0], isDone: false,
-                  date: due[7]),
+                  date: due[3]),
             
             .init(title: "change passwords", ofTaskList: uuids[2], isDone: true),
             
-            .init(creation: creations[8], 
-                  title: "clean bathroom", ofTaskList: uuids[0], isDone: true, priority: 1,
-                  date: due[8]),
+            .init(
+                  title: "clean bathroom", ofTaskList: uuids[0], 
+                  isDone: true,
+                  priority: 1,
+                  date: due[4]),
             
-            .init(creation: creations[9], 
+            .init(
                   title: "organize shelf",
                   ofTaskList: uuids[0],
                   isDone: false,
                   priority: 2,
-                  date: due[8]),
+                  date: due[4]),
             
             .init(title: "i want to make [] things, even if nobody cares", ofTaskList: uuids[1], isDone: true),
         ]

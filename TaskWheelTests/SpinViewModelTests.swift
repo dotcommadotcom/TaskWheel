@@ -26,11 +26,15 @@ final class SpinViewModelTests: XCTestCase {
     
     // TEST - Weights
     
-//    func testWeights() throws {
-//        XCTAssertEqual(spinVM.weights(), [])
-//    }
+    //    func testWeights() throws {
+    //        XCTAssertEqual(spinVM.weights(), [])
+    //    }
     
-    // TEST - Urgency score
+    
+    
+    
+    
+    // TEST - Urgency score of due date
     
     func testUrgencyOfYesterday() throws {
         let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
@@ -57,6 +61,67 @@ final class SpinViewModelTests: XCTestCase {
         
         XCTAssertEqual(spinVM.scoreUrgency(of: task), 0)
     }
+    
+    func testTasksDueDate() throws {
+        let dueDate = taskVM.tasks.enumerated().filter { index, task in
+            task.ofTaskList == taskVM.currentId() && !task.isDone && task.date != nil
+        }.map { $0.offset }
+        
+        XCTAssertEqual(dueDate, [0, 3, 8, 11, 14])
+    }
+    
+    // TEST - Urgency score of creation dates
+    
+    func testCreatedOneYear() throws {
+        let task = taskVM.tasks[10]
+        
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), 9.104, accuracy: 0.001)
+    }
+    
+    func testCreatedTwoMonths() throws {
+        let task = taskVM.tasks[9]
+        
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), -2.788, accuracy: 0.001)
+    }
+    
+    func testCreatedTwoDaysAgoUrgency() throws {
+        let task = taskVM.tasks[7]
+        
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), -8.585, accuracy: 0.001)
+    }
+    
+    func testCreatedTodayUrgency() throws {
+        let task = taskVM.tasks[2]
+        
+        XCTAssertEqual(spinVM.scoreUrgency(of: task), -10.0)
+    }
+    
+    func testTasksNoDueDate() throws {
+        let noDueDate = taskVM.tasks.enumerated().filter { index, task in
+            task.ofTaskList == taskVM.currentId() && !task.isDone && task.date == nil
+        }.map { $0.offset }
+        
+        XCTAssertEqual(noDueDate, [2, 7, 9, 10])
+    }
+    
+    // TEST - find tasks to test
+    
+    func testTasksNotCurrent() throws {
+        let notCurrent = taskVM.tasks.enumerated().filter { index, task in
+            task.ofTaskList != taskVM.currentId()
+        }.map { $0.offset }
+        
+        XCTAssertEqual(notCurrent, [1, 4, 6, 12, 15])
+    }
+    
+    func testTasksDoneDate() throws {
+        let done = taskVM.tasks.enumerated().filter { index, task in
+            task.ofTaskList == taskVM.currentId() && task.isDone
+        }.map { $0.offset }
+        
+        XCTAssertEqual(done, [5, 13])
+    }
+    
     
     // TEST - Importance score
     
