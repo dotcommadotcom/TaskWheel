@@ -35,7 +35,7 @@
 		B7DD37502B8ED87E008AD29D /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD374F2B8ED87E008AD29D /* Icon.swift */; };
 		B7DD37522B8EE9BF008AD29D /* PrioritySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD37512B8EE9BF008AD29D /* PrioritySheetView.swift */; };
 		B7EAF45E2B92CBB9006732EE /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF45D2B92CBB9006732EE /* SheetView.swift */; };
-		B7EAF4602B940EE3006732EE /* TaskListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF45F2B940EE3006732EE /* TaskListsView.swift */; };
+		B7EAF4602B940EE3006732EE /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF45F2B940EE3006732EE /* TaskListView.swift */; };
 		B7EAF4622B948F2F006732EE /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4612B948F2F006732EE /* CalendarView.swift */; };
 		B7EAF4642B949300006732EE /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4632B949300006732EE /* CalendarViewModel.swift */; };
 		B7EAF4662B94A013006732EE /* CalendarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4652B94A013006732EE /* CalendarViewModelTests.swift */; };
@@ -83,7 +83,7 @@
 		B7DD374F2B8ED87E008AD29D /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		B7DD37512B8EE9BF008AD29D /* PrioritySheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySheetView.swift; sourceTree = "<group>"; };
 		B7EAF45D2B92CBB9006732EE /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
-		B7EAF45F2B940EE3006732EE /* TaskListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListsView.swift; sourceTree = "<group>"; };
+		B7EAF45F2B940EE3006732EE /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		B7EAF4612B948F2F006732EE /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		B7EAF4632B949300006732EE /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		B7EAF4652B94A013006732EE /* CalendarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModelTests.swift; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 				B76905262B8DD8D8001DD077 /* ListsSheetView.swift */,
 				B76905222B8D8BC3001DD077 /* OrderSheetView.swift */,
 				B76905242B8DD6FD001DD077 /* MoreSheetView.swift */,
-				B7EAF45F2B940EE3006732EE /* TaskListsView.swift */,
+				B7EAF45F2B940EE3006732EE /* TaskListView.swift */,
 				B7EAF4612B948F2F006732EE /* CalendarView.swift */,
 				B7DD37512B8EE9BF008AD29D /* PrioritySheetView.swift */,
 			);
@@ -358,7 +358,7 @@
 				B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */,
 				B768297E2B99494600F73055 /* SpinViewModel.swift in Sources */,
 				B7EAF46A2B95DC6F006732EE /* Buttons.swift in Sources */,
-				B7EAF4602B940EE3006732EE /* TaskListsView.swift in Sources */,
+				B7EAF4602B940EE3006732EE /* TaskListView.swift in Sources */,
 				B7EAF45E2B92CBB9006732EE /* SheetView.swift in Sources */,
 				B71A81DA2B830BB000A8886F /* TaskWheelApp.swift in Sources */,
 			);

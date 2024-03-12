@@ -4,6 +4,7 @@ struct ListsSheetView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
+    
     @State var newTitleInput: String = ""
     @State private var showNewList = false
     
@@ -12,7 +13,7 @@ struct ListsSheetView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
-            TaskListsView()
+            taskListsView()
             
             Divider()
                 .padding(.horizontal, -10)
@@ -25,12 +26,45 @@ struct ListsSheetView: View {
 
 extension ListsSheetView {
     
+    private func taskListsView() -> some View {
+        LazyVStack(spacing: 22) {
+            ForEach(taskViewModel.taskLists) { taskList in
+                taskListRowView(taskList: taskList)
+                    .onTapGesture {
+                        switchTaskList(to: taskList)
+                        presentationMode.wrappedValue.dismiss()
+                    }
+            }
+        }
+    }
+    
+    private func taskListRowView(taskList: TaskListModel) -> some View {
+        
+        let highlight = taskList.id == taskViewModel.currentId()
+        
+        return HStack(spacing: 15) {
+            Image(systemName: highlight ? "record.circle" : "circle")
+                .fontWeight(highlight ? .bold : .regular)
+                .foregroundStyle(highlight ? Color.accent : Color.text)
+            
+            Text(taskList.title)
+                .fontWeight(highlight ? .bold : .regular)
+            
+            Spacer()
+            
+            Text(String(taskList.count))
+                .foregroundStyle(Color.text.opacity(0.5))
+                .font(.system(size: 15))
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
     private func newListView() -> some View {
         VStack {
             HStack(spacing: 15) {
                 Button {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        showNewList.toggle()
+                        clickCreateOrCancel()
                     }
                 } label: {
                     Image(systemName: "plus")
@@ -48,6 +82,8 @@ extension ListsSheetView {
                         Icon(this: .save)
                     }
                     .buttonStyle(NoAnimationStyle())
+                    .disabled(newTitleInput.isEmpty)
+                    .foregroundStyle(newTitleInput.isEmpty ? Color.text.opacity(0.5) : Color.text)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -70,13 +106,22 @@ extension ListsSheetView {
 
 extension ListsSheetView {
     
-    private func switchTaskList(_ taskList: TaskListModel) {
+    private func switchTaskList(to taskList: TaskListModel) {
         taskViewModel.updateCurrentTo(this: taskList)
         presentationMode.wrappedValue.dismiss()
     }
     
+    private func clickCreateOrCancel() {
+        showNewList.toggle()
+        if !showNewList {
+            newTitleInput = ""
+        }
+    }
+    
     private func clickSave() {
-        taskViewModel.addTaskList(title: newTitleInput)
+        if !newTitleInput.isEmpty {
+            taskViewModel.addTaskList(title: newTitleInput)
+        }
         presentationMode.wrappedValue.dismiss()
     }
 }

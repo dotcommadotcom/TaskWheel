@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TaskListsView: View {
+struct TaskListView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
@@ -18,7 +18,7 @@ struct TaskListsView: View {
     }
 }
 
-extension TaskListsView {
+extension TaskListView {
     
     private func taskListRowView(taskList: TaskListModel) -> some View {
         
@@ -31,12 +31,18 @@ extension TaskListsView {
             
             Text(taskList.title)
                 .fontWeight(highlight ? .bold : .regular)
+            
+            Spacer()
+            
+            Text(String(taskList.count))
+                .foregroundStyle(Color.text.opacity(0.5))
+                .font(.system(size: 15))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
-extension TaskListsView {
+extension TaskListView {
     
     private func switchTaskList(to taskList: TaskListModel) {
         taskViewModel.updateCurrentTo(this: taskList)
@@ -44,6 +50,6 @@ extension TaskListsView {
 }
 
 #Preview {
-    TaskListsView()
+    TaskListView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
