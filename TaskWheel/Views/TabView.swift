@@ -1,13 +1,12 @@
 import SwiftUI
 
 enum TabItem: Hashable {
-    case list, wheel, empty
+    case list, wheel
     
     var title: String {
         switch self {
         case .list: return "List"
         case .wheel: return "Wheel"
-        case .empty: return "blank"
         }
     }
 }
@@ -56,6 +55,7 @@ struct TabView: View {
                     
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: 35)
     }
 }
 
@@ -81,7 +81,6 @@ extension TabView {
                     .frame(maxWidth: .infinity)
                     .shadow(color: Color.text.opacity(0.2), radius: 1, x: 0, y: 0.5)
             }
-            .frame(maxWidth: .infinity, maxHeight: 35)
             .foregroundStyle(tabSelected == tab ? Color.accent : Color.text.opacity(0.3))
         }
         .buttonStyle(NoAnimationStyle())

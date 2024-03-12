@@ -1,13 +1,42 @@
 import SwiftUI
 
+extension View {
+    func popSheet(selected: Binding<IconItem?>) -> some View {
+        self
+            .modifier(SheetViewModifier(selected: selected))
+    }
+    
+    func popPriority(show: Binding<Bool>, input: Binding<PriorityItem>) -> some View {
+        self
+            .modifier(PriorityViewModifer(show: show, input: input))
+    }
+    
+    func popSchedule(show: Binding<Bool>, input: Binding<Date?>) -> some View {
+        self
+            .modifier(ScheduleViewModifer(show: show, input: input))
+    }
+    
+    func getSheetHeight(_ sheetHeight: Binding<CGFloat>) -> some View {
+        self
+            .modifier(SheetHeightModifier(sheetHeight: sheetHeight))
+    }
+    
+    func presentSheet(_ sheetHeight: Binding<CGFloat>) -> some View {
+        self
+            .modifier(SheetPresentationModifier(sheetHeight: sheetHeight))
+    }
+}
+
 struct SheetViewModifier: ViewModifier {
     
     @Binding var selected: IconItem?
+    @State private var sheetHeight: CGFloat = .zero
     
     func body(content: Content) -> some View {
         content
             .popover(item: $selected) { _ in
                 SheetView(selected: $selected)
+                    .presentSheet($sheetHeight)
             }
     }
 }
@@ -15,7 +44,6 @@ struct SheetViewModifier: ViewModifier {
 struct SheetView: View {
     
     @Binding var selected: IconItem?
-    @State private var sheetHeight: CGFloat = .zero
     
     var body: some View {
         VStack {
@@ -27,18 +55,14 @@ struct SheetView: View {
             default: EmptyView()
             }
         }
-        .font(.system(size: 22))
-        .padding(30)
-        .presentSheet($sheetHeight)
     }
 }
 
 struct PriorityViewModifer: ViewModifier {
     
-    @State private var sheetHeight: CGFloat = .zero
-
     @Binding var show: Bool
     @Binding var input: PriorityItem
+    @State private var sheetHeight: CGFloat = .zero
     
     func body(content: Content) -> some View {
         content
@@ -46,8 +70,6 @@ struct PriorityViewModifer: ViewModifier {
                 VStack(alignment: .leading, spacing: 22) {
                     PrioritySheetView(selected: $input, showPriority: $show)
                 }
-                .font(.system(size: 22))
-                .padding(30)
                 .presentSheet($sheetHeight)
             }
     }
@@ -55,10 +77,9 @@ struct PriorityViewModifer: ViewModifier {
 
 struct ScheduleViewModifer: ViewModifier {
     
-    @State private var sheetHeight: CGFloat = .zero
-
     @Binding var show: Bool
     @Binding var input: Date?
+    @State private var sheetHeight: CGFloat = .zero
     
     func body(content: Content) -> some View {
         content
@@ -66,7 +87,6 @@ struct ScheduleViewModifer: ViewModifier {
                 VStack(alignment: .leading, spacing: 22) {
                     CalendarView(dateInput: $input)
                 }
-                .padding(30)
                 .presentSheet($sheetHeight)
             }
     }
@@ -95,6 +115,8 @@ struct SheetPresentationModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
+            .font(.system(size: 22))
+            .padding(30)
             .fixedSize(horizontal: false, vertical: true)
             .foregroundStyle(Color.text)
             .presentationCompactAdaptation(.sheet)
@@ -106,36 +128,8 @@ struct SheetPresentationModifier: ViewModifier {
     }
 }
 
-
-
-extension View {
-    func popSheet(selected: Binding<IconItem?>) -> some View {
-        self
-            .modifier(SheetViewModifier(selected: selected))
-    }
-    
-    func getSheetHeight(_ sheetHeight: Binding<CGFloat>) -> some View {
-        self
-            .modifier(SheetHeightModifier(sheetHeight: sheetHeight))
-    }
-    
-    func presentSheet(_ sheetHeight: Binding<CGFloat>) -> some View {
-        self
-            .modifier(SheetPresentationModifier(sheetHeight: sheetHeight))
-    }
-    
-    func popPriority(show: Binding<Bool>, input: Binding<PriorityItem>) -> some View {
-        self
-            .modifier(PriorityViewModifer(show: show, input: input))
-    }
-    
-    func popSchedule(show: Binding<Bool>, input: Binding<Date?>) -> some View {
-        self
-            .modifier(ScheduleViewModifer(show: show, input: input))
-    }
-}
-
-
-#Preview {
-    SheetView(selected: .constant(nil))
+#Preview() {
+    MainView()
+        .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
+        .environmentObject(NavigationCoordinator())
 }

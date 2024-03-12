@@ -8,7 +8,7 @@ struct MainView: View {
     @State private var tabSelected: TabItem = .list
     @State private var barSelected: IconItem? = nil
     
-    private let mainTabs: [IconItem] = [.order, .more, .add]
+    private let mainIcons: [IconItem] = [.order, .more, .add]
     
     var body: some View {
         NavigationStack(path: $navigation.path) {
@@ -24,9 +24,6 @@ struct MainView: View {
                     
                     WheelView(taskViewModel: taskViewModel)
                         .showTab(this: .wheel, selected: $tabSelected)
-                    
-                    EmptyView()
-                        .showTab(this: .empty, selected: $tabSelected)
                 }
                 .highPriorityGesture(DragGesture().onEnded({
                     handleSwipe(width: $0.translation.width)
@@ -49,8 +46,8 @@ extension MainView {
     
     private func mainBarView() -> some View {
         HStack(spacing: 30) {
-            ForEach(mainTabs, id: \.self) { tab in
-                Icon(this: tab, isSpace: tab == mainTabs.last)
+            ForEach(mainIcons, id: \.self) { tab in
+                Icon(this: tab, isSpace: tab == mainIcons.last)
                     .onTapGesture {
                         barSelected = tab
                     }
