@@ -61,12 +61,11 @@ extension WheelView {
         let sizeOffset: CGFloat = CGFloat(0.9 * diameter / 2)
         let angle = angle(at: index)
         let angleRads = angle * .pi / 180.0
-        let spin = SpinViewModel()
         
         return NavigationLink(value: task) {
             VStack {
                 Text(task.title.isEmpty ? "Empty title" : task.title)
-                Text(String(spin.score(of: task)))
+                Text(String(spinVM.score(of: task)))
             }
         }
         .lineLimit(1)

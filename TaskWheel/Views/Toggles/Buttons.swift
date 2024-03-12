@@ -38,30 +38,39 @@ struct ScheduleButton: View {
     @Binding var date: Date?
     
     var body: some View {
-        ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.text.opacity(0.7), lineWidth: 2)
-
-            HStack(spacing: 10) {
-                Text(date?.relative() ?? "")
-                    .foregroundStyle(isPast(date) ? Color.past : Color.text)
+//        if dateInput != nil {
+//        } else {
+//            return AnyView(EmptyView())
+//        }
+        if date != nil {
+            ZStack(alignment: .center) {
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.text.opacity(0.7), lineWidth: 2)
                 
-                Button {
-                    date = nil
-                } label: {
-                    Icon(this: .cancel, size: 14)
+                HStack(spacing: 10) {
+                    Text(date?.relative() ?? "")
+                        .foregroundStyle(isPast(date) ? Color.past : Color.text)
+                    
+                    Button {
+                        date = Date()
+                        date = nil
+                    } label: {
+                        Icon(this: .cancel, size: 14)
+                    }
                 }
+                .padding(8)
+                .padding(.horizontal, 8)
             }
-            .padding(8)
-            .padding(.horizontal, 8)
+            .fontWeight(.medium)
+            .foregroundStyle(Color.text)
+            .fixedSize()
+            .onTapGesture {
+                show.toggle()
+            }
+            .popSchedule(show: $show, input: $date)
+        } else {
+            EmptyView()
         }
-        .fontWeight(.medium)
-        .foregroundStyle(Color.text)
-        .fixedSize()
-        .onTapGesture {
-            show.toggle()
-        }
-        .popSchedule(show: $show, input: $date)
     }
     
     private func isPast(_ date: Date?) -> Bool {

@@ -35,8 +35,8 @@ struct TaskView: View {
         self.isAdd = isNew
         _titleInput = State(initialValue: self.task.title)
         _detailsInput = State(initialValue: self.task.details)
-        _dateInput = State(initialValue: self.task.date)
         _priorityInput = State(initialValue: PriorityItem(self.task.priority))
+        _dateInput = State(initialValue: self.task.date)
     }
     
     init() {
@@ -64,7 +64,7 @@ extension TaskView {
                 detailsView()
             }
             
-            scheduleTextButton()
+            ScheduleButton(date: $dateInput)
             
             HStack(spacing: 30) {
                 detailsButton()
@@ -241,7 +241,7 @@ extension TaskView {
                         .foregroundStyle(Color.text.opacity(half))
                         .opacity(dateInput == nil ? 1 : 0)
                     
-                    scheduleTextButton()
+                    ScheduleButton(date: $dateInput)
                 }
             }
         }
@@ -250,14 +250,6 @@ extension TaskView {
             showSchedule.toggle()
         }
         .popSchedule(show: $showSchedule, input: $dateInput)
-    }
-    
-    private func scheduleTextButton() -> some View {
-        if dateInput != nil {
-            return AnyView(ScheduleButton(date: $dateInput))
-        } else {
-            return AnyView(EmptyView())
-        }
     }
 
     private func saveButton() -> some View {

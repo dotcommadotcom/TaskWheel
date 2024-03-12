@@ -22,6 +22,14 @@ class TaskViewModel: ObservableObject {
 
 extension TaskViewModel {
     
+    func printDate(of task: TaskModel) {
+        if let date = task.date {
+            print("Optional value:", date.string())
+        } else {
+            print("Optional value is nil")
+        }
+    }
+    
     func addTask(title: String = "", details: String = "", priority: Int = 3, date: Date? = nil) {
         tasks.prepend(TaskModel(title: title, ofTaskList: taskLists[current].id, details: details, priority: priority, date: date))
         incrementListCount()
@@ -57,6 +65,12 @@ extension TaskViewModel {
                                      details: details ?? task.details,
                                      priority: priority ?? task.priority,
                                      date: date ?? task.date)
+        }
+    }
+    
+    func resetDate(of task: TaskModel) {
+        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            tasks[index] = task.resetToNil()
         }
     }
 }

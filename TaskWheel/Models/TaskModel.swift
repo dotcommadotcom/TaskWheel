@@ -45,7 +45,15 @@ struct TaskModel: Identifiable, Hashable {
         return edit(isDone: !self.isDone)
     }
     
-    
+    func resetToNil() -> TaskModel {
+        return TaskModel(id: self.id,
+                         title: self.title,
+                         ofTaskList: self.ofTaskList,
+                         isDone: self.isDone,
+                         details: self.details,
+                         priority: self.priority,
+                         date: nil)
+    }
 }
 
 extension TaskModel: Equatable {
