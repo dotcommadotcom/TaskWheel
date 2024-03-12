@@ -5,7 +5,7 @@ struct MainView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @EnvironmentObject var navigation: NavigationCoordinator
     
-    @State private var topSelected: TopTabItem = .list
+    @State private var tabSelected: TabItem = .list
     @State private var barSelected: IconItem? = nil
     
     private let mainTabs: [IconItem] = [.order, .more, .add]
@@ -18,12 +18,15 @@ struct MainView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                 
-                TopTabContainerView(selected: $topSelected) {
+                TabContainerView(tabSelected: $tabSelected) {
                     ListView()
-                        .topTabItem(tab: .list, selected: $topSelected)
+                        .showTab(this: .list, selected: $tabSelected)
                     
                     WheelView(taskViewModel: taskViewModel)
-                        .topTabItem(tab: .wheel, selected: $topSelected)
+                        .showTab(this: .wheel, selected: $tabSelected)
+                    
+                    EmptyView()
+                        .showTab(this: .empty, selected: $tabSelected)
                 }
                 .highPriorityGesture(DragGesture().onEnded({
                     handleSwipe(width: $0.translation.width)
@@ -34,7 +37,7 @@ struct MainView: View {
             }
             .background(Color.background)
             .foregroundStyle(Color.text)
-            .animation(.easeInOut, value: topSelected)
+            .animation(.easeInOut, value: tabSelected)
             .navigationDestination(for: TaskModel.self) { task in
                 TaskView(task: task)
             }
@@ -60,10 +63,10 @@ extension MainView {
     }
     
     private func handleSwipe(width: CGFloat) {
-        if width < -50 && topSelected == .list {
-            topSelected = .wheel
-        } else if width > 50 && topSelected == .wheel {
-            topSelected = .list
+        if width < -50 && tabSelected == .list {
+            tabSelected = .wheel
+        } else if width > 50 && tabSelected == .wheel {
+            tabSelected = .list
         }
     }
 }

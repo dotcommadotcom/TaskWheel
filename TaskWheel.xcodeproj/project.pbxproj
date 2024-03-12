@@ -20,7 +20,7 @@
 		B72F692D2B8C2DF000525EF8 /* WheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F692C2B8C2DF000525EF8 /* WheelView.swift */; };
 		B72F69402B8C97AD00525EF8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B72F693F2B8C97AD00525EF8 /* .gitignore */; };
 		B749535B2B9B06AB0040ACF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B749535A2B9B06AB0040ACF7 /* ContentView.swift */; };
-		B75F44022B8C253A00D0B182 /* TopTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75F44012B8C253A00D0B182 /* TopTabView.swift */; };
+		B75F44022B8C253A00D0B182 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75F44012B8C253A00D0B182 /* TabView.swift */; };
 		B768297A2B98B2F000F73055 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76829772B98A77400F73055 /* DateExtensionTests.swift */; };
 		B768297E2B99494600F73055 /* SpinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768297D2B99494600F73055 /* SpinViewModel.swift */; };
 		B76829802B994DE900F73055 /* SpinViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768297F2B994DE900F73055 /* SpinViewModelTests.swift */; };
@@ -70,7 +70,7 @@
 		B72F692C2B8C2DF000525EF8 /* WheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelView.swift; sourceTree = "<group>"; };
 		B72F693F2B8C97AD00525EF8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		B749535A2B9B06AB0040ACF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		B75F44012B8C253A00D0B182 /* TopTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabView.swift; sourceTree = "<group>"; };
+		B75F44012B8C253A00D0B182 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		B76829772B98A77400F73055 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		B768297D2B99494600F73055 /* SpinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinViewModel.swift; sourceTree = "<group>"; };
 		B768297F2B994DE900F73055 /* SpinViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinViewModelTests.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 				B7EAF46B2B95DCD7006732EE /* Popovers */,
 				B7EAF4672B95DC0B006732EE /* Toggles */,
 				B71A81EA2B830E4B00A8886F /* MainView.swift */,
-				B75F44012B8C253A00D0B182 /* TopTabView.swift */,
+				B75F44012B8C253A00D0B182 /* TabView.swift */,
 				B72F692A2B8C296100525EF8 /* ListView.swift */,
 				B72F692C2B8C2DF000525EF8 /* WheelView.swift */,
 				B71482152B9722CE00CA8511 /* TaskView.swift */,
@@ -344,7 +344,7 @@
 				B7EAF4642B949300006732EE /* CalendarViewModel.swift in Sources */,
 				B718BAA02BA0017600CCD200 /* TitleView.swift in Sources */,
 				B71482122B96E41100CA8511 /* DateExtension.swift in Sources */,
-				B75F44022B8C253A00D0B182 /* TopTabView.swift in Sources */,
+				B75F44022B8C253A00D0B182 /* TabView.swift in Sources */,
 				B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */,
 				B7DD37502B8ED87E008AD29D /* Icon.swift in Sources */,
 				B76905232B8D8BC3001DD077 /* OrderSheetView.swift in Sources */,
