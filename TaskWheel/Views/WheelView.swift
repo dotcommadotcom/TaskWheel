@@ -86,8 +86,7 @@ extension WheelView {
         } label: {
             Icon(this: .ticker, size: 15)
         }
-        .disabled(isSpinDisabled)
-        .foregroundStyle(isSpinDisabled ? Color.text.opacity(0.5) : .accent)
+        .disableClick(if: isSpinDisabled)
     }
 }
 

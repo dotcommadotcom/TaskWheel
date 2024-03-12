@@ -41,11 +41,11 @@ struct MoreSheetView: View {
                     Button {
                         clickSave()
                     } label: {
-                        Image(systemName: "square.and.arrow.down")
+                        Icon(this: .save, isSpace: true)
                     }
                 }
             }
-            .buttonStyle(NoAnimationStyle())
+            .noAnimation()
             
             if showRenameList {
                 TextField(titleInput, text: $titleInput, axis: .vertical)
@@ -85,11 +85,10 @@ extension MoreSheetView {
             click(option: option)
         } label: {
             Text(option.text)
-                .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .disabled(isDisabled)
-        .foregroundStyle(isDisabled ? Color.text.opacity(0.5) : Color.text)
-        .buttonStyle(NoAnimationStyle())
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .disableClick(if: isDisabled)
+        .noAnimation()
     }
     
 }

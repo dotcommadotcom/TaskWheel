@@ -22,7 +22,6 @@ struct GreyTextModifier: ViewModifier {
     }
 }
 
-
 struct DisableButtonModifier: ViewModifier {
     let isDisabled: Bool
 

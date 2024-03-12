@@ -74,7 +74,7 @@ extension TaskView {
                 
                 saveButton()
             }
-            .buttonStyle(NoAnimationStyle())
+            .noAnimation()
         }
         .font(.system(size: 20))
         .onSubmit { clickSave() }
@@ -120,6 +120,7 @@ extension TaskView {
                 }) {
                     Image(systemName: "arrow.backward")
                 }
+                .foregroundStyle(Color.text)
                 .padding([.horizontal])
                 .fontWeight(.semibold)
             }
@@ -133,8 +134,7 @@ extension TaskView {
     private func taskTitleView() -> some View {
         ZStack(alignment: .leading) {
             if titleInput.isEmpty {
-                Text("What now?")
-                    .foregroundStyle(Color.text.opacity(0.5))
+                Text("What now?").greyed()
             }
             
             TextField(titleInput, text: $titleInput, axis: .vertical)
@@ -157,8 +157,7 @@ extension TaskView {
             
             ZStack(alignment: .leading) {
                 if detailsInput.isEmpty {
-                    Text("Add details")
-                        .foregroundStyle(Color.text.opacity(0.5))
+                    Text("Add details").greyed()
                 }
                 TextField(detailsInput, text: $detailsInput, axis: .vertical)
                     .focused($detailsFocused)
@@ -188,8 +187,7 @@ extension TaskView {
             Icon(this: .priority, size: iconSize)
             
             ZStack(alignment: .leading) {
-                Text("Add priority")
-                    .foregroundStyle(Color.text.opacity(half))
+                Text("Add priority").greyed()
                     .opacity(priorityInput.rawValue == 3 ? 1 : 0)
                 
                 PriorityButton(priority: $priorityInput)
@@ -221,8 +219,7 @@ extension TaskView {
             
             if !isAdd {
                 ZStack(alignment: .leading) {
-                    Text("Add date/time")
-                        .foregroundStyle(Color.text.opacity(half))
+                    Text("Add date/time").greyed()
                         .opacity(dateInput == nil ? 1 : 0)
                     
 //                    if dateInput != nil {
@@ -251,8 +248,7 @@ extension TaskView {
         } label: {
             Icon(this: .save, isSpace: true, size: iconSize)
         }
-        .disabled(isTaskEmpty() ? true : false)
-        .foregroundStyle(isTaskEmpty() ? Color.text.opacity(0.5) : Color.text)
+        .disableClick(if: isTaskEmpty())
     }
 }
 
@@ -292,14 +288,6 @@ extension TaskView {
         )
 
         navigation.goBack()
-    }
-}
-
-struct NoAnimationStyle: PrimitiveButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .contentShape(Rectangle())
-            .onTapGesture(perform: configuration.trigger)
     }
 }
 

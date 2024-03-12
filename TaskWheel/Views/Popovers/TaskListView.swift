@@ -5,16 +5,49 @@ struct TaskListView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
     
+    @State var titleInput: String = ""
+    
     var body: some View {
-        LazyVStack(spacing: 22) {
-            ForEach(taskViewModel.taskLists) { taskList in
-                taskListRowView(taskList: taskList)
-                    .onTapGesture {
-                        switchTaskList(to: taskList)
-                        presentationMode.wrappedValue.dismiss()
-                    }
+        VStack(alignment: .leading, spacing: 20) {
+            
+            ZStack(alignment: .leading) {
+                if titleInput.isEmpty {
+                    Text("Enter title").greyed()
+                }
+                
+                TextField(titleInput, text: $titleInput, axis: .vertical)
+                    .lineLimit(1)
+                
             }
+            .font(.system(size: 25))
+            .frame(maxWidth: .infinity)
+//            .onSubmit {
+//                saveGoBack()
+//            }
+//            
+//            HStack {
+//                detailsButton()
+//                
+//                //maybe default?
+//                
+//                Spacer()
+//                
+//                saveButton()
+//            }
+//            .buttonStyle(NoAnimationStyle())
         }
+        .font(.system(size: 20))
+//        .onSubmit { clickSave() }
+//
+//        LazyVStack(spacing: 22) {
+//            ForEach(taskViewModel.taskLists) { taskList in
+//                taskListRowView(taskList: taskList)
+//                    .onTapGesture {
+//                        switchTaskList(to: taskList)
+//                        presentationMode.wrappedValue.dismiss()
+//                    }
+//            }
+//        }
     }
 }
 
@@ -35,7 +68,7 @@ extension TaskListView {
             Spacer()
             
             Text(String(taskList.count))
-                .foregroundStyle(Color.text.opacity(0.5))
+                .greyed()
                 .font(.system(size: 15))
         }
         .frame(maxWidth: .infinity, alignment: .leading)

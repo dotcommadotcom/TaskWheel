@@ -96,18 +96,18 @@ struct ScheduleButton: View {
 
 #Preview("future") {
     VStack {
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -1, to: Date())!))
+        ScheduleButton(date: .constant(ago(days: 1)))
         ScheduleButton(date: .constant(Date()))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 1, to: Date())!))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 2, to: Date())!))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 3, to: Date())!))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 4, to: Date())!))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 5, to: Date())!))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 6, to: Date())!))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 7, to: Date())!))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 8, to: Date())!))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 9, to: Date())!))
-        ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: 400, to: Date())!))
+        ScheduleButton(date: .constant(fromNow(days: 1)))
+        ScheduleButton(date: .constant(fromNow(days: 2)))
+        ScheduleButton(date: .constant(fromNow(days: 3)))
+        ScheduleButton(date: .constant(fromNow(days: 4)))
+        ScheduleButton(date: .constant(fromNow(days: 5)))
+        ScheduleButton(date: .constant(fromNow(days: 6)))
+        ScheduleButton(date: .constant(fromNow(days: 7)))
+        ScheduleButton(date: .constant(fromNow(days: 8)))
+        ScheduleButton(date: .constant(fromNow(days: 9)))
+        ScheduleButton(date: .constant(fromNow(days: 400)))
     }
 }
 
@@ -116,15 +116,15 @@ struct ScheduleButton: View {
         Color.background.ignoresSafeArea()
         
         VStack {
-            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -21, to: Date())!))
-            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -9, to: Date())!))
-            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -7, to: Date())!))
-            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -6, to: Date())!))
-            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -5, to: Date())!))
-            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -4, to: Date())!))
-            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -3, to: Date())!))
-            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -2, to: Date())!))
-            ScheduleButton(date: .constant(Calendar.current.date(byAdding: .day, value: -1, to: Date())!))
+            ScheduleButton(date: .constant(ago(days: 21)))
+            ScheduleButton(date: .constant(ago(days: 9)))
+            ScheduleButton(date: .constant(ago(days: 7)))
+            ScheduleButton(date: .constant(ago(days: 6)))
+            ScheduleButton(date: .constant(ago(days: 5)))
+            ScheduleButton(date: .constant(ago(days: 4)))
+            ScheduleButton(date: .constant(ago(days: 3)))
+            ScheduleButton(date: .constant(ago(days: 2)))
+            ScheduleButton(date: .constant(ago(days: 1)))
             ScheduleButton(date: .constant(Date()))
         }
     }

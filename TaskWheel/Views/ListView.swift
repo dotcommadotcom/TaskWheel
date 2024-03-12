@@ -83,7 +83,7 @@ struct TaskRowModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         if isDone {
-            return AnyView(content.strikethrough().foregroundStyle(Color.text.opacity(0.5)))
+            return AnyView(content.strikethrough().greyed())
         } else {
             return AnyView(content.foregroundStyle(Color.text))
         }

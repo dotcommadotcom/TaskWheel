@@ -11,6 +11,7 @@
 		B71482122B96E41100CA8511 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71482112B96E41100CA8511 /* DateExtension.swift */; };
 		B71482162B9722CE00CA8511 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71482152B9722CE00CA8511 /* TaskView.swift */; };
 		B718BAA02BA0017600CCD200 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B718BA9F2BA0017600CCD200 /* TitleView.swift */; };
+		B718BAA42BA0547700CCD200 /* CustomViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B718BAA32BA0547700CCD200 /* CustomViewModifiers.swift */; };
 		B71A81DA2B830BB000A8886F /* TaskWheelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A81D92B830BB000A8886F /* TaskWheelApp.swift */; };
 		B71A81DE2B830BB100A8886F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71A81DD2B830BB100A8886F /* Assets.xcassets */; };
 		B71A81E12B830BB100A8886F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71A81E02B830BB100A8886F /* Preview Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		B71482112B96E41100CA8511 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		B71482152B9722CE00CA8511 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		B718BA9F2BA0017600CCD200 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TitleView.swift; path = TaskWheel/Views/TitleView.swift; sourceTree = "<group>"; };
+		B718BAA32BA0547700CCD200 /* CustomViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewModifiers.swift; sourceTree = "<group>"; };
 		B71A81D62B830BB000A8886F /* TaskWheel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskWheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71A81D92B830BB000A8886F /* TaskWheelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskWheelApp.swift; sourceTree = "<group>"; };
 		B71A81DD2B830BB100A8886F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				B72F692A2B8C296100525EF8 /* ListView.swift */,
 				B72F692C2B8C2DF000525EF8 /* WheelView.swift */,
 				B71482152B9722CE00CA8511 /* TaskView.swift */,
+				B718BAA32BA0547700CCD200 /* CustomViewModifiers.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				B749535B2B9B06AB0040ACF7 /* ContentView.swift in Sources */,
 				B72F692D2B8C2DF000525EF8 /* WheelView.swift in Sources */,
 				B7B71FB42B8F5A9400233641 /* TaskListModel.swift in Sources */,
+				B718BAA42BA0547700CCD200 /* CustomViewModifiers.swift in Sources */,
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
 				B76905252B8DD6FD001DD077 /* MoreSheetView.swift in Sources */,
 				B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */,

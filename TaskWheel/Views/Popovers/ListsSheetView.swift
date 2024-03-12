@@ -53,7 +53,7 @@ extension ListsSheetView {
             Spacer()
             
             Text(String(taskList.count))
-                .foregroundStyle(Color.text.opacity(0.5))
+                .greyed()
                 .font(.system(size: 15))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -81,9 +81,8 @@ extension ListsSheetView {
                     } label: {
                         Icon(this: .save)
                     }
-                    .buttonStyle(NoAnimationStyle())
-                    .disabled(newTitleInput.isEmpty)
-                    .foregroundStyle(newTitleInput.isEmpty ? Color.text.opacity(0.5) : Color.text)
+                    .noAnimation()
+                    .disableClick(if: newTitleInput.isEmpty)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
