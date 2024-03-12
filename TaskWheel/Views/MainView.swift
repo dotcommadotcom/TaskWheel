@@ -7,15 +7,16 @@ struct MainView: View {
     
     @State private var topSelected: TopTabItem = .list
     @State private var barSelected: IconItem? = nil
-    @State private var showCompleted: Bool = true
     
-    private let mainTabs: [IconItem] = [.lists, .order, .more, .add]
+    private let mainTabs: [IconItem] = [.order, .more, .add]
     
     var body: some View {
         NavigationStack(path: $navigation.path) {
             VStack(spacing: 0) {
                 
-                titleView()
+                TitleView(fontSize: 25, fontWeight: .bold, hideIcon: true)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
                 
                 TopTabContainerView(selected: $topSelected) {
                     ListView()
@@ -24,11 +25,9 @@ struct MainView: View {
                     WheelView(taskViewModel: taskViewModel)
                         .topTabItem(tab: .wheel, selected: $topSelected)
                 }
-                .gesture(
-                    DragGesture().onEnded({
-                        handleSwipe(translation: $0.translation.width)
-                    }))
-                
+                .highPriorityGesture(DragGesture().onEnded({
+                    handleSwipe(width: $0.translation.width)
+                }))
                 
                 mainBarView()
                     .background(Color.text.opacity(0.05))
@@ -45,21 +44,8 @@ struct MainView: View {
 
 extension MainView {
     
-    private func titleView() -> some View {
-        HStack {
-            Text(taskViewModel.currentTitle())
-                .font(.system(size: 25, weight: .bold))
-                .lineLimit(1)
-            
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
-    }
-    
     private func mainBarView() -> some View {
-        BarContainerView(selected: $barSelected) {
+        HStack(spacing: 30) {
             ForEach(mainTabs, id: \.self) { tab in
                 Icon(this: tab, isSpace: tab == mainTabs.last)
                     .onTapGesture {
@@ -67,13 +53,16 @@ extension MainView {
                     }
             }
         }
-        .sheetItem(selected: $barSelected)
+        .padding(20)
+        .padding(.horizontal, 5)
+        .frame(maxWidth: .infinity)
+        .popSheet(selected: $barSelected)
     }
     
-    private func handleSwipe(translation: CGFloat) {
-        if translation < -50 && topSelected == .list {
+    private func handleSwipe(width: CGFloat) {
+        if width < -50 && topSelected == .list {
             topSelected = .wheel
-        } else if translation > 50 && topSelected == .wheel {
+        } else if width > 50 && topSelected == .wheel {
             topSelected = .list
         }
     }

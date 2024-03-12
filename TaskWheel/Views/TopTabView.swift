@@ -82,7 +82,7 @@ extension TopTabView {
             
             Rectangle()
                 .frame(maxWidth: .infinity, maxHeight: 1.5)
-                .shadow(color: .gray.opacity(0.2), radius: 1, x: 0, y: 0.5)
+                .shadow(color: Color.text.opacity(0.2), radius: 1, x: 0, y: 0.5)
             
         }
         .frame(maxWidth: .infinity, maxHeight: 35)

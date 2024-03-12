@@ -4,7 +4,7 @@ enum IconItem: Identifiable, Hashable {
     
     case complete, details, priority, schedule
     
-    case shuffle, lists, order, more, add
+    case shuffle, lists, order, filter, more, add
 
     case cancel, delete, save, move, settings, ticker
     
@@ -22,6 +22,7 @@ enum IconItem: Identifiable, Hashable {
         case .shuffle: return "checkmark.gobackward"
         case .lists: return "list.dash"
         case .order: return "arrow.up.arrow.down"
+        case .filter: return "slider.horizontal.3"
         case .more: return "ellipsis"
         case .add: return "plus.square"
             

@@ -109,7 +109,7 @@ struct SheetPresentationModifier: ViewModifier {
 
 
 extension View {
-    func sheetItem(selected: Binding<IconItem?>) -> some View {
+    func popSheet(selected: Binding<IconItem?>) -> some View {
         self
             .modifier(SheetViewModifier(selected: selected))
     }

@@ -18,8 +18,7 @@ struct TaskView: View {
     @State private var listsSelected: IconItem? = nil
     
     @State private var barSelected: IconItem? = nil
-    @State private var dateSelected: Date? = nil
-    @State private var isPriorityReset = false
+    @State private var isDateReset: Bool = false
     @State private var sheetHeight: CGFloat = .zero
     
     let task: TaskModel
@@ -56,7 +55,7 @@ extension TaskView {
     
     private func addTaskView() -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            listTitleView()
+            TitleView(fontSize: 18, fontWeight: .medium, isGreyed: true)
             
             taskTitleView()
             
@@ -83,7 +82,7 @@ extension TaskView {
     
     private func updateTaskView() -> some View {
         VStack(alignment: .leading, spacing: 18) {
-            listTitleView()
+            TitleView(fontSize: 20, fontWeight: .medium, isGreyed: true)
             
             taskTitleView()
             
@@ -95,7 +94,7 @@ extension TaskView {
             
             Spacer()
             
-            BarContainerView(selected: $barSelected, padding: 0) {
+            HStack(spacing: 30) {
                 ForEach(updateTabs, id: \.self) { tab in
                     Icon(this: tab, isSpace: tab == updateTabs.last, isAlt: true)
                         .onTapGesture {
@@ -130,21 +129,6 @@ extension TaskView {
 }
 
 extension TaskView {
-    
-    private func listTitleView() -> some View {
-        Button {
-            listsSelected = .lists
-        } label: {
-            HStack(alignment: .center) {
-                Icon(this: .move, size: 15)
-                
-                Text(taskViewModel.currentTitle())
-            }
-            .font(.system(size: 18, weight: .medium))
-            .foregroundStyle(Color.text.opacity(0.8))
-        }
-        .sheetItem(selected: $listsSelected)
-    }
     
     private func taskTitleView() -> some View {
         ZStack(alignment: .leading) {
@@ -241,7 +225,9 @@ extension TaskView {
                         .foregroundStyle(Color.text.opacity(half))
                         .opacity(dateInput == nil ? 1 : 0)
                     
+//                    if dateInput != nil {
                     ScheduleButton(date: $dateInput)
+//                    }
                 }
             }
         }
@@ -250,6 +236,13 @@ extension TaskView {
             showSchedule.toggle()
         }
         .popSchedule(show: $showSchedule, input: $dateInput)
+//        .onChange(of: dateInput) { old, new in
+//            if old != nil && new == nil {
+//                taskViewModel.resetDate(of: task)
+//                taskViewModel.printDate(of: task)
+//                print("\(old) to \(new)")
+//            }
+//        }
     }
 
     private func saveButton() -> some View {
@@ -285,20 +278,19 @@ extension TaskView {
     }
     
     private func saveGoBack() {
-        if task.title != titleInput ||
-            task.ofTaskList !=  taskViewModel.currentId() ||
-            task.details != detailsInput ||
-            task.priority != priorityInput.rawValue ||
-            task.date != dateInput {
-            taskViewModel.update(
-                this: task,
-                title: titleInput,
-                ofTaskList: taskViewModel.currentId(),
-                details: detailsInput,
-                priority: priorityInput.rawValue,
-                date: dateInput
-            )
+        
+        if dateInput == .distantPast {
+            taskViewModel.resetDate(of: task)
         }
+        
+        taskViewModel.update(
+            this: task,
+            title: titleInput,
+            ofTaskList: taskViewModel.currentId(),
+            details: detailsInput,
+            priority: priorityInput.rawValue
+        )
+
         navigation.goBack()
     }
 }

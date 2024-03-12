@@ -58,7 +58,13 @@ extension TaskViewModel {
         tasks.removeAll(where: condition)
     }
     
-    func update(this task: TaskModel, title: String? = nil, ofTaskList: UUID? = nil, isDone: Bool? = nil, details: String? = nil, priority: Int? = nil, date: Date? = nil) {
+    func update(this task: TaskModel, 
+                title: String? = nil,
+                ofTaskList: UUID? = nil,
+                details: String? = nil,
+                priority: Int? = nil,
+                date: Date? = nil
+    ) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task.edit(title: title ?? task.title,
                                      ofTaskList: ofTaskList ?? task.ofTaskList,
@@ -66,6 +72,14 @@ extension TaskViewModel {
                                      priority: priority ?? task.priority,
                                      date: date ?? task.date)
         }
+        
+        //        if task.title != titleInput ||
+        //            task.ofTaskList !=  taskViewModel.currentId() ||
+        //            task.details != detailsInput ||
+        //            task.priority != priorityInput.rawValue ||
+        //            task.date != dateInput {
+        //
+        //        }
     }
     
     func resetDate(of task: TaskModel) {
