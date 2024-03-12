@@ -115,7 +115,7 @@ struct SheetPresentationModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 22))
+            .mediumFont()
             .padding(30)
             .fixedSize(horizontal: false, vertical: true)
             .foregroundStyle(Color.text)

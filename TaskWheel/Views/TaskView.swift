@@ -55,7 +55,7 @@ extension TaskView {
     
     private func addTaskView() -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            TitleView(fontSize: 18, fontWeight: .medium, isGreyed: true)
+            TitleView(sizeOrder: .small, fontWeight: .medium, isGreyed: true)
             
             taskTitleView()
             
@@ -76,13 +76,13 @@ extension TaskView {
             }
             .noAnimation()
         }
-        .font(.system(size: 20))
+        .smallFont()
         .onSubmit { clickSave() }
     }
     
     private func updateTaskView() -> some View {
         VStack(alignment: .leading, spacing: 18) {
-            TitleView(fontSize: 20, fontWeight: .medium, isGreyed: true)
+            TitleView(sizeOrder: .small, fontWeight: .medium, isGreyed: true)
             
             taskTitleView()
             
@@ -109,7 +109,7 @@ extension TaskView {
         }
         .padding(.horizontal, 30)
         .padding(.vertical, 15)
-        .font(.system(size: 20))
+        .smallFont()
         .foregroundStyle(Color.text)
         .background(Color.background)
         .navigationBarBackButtonHidden()
@@ -142,7 +142,7 @@ extension TaskView {
                 .strikethrough(task.isDone ? true : false)
             
         }
-        .font(.system(size: 25))
+        .largeFont()
         .frame(maxWidth: .infinity)
         .onSubmit {
             saveGoBack()

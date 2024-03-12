@@ -19,7 +19,6 @@ struct TaskListView: View {
                     .lineLimit(1)
                 
             }
-            .font(.system(size: 25))
             .frame(maxWidth: .infinity)
 //            .onSubmit {
 //                saveGoBack()
@@ -36,7 +35,6 @@ struct TaskListView: View {
 //            }
 //            .buttonStyle(NoAnimationStyle())
         }
-        .font(.system(size: 20))
 //        .onSubmit { clickSave() }
 //
 //        LazyVStack(spacing: 22) {
@@ -48,30 +46,6 @@ struct TaskListView: View {
 //                    }
 //            }
 //        }
-    }
-}
-
-extension TaskListView {
-    
-    private func taskListRowView(taskList: TaskListModel) -> some View {
-        
-        let highlight = taskList.id == taskViewModel.currentId()
-        
-        return HStack(spacing: 15) {
-            Image(systemName: highlight ? "record.circle" : "circle")
-                .fontWeight(highlight ? .bold : .regular)
-                .foregroundStyle(highlight ? Color.accent : Color.text)
-            
-            Text(taskList.title)
-                .fontWeight(highlight ? .bold : .regular)
-            
-            Spacer()
-            
-            Text(String(taskList.count))
-                .greyed()
-                .font(.system(size: 15))
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

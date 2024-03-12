@@ -56,7 +56,8 @@ struct TaskRowView: View {
 
                 if !task.details.isEmpty {
                     Text(task.details)
-                        .font(.system(size: 20, weight: .light))
+                        .smallFont()
+                        .fontWeight(.light)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
                     
@@ -64,13 +65,13 @@ struct TaskRowView: View {
                 
                 if !task.isDone {
                     ScheduleButton(date: $dateInput)
-                    .font(.system(size: 20))
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(10)
-        .font(.system(size: 23))
+        .padding(.horizontal, 10)
+        .mediumFont()
         .mark(isDone: task.isDone)
         .onChange(of: dateInput) { _, _ in
             taskViewModel.resetDate(of: task)

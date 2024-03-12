@@ -14,7 +14,7 @@ struct MainView: View {
         NavigationStack(path: $navigation.path) {
             VStack(spacing: 0) {
                 
-                TitleView(fontSize: 25, fontWeight: .bold, hideIcon: true)
+                TitleView(sizeOrder: .large, fontWeight: .bold, hideIcon: true)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                 

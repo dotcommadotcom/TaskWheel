@@ -52,9 +52,8 @@ extension ListsSheetView {
             
             Spacer()
             
-            Text(String(taskList.count))
-                .greyed()
-                .font(.system(size: 15))
+            Text(String(taskList.count)).greyed()
+                .xsmallFont()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

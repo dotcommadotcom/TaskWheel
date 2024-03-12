@@ -71,8 +71,7 @@ extension TabView {
                         .fill(.clear)
                     
                     
-                    Text(tab.title)
-                        .font(.system(size: 16))
+                    Text(tab.title).xsmallFont()
                         .fontWeight(.semibold)
                 }
                 

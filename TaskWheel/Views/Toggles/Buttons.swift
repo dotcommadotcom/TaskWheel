@@ -12,6 +12,7 @@ struct PriorityButton: View {
 
             HStack(spacing: 10) {
                 Text(priority.text)
+                    .smallFont()
                 
                 Button {
                     priority = .no
@@ -45,6 +46,7 @@ struct ScheduleButton: View {
             HStack(spacing: 10) {
                 Text(date?.relative() ?? "")
                     .foregroundStyle(isPast(date) ? Color.past : Color.text)
+                    .smallFont()
                 
                 Button {
                     date = .distantPast

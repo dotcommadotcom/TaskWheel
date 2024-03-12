@@ -4,7 +4,7 @@ struct TitleView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     
-    @State var fontSize: CGFloat = 15
+    @State var sizeOrder: FontItem
     @State var fontWeight: Font.Weight = .regular
     @State var isGreyed: Bool = false
     @State var hideIcon: Bool = false
@@ -17,12 +17,13 @@ struct TitleView: View {
         } label: {
             HStack(alignment: .center) {
                 if !hideIcon {
-                    Icon(this: .move, size: fontSize * 0.8)
+                    Icon(this: .move, size: sizeOrder.size * 0.8)
                 }
                 
                 Text(taskViewModel.currentTitle())
             }
-            .font(.system(size: fontSize, weight: fontWeight))
+            .font(.system(size: sizeOrder.size))
+            .fontWeight(fontWeight)
             .foregroundStyle(Color.text.opacity(isGreyed ? 0.8 : 1.0))
         }
         .popSheet(selected: $listsSelected)
@@ -31,6 +32,6 @@ struct TitleView: View {
 }
 
 #Preview {
-    TitleView()
+    TitleView(sizeOrder: .large)
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

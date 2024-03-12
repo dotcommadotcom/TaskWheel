@@ -23,7 +23,8 @@ struct OrderSheetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             Text("Sort by").greyed()
-                .font(.system(size: 20, weight: .semibold))
+                .smallFont()
+                .fontWeight(.semibold)
             
             VStack(spacing: 15) {
                 ForEach(orders, id: \.self) { order in

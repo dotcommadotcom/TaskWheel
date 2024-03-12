@@ -25,7 +25,6 @@ struct CalendarView: View {
             
             calendarBarView()
         }
-        .font(.system(size: 18))
         .background(Color.background)
         .foregroundStyle(Color.text)
         .highPriorityGesture(DragGesture().onEnded({

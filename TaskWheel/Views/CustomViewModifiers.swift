@@ -1,6 +1,23 @@
 import SwiftUI
 
 extension View {
+    
+    func xsmallFont() -> some View {
+        self.modifier(FontSizeModifier(sizeOrder: .xsmall))
+    }
+    
+    func smallFont() -> some View {
+        self.modifier(FontSizeModifier(sizeOrder: .small))
+    }
+    
+    func mediumFont() -> some View {
+        self.modifier(FontSizeModifier(sizeOrder: .medium))
+    }
+    
+    func largeFont() -> some View {
+        self.modifier(FontSizeModifier(sizeOrder: .large))
+    }
+    
     func greyed() -> some View {
         self.modifier(GreyTextModifier())
     }
@@ -11,6 +28,29 @@ extension View {
     
     func noAnimation() -> some View {
         self.modifier(NoAnimationModifier())
+    }
+}
+
+enum FontItem {
+    case xsmall, small, large, medium
+    
+    var size: CGFloat {
+        switch self {
+        case .xsmall: return 15
+        case .small: return 20
+        case .medium: return 22
+        case .large: return 25
+        }
+    }
+}
+
+struct FontSizeModifier: ViewModifier {
+    
+    let sizeOrder: FontItem
+
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: sizeOrder.size))
     }
 }
 
