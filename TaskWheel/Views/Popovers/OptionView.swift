@@ -84,7 +84,7 @@ extension OptionView {
                 TextField(titleInput, text: $titleInput, axis: .vertical)
                     .padding()
                     .background(
-                        RoundedRectangle(cornerRadius: 10)
+                        RoundedRectangle(cornerRadius: 5)
                             .stroke(Color.accent, lineWidth: 2))
                     .lineLimit(1)
                     .fixedSize(horizontal: false, vertical: true)

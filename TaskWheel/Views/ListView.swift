@@ -7,7 +7,7 @@ struct ListView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
                 ForEach(taskViewModel.currentTasks()) { task in
                     NavigationLink(value: task) {
                         TaskRowView(task: task)
@@ -39,48 +39,70 @@ struct TaskRowView: View {
     
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 20) {
-            Button {
-                taskViewModel.toggleDone(task)
-            } label: {
-                Icon(
-                    this: .complete,
-                    style: IconOnly(),
-                    isAlt: task.isDone,
-                    isFill: task.priority != 3 && !task.isDone
-                )
-                .foregroundStyle(task.isDone ? Color.text.opacity(0.5) : PriorityItem(task.priority).color)
-            }
-            .alignmentGuide(.firstTextBaseline) { dimension in
-                return dimension[.bottom] - 3
-            }
+            checkmarkButton()
             
             VStack(alignment: .leading, spacing: 10) {
                 Text(task.title.isEmpty ? " " : task.title)
                     .lineLimit(1)
-                
-                
+                    .alignText()
+    
                 if !task.details.isEmpty {
-                    Text(task.details)
-                        .smallFont()
+                    Text(task.details).smallFont()
                         .fontWeight(.light)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
-                    
                 }
-                
+    
                 if !task.isDone && dateInput != nil {
                     ScheduleButton(date: $dateInput)
                 }
             }
         }
+        .padding(10).padding(.horizontal, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(10)
-        .padding(.horizontal, 10)
         .mediumFont()
         .mark(isDone: task.isDone)
         .onChange(of: dateInput) { _, _ in
-            taskViewModel.resetDate(of: task)
+            changeDate()
         }
+    }
+}
+
+extension TaskRowView {
+    private func checkmarkButton() -> some View {
+        Button {
+            clickDone()
+        } label: {
+            Icon(
+                this: .complete,
+                style: IconOnly(),
+                color: checkmarkColor(),
+                isAlt: task.isDone,
+                isFill: task.priority != 3 && !task.isDone
+            )
+        }
+        .alignIcon()
+    }
+}
+
+extension TaskRowView {
+    
+    private func changeDate() {
+        if dateInput == nil {
+            taskViewModel.resetDate(of: task)
+        } else {
+            taskViewModel.update(this: task, date: dateInput)
+        }
+    }
+    
+    private func clickDone() {
+        taskViewModel.toggleDone(task)
+    }
+    
+    private func checkmarkColor() -> Color {
+        return task.isDone ? Color.text.opacity(0.5) :
+        task.priority != 3 ? PriorityItem(task.priority).color :
+        Color.text
     }
 }
 
@@ -103,7 +125,7 @@ extension View {
     }
 }
 
-#Preview {
+#Preview("variations") {
     let taskList = TaskListModel(title: "my tasks")
     let tasks: Deque<TaskModel> = [
         TaskModel(title: "this is the most simple task", ofTaskList: taskList.id, priority: 0),
@@ -128,10 +150,10 @@ extension View {
     }
 }
 
-
-
-
 #Preview {
     ListView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
+
+
+

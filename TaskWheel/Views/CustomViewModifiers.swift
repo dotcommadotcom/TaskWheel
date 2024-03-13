@@ -29,6 +29,14 @@ extension View {
     func noAnimation() -> some View {
         self.modifier(NoAnimationModifier())
     }
+    
+    func alignIcon() -> some View {
+        self.modifier(CheckmarkAlignmentModifier())
+    }
+    
+    func alignText() -> some View {
+        self.modifier(TaskAlignmentModifier())
+    }
 }
 
 enum SizeItem {
@@ -96,3 +104,25 @@ struct NoAnimationModifier: ViewModifier {
         content.buttonStyle(NoAnimationStyle())
     }
 }
+
+struct CheckmarkAlignmentModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .alignmentGuide(.firstTextBaseline) { context in
+                context[VerticalAlignment.center]
+            }
+    }
+}
+
+struct TaskAlignmentModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content.alignmentGuide(.firstTextBaseline) { context in
+            let remainingLine = (context.height - context[.lastTextBaseline])
+            let lineHeight = context[.firstTextBaseline] + remainingLine
+            let lineCenter = lineHeight / 2
+            return lineCenter
+        }
+    }
+}
+
+

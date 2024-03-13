@@ -59,8 +59,7 @@ extension MainView {
                 }
             }
         }
-        .padding(20)
-        .padding(.horizontal, 5)
+        .padding(25)
         .frame(maxWidth: .infinity)
         .popSheet(selected: $barSelected)
     }

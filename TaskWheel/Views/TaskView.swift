@@ -73,7 +73,7 @@ extension TaskView {
     }
     
     private func updateTaskView() -> some View {
-        VStack(alignment: .leading, spacing: 18) {
+        VStack(alignment: .leading, spacing: 25) {
             TitleView(size: .small, fontWeight: .medium, isGreyed: true)
             
             taskTitleView()

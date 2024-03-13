@@ -6,26 +6,24 @@ struct PriorityButton: View {
     @Binding var priority: PriorityItem
     
     var body: some View {
-        ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 5)
-                .foregroundColor(priority.background)
-
-            HStack(spacing: 10) {
-                Text(priority.text)
-                    .smallFont()
-                
-                Button {
-                    priority = .no
-                } label: {
-                    Icon(this: .cancel, size: .xsmall, style: IconOnly()) {}
-                }
+        HStack(spacing: 10) {
+            Text(priority.text).smallFont()
+            
+            Button {
+                priority = .no
+            } label: {
+                Icon(this: .cancel, size: .xsmall, style: IconOnly()) {}
             }
-            .padding(8)
-            .padding(.horizontal, 8)
         }
+        .padding(8).padding(.horizontal, 8)
+        .fixedSize()
         .fontWeight(.medium)
         .foregroundStyle(Color.text)
-        .fixedSize()
+        .background(
+            RoundedRectangle(cornerRadius: 5)
+                .fill(priority.background)
+                .stroke(priority.color, lineWidth: 2)
+        )
         .onTapGesture {
             show.toggle()
         }
@@ -38,28 +36,24 @@ struct ScheduleButton: View {
     
     @Binding var date: Date?
     var body: some View {
-
-        ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.text.opacity(0.7), lineWidth: 2)
+        HStack(spacing: 10) {
+            Text(date?.relative() ?? "").smallFont()
+                .foregroundStyle(isPast(date) ? Color.past : Color.text)
             
-            HStack(spacing: 10) {
-                Text(date?.relative() ?? "")
-                    .foregroundStyle(isPast(date) ? Color.past : Color.text)
-                    .smallFont()
-                
-                Button {
-                    date = .distantPast
-                } label: {
-                    Icon(this: .cancel, size: .xsmall, style: IconOnly()) {}
-                }
+            Button {
+                date = nil
+            } label: {
+                Icon(this: .cancel, size: .xsmall, style: IconOnly()) {}
             }
-            .padding(8)
-            .padding(.horizontal, 8)
         }
+        .padding(8).padding(.horizontal, 8)
+        .fixedSize()
         .fontWeight(.medium)
         .foregroundStyle(Color.text)
-        .fixedSize()
+        .background(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(Color.text.opacity(0.7), lineWidth: 2)
+        )
         .onTapGesture {
             show.toggle()
         }

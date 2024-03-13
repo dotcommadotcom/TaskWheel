@@ -85,7 +85,7 @@ extension ListOfListsView {
                 TextField("Enter title", text: $titleInput)
                     .padding()
                     .background(
-                        RoundedRectangle(cornerRadius: 10)
+                        RoundedRectangle(cornerRadius: 5)
                             .stroke(Color.accent, lineWidth: 2)
                     )
                     .lineLimit(1)
