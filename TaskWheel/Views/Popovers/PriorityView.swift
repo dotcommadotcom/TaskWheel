@@ -46,30 +46,42 @@ struct PriorityView: View {
     
     @Binding var priorityInput: PriorityItem
     
-    let priority: [PriorityItem] = [.high, .medium, .low, .no]
-
+    private let priority: [PriorityItem] = [.high, .medium, .low, .no]
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack(alignment: .leading, spacing: 22) {
             ForEach(priority, id: \.self) { priority in
-                
-                priorityRowView(priority: priority)
-                    .onTapGesture {
-                        priorityInput = priority
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                priorityRowView(this: priority)
             }
         }
     }
+}
+
+extension PriorityView {
     
-    private func priorityRowView(priority: PriorityItem) -> some View {
-        HStack(spacing: 15) {
-            Image(systemName: priorityInput == priority ? "record.circle" : "circle")
-                .fontWeight(priorityInput == priority ? .bold : .regular)
-                .foregroundStyle(priorityInput == priority ? Color.accent : Color.text)
-            
-            Text(priority.text)
-            Spacer()
+    private func priorityRowView(this priority: PriorityItem) -> some View {
+        
+        let highlight = priority == priorityInput
+        
+        return Button {
+            selectPriority(this: priority)
+        } label: {
+            Icon(
+                this: .select,
+                style: Default(spacing: 15),
+                color: highlight ? Color.accent : Color.text,
+                isAlt: highlight
+            ) {
+                Text(priority.text)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .fontWeight(highlight ? .bold : .regular)
         }
+    }
+    
+    private func selectPriority(this priority: PriorityItem) {
+        priorityInput = priority
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

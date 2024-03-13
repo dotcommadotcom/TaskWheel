@@ -4,11 +4,8 @@ struct CalendarView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @StateObject var calendarVM: CalendarViewModel
-    @State var optionSelected: IconItem? = nil
     
     @Binding var dateInput: Date?
-    
-    private let optionTabs: [IconItem] = [.cancel, .save]
     
     init(dateInput: Binding<Date?>) {
         self._dateInput = dateInput
@@ -16,7 +13,7 @@ struct CalendarView: View {
     }
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 25) {
             monthYearView()
             
             daysView()
@@ -25,6 +22,7 @@ struct CalendarView: View {
             
             calendarBarView()
         }
+        .smallFont()
         .background(Color.background)
         .foregroundStyle(Color.text)
         .highPriorityGesture(DragGesture().onEnded({
@@ -41,38 +39,35 @@ extension CalendarView {
             Button {
                 calendarVM.adjustMonth(by: -1)
             } label: {
-                Image(systemName: "chevron.left")
+                Icon(this: .left, size: .xsmall, style: IconOnly())
             }
             
             Text(calendarVM.monthTitle())
                 .frame(maxWidth: .infinity)
-                .fontWeight(.semibold)
+                .fontWeight(.medium)
             
             Button{
                 calendarVM.adjustMonth(by: 1)
             } label: {
-                Image(systemName: "chevron.right")
+                Icon(this: .right, size: .xsmall, style: IconOnly())
             }
         }
         .padding(.horizontal, 10)
-        .frame(maxWidth: .infinity)
-//        .noAnimation()
     }
     
     private func daysView() -> some View {
         HStack {
             ForEach(calendarVM.xdays, id: \.self) { xday in
                 Text("\(xday)")
-                    .frame(maxWidth: .infinity)
                     .foregroundStyle(Color.text.opacity(0.75))
-                    .fontWeight(.semibold)
+                    .fontWeight(.medium)
             }
             .frame(maxWidth: .infinity)
         }
     }
     
     private func weeksView() -> some View {
-        LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 22) {
+        LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 20) {
             ForEach(calendarVM.weeks, id: \.self) { week in
                 ForEach(week, id: \.self) { day in
                     dayButton(day)
@@ -104,7 +99,7 @@ extension CalendarView {
             Button {
                 clickCancel()
             } label: {
-                Icon(this: .cancel, style: IconOnly())
+                Icon(this: .cancel, size: .small, style: IconOnly())
             }
             
             Spacer()
@@ -112,7 +107,7 @@ extension CalendarView {
             Button {
                 clickSave()
             } label: {
-                Icon(this: .save, style: IconOnly())
+                Icon(this: .save, size: .small, style: IconOnly())
             }
         }
         .padding(.horizontal, 10)

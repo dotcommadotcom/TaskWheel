@@ -19,7 +19,7 @@ enum IconItem: Identifiable, Hashable {
         case .details: return "text.alignleft"
         case .delete: return "trash"
         case .filter: return "slider.horizontal.3"
-        case .left: return "slider.horizontal.3"
+        case .left: return "chevron.left"
         case .lists: return "list.dash"
         case .move: return "chevron.up.chevron.down"
         case .option: return "ellipsis"

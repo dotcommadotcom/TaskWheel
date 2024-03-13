@@ -10,7 +10,11 @@ struct ListOfListsView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
-            taskListsView()
+            LazyVStack(spacing: 22) {
+                ForEach(taskViewModel.taskLists) { taskList in
+                    listRowView(this: taskList)
+                }
+            }
             
             Divider()
                 .padding(.horizontal, -10)
@@ -23,31 +27,29 @@ struct ListOfListsView: View {
 
 extension ListOfListsView {
     
-    private func taskListsView() -> some View {
-        LazyVStack(spacing: 22) {
-            ForEach(taskViewModel.taskLists) { taskList in
-                let highlight = taskList.id == taskViewModel.currentId()
-                
-                Button {
-                    switchTaskList(to: taskList)
-                } label: {
-                    Icon(
-                        this: .select,
-                        style: Default(spacing: 15),
-                        color: highlight ? Color.accent : Color.text, isAlt: highlight
-                    ) {
-                        Text(taskList.title)
-                            .fontWeight(highlight ? .bold : .regular)
-                        
-                        Spacer()
-                        
-                        Text(String(taskList.count)).greyed()
-                            .xsmallFont()
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+    private func listRowView(this taskList: TaskListModel) -> some View {
+        
+        let highlight = taskList.id == taskViewModel.currentId()
+        
+        return Button {
+            switchTaskList(to: taskList)
+        } label: {
+            Icon(
+                this: .select,
+                style: Default(spacing: 15),
+                color: highlight ? Color.accent : Color.text, 
+                isAlt: highlight
+            ) {
+                Text(taskList.title)
                     .fontWeight(highlight ? .bold : .regular)
-                }
+                
+                Spacer()
+                
+                Text(String(taskList.count)).greyed()
+                    .xsmallFont()
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .fontWeight(highlight ? .bold : .regular)
         }
     }
     

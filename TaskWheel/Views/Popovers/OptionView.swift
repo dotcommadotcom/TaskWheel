@@ -27,7 +27,7 @@ struct OptionView: View {
     @State private var titleInput: String = ""
     @State private var showRenameList = false
     
-    let options: [OptionItem] = [.defaultList, .deleteList, .showHide, .deleteCompleted]
+    private let options: [OptionItem] = [.defaultList, .deleteList, .showHide, .deleteCompleted]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {

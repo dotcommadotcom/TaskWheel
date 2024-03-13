@@ -17,8 +17,8 @@ struct OrderView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
-
-    let orders: [OrderItem] = [.manual, .dofirst, .priority, .date]
+    
+    private let orders: [OrderItem] = [.manual, .dofirst, .priority, .date]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
@@ -26,29 +26,34 @@ struct OrderView: View {
                 .smallFont()
                 .fontWeight(.semibold)
             
-            orderRowView()
-        }
-    }
-    
-    private func orderRowView() -> some View {
-        VStack(spacing: 22) {
-            ForEach(orders, id: \.self) { order in
-                let highlight = order == taskViewModel.currentOrder()
-                
-                Button {
-                    selectOrder(this: order)
-                } label: {
-                    Icon(
-                        this: .select,
-                        style: Default(spacing: 15),
-                        color: highlight ? Color.accent : Color.text, isAlt: highlight
-                    ) {
-                        Text(order.text)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .fontWeight(highlight ? .bold : .regular)
+            VStack(spacing: 22) {
+                ForEach(orders, id: \.self) { order in
+                    orderRowView(this: order)
                 }
             }
+        }
+    }
+}
+
+extension OrderView {
+    
+    private func orderRowView(this order: OrderItem) -> some View {
+        
+        let highlight = order == taskViewModel.currentOrder()
+        
+        return Button {
+            selectOrder(this: order)
+        } label: {
+            Icon(
+                this: .select,
+                style: Default(spacing: 15),
+                color: highlight ? Color.accent : Color.text, 
+                isAlt: highlight
+            ) {
+                Text(order.text)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .fontWeight(highlight ? .bold : .regular)
         }
     }
     
