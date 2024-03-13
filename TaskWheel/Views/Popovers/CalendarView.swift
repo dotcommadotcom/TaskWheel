@@ -101,15 +101,19 @@ extension CalendarView {
     private func calendarBarView() -> some View {
         
         HStack {
-            Icon(this: .cancel)
-                .onTapGesture {
-                    clickCancel()
-                }
+            Button {
+                clickCancel()
+            } label: {
+                Icon(this: .cancel, style: IconOnly())
+            }
             
-            Icon(this: .save, isSpace: true)
-                .onTapGesture {
-                    clickSave()
-                }
+            Spacer()
+            
+            Button {
+                clickSave()
+            } label: {
+                Icon(this: .save, style: IconOnly())
+            }
         }
         .padding(.horizontal, 10)
     }

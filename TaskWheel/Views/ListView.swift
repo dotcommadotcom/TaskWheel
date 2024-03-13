@@ -42,8 +42,13 @@ struct TaskRowView: View {
             Button {
                 taskViewModel.toggleDone(task)
             } label: {
-                Icon(this: .complete, isAlt: task.isDone, isFill: task.priority != 3 && !task.isDone)
-                    .foregroundStyle(task.isDone ? Color.text.opacity(0.5) : PriorityItem(task.priority).color)
+                Icon(
+                    this: .complete,
+                    style: IconOnly(),
+                    isAlt: task.isDone,
+                    isFill: task.priority != 3 && !task.isDone
+                )
+                .foregroundStyle(task.isDone ? Color.text.opacity(0.5) : PriorityItem(task.priority).color)
             }
             .alignmentGuide(.firstTextBaseline) { dimension in
                 return dimension[.bottom] - 3
@@ -52,8 +57,8 @@ struct TaskRowView: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text(task.title.isEmpty ? " " : task.title)
                     .lineLimit(1)
-                    
-
+                
+                
                 if !task.details.isEmpty {
                     Text(task.details)
                         .smallFont()
@@ -63,7 +68,7 @@ struct TaskRowView: View {
                     
                 }
                 
-                if !task.isDone {
+                if !task.isDone && dateInput != nil {
                     ScheduleButton(date: $dateInput)
                 }
             }

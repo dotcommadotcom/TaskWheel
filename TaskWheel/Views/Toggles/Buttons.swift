@@ -17,7 +17,7 @@ struct PriorityButton: View {
                 Button {
                     priority = .no
                 } label: {
-                    Icon(this: .cancel, size: .small)
+                    Icon(this: .cancel, size: .xsmall, style: IconOnly()) {}
                 }
             }
             .padding(8)
@@ -51,7 +51,7 @@ struct ScheduleButton: View {
                 Button {
                     date = .distantPast
                 } label: {
-                    Icon(this: .cancel)
+                    Icon(this: .cancel, size: .xsmall, style: IconOnly()) {}
                 }
             }
             .padding(8)

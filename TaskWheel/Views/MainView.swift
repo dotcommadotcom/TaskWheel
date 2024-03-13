@@ -54,9 +54,7 @@ extension MainView {
                 Button {
                     barSelected = icon
                 } label: {
-                    Icon(this: icon,
-                         size: .custom(25),
-                         style: IconOnly())
+                    Icon(this: icon, size: .custom(25), style: IconOnly())
                 }
             }
         }

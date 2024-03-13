@@ -5,11 +5,8 @@ struct ListOfListsView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
     
-    @State var newTitleInput: String = ""
+    @State private var titleInput: String = ""
     @State private var showNewList = false
-    
-    private let newListText = "Create new list"
-    private let newTitleDefault = "Enter title"
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
@@ -29,33 +26,31 @@ extension ListOfListsView {
     private func taskListsView() -> some View {
         LazyVStack(spacing: 22) {
             ForEach(taskViewModel.taskLists) { taskList in
-                taskListRowView(taskList: taskList)
-                    .onTapGesture {
+                let highlight = taskList.id == taskViewModel.currentId()
+                
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
                         switchTaskList(to: taskList)
-                        presentationMode.wrappedValue.dismiss()
                     }
+                } label: {
+                    Icon(
+                        this: .select,
+                        style: Default(spacing: 15),
+                        color: highlight ? Color.accent : Color.text, isAlt: highlight
+                    ) {
+                        Text(taskList.title)
+                            .fontWeight(highlight ? .bold : .regular)
+                        
+                        Spacer()
+                        
+                        Text(String(taskList.count)).greyed()
+                            .xsmallFont()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fontWeight(highlight ? .bold : .regular)
+                }
             }
         }
-    }
-    
-    private func taskListRowView(taskList: TaskListModel) -> some View {
-        
-        let highlight = taskList.id == taskViewModel.currentId()
-        
-        return HStack(spacing: 15) {
-            Image(systemName: highlight ? "record.circle" : "circle")
-                .fontWeight(highlight ? .bold : .regular)
-                .foregroundStyle(highlight ? Color.accent : Color.text)
-            
-            Text(taskList.title)
-                .fontWeight(highlight ? .bold : .regular)
-            
-            Spacer()
-            
-            Text(String(taskList.count)).greyed()
-                .xsmallFont()
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private func newListView() -> some View {
@@ -63,14 +58,15 @@ extension ListOfListsView {
             HStack(spacing: 15) {
                 Button {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        clickCreateOrCancel()
+                        toggleNewList()
                     }
                 } label: {
-                    Image(systemName: "plus")
-                        .rotationEffect(Angle(degrees: !showNewList ? 0 : 45))
-                    Text(newListText)
+                    Icon(this: .plus,
+                         style: Default(spacing: 15)
+                    ) {
+                        Text("Create new list")
+                    }
                 }
-                
                 
                 Spacer()
                 
@@ -78,16 +74,16 @@ extension ListOfListsView {
                     Button {
                         clickSave()
                     } label: {
-                        Icon(this: .save)
+                        Icon(this: .save, style: IconOnly())
                     }
-                    .noAnimation()
-                    .disableClick(if: newTitleInput.isEmpty)
+                    .disableClick(if: titleInput.isEmpty)
                 }
             }
+            .noAnimation()
             .frame(maxWidth: .infinity, alignment: .leading)
             
             if showNewList {
-                TextField(newTitleDefault, text: $newTitleInput)
+                TextField("Enter title", text: $titleInput)
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -109,16 +105,14 @@ extension ListOfListsView {
         presentationMode.wrappedValue.dismiss()
     }
     
-    private func clickCreateOrCancel() {
+    private func toggleNewList() {
+        titleInput = ""
         showNewList.toggle()
-        if !showNewList {
-            newTitleInput = ""
-        }
     }
     
     private func clickSave() {
-        if !newTitleInput.isEmpty {
-            taskViewModel.addTaskList(title: newTitleInput)
+        if !titleInput.isEmpty {
+            taskViewModel.addTaskList(title: titleInput)
         }
         presentationMode.wrappedValue.dismiss()
     }

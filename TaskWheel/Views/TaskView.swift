@@ -25,10 +25,6 @@ struct TaskView: View {
     private var updateIcons: [(IconItem, () -> Void)] { 
         [(.delete, clickDelete), (.complete, clickComplete)]
     }
-    private let half: Double = 0.5
-    private let iconSize: SizeItem = .medium
-    private let textDefault: String = "What now?"
-    private let detailDefault: String = "Add details"
     
     init(task: TaskModel?, _ isNew: Bool = false) {
         self.task = task ?? TaskModel(title: "")
@@ -186,8 +182,8 @@ extension TaskView {
             clickPriority()
         } label: {
             Icon(this: .priority,
-                 isAlt: isAdd && priorityInput != .no,
-                 style: isAdd ? IconOnly() : Default(spacing: 20)
+                 style: isAdd ? IconOnly() : Default(spacing: 20),
+                 isAlt: isAdd && priorityInput != .no
             ) {
                 ZStack(alignment: .leading) {
                     Text("Add priority").greyed()
@@ -227,7 +223,7 @@ extension TaskView {
         Button {
             clickSave()
         } label: {
-            Icon(this: .save)
+            Icon(this: .save, style: IconOnly())
         }
         .disableClick(if: isTaskEmpty())
     }

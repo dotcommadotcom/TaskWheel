@@ -43,6 +43,6 @@ struct TitleView: View {
 }
 
 #Preview {
-    TitleView(size: .large)
+    TitleView(size: .large, fontWeight: .bold)
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

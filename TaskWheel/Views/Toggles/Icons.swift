@@ -2,11 +2,9 @@ import SwiftUI
 
 enum IconItem: Identifiable, Hashable {
     
-    case complete, details, priority, schedule
-    
-    case shuffle, lists, order, filter, more, add
-    
-    case cancel, delete, save, move, settings, ticker
+    case add, back, cancel, complete, details, delete, filter
+    case left, lists, order, more, move, plus, priority
+    case right, save, schedule, select, settings, shuffle, ticker
     
     var id: Self {
         self
@@ -14,63 +12,45 @@ enum IconItem: Identifiable, Hashable {
     
     var name: String {
         switch self {
+        case .add: return "plus.square"
+        case .back: return "arrow.backward"
+        case .cancel: return "xmark"
         case .complete: return "square"
         case .details: return "text.alignleft"
-        case .priority: return "tag"
-        case .schedule: return "alarm"
-            
-        case .shuffle: return "checkmark.gobackward"
+        case .delete: return "trash"
+        case .filter: return "slider.horizontal.3"
+        case .left: return "slider.horizontal.3"
         case .lists: return "list.dash"
         case .order: return "arrow.up.arrow.down"
-        case .filter: return "slider.horizontal.3"
         case .more: return "ellipsis"
-        case .add: return "plus.square"
-            
-        case .cancel: return "xmark"
-        case .delete: return "trash"
-        case .save: return "square.and.arrow.down"
         case .move: return "chevron.up.chevron.down"
+        case .plus: return "plus"
+        case .priority: return "tag"
+        case .right: return "chevron.right"
+        case .save: return "square.and.arrow.down"
+        case .select: return "circle"
+        case .schedule: return "alarm"
         case .settings: return "gearshape.fill"
+        case .shuffle: return "checkmark.gobackward"
         case .ticker: return "arrowtriangle.backward.fill"
         }
     }
     
     var alternative: String {
         switch self {
+        case .select: return "record.circle"
         case .complete: return "checkmark.square"
         case .priority: return "tag.fill"
         default: return self.name
         }
     }
     
-    var title: String {
-        switch self {
-        case .complete: return "square"
-        case .details: return "text.alignleft"
-        case .priority: return "tag"
-        case .schedule: return "alarm"
-            
-        case .shuffle: return ""
-        case .lists: return "Select list"
-        case .order: return "Change order"
-        case .filter: return ""
-        case .more: return "More options"
-        case .add: return "Add task"
-            
-        case .cancel: return "xmark"
-        case .delete: return "trash"
-        case .save: return "square.and.arrow.down"
-        case .move: return "chevron.up.chevron.down"
-        case .settings: return "gearshape.fill"
-        case .ticker: return "arrowtriangle.backward.fill"
-        }
-    }
-    
     var adjust: Double {
         switch self {
         case .cancel: return 0.8
-        case .save: return 1.1
+        case .save: return 1.2
         case .move: return 0.6
+        case .plus: return 0.8
         default: return 1.0
         }
     }
@@ -83,23 +63,21 @@ struct Icon<Content: View>: View {
     var isAlt: Bool = false
     var isFill: Bool = false
     let size: SizeItem
-    let weight: Font.Weight
+    let color: Color
     let style: any LabelStyle
     
     init(
         this: IconItem,
-        isSpace: Bool = false,
+        size: SizeItem = .medium,
+        style: any LabelStyle = Default(spacing: 10),
+        color: Color = Color.text,
         isAlt: Bool = false,
         isFill: Bool = false,
-        size: SizeItem = .medium,
-        weight: Font.Weight = .regular,
-        style: any LabelStyle = Default(spacing: 10),
-        @ViewBuilder content: () -> Content = { EmptyView() } 
+        @ViewBuilder content: () -> Content = { EmptyView() }
     ) {
         self.this = this
         self.size = size
-        self.weight = weight
-        self.isSpace = isSpace
+        self.color = color
         self.isAlt = isAlt
         self.isFill = isFill
         self.style = style
@@ -122,6 +100,7 @@ struct Icon<Content: View>: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 }
+                .foregroundStyle(color)
                 .frame(width: size.scale * this.adjust, height: size.scale * this.adjust)
             }
             .labelStyle(style)
@@ -153,27 +132,8 @@ struct IconOnly: LabelStyle {
     }
 }
 
-struct Backward: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        HStack(alignment: .center, spacing: 8) {
-            configuration.title
-            configuration.icon
-        }
-    }
-}
-
 #Preview("default") {
     Icon(this: .move, style: Default(spacing: 10)) {
         Text("hello world")
     }
 }
-
-//#Preview("icons") {
-//    let icons: [IconItem] = [.lists, .order, .more, .add, .settings, .cancel, .delete, .save, .move]
-//
-//    return HStack {
-//        ForEach(icons, id: \.self) { icon in
-//            Icon(this: icon)
-//        }
-//    }
-//}

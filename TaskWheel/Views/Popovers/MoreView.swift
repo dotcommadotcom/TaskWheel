@@ -38,10 +38,12 @@ struct MoreView: View {
                 moreOptionsView(option: .rename)
                 
                 if showRenameList {
+                    Spacer()
+                    
                     Button {
                         clickSave()
                     } label: {
-                        Icon(this: .save, isSpace: true)
+                        Icon(this: .save, style: IconOnly())
                     }
                 }
             }
