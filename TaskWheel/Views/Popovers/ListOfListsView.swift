@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ListsSheetView: View {
+struct ListOfListsView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
@@ -24,7 +24,7 @@ struct ListsSheetView: View {
     
 }
 
-extension ListsSheetView {
+extension ListOfListsView {
     
     private func taskListsView() -> some View {
         LazyVStack(spacing: 22) {
@@ -102,7 +102,7 @@ extension ListsSheetView {
     }
 }
 
-extension ListsSheetView {
+extension ListOfListsView {
     
     private func switchTaskList(to taskList: TaskListModel) {
         taskViewModel.updateCurrentTo(this: taskList)
@@ -125,6 +125,6 @@ extension ListsSheetView {
 }
 
 #Preview("lists sheet") {
-    ListsSheetView()
+    ListOfListsView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

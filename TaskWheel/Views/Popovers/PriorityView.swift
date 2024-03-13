@@ -40,11 +40,11 @@ enum PriorityItem: Int {
     }
 }
 
-struct PrioritySheetView: View {
+struct PriorityView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @Binding var selected: PriorityItem
+    @Binding var priorityInput: PriorityItem
     @Binding var showPriority: Bool
     
     let priority: [PriorityItem] = [.high, .medium, .low, .no]
@@ -54,7 +54,7 @@ struct PrioritySheetView: View {
             ForEach(priority, id: \.self) { priority in
                 priorityRowView(priority: priority)
                     .onTapGesture {
-                        selected = priority
+                        priorityInput = priority
                         showPriority.toggle()
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -64,9 +64,9 @@ struct PrioritySheetView: View {
     
     private func priorityRowView(priority: PriorityItem) -> some View {
         HStack(spacing: 15) {
-            Image(systemName: selected == priority ? "record.circle" : "circle")
-                .fontWeight(selected == priority ? .bold : .regular)
-                .foregroundStyle(selected == priority ? Color.accent : Color.text)
+            Image(systemName: priorityInput == priority ? "record.circle" : "circle")
+                .fontWeight(priorityInput == priority ? .bold : .regular)
+                .foregroundStyle(priorityInput == priority ? Color.accent : Color.text)
             
             Text(priority.text)
             Spacer()
@@ -77,7 +77,7 @@ struct PrioritySheetView: View {
 #Preview("priority") {
     ZStack {
         Color.pink
-        PrioritySheetView(selected: .constant(.no), showPriority: .constant(false))
+        PriorityView(priorityInput: .constant(.no), showPriority: .constant(false))
             .background(Color.background)
     }
 }

@@ -19,7 +19,7 @@ enum OptionItem: Identifiable {
     
 }
 
-struct MoreSheetView: View {
+struct MoreView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
@@ -67,7 +67,7 @@ struct MoreSheetView: View {
     }
 }
 
-extension MoreSheetView {
+extension MoreView {
     
     private func moreOptionsView(option: OptionItem) -> some View {
         
@@ -93,7 +93,7 @@ extension MoreSheetView {
     
 }
 
-extension MoreSheetView {
+extension MoreView {
     
     private func click(option: OptionItem) {
         switch option {
@@ -141,6 +141,6 @@ extension MoreSheetView {
 }
 
 #Preview("more sheet") {
-    MoreSheetView()
+    MoreView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

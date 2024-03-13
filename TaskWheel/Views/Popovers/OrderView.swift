@@ -13,7 +13,7 @@ enum OrderItem {
     }
 }
 
-struct OrderSheetView: View {
+struct OrderView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
@@ -60,6 +60,6 @@ struct OrderSheetView: View {
 #Preview {
     ZStack {
         Color.gray.opacity(0.3)
-        OrderSheetView()
+        OrderView()
     }
 }
