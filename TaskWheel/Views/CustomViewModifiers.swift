@@ -3,19 +3,19 @@ import SwiftUI
 extension View {
     
     func xsmallFont() -> some View {
-        self.modifier(FontSizeModifier(sizeOrder: .xsmall))
+        self.modifier(SizeModifier(size: .xsmall))
     }
     
     func smallFont() -> some View {
-        self.modifier(FontSizeModifier(sizeOrder: .small))
+        self.modifier(SizeModifier(size: .small))
     }
     
     func mediumFont() -> some View {
-        self.modifier(FontSizeModifier(sizeOrder: .medium))
+        self.modifier(SizeModifier(size: .medium))
     }
     
     func largeFont() -> some View {
-        self.modifier(FontSizeModifier(sizeOrder: .large))
+        self.modifier(SizeModifier(size: .large))
     }
     
     func greyed() -> some View {
@@ -31,10 +31,10 @@ extension View {
     }
 }
 
-enum FontItem {
+enum SizeItem {
     case xsmall, small, large, medium
     
-    var size: Font {
+    var font: Font {
         switch self {
         case .xsmall: return Font.subheadline // 15
         case .small: return Font.title3 // 20
@@ -42,15 +42,24 @@ enum FontItem {
         case .large: return Font.title // 28
         }
     }
+    
+    var scale: CGFloat {
+        switch self {
+        case .xsmall: return 15
+        case .small: return 20
+        case .medium: return 22
+        case .large: return 28
+        }
+    }
 }
 
-struct FontSizeModifier: ViewModifier {
+struct SizeModifier: ViewModifier {
     
-    let sizeOrder: FontItem
+    let size: SizeItem
 
     func body(content: Content) -> some View {
         content
-            .font(sizeOrder.size)
+            .font(size.font)
     }
 }
 

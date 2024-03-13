@@ -55,7 +55,7 @@ extension TaskView {
     
     private func addTaskView() -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            TitleView(sizeOrder: .small, fontWeight: .medium, isGreyed: true)
+            TitleView(size: .small, fontWeight: .medium, isGreyed: true)
             
             taskTitleView()
             
@@ -82,7 +82,7 @@ extension TaskView {
     
     private func updateTaskView() -> some View {
         VStack(alignment: .leading, spacing: 18) {
-            TitleView(sizeOrder: .small, fontWeight: .medium, isGreyed: true)
+            TitleView(size: .small, fontWeight: .medium, isGreyed: true)
             
             taskTitleView()
             

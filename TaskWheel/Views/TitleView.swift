@@ -4,36 +4,44 @@ struct TitleView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     
-    @State var sizeOrder: FontItem
-    @State var fontWeight: Font.Weight = .regular
-    @State var isGreyed: Bool = false
-    @State var hideIcon: Bool = false
-    
     @State private var listsSelected: IconItem? = nil
+    
+    let size: SizeItem
+    let fontWeight: Font.Weight
+    let isGreyed: Bool
+    let hideIcon: Bool
+    
+    init(
+        size: SizeItem,
+        fontWeight: Font.Weight = .regular,
+        isGreyed: Bool = false,
+        hideIcon: Bool = false
+    ) {
+        self.size = size
+        self.fontWeight = fontWeight
+        self.isGreyed = isGreyed
+        self.hideIcon = hideIcon
+    }
     
     var body: some View {
         Button {
             listsSelected = .lists
         } label: {
-            HStack(alignment: .center) {
-                if !hideIcon {
-                    Icon(this: .move)
-                        .font(sizeOrder.size)
-                            //sizeOrder.size * 0.8)
-                }
-                
-                Text(taskViewModel.currentTitle())
-            }
-            .font(sizeOrder.size)
+            Icon(
+                this: .move,
+                text: taskViewModel.currentTitle(),
+                size: size.scale,
+                style: hideIcon ? TextOnly() : Default()
+            )
             .fontWeight(fontWeight)
             .foregroundStyle(Color.text.opacity(isGreyed ? 0.8 : 1.0))
         }
-        .popSheet(selected: $listsSelected)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .popSheet(selected: $listsSelected)
     }
 }
 
 #Preview {
-    TitleView(sizeOrder: .large)
+    TitleView(size: .large)
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }
