@@ -47,7 +47,7 @@ struct MoreView: View {
                     }
                 }
             }
-            .noAnimation()
+//            .noAnimation()
             
             if showRenameList {
                 TextField(titleInput, text: $titleInput, axis: .vertical)
@@ -90,7 +90,7 @@ extension MoreView {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .disableClick(if: isDisabled)
-        .noAnimation()
+//        .noAnimation()
     }
     
 }

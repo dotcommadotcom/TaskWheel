@@ -1,14 +1,14 @@
 import SwiftUI
 
 enum OrderItem {
-    case manual, priority, date, dofirst
+    case manual, dofirst, priority, date
     
     var text: String {
         switch self {
         case .manual: return "Manual (default)"
+        case .dofirst: return "Do First"
         case .date: return "Date"
         case .priority: return "Priority"
-        case .dofirst: return "Do First"
         }
     }
 }
@@ -26,28 +26,29 @@ struct OrderView: View {
                 .smallFont()
                 .fontWeight(.semibold)
             
-            VStack(spacing: 15) {
-                ForEach(orders, id: \.self) { order in
-                    orderRowView(order: order)
-                        .onTapGesture {
-                            selectOrder(this: order)
-                        }
-                }
-                
-            }
+            orderRowView()
         }
     }
     
-    private func orderRowView(order: OrderItem) -> some View {
-        let highlight = order == taskViewModel.currentOrder()
-        
-        return HStack(spacing: 15) {
-            Image(systemName: highlight ? "record.circle" : "circle")
-                .fontWeight(highlight ? .bold : .regular)
-                .foregroundStyle(highlight ? Color.accent : Color.text)
-            
-            Text(order.text)
-            Spacer()
+    private func orderRowView() -> some View {
+        VStack(spacing: 22) {
+            ForEach(orders, id: \.self) { order in
+                let highlight = order == taskViewModel.currentOrder()
+                
+                Button {
+                    selectOrder(this: order)
+                } label: {
+                    Icon(
+                        this: .select,
+                        style: Default(spacing: 15),
+                        color: highlight ? Color.accent : Color.text, isAlt: highlight
+                    ) {
+                        Text(order.text)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fontWeight(highlight ? .bold : .regular)
+                }
+            }
         }
     }
     

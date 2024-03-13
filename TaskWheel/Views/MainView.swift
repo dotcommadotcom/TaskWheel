@@ -35,6 +35,7 @@ struct MainView: View {
             .background(Color.background)
             .foregroundStyle(Color.text)
             .animation(.easeInOut, value: tabSelected)
+            .noAnimation()
             .navigationDestination(for: TaskModel.self) { task in
                 TaskView(task: task)
             }

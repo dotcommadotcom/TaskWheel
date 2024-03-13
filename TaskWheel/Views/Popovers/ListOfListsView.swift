@@ -79,7 +79,7 @@ extension ListOfListsView {
                     .disableClick(if: titleInput.isEmpty)
                 }
             }
-            .noAnimation()
+//            .noAnimation()
             .frame(maxWidth: .infinity, alignment: .leading)
             
             if showNewList {

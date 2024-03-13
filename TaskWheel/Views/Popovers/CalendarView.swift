@@ -56,7 +56,7 @@ extension CalendarView {
         }
         .padding(.horizontal, 10)
         .frame(maxWidth: .infinity)
-        .noAnimation()
+//        .noAnimation()
     }
     
     private func daysView() -> some View {

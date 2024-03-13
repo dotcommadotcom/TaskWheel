@@ -140,7 +140,7 @@ extension TaskView {
             
             saveButton()
         }
-        .noAnimation()
+//        .noAnimation()
     }
     
     private func taskBarView() -> some View {
