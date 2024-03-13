@@ -8,7 +8,7 @@ struct MainView: View {
     @State private var tabSelected: TabItem = .list
     @State private var barSelected: IconItem? = nil
     
-    private let mainIcons: [IconItem] = [.order, .more, .add]
+    private let mainIcons: [IconItem] = [.order, .option, .add]
     
     var body: some View {
         NavigationStack(path: $navigation.path) {

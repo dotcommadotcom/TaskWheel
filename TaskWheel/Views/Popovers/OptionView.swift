@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum OptionItem: Identifiable {
-    case rename, defaultList, deleteList, showHide, deleteCompleted
+    case defaultList, deleteList, showHide, deleteCompleted, rename
     
     var id: Self {
         self
@@ -9,33 +9,64 @@ enum OptionItem: Identifiable {
     
     var text: String {
         switch self {
-        case .rename: return "Rename list"
         case .defaultList: return "Set as default"
         case .deleteList: return "Delete list"
         case .showHide: return "Show/Hide completed tasks"
         case .deleteCompleted: return "Delete all completed tasks"
+        case .rename: return "Rename list"
         }
     }
     
 }
 
-struct MoreView: View {
+struct OptionView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode
+    
     @State private var titleInput: String = ""
     @State private var showRenameList = false
     
-    let moreOptions: [OptionItem] = [.defaultList, .deleteList, .showHide, .deleteCompleted]
+    let options: [OptionItem] = [.defaultList, .deleteList, .showHide, .deleteCompleted]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
-            ForEach(moreOptions) { option in
-                moreOptionsView(option: option)
+            ForEach(options) { option in
+                optionRowView(option: option)
             }
             
+            renameListView()
+        }
+    }
+}
+
+extension OptionView {
+    
+    private func optionRowView(option: OptionItem) -> some View {
+        
+        var isDisabled: Bool {
+            switch option {
+            case .defaultList, .deleteList:
+                return taskViewModel.currentId() == taskViewModel.defaultTaskList.id
+            case .showHide, .deleteCompleted:
+                return taskViewModel.countDone() == 0
+            default: return false
+            }
+        }
+        
+        return Button {
+            click(option: option)
+        } label: {
+            Text(option.text)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .disableClick(if: isDisabled)
+    }
+    
+    private func renameListView() -> some View {
+        VStack {
             HStack(spacing: 30) {
-                moreOptionsView(option: .rename)
+                optionRowView(option: .rename)
                 
                 if showRenameList {
                     Spacer()
@@ -45,9 +76,9 @@ struct MoreView: View {
                     } label: {
                         Icon(this: .save, style: IconOnly())
                     }
+                    .disableClick(if: titleInput.isEmpty)
                 }
             }
-//            .noAnimation()
             
             if showRenameList {
                 TextField(titleInput, text: $titleInput, axis: .vertical)
@@ -69,33 +100,7 @@ struct MoreView: View {
     }
 }
 
-extension MoreView {
-    
-    private func moreOptionsView(option: OptionItem) -> some View {
-        
-        var isDisabled: Bool {
-            switch option {
-            case .defaultList, .deleteList:
-                return taskViewModel.currentId() == taskViewModel.defaultTaskList.id
-            case .showHide, .deleteCompleted:
-                return taskViewModel.currentDoneTasks().count == 0
-            default: return false
-            }
-        }
-        
-        return Button {
-            click(option: option)
-        } label: {
-            Text(option.text)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .disableClick(if: isDisabled)
-//        .noAnimation()
-    }
-    
-}
-
-extension MoreView {
+extension OptionView {
     
     private func click(option: OptionItem) {
         switch option {
@@ -123,10 +128,7 @@ extension MoreView {
     }
     
     private func clickDeleteCompleted() {
-        taskViewModel.deleteIf {
-            $0.isDone &&
-            $0.ofTaskList == taskViewModel.currentId()
-        }
+        taskViewModel.deleteDone()
         presentationMode.wrappedValue.dismiss()
     }
     
@@ -137,12 +139,14 @@ extension MoreView {
     }
     
     private func clickSave() {
-        taskViewModel.updateCurrentTitle(to: titleInput)
+        if !titleInput.isEmpty {
+            taskViewModel.updateCurrentTitle(to: titleInput)
+        }
         presentationMode.wrappedValue.dismiss()
     }
 }
 
 #Preview("more sheet") {
-    MoreView()
+    OptionView()
         .environmentObject(TaskViewModel(TaskViewModel.tasksExamples(), TaskViewModel.examples))
 }

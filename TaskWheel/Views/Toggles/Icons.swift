@@ -3,7 +3,7 @@ import SwiftUI
 enum IconItem: Identifiable, Hashable {
     
     case add, back, cancel, complete, details, delete, filter
-    case left, lists, order, more, move, plus, priority
+    case left, lists, move, option, order, plus, priority
     case right, save, schedule, select, settings, shuffle, ticker
     
     var id: Self {
@@ -21,9 +21,9 @@ enum IconItem: Identifiable, Hashable {
         case .filter: return "slider.horizontal.3"
         case .left: return "slider.horizontal.3"
         case .lists: return "list.dash"
-        case .order: return "arrow.up.arrow.down"
-        case .more: return "ellipsis"
         case .move: return "chevron.up.chevron.down"
+        case .option: return "ellipsis"
+        case .order: return "arrow.up.arrow.down"
         case .plus: return "plus"
         case .priority: return "tag"
         case .right: return "chevron.right"

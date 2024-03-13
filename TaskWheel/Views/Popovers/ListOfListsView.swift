@@ -29,9 +29,7 @@ extension ListOfListsView {
                 let highlight = taskList.id == taskViewModel.currentId()
                 
                 Button {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        switchTaskList(to: taskList)
-                    }
+                    switchTaskList(to: taskList)
                 } label: {
                     Icon(
                         this: .select,
@@ -68,9 +66,9 @@ extension ListOfListsView {
                     }
                 }
                 
-                Spacer()
-                
                 if showNewList {
+                    Spacer()
+                    
                     Button {
                         clickSave()
                     } label: {
@@ -79,7 +77,6 @@ extension ListOfListsView {
                     .disableClick(if: titleInput.isEmpty)
                 }
             }
-//            .noAnimation()
             .frame(maxWidth: .infinity, alignment: .leading)
             
             if showNewList {

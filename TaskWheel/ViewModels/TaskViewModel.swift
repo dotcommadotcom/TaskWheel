@@ -112,11 +112,7 @@ extension TaskViewModel {
     }
     
     func currentDoneTasks() -> Deque<TaskModel> {
-        guard taskLists[current].isDoneVisible else {
-            return []
-        }
-        
-        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }.sorted(by: ordering()))
+        return Deque(tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone && taskLists[current].isDoneVisible})
     }
     
     func updateCurrentTo(this taskList: TaskListModel) {
@@ -155,10 +151,16 @@ extension TaskViewModel {
         taskLists.remove(at: index)
     }
     
+    
     func deleteDone() {
         deleteIf { $0.isDone && $0.ofTaskList == self.currentId()}
     }
     
+    // TEST
+    func countDone() -> Int {
+        return tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }.count
+    }
+
     func toggleCurrentDoneVisible() {
         taskLists[current] = taskLists[current].toggleDoneVisible()
     }

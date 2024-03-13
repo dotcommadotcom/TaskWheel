@@ -82,7 +82,6 @@ extension TabView {
             }
             .foregroundStyle(tabSelected == tab ? Color.accent : Color.text.opacity(0.3))
         }
-//        .noAnimation()
     }
 }
 

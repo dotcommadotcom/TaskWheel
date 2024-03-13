@@ -50,7 +50,7 @@ struct SheetView: View {
             switch selected {
             case .lists: ListOfListsView()
             case .order: OrderView()
-            case .more: MoreView()
+            case .option: OptionView()
             case .add: TaskView()
             default: EmptyView()
             }

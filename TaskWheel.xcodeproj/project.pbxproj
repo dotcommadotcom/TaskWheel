@@ -26,7 +26,7 @@
 		B768297E2B99494600F73055 /* SpinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768297D2B99494600F73055 /* SpinViewModel.swift */; };
 		B76829802B994DE900F73055 /* SpinViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768297F2B994DE900F73055 /* SpinViewModelTests.swift */; };
 		B76905232B8D8BC3001DD077 /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905222B8D8BC3001DD077 /* OrderView.swift */; };
-		B76905252B8DD6FD001DD077 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905242B8DD6FD001DD077 /* MoreView.swift */; };
+		B76905252B8DD6FD001DD077 /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905242B8DD6FD001DD077 /* OptionView.swift */; };
 		B76905272B8DD8D8001DD077 /* ListOfListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905262B8DD8D8001DD077 /* ListOfListsView.swift */; };
 		B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */; };
 		B7A97B1D2B85D26500C9E9AA /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = B7A97B1C2B85D26500C9E9AA /* DequeModule */; };
@@ -75,7 +75,7 @@
 		B768297D2B99494600F73055 /* SpinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinViewModel.swift; sourceTree = "<group>"; };
 		B768297F2B994DE900F73055 /* SpinViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinViewModelTests.swift; sourceTree = "<group>"; };
 		B76905222B8D8BC3001DD077 /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
-		B76905242B8DD6FD001DD077 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		B76905242B8DD6FD001DD077 /* OptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
 		B76905262B8DD8D8001DD077 /* ListOfListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfListsView.swift; sourceTree = "<group>"; };
 		B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		B7B71FB32B8F5A9400233641 /* TaskListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListModel.swift; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 				B7EAF45D2B92CBB9006732EE /* SheetView.swift */,
 				B76905262B8DD8D8001DD077 /* ListOfListsView.swift */,
 				B76905222B8D8BC3001DD077 /* OrderView.swift */,
-				B76905242B8DD6FD001DD077 /* MoreView.swift */,
+				B76905242B8DD6FD001DD077 /* OptionView.swift */,
 				B7EAF4612B948F2F006732EE /* CalendarView.swift */,
 				B7DD37512B8EE9BF008AD29D /* PriorityView.swift */,
 			);
@@ -352,7 +352,7 @@
 				B7B71FB42B8F5A9400233641 /* TaskListModel.swift in Sources */,
 				B718BAA42BA0547700CCD200 /* CustomViewModifiers.swift in Sources */,
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
-				B76905252B8DD6FD001DD077 /* MoreView.swift in Sources */,
+				B76905252B8DD6FD001DD077 /* OptionView.swift in Sources */,
 				B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */,
 				B768297E2B99494600F73055 /* SpinViewModel.swift in Sources */,
 				B7EAF46A2B95DC6F006732EE /* Buttons.swift in Sources */,
