@@ -67,8 +67,8 @@ struct PriorityViewModifer: ViewModifier {
     func body(content: Content) -> some View {
         content
             .popover(isPresented: $show) {
-                VStack(alignment: .leading, spacing: 22) {
-                    PriorityView(priorityInput: $input, showPriority: $show)
+                VStack {
+                    PriorityView(priorityInput: $input)
                 }
                 .presentSheet($sheetHeight)
             }
@@ -84,7 +84,7 @@ struct ScheduleViewModifer: ViewModifier {
     func body(content: Content) -> some View {
         content
             .popover(isPresented: $show) {
-                VStack(alignment: .leading, spacing: 22) {
+                VStack {
                     CalendarView(dateInput: $input)
                 }
                 .presentSheet($sheetHeight)

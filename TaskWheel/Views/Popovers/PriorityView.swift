@@ -45,17 +45,16 @@ struct PriorityView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @Binding var priorityInput: PriorityItem
-    @Binding var showPriority: Bool
     
     let priority: [PriorityItem] = [.high, .medium, .low, .no]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             ForEach(priority, id: \.self) { priority in
+                
                 priorityRowView(priority: priority)
                     .onTapGesture {
                         priorityInput = priority
-                        showPriority.toggle()
                         presentationMode.wrappedValue.dismiss()
                     }
             }
@@ -77,7 +76,7 @@ struct PriorityView: View {
 #Preview("priority") {
     ZStack {
         Color.pink
-        PriorityView(priorityInput: .constant(.no), showPriority: .constant(false))
+        PriorityView(priorityInput: .constant(.no))
             .background(Color.background)
     }
 }
