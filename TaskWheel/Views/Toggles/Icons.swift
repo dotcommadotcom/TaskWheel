@@ -76,42 +76,41 @@ enum IconItem: Identifiable, Hashable {
     }
 }
 
-struct Icon: View {
+struct Icon<Content: View>: View {
     let this: IconItem
-    let text: String
+    let content: Content
     var isSpace: Bool = false
     var isAlt: Bool = false
     var isFill: Bool = false
     let size: SizeItem
     let weight: Font.Weight
     let style: any LabelStyle
-    //    Icon(this: .move, text: taskViewModel.currentTitle(), size: sizeOrder.scale, style: hideIcon? .text : .both)
-    
     
     init(
         this: IconItem,
-        text: String = "",
         isSpace: Bool = false,
         isAlt: Bool = false,
         isFill: Bool = false,
         size: SizeItem = .medium,
         weight: Font.Weight = .regular,
-        style: any LabelStyle = Default()
+        style: any LabelStyle = Default(),
+        @ViewBuilder content: () -> Content = { EmptyView() } 
     ) {
         self.this = this
-        self.text = text
         self.size = size
         self.weight = weight
         self.isSpace = isSpace
         self.isAlt = isAlt
         self.isFill = isFill
         self.style = style
+        self.content = content()
     }
     
     var body: some View {
         AnyView(
             Label {
-                Text(text).font(size.font)
+                content
+                    .font(size.font)
             } icon: {
                 ZStack {
                     if isFill {
@@ -161,7 +160,9 @@ struct Backward: LabelStyle {
 }
 
 #Preview("default") {
-    Icon(this: .move, text: "sample task list", style: Default())
+    Icon(this: .move, style: Default()) {
+        Text("hello world")
+    }
 }
 
 //#Preview("icons") {

@@ -23,7 +23,9 @@ struct TaskView: View {
     
     let task: TaskModel
     let isAdd: Bool
-    private let updateTabs: [IconItem] = [.delete, .complete]
+    private var updateIcons: [(IconItem, () -> Void)] { 
+        [(.delete, clickDelete), (.complete, clickComplete)]
+    }
     private let half: Double = 0.5
     private let iconSize: SizeItem = .medium
     private let textDefault: String = "What now?"
@@ -94,18 +96,7 @@ extension TaskView {
             
             Spacer()
             
-            HStack(spacing: 30) {
-                ForEach(updateTabs, id: \.self) { tab in
-                    Icon(this: tab, isSpace: tab == updateTabs.last, isAlt: true)
-                        .onTapGesture {
-                            switch tab {
-                            case .complete: clickComplete()
-                            case .delete: clickDelete()
-                            default: {}()
-                            }
-                        }
-                }
-            }
+            taskBarView()
         }
         .padding(.horizontal, 30)
         .padding(.vertical, 15)
@@ -147,6 +138,23 @@ extension TaskView {
         .onSubmit {
             saveGoBack()
         }
+    }
+    
+    private func taskBarView() -> some View {
+        HStack(spacing: 30) {
+            ForEach(updateIcons, id: \.0) { icon, action in
+                if let lastUpdateIcon = updateIcons.last, icon == lastUpdateIcon.0 {
+                    Spacer()
+                }
+                
+                Button(action: action) {
+                    Icon(this: icon,
+                         size: .custom(25),
+                         style: IconOnly())
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
     }
     
     private func detailsView() -> some View {

@@ -29,10 +29,11 @@ struct TitleView: View {
         } label: {
             Icon(
                 this: .move,
-                text: taskViewModel.currentTitle(),
                 size: size,
                 style: hideIcon ? TextOnly() : Default()
-            )
+            ) {
+                Text(taskViewModel.currentTitle())
+            }
             .fontWeight(fontWeight)
             .foregroundStyle(Color.text.opacity(isGreyed ? 0.8 : 1.0))
         }
