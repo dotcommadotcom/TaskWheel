@@ -74,7 +74,7 @@ extension TaskRowView {
             clickDone()
         } label: {
             Icon(
-                this: .complete,
+                this: .done,
                 style: IconOnly(),
                 color: checkmarkColor(),
                 isAlt: task.isDone,
@@ -103,25 +103,6 @@ extension TaskRowView {
         return task.isDone ? Color.text.opacity(0.5) :
         task.priority != 3 ? PriorityItem(task.priority).color :
         Color.text
-    }
-}
-
-struct TaskRowModifier: ViewModifier {
-    let isDone: Bool
-    
-    func body(content: Content) -> some View {
-        if isDone {
-            return AnyView(content.strikethrough().greyed())
-        } else {
-            return AnyView(content.foregroundStyle(Color.text))
-        }
-    }
-}
-
-extension View {
-    func mark(isDone: Bool) -> some View {
-        self
-            .modifier(TaskRowModifier(isDone: isDone))
     }
 }
 

@@ -37,6 +37,11 @@ extension View {
     func alignText() -> some View {
         self.modifier(TaskAlignmentModifier())
     }
+    
+    func mark(isDone: Bool) -> some View {
+        self
+            .modifier(DoneModifier(isDone: isDone))
+    }
 }
 
 enum SizeItem {
@@ -125,4 +130,14 @@ struct TaskAlignmentModifier: ViewModifier {
     }
 }
 
-
+struct DoneModifier: ViewModifier {
+    let isDone: Bool
+    
+    func body(content: Content) -> some View {
+        if isDone {
+            return AnyView(content.strikethrough().greyed())
+        } else {
+            return AnyView(content.foregroundStyle(Color.text))
+        }
+    }
+}

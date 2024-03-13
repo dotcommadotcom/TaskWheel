@@ -2,7 +2,7 @@ import SwiftUI
 
 enum IconItem: Identifiable, Hashable {
     
-    case add, back, cancel, complete, details, delete, filter
+    case add, back, cancel, details, delete, done, filter
     case left, lists, move, option, order, plus, priority
     case right, save, schedule, select, settings, shuffle, ticker
     
@@ -15,9 +15,9 @@ enum IconItem: Identifiable, Hashable {
         case .add: return "plus.square"
         case .back: return "arrow.backward"
         case .cancel: return "xmark"
-        case .complete: return "square"
         case .details: return "text.alignleft"
         case .delete: return "trash"
+        case .done: return "square"
         case .filter: return "slider.horizontal.3"
         case .left: return "chevron.left"
         case .lists: return "list.dash"
@@ -38,8 +38,8 @@ enum IconItem: Identifiable, Hashable {
     
     var alternative: String {
         switch self {
+        case .done: return "checkmark.square"
         case .select: return "record.circle"
-        case .complete: return "checkmark.square"
         case .priority: return "tag.fill"
         default: return self.name
         }

@@ -11,20 +11,14 @@ struct TaskView: View {
     @State var priorityInput: PriorityItem
     @State var dateInput: Date?
     
-    @FocusState private var detailsFocused: Bool
+    @State private var listsSelected: IconItem? = nil
     @State private var showPriority = false
     @State private var showSchedule = false
-    @State private var listsSelected: IconItem? = nil
-    
-    @State private var barSelected: IconItem? = nil
-    @State private var isDateReset: Bool = false
-    @State private var sheetHeight: CGFloat = .zero
     
     let task: TaskModel
     let isAdd: Bool
-    private var updateIcons: [(IconItem, () -> Void)] { 
-        [(.delete, clickDelete), (.complete, clickComplete)]
-    }
+    
+    private let options: [IconItem] = [.delete, .done]
     
     init(task: TaskModel?, _ isNew: Bool = false) {
         self.task = task ?? TaskModel(title: "")
@@ -43,12 +37,22 @@ struct TaskView: View {
         ZStack {
             if isAdd {
                 addTaskView()
+                    .onSubmit {
+                        clickAddSave()
+                    }
             } else {
                 updateTaskView()
+                    .onSubmit {
+                        clickUpdateSave()
+                    }
             }
         }
         .popPriority(show: $showPriority, input: $priorityInput)
         .popSchedule(show: $showSchedule, input: $dateInput)
+        .onChange(of: dateInput) { _, _ in
+            changeDate()
+            taskViewModel.printDate(of: task)
+        }
     }
 }
 
@@ -69,7 +73,23 @@ extension TaskView {
             addBarView()
         }
         .smallFont()
-        .onSubmit { clickSave() }
+    }
+    
+    private func addBarView() -> some View {
+        HStack(spacing: 30) {
+            priorityView()
+            
+            scheduleView()
+            
+            Spacer()
+            
+            Button {
+                clickAddSave()
+            } label: {
+                Icon(this: .save, style: IconOnly())
+            }
+            .disableClick(if: isTaskEmpty())
+        }
     }
     
     private func updateTaskView() -> some View {
@@ -83,10 +103,11 @@ extension TaskView {
             priorityView()
             
             scheduleView()
+                .frame(height: 40)
             
             Spacer()
             
-            taskBarView()
+            updateBarView()
         }
         .padding(.horizontal, 30)
         .padding(.vertical, 15)
@@ -97,9 +118,9 @@ extension TaskView {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action: {
-                    saveGoBack()
+                    clickUpdateSave()
                 }) {
-                    Image(systemName: "arrow.backward")
+                    Icon(this: .back, style: IconOnly(), color: Color.text)
                 }
                 .foregroundStyle(Color.text)
                 .padding([.horizontal])
@@ -108,6 +129,22 @@ extension TaskView {
         }
     }
     
+    private func updateBarView() -> some View {
+        let zippedOptions = Array(zip(options, [clickDelete, clickDone]))
+        
+        return HStack(spacing: 30) {
+            ForEach(zippedOptions, id: \.0) { icon, action in
+                if icon == .done {
+                    Spacer()
+                }
+                
+                Button(action: action) {
+                    Icon(this: icon, size: .custom(25), style: IconOnly())
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+    }
 }
 
 extension TaskView {
@@ -125,39 +162,6 @@ extension TaskView {
         }
         .largeFont()
         .frame(maxWidth: .infinity)
-        .onSubmit {
-            saveGoBack()
-        }
-    }
-    
-    private func addBarView() -> some View {
-        HStack(spacing: 30) {
-            priorityView()
-            
-            scheduleView()
-            
-            Spacer()
-            
-            saveButton()
-        }
-//        .noAnimation()
-    }
-    
-    private func taskBarView() -> some View {
-        HStack(spacing: 30) {
-            ForEach(updateIcons, id: \.0) { icon, action in
-                if let lastUpdateIcon = updateIcons.last, icon == lastUpdateIcon.0 {
-                    Spacer()
-                }
-                
-                Button(action: action) {
-                    Icon(this: icon,
-                         size: .custom(25),
-                         style: IconOnly())
-                }
-            }
-        }
-        .frame(maxWidth: .infinity)
     }
     
     private func detailsView() -> some View {
@@ -172,9 +176,6 @@ extension TaskView {
                     .lineLimit(10)
             }
         }
-        .onSubmit {
-            saveGoBack()
-        }
     }
     
     private func priorityView() -> some View {
@@ -183,6 +184,7 @@ extension TaskView {
         } label: {
             Icon(this: .priority,
                  style: isAdd ? IconOnly() : Default(spacing: 20),
+                 color: isAdd && priorityInput != .no ? priorityInput.color : Color.text,
                  isAlt: isAdd && priorityInput != .no
             ) {
                 ZStack(alignment: .leading) {
@@ -195,14 +197,14 @@ extension TaskView {
             }
         }
         .foregroundStyle(isAdd ? priorityInput.color : Color.text)
-        .onLongPressGesture(minimumDuration: 1) {
+        .onLongPressGesture(minimumDuration: 0.5) {
             priorityInput = PriorityItem(3)
         }
     }
     
     private func scheduleView() -> some View {
         Button {
-            showSchedule.toggle()
+            clickSchedule()
         } label: {
             Icon(this: .schedule,
                  style: isAdd ? IconOnly() : Default(spacing: 20)
@@ -218,18 +220,20 @@ extension TaskView {
             }
         }
     }
-
-    private func saveButton() -> some View {
-        Button {
-            clickSave()
-        } label: {
-            Icon(this: .save, style: IconOnly())
-        }
-        .disableClick(if: isTaskEmpty())
-    }
 }
 
 extension TaskView {
+    
+    private func isTaskEmpty() -> Bool {
+        return titleInput.isEmpty && detailsInput.isEmpty && priorityInput.rawValue == 3 && dateInput == nil
+    }
+    
+    private func clickAddSave() {
+        if !isTaskEmpty() {
+            taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput.rawValue, date: dateInput)
+        }
+        presentationMode.wrappedValue.dismiss()
+    }
     
     private func clickPriority() {
         if isAdd {
@@ -239,37 +243,42 @@ extension TaskView {
         }
     }
     
-    private func clickSave() {
-        taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput.rawValue, date: dateInput)
-        presentationMode.wrappedValue.dismiss()
+    private func clickSchedule() {
+        showSchedule.toggle()
     }
     
-    private func isTaskEmpty() -> Bool {
-        return titleInput.isEmpty && detailsInput.isEmpty && priorityInput.rawValue == 3 && dateInput == nil
+    private func changeDate() {
+        if dateInput == nil {
+            taskViewModel.resetDate(of: task)
+        } else {
+            taskViewModel.update(this: task, date: dateInput)
+        }
     }
     
     private func clickDelete() {
         taskViewModel.delete(this: task)
-        saveGoBack()
+        navigation.goBack()
     }
     
-    private func clickComplete() {
+    private func clickDone() {
         taskViewModel.toggleDone(task)
-        saveGoBack()
+        navigation.goBack()
     }
     
-    private func saveGoBack() {
-        
-        if dateInput == .distantPast {
-            taskViewModel.resetDate(of: task)
-        }
+    private func clickUpdateSave() {
+//        if dateInput == nil {
+//            taskViewModel.resetDate(of: task)
+//        } else {
+//            taskViewModel.update(this: task, date: dateInput)
+//        }
         
         taskViewModel.update(
             this: task,
             title: titleInput,
             ofTaskList: taskViewModel.currentId(),
             details: detailsInput,
-            priority: priorityInput.rawValue
+            priority: priorityInput.rawValue,
+            date: dateInput
         )
 
         navigation.goBack()
