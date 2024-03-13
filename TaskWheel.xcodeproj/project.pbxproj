@@ -25,18 +25,16 @@
 		B768297A2B98B2F000F73055 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76829772B98A77400F73055 /* DateExtensionTests.swift */; };
 		B768297E2B99494600F73055 /* SpinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768297D2B99494600F73055 /* SpinViewModel.swift */; };
 		B76829802B994DE900F73055 /* SpinViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768297F2B994DE900F73055 /* SpinViewModelTests.swift */; };
-		B76905232B8D8BC3001DD077 /* OrderSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905222B8D8BC3001DD077 /* OrderSheetView.swift */; };
-		B76905252B8DD6FD001DD077 /* MoreSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905242B8DD6FD001DD077 /* MoreSheetView.swift */; };
-		B76905272B8DD8D8001DD077 /* ListsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905262B8DD8D8001DD077 /* ListsSheetView.swift */; };
+		B76905232B8D8BC3001DD077 /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905222B8D8BC3001DD077 /* OrderView.swift */; };
+		B76905252B8DD6FD001DD077 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905242B8DD6FD001DD077 /* MoreView.swift */; };
+		B76905272B8DD8D8001DD077 /* ListOfListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76905262B8DD8D8001DD077 /* ListOfListsView.swift */; };
 		B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */; };
 		B7A97B1D2B85D26500C9E9AA /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = B7A97B1C2B85D26500C9E9AA /* DequeModule */; };
 		B7B71FB42B8F5A9400233641 /* TaskListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B71FB32B8F5A9400233641 /* TaskListModel.swift */; };
 		B7B71FE52B9190F000233641 /* TaskListModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B71FE42B9190F000233641 /* TaskListModelTests.swift */; };
-		B7DD374E2B8ECDBE008AD29D /* InfiniteScroller in Frameworks */ = {isa = PBXBuildFile; productRef = B7DD374D2B8ECDBE008AD29D /* InfiniteScroller */; };
-		B7DD37502B8ED87E008AD29D /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD374F2B8ED87E008AD29D /* Icon.swift */; };
-		B7DD37522B8EE9BF008AD29D /* PrioritySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD37512B8EE9BF008AD29D /* PrioritySheetView.swift */; };
+		B7DD37502B8ED87E008AD29D /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD374F2B8ED87E008AD29D /* Icons.swift */; };
+		B7DD37522B8EE9BF008AD29D /* PriorityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD37512B8EE9BF008AD29D /* PriorityView.swift */; };
 		B7EAF45E2B92CBB9006732EE /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF45D2B92CBB9006732EE /* SheetView.swift */; };
-		B7EAF4602B940EE3006732EE /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF45F2B940EE3006732EE /* TaskListView.swift */; };
 		B7EAF4622B948F2F006732EE /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4612B948F2F006732EE /* CalendarView.swift */; };
 		B7EAF4642B949300006732EE /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4632B949300006732EE /* CalendarViewModel.swift */; };
 		B7EAF4662B94A013006732EE /* CalendarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAF4652B94A013006732EE /* CalendarViewModelTests.swift */; };
@@ -60,7 +58,7 @@
 		B714820F2B96BF9100CA8511 /* TaskVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskVMTests.swift; sourceTree = "<group>"; };
 		B71482112B96E41100CA8511 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		B71482152B9722CE00CA8511 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
-		B718BA9F2BA0017600CCD200 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TitleView.swift; path = TaskWheel/Views/TitleView.swift; sourceTree = "<group>"; };
+		B718BA9F2BA0017600CCD200 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		B718BAA32BA0547700CCD200 /* CustomViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewModifiers.swift; sourceTree = "<group>"; };
 		B71A81D62B830BB000A8886F /* TaskWheel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskWheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71A81D92B830BB000A8886F /* TaskWheelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskWheelApp.swift; sourceTree = "<group>"; };
@@ -76,16 +74,15 @@
 		B76829772B98A77400F73055 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		B768297D2B99494600F73055 /* SpinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinViewModel.swift; sourceTree = "<group>"; };
 		B768297F2B994DE900F73055 /* SpinViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinViewModelTests.swift; sourceTree = "<group>"; };
-		B76905222B8D8BC3001DD077 /* OrderSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSheetView.swift; sourceTree = "<group>"; };
-		B76905242B8DD6FD001DD077 /* MoreSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreSheetView.swift; sourceTree = "<group>"; };
-		B76905262B8DD8D8001DD077 /* ListsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsSheetView.swift; sourceTree = "<group>"; };
+		B76905222B8D8BC3001DD077 /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
+		B76905242B8DD6FD001DD077 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		B76905262B8DD8D8001DD077 /* ListOfListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfListsView.swift; sourceTree = "<group>"; };
 		B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		B7B71FB32B8F5A9400233641 /* TaskListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListModel.swift; sourceTree = "<group>"; };
 		B7B71FE42B9190F000233641 /* TaskListModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskListModelTests.swift; path = TaskWheelTests/TaskListModelTests.swift; sourceTree = SOURCE_ROOT; };
-		B7DD374F2B8ED87E008AD29D /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
-		B7DD37512B8EE9BF008AD29D /* PrioritySheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySheetView.swift; sourceTree = "<group>"; };
+		B7DD374F2B8ED87E008AD29D /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		B7DD37512B8EE9BF008AD29D /* PriorityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityView.swift; sourceTree = "<group>"; };
 		B7EAF45D2B92CBB9006732EE /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
-		B7EAF45F2B940EE3006732EE /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		B7EAF4612B948F2F006732EE /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		B7EAF4632B949300006732EE /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		B7EAF4652B94A013006732EE /* CalendarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModelTests.swift; sourceTree = "<group>"; };
@@ -101,7 +98,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7DD374E2B8ECDBE008AD29D /* InfiniteScroller in Frameworks */,
 				B7A97B1D2B85D26500C9E9AA /* DequeModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,7 +115,6 @@
 		B71A81CD2B830BB000A8886F = {
 			isa = PBXGroup;
 			children = (
-				B718BA9F2BA0017600CCD200 /* TitleView.swift */,
 				B749535A2B9B06AB0040ACF7 /* ContentView.swift */,
 				B72F693F2B8C97AD00525EF8 /* .gitignore */,
 				B71A81D82B830BB000A8886F /* TaskWheel */,
@@ -165,6 +160,7 @@
 				B7EAF4672B95DC0B006732EE /* Toggles */,
 				B71A81EA2B830E4B00A8886F /* MainView.swift */,
 				B75F44012B8C253A00D0B182 /* TabView.swift */,
+				B718BA9F2BA0017600CCD200 /* TitleView.swift */,
 				B72F692A2B8C296100525EF8 /* ListView.swift */,
 				B72F692C2B8C2DF000525EF8 /* WheelView.swift */,
 				B71482152B9722CE00CA8511 /* TaskView.swift */,
@@ -185,7 +181,7 @@
 		B7EAF4672B95DC0B006732EE /* Toggles */ = {
 			isa = PBXGroup;
 			children = (
-				B7DD374F2B8ED87E008AD29D /* Icon.swift */,
+				B7DD374F2B8ED87E008AD29D /* Icons.swift */,
 				B7EAF4692B95DC6F006732EE /* Buttons.swift */,
 			);
 			path = Toggles;
@@ -195,12 +191,11 @@
 			isa = PBXGroup;
 			children = (
 				B7EAF45D2B92CBB9006732EE /* SheetView.swift */,
-				B76905262B8DD8D8001DD077 /* ListsSheetView.swift */,
-				B76905222B8D8BC3001DD077 /* OrderSheetView.swift */,
-				B76905242B8DD6FD001DD077 /* MoreSheetView.swift */,
-				B7EAF45F2B940EE3006732EE /* TaskListView.swift */,
+				B76905262B8DD8D8001DD077 /* ListOfListsView.swift */,
+				B76905222B8D8BC3001DD077 /* OrderView.swift */,
+				B76905242B8DD6FD001DD077 /* MoreView.swift */,
 				B7EAF4612B948F2F006732EE /* CalendarView.swift */,
-				B7DD37512B8EE9BF008AD29D /* PrioritySheetView.swift */,
+				B7DD37512B8EE9BF008AD29D /* PriorityView.swift */,
 			);
 			path = Popovers;
 			sourceTree = "<group>";
@@ -209,10 +204,10 @@
 			isa = PBXGroup;
 			children = (
 				B7F5B8092B83721600F5CD9D /* TaskViewModel.swift */,
-				B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */,
+				B768297D2B99494600F73055 /* SpinViewModel.swift */,
 				B7EAF4632B949300006732EE /* CalendarViewModel.swift */,
 				B71482112B96E41100CA8511 /* DateExtension.swift */,
-				B768297D2B99494600F73055 /* SpinViewModel.swift */,
+				B79D9AA72B88A9DF009CA9FF /* NavigationCoordinator.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -249,7 +244,6 @@
 			name = TaskWheel;
 			packageProductDependencies = (
 				B7A97B1C2B85D26500C9E9AA /* DequeModule */,
-				B7DD374D2B8ECDBE008AD29D /* InfiniteScroller */,
 			);
 			productName = TaskWheel;
 			productReference = B71A81D62B830BB000A8886F /* TaskWheel.app */;
@@ -341,7 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71482162B9722CE00CA8511 /* TaskView.swift in Sources */,
-				B7DD37522B8EE9BF008AD29D /* PrioritySheetView.swift in Sources */,
+				B7DD37522B8EE9BF008AD29D /* PriorityView.swift in Sources */,
 				B7EAF4622B948F2F006732EE /* CalendarView.swift in Sources */,
 				B72F692B2B8C296100525EF8 /* ListView.swift in Sources */,
 				B7EAF4642B949300006732EE /* CalendarViewModel.swift in Sources */,
@@ -349,20 +343,19 @@
 				B71482122B96E41100CA8511 /* DateExtension.swift in Sources */,
 				B75F44022B8C253A00D0B182 /* TabView.swift in Sources */,
 				B71A81EB2B830E4B00A8886F /* MainView.swift in Sources */,
-				B7DD37502B8ED87E008AD29D /* Icon.swift in Sources */,
-				B76905232B8D8BC3001DD077 /* OrderSheetView.swift in Sources */,
-				B76905272B8DD8D8001DD077 /* ListsSheetView.swift in Sources */,
+				B7DD37502B8ED87E008AD29D /* Icons.swift in Sources */,
+				B76905232B8D8BC3001DD077 /* OrderView.swift in Sources */,
+				B76905272B8DD8D8001DD077 /* ListOfListsView.swift in Sources */,
 				B7F5B80A2B83721600F5CD9D /* TaskViewModel.swift in Sources */,
 				B749535B2B9B06AB0040ACF7 /* ContentView.swift in Sources */,
 				B72F692D2B8C2DF000525EF8 /* WheelView.swift in Sources */,
 				B7B71FB42B8F5A9400233641 /* TaskListModel.swift in Sources */,
 				B718BAA42BA0547700CCD200 /* CustomViewModifiers.swift in Sources */,
 				B71A81F02B830F3800A8886F /* TaskModel.swift in Sources */,
-				B76905252B8DD6FD001DD077 /* MoreSheetView.swift in Sources */,
+				B76905252B8DD6FD001DD077 /* MoreView.swift in Sources */,
 				B79D9AA82B88A9DF009CA9FF /* NavigationCoordinator.swift in Sources */,
 				B768297E2B99494600F73055 /* SpinViewModel.swift in Sources */,
 				B7EAF46A2B95DC6F006732EE /* Buttons.swift in Sources */,
-				B7EAF4602B940EE3006732EE /* TaskListView.swift in Sources */,
 				B7EAF45E2B92CBB9006732EE /* SheetView.swift in Sources */,
 				B71A81DA2B830BB000A8886F /* TaskWheelApp.swift in Sources */,
 			);
@@ -534,6 +527,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dotcommadotcom.TaskWheel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -562,6 +558,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dotcommadotcom.TaskWheel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -666,11 +665,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7A97B1B2B85D26500C9E9AA /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = DequeModule;
-		};
-		B7DD374D2B8ECDBE008AD29D /* InfiniteScroller */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B7DD374C2B8ECDBE008AD29D /* XCRemoteSwiftPackageReference "InfiniteScroller" */;
-			productName = InfiniteScroller;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

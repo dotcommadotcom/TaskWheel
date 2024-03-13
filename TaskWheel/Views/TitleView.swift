@@ -17,12 +17,14 @@ struct TitleView: View {
         } label: {
             HStack(alignment: .center) {
                 if !hideIcon {
-                    Icon(this: .move, size: sizeOrder.size * 0.8)
+                    Icon(this: .move)
+                        .font(sizeOrder.size)
+                            //sizeOrder.size * 0.8)
                 }
                 
                 Text(taskViewModel.currentTitle())
             }
-            .font(.system(size: sizeOrder.size))
+            .font(sizeOrder.size)
             .fontWeight(fontWeight)
             .foregroundStyle(Color.text.opacity(isGreyed ? 0.8 : 1.0))
         }

@@ -34,12 +34,12 @@ extension View {
 enum FontItem {
     case xsmall, small, large, medium
     
-    var size: CGFloat {
+    var size: Font {
         switch self {
-        case .xsmall: return 15
-        case .small: return 20
-        case .medium: return 22
-        case .large: return 25
+        case .xsmall: return Font.subheadline // 15
+        case .small: return Font.title3 // 20
+        case .medium: return Font.title2 // 22
+        case .large: return Font.title // 28
         }
     }
 }
@@ -50,7 +50,7 @@ struct FontSizeModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .font(.system(size: sizeOrder.size))
+            .font(sizeOrder.size)
     }
 }
 

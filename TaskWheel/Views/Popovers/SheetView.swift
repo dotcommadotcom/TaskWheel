@@ -48,9 +48,9 @@ struct SheetView: View {
     var body: some View {
         VStack {
             switch selected {
-            case .lists: ListsSheetView()
-            case .order: OrderSheetView()
-            case .more: MoreSheetView()
+            case .lists: ListOfListsView()
+            case .order: OrderView()
+            case .more: MoreView()
             case .add: TaskView()
             default: EmptyView()
             }
@@ -68,7 +68,7 @@ struct PriorityViewModifer: ViewModifier {
         content
             .popover(isPresented: $show) {
                 VStack(alignment: .leading, spacing: 22) {
-                    PrioritySheetView(selected: $input, showPriority: $show)
+                    PriorityView(priorityInput: $input, showPriority: $show)
                 }
                 .presentSheet($sheetHeight)
             }
