@@ -49,10 +49,6 @@ struct TaskView: View {
         }
         .popPriority(show: $showPriority, input: $priorityInput)
         .popSchedule(show: $showSchedule, input: $dateInput)
-        .onChange(of: dateInput) { _, _ in
-            changeDate()
-            taskViewModel.printDate(of: task)
-        }
     }
 }
 
@@ -247,14 +243,6 @@ extension TaskView {
         showSchedule.toggle()
     }
     
-    private func changeDate() {
-        if dateInput == nil {
-            taskViewModel.resetDate(of: task)
-        } else {
-            taskViewModel.update(this: task, date: dateInput)
-        }
-    }
-    
     private func clickDelete() {
         taskViewModel.delete(this: task)
         navigation.goBack()
@@ -266,20 +254,32 @@ extension TaskView {
     }
     
     private func clickUpdateSave() {
-//        if dateInput == nil {
-//            taskViewModel.resetDate(of: task)
-//        } else {
-//            taskViewModel.update(this: task, date: dateInput)
-//        }
+        if let input = dateInput {
+            print("new date", input.string())
+        } else {
+            print("new date is nil")
+        }
         
-        taskViewModel.update(
-            this: task,
+        let updated: TaskModel = TaskModel(
+            id: task.id,
+            creation: task.creation,
             title: titleInput,
-            ofTaskList: taskViewModel.currentId(),
+            ofTaskList: task.ofTaskList,
+            isDone: task.isDone,
             details: detailsInput,
             priority: priorityInput.rawValue,
             date: dateInput
         )
+        
+        if let index = taskViewModel.tasks.firstIndex(where: { $0.id == task.id }) {
+            taskViewModel.tasks[index] = updated
+            
+            if let x = taskViewModel.tasks[index].date {
+                print("updated date", x.string())
+            } else {
+                print("update date is nil")
+            }
+        }
 
         navigation.goBack()
     }
