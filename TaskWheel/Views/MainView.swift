@@ -46,11 +46,19 @@ extension MainView {
     
     private func mainBarView() -> some View {
         HStack(spacing: 30) {
-            ForEach(mainIcons, id: \.self) { tab in
-                Icon(this: tab, isSpace: tab == mainIcons.last)
-                    .onTapGesture {
-                        barSelected = tab
-                    }
+            ForEach(mainIcons, id: \.self) { icon in
+                if icon == mainIcons.last {
+                    Spacer()
+                }
+                
+                Button {
+                    barSelected = icon
+                } label: {
+                    Icon(this: icon,
+                         text: icon.title,
+                         size: .custom(25),
+                         style: IconOnly())
+                }
             }
         }
         .padding(20)

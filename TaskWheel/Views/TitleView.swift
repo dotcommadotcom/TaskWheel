@@ -30,7 +30,7 @@ struct TitleView: View {
             Icon(
                 this: .move,
                 text: taskViewModel.currentTitle(),
-                size: size.scale,
+                size: size,
                 style: hideIcon ? TextOnly() : Default()
             )
             .fontWeight(fontWeight)

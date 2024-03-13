@@ -84,7 +84,7 @@ extension WheelView {
         Button {
             spin()
         } label: {
-            Icon(this: .ticker, size: 15)
+            Icon(this: .ticker, size: .xsmall)
         }
         .disableClick(if: isSpinDisabled)
     }

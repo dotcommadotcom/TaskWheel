@@ -32,14 +32,15 @@ extension View {
 }
 
 enum SizeItem {
-    case xsmall, small, large, medium
+    case xsmall, small, medium, large, custom(CGFloat)
     
     var font: Font {
         switch self {
-        case .xsmall: return Font.subheadline // 15
-        case .small: return Font.title3 // 20
-        case .medium: return Font.title2 // 22
-        case .large: return Font.title // 28
+        case .xsmall: return Font.subheadline
+        case .small: return Font.title3
+        case .medium: return Font.title2
+        case .large: return Font.title
+        default: return Font.title2
         }
     }
     
@@ -49,6 +50,7 @@ enum SizeItem {
         case .small: return 20
         case .medium: return 22
         case .large: return 28
+        case .custom(let value): return value
         }
     }
 }

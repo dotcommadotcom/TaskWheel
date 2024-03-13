@@ -42,7 +42,7 @@ struct TaskRowView: View {
             Button {
                 taskViewModel.toggleDone(task)
             } label: {
-                Icon(this: .complete, isAlt: task.isDone, isFill: task.priority != 3 && !task.isDone, size: 22)
+                Icon(this: .complete, isAlt: task.isDone, isFill: task.priority != 3 && !task.isDone)
                     .foregroundStyle(task.isDone ? Color.text.opacity(0.5) : PriorityItem(task.priority).color)
             }
             .alignmentGuide(.firstTextBaseline) { dimension in

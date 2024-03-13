@@ -43,6 +43,29 @@ enum IconItem: Identifiable, Hashable {
         }
     }
     
+    var title: String {
+        switch self {
+        case .complete: return "square"
+        case .details: return "text.alignleft"
+        case .priority: return "tag"
+        case .schedule: return "alarm"
+            
+        case .shuffle: return ""
+        case .lists: return "Select list"
+        case .order: return "Change order"
+        case .filter: return ""
+        case .more: return "More options"
+        case .add: return "Add task"
+            
+        case .cancel: return "xmark"
+        case .delete: return "trash"
+        case .save: return "square.and.arrow.down"
+        case .move: return "chevron.up.chevron.down"
+        case .settings: return "gearshape.fill"
+        case .ticker: return "arrowtriangle.backward.fill"
+        }
+    }
+    
     var adjust: Double {
         switch self {
         case .cancel: return 0.8
@@ -59,15 +82,26 @@ struct Icon: View {
     var isSpace: Bool = false
     var isAlt: Bool = false
     var isFill: Bool = false
-    let size: CGFloat
+    let size: SizeItem
+    let weight: Font.Weight
     let style: any LabelStyle
     //    Icon(this: .move, text: taskViewModel.currentTitle(), size: sizeOrder.scale, style: hideIcon? .text : .both)
     
     
-    init(this: IconItem, text: String = "", isSpace: Bool = false, isAlt: Bool = false, isFill: Bool = false, size: CGFloat = 20, style: any LabelStyle = Default()) {
+    init(
+        this: IconItem,
+        text: String = "",
+        isSpace: Bool = false,
+        isAlt: Bool = false,
+        isFill: Bool = false,
+        size: SizeItem = .medium,
+        weight: Font.Weight = .regular,
+        style: any LabelStyle = Default()
+    ) {
         self.this = this
         self.text = text
         self.size = size
+        self.weight = weight
         self.isSpace = isSpace
         self.isAlt = isAlt
         self.isFill = isFill
@@ -77,7 +111,7 @@ struct Icon: View {
     var body: some View {
         AnyView(
             Label {
-                Text(text).font(.system(size: size))
+                Text(text).font(size.font)
             } icon: {
                 ZStack {
                     if isFill {
@@ -89,7 +123,7 @@ struct Icon: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 }
-                .frame(width: size * this.adjust, height: size * this.adjust)
+                .frame(width: size.scale * this.adjust, height: size.scale * this.adjust)
             }
             .labelStyle(style)
         )

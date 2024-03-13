@@ -25,7 +25,7 @@ struct TaskView: View {
     let isAdd: Bool
     private let updateTabs: [IconItem] = [.delete, .complete]
     private let half: Double = 0.5
-    private let iconSize: CGFloat = 22
+    private let iconSize: SizeItem = .medium
     private let textDefault: String = "What now?"
     private let detailDefault: String = "Add details"
     
