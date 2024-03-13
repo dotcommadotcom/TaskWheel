@@ -12,7 +12,6 @@ struct TaskView: View {
     @State var dateInput: Date?
     
     @FocusState private var detailsFocused: Bool
-    @State private var showDetails = false
     @State private var showPriority = false
     @State private var showSchedule = false
     @State private var listsSelected: IconItem? = nil
@@ -45,11 +44,15 @@ struct TaskView: View {
     }
     
     var body: some View {
-        if isAdd {
-            addTaskView()
-        } else {
-            updateTaskView()
+        ZStack {
+            if isAdd {
+                addTaskView()
+            } else {
+                updateTaskView()
+            }
         }
+        .popPriority(show: $showPriority, input: $priorityInput)
+        .popSchedule(show: $showSchedule, input: $dateInput)
     }
 }
 
@@ -61,22 +64,13 @@ extension TaskView {
             
             taskTitleView()
             
-            if showDetails {
-                detailsView()
+            detailsView()
+            
+            if dateInput != nil {
+                ScheduleButton(date: $dateInput)
             }
             
-            ScheduleButton(date: $dateInput)
-            
-            HStack(spacing: 30) {
-                detailsButton()
-                
-                priorityButton()
-                
-                scheduleView()
-                
-                saveButton()
-            }
-            .noAnimation()
+            addBarView()
         }
         .smallFont()
         .onSubmit { clickSave() }
@@ -140,6 +134,19 @@ extension TaskView {
         }
     }
     
+    private func addBarView() -> some View {
+        HStack(spacing: 30) {
+            priorityView()
+            
+            scheduleView()
+            
+            Spacer()
+            
+            saveButton()
+        }
+        .noAnimation()
+    }
+    
     private func taskBarView() -> some View {
         HStack(spacing: 30) {
             ForEach(updateIcons, id: \.0) { icon, action in
@@ -158,109 +165,83 @@ extension TaskView {
     }
     
     private func detailsView() -> some View {
-        HStack(spacing: 20) {
-            if !isAdd {
-                Icon(this: .details, size: iconSize)
-            }
-            
+        Icon(this: .details,
+             style: Default(spacing: 20)
+        ) {
             ZStack(alignment: .leading) {
                 if detailsInput.isEmpty {
                     Text("Add details").greyed()
                 }
                 TextField(detailsInput, text: $detailsInput, axis: .vertical)
-                    .focused($detailsFocused)
                     .lineLimit(10)
             }
-        }
-        .frame(height: 40)
-        .onTapGesture {
-            detailsFocused = true
         }
         .onSubmit {
             saveGoBack()
         }
-        
-    }
-    
-    private func detailsButton() -> some View {
-        Button {
-            showDetails = true
-        } label: {
-            Icon(this: .details, size: iconSize)
-        }
     }
     
     private func priorityView() -> some View {
-        HStack(spacing: 20) {
-            Icon(this: .priority, size: iconSize)
-            
-            ZStack(alignment: .leading) {
-                Text("Add priority").greyed()
-                    .opacity(priorityInput.rawValue == 3 ? 1 : 0)
-                
-                PriorityButton(priority: $priorityInput)
-                    .opacity(priorityInput.rawValue == 3 ? 0 : 1)
+        Button {
+            clickPriority()
+        } label: {
+            Icon(this: .priority,
+                 isAlt: isAdd && priorityInput != .no,
+                 style: isAdd ? IconOnly() : Default(spacing: 20)
+            ) {
+                ZStack(alignment: .leading) {
+                    Text("Add priority").greyed()
+                        .opacity(priorityInput.rawValue == 3 ? 1 : 0)
+                    
+                    PriorityButton(priority: $priorityInput)
+                        .opacity(priorityInput.rawValue == 3 ? 0 : 1)
+                }
             }
         }
-        .frame(height: 40)
-        .onTapGesture {
-            showPriority.toggle()
-        }
-        .popPriority(show: $showPriority, input: $priorityInput)
-    }
-    
-    private func priorityButton() -> some View {
-        Button {
-            priorityInput = PriorityItem((priorityInput.rawValue + 3) % 4)
-        } label: {
-            Icon(this: .priority, isAlt: priorityInput.rawValue != 3, size: iconSize)
-        }
-        .foregroundStyle(priorityInput.color)
+        .foregroundStyle(isAdd ? priorityInput.color : Color.text)
         .onLongPressGesture(minimumDuration: 1) {
             priorityInput = PriorityItem(3)
         }
     }
     
     private func scheduleView() -> some View {
-        HStack(spacing: 20) {
-            Icon(this: .schedule, size: iconSize)
-            
-            if !isAdd {
+        Button {
+            showSchedule.toggle()
+        } label: {
+            Icon(this: .schedule,
+                 style: isAdd ? IconOnly() : Default(spacing: 20)
+            ) {
                 ZStack(alignment: .leading) {
-                    Text("Add date/time").greyed()
+                    Text("Add due date").greyed()
                         .opacity(dateInput == nil ? 1 : 0)
                     
-//                    if dateInput != nil {
-                    ScheduleButton(date: $dateInput)
-//                    }
+                    if dateInput != nil {
+                        ScheduleButton(date: $dateInput)
+                    }
                 }
             }
         }
-        .frame(height: 40)
-        .onTapGesture {
-            showSchedule.toggle()
-        }
-        .popSchedule(show: $showSchedule, input: $dateInput)
-//        .onChange(of: dateInput) { old, new in
-//            if old != nil && new == nil {
-//                taskViewModel.resetDate(of: task)
-//                taskViewModel.printDate(of: task)
-//                print("\(old) to \(new)")
-//            }
-//        }
     }
 
     private func saveButton() -> some View {
         Button {
             clickSave()
         } label: {
-            Icon(this: .save, isSpace: true, size: iconSize)
+            Icon(this: .save)
         }
         .disableClick(if: isTaskEmpty())
     }
 }
 
 extension TaskView {
+    
+    private func clickPriority() {
+        if isAdd {
+            priorityInput = PriorityItem((priorityInput.rawValue + 3) % 4)
+        } else {
+            showPriority.toggle()
+        }
+    }
     
     private func clickSave() {
         taskViewModel.addTask(title: titleInput, details: detailsInput, priority: priorityInput.rawValue, date: dateInput)
@@ -271,13 +252,13 @@ extension TaskView {
         return titleInput.isEmpty && detailsInput.isEmpty && priorityInput.rawValue == 3 && dateInput == nil
     }
     
-    private func clickComplete() {
-        taskViewModel.toggleDone(task)
+    private func clickDelete() {
+        taskViewModel.delete(this: task)
         saveGoBack()
     }
     
-    private func clickDelete() {
-        taskViewModel.delete(this: task)
+    private func clickComplete() {
+        taskViewModel.toggleDone(task)
         saveGoBack()
     }
     

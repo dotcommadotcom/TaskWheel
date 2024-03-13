@@ -93,7 +93,7 @@ struct Icon<Content: View>: View {
         isFill: Bool = false,
         size: SizeItem = .medium,
         weight: Font.Weight = .regular,
-        style: any LabelStyle = Default(),
+        style: any LabelStyle = Default(spacing: 10),
         @ViewBuilder content: () -> Content = { EmptyView() } 
     ) {
         self.this = this
@@ -130,8 +130,11 @@ struct Icon<Content: View>: View {
 }
 
 struct Default: LabelStyle {
+    
+    let spacing: CGFloat
+    
     func makeBody(configuration: Configuration) -> some View {
-        HStack(alignment: .center) {
+        HStack(alignment: .center, spacing: spacing) {
             configuration.icon
             configuration.title
         }
@@ -160,7 +163,7 @@ struct Backward: LabelStyle {
 }
 
 #Preview("default") {
-    Icon(this: .move, style: Default()) {
+    Icon(this: .move, style: Default(spacing: 10)) {
         Text("hello world")
     }
 }

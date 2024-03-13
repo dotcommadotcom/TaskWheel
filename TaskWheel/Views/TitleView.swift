@@ -30,7 +30,7 @@ struct TitleView: View {
             Icon(
                 this: .move,
                 size: size,
-                style: hideIcon ? TextOnly() : Default()
+                style: hideIcon ? TextOnly() : Default(spacing: 10)
             ) {
                 Text(taskViewModel.currentTitle())
             }
