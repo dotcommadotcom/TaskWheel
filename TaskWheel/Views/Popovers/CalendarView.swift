@@ -91,6 +91,7 @@ extension CalendarView {
                     .foregroundColor(isHighlight(day) ? Color.background : Color.text)
             }
         }
+        .noAnimation()
     }
     
     private func calendarBarView() -> some View {

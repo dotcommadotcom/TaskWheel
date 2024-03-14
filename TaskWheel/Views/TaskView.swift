@@ -234,10 +234,9 @@ extension TaskView {
             dateInput?.relative() ?? "",
             textColor: dateInput?.isPast() ?? false ? Color.past : Color.text
         ) {
-            showSchedule.toggle()
+            clickSchedule()
         } action: {
             dateInput = nil
-            taskViewModel.changeDate(of: task, to: nil)
         }
     }
 }
@@ -278,16 +277,15 @@ extension TaskView {
     }
     
     private func clickUpdateSave() {
-        taskViewModel.changeDate(of: task, to: dateInput)
-        
         taskViewModel.update(
             this: task,
             title: titleInput,
             ofTaskList: taskViewModel.currentId(),
             details: detailsInput,
-            priority: priorityInput.rawValue,
-            date: dateInput
+            priority: priorityInput.rawValue
         )
+        
+        taskViewModel.changeDate(of: task, to: dateInput)
         
         navigation.goBack()
     }
