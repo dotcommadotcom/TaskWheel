@@ -12,7 +12,8 @@ final class TaskModelTests: XCTestCase {
         testTaskList = TaskListModel(title: "sample task list")
         testTask = TaskModel(title: "this is a test",
                              ofTaskList: testTaskList.id,
-                             details: "details test")
+                             details: "details test",
+                             date: Date())
     }
     
     override func tearDownWithError() throws {
@@ -25,35 +26,36 @@ final class TaskModelTests: XCTestCase {
         XCTAssertTrue(true)
     }
     
+    // TEST - Change date
+    
+    func testChangeDateToTomorrow() throws {
+        let tomorrow = fromNow(days: 1)
+        
+        testTask = testTask.changeDate(to: fromNow(days: 1))
+        
+        XCTAssertEqual(testTask.date?.string(), tomorrow.string())
+    }
+
+    func testChangeDateToNil() throws {
+        testTask = testTask.changeDate(to: nil)
+        
+        XCTAssertNil(testTask.date)
+    }
+    
     // TEST - Move task list
     
     func testEditOfTaskList() throws {
         let newTaskList = TaskListModel(title: "new task list")
         
-        let testTask = testTask.edit(ofTaskList: newTaskList.id)
+        testTask = testTask.edit(ofTaskList: newTaskList.id)
         
         XCTAssertNotEqual(testTask.ofTaskList, testTaskList.id)
-    }
-    
-    // TEST - Date
-    
-    func testEditDateIsTomorrow() throws {
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
-        
-        let testTask = testTask.edit(date: tomorrow)
-        
-        XCTAssertEqual(testTask.date?.string(), tomorrow.string())
-    }
-    
-
-    func testEditDateIsNil() throws {
-        XCTAssertNil(testTask.date)
     }
     
     // TEST - Priority
     
     func testEditPriority() throws {
-        let testTask = testTask.edit(priority: 1)
+        testTask = testTask.edit(priority: 1)
         
         XCTAssertEqual(testTask.priority, 1)
     }
@@ -139,5 +141,17 @@ final class TaskModelTests: XCTestCase {
         let sampleTask = TaskModel(title: "test id")
         
         XCTAssertNotEqual(sampleTask.id, sampleTask.ofTaskList)
+    }
+    
+    func testConstructor() throws {
+        let sampleTask = TaskModel(title: "")
+        
+        XCTAssertNotNil(sampleTask.id)
+        XCTAssertNotNil(sampleTask.creation)
+        XCTAssertNotNil(sampleTask.ofTaskList)
+        XCTAssertFalse(sampleTask.isDone)
+        XCTAssertEqual(sampleTask.details, "")
+        XCTAssertEqual(sampleTask.priority, 3)
+        XCTAssertNil(sampleTask.date)
     }
 }

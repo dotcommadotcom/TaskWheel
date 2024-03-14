@@ -18,24 +18,52 @@ final class TaskVMTests: XCTestCase {
         multipleVM = nil
     }
     
+    // TEST - Change date
+    
+    func testChangeDateToTomorrow() throws {
+        multipleVM.changeDate(of: multipleVM.tasks[6], to: fromNow(days: 1))
+        
+        XCTAssertEqual(multipleVM.tasks[6].date?.string(), fromNow(days: 1).string())
+    }
+    
+    func testChangeDateToNil() throws {
+        multipleVM.changeDate(of: multipleVM.tasks[6], to: nil)
+
+        XCTAssertNil(multipleVM.tasks[6].date)
+    }
+    
     // TEST - Update task
     
-    func testUpdateTaskDoesNotChangeOfTaskList() throws {
-        let previousOfTaskList = multipleVM.tasks[6].ofTaskList
-        
-        multipleVM.update(this: multipleVM.tasks[6], title: "new title", details: "lets add some more")
-        
-        XCTAssertEqual(multipleVM.tasks[6].ofTaskList, previousOfTaskList)
-    }
+//    func testUpdateTaskDateToNil() throws {
+//        let previousDate = multipleVM.tasks[6].date
+//        
+//        multipleVM.update(this: multipleVM.tasks[6], date: nil)
+//        
+//        XCTAssertNil(multipleVM.tasks[6].date)
+//    }
     
     func testUpdateMultipleProperties() throws {
         let previousTitle = multipleVM.tasks[6].title
+        let previousOfTaskList = multipleVM.tasks[6].ofTaskList
         let previousDetails = multipleVM.tasks[6].details
+        let previousPriority = multipleVM.tasks[6].priority
+        let previousDate = multipleVM.tasks[6].date
         
-        multipleVM.update(this: multipleVM.tasks[6], title: "new title", details: "lets add some more")
+        multipleVM.update(
+            this: multipleVM.tasks[6],
+            title: "new title",
+            ofTaskList: multipleVM.currentId(),
+            details: "lets add some more",
+            priority: 0,
+            date: fromNow(days: 1)
+        )
         
+        XCTAssertEqual(previousTitle, "its all a big circle jerk")
         XCTAssertNotEqual(multipleVM.tasks[6].title, previousTitle)
+        XCTAssertNotEqual(multipleVM.tasks[6].ofTaskList, previousOfTaskList)
         XCTAssertNotEqual(multipleVM.tasks[6].details, previousDetails)
+        XCTAssertNotEqual(multipleVM.tasks[6].priority, previousPriority)
+        XCTAssertNotEqual(multipleVM.tasks[6].date?.string(), previousDate?.string())
     }
     
     func testUpdateTaskWithNothingChangesNothing() throws {
@@ -49,7 +77,7 @@ final class TaskVMTests: XCTestCase {
     func testUpdateTaskIsStillSameTask() throws {
         let targetTask = multipleVM.tasks[6]
         
-        multipleVM.update(this: targetTask, priority: 2)
+        multipleVM.update(this: targetTask, priority: 0)
         
         XCTAssertEqual(multipleVM.tasks[6].id, targetTask.id)
     }
@@ -57,7 +85,7 @@ final class TaskVMTests: XCTestCase {
     func testUpdateTask() throws {
         let previousPriority = multipleVM.tasks[6].priority
         
-        multipleVM.update(this: multipleVM.tasks[6], priority: 2)
+        multipleVM.update(this: multipleVM.tasks[6], priority: 0)
         
         XCTAssertNotEqual(multipleVM.tasks[6].priority, previousPriority)
     }
@@ -97,31 +125,34 @@ final class TaskVMTests: XCTestCase {
     // TEST - Add task
     
     func testAddTaskAddsToCurrent() throws {
-        let currentID = multipleVM.currentId()
+        multipleVM.addTask(title: "new task")
         
-        multipleVM.addTaskList(title: "new task")
-        
-        XCTAssertEqual(multipleVM.tasks[0].ofTaskList, currentID)
+        XCTAssertEqual(multipleVM.tasks[0].title, "new task")
+        XCTAssertEqual(multipleVM.tasks[0].ofTaskList, multipleVM.currentId())
     }
     
     func testAddTaskWithProperties() throws {
         let title = "task title"
         let details = "task details"
         let priority = 2
+        let date = fromNow(days: 14)
         
-        simpleVM.addTask(title: title, details: details, priority: priority)
+        simpleVM.addTask(title: title, details: details, priority: priority, date: date)
         
         XCTAssertEqual(simpleVM.tasks[0].title, title)
         XCTAssertEqual(simpleVM.tasks[0].details, details)
         XCTAssertEqual(simpleVM.tasks[0].priority, priority)
+        XCTAssertEqual(simpleVM.tasks[0].date?.string(), date.string())
     }
     
     func testAddEmptyTask() throws {
         simpleVM.addTask()
         
         XCTAssertEqual(simpleVM.tasks[0].title, "")
+        XCTAssertFalse(simpleVM.tasks[0].isDone)
         XCTAssertEqual(simpleVM.tasks[0].details, "")
         XCTAssertEqual(simpleVM.tasks[0].priority, 3)
+        XCTAssertNil(simpleVM.tasks[0].date)
     }
     
     func testAddTaskPrepends() throws {

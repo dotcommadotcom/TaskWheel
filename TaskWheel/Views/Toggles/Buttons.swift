@@ -1,127 +1,154 @@
 import SwiftUI
 
-struct PriorityButton: View {
-    @State private var show: Bool = false
+struct RoundedButton: View {
+    let text: String
+    let tap: () -> Void
+    let action: () -> Void
     
-    @Binding var priority: PriorityItem
+    var textColor: Color
+    var strokeColor: Color
+    var fillColor: Color
+    
+    init(
+        _ text: String,
+        textColor: Color = Color.text,
+        strokeColor: Color = Color.text.opacity(0.7),
+        fillColor: Color = Color.clear,
+        tap: @escaping () -> Void,
+        action: @escaping () -> Void
+    ) {
+        self.text = text
+        self.textColor = textColor
+        self.strokeColor = strokeColor
+        self.fillColor = fillColor
+        self.tap = tap
+        self.action = action
+    }
     
     var body: some View {
-        HStack(spacing: 10) {
-            Text(priority.text).smallFont()
+        HStack {
+            Text(text).smallFont()
             
-            Button {
-                priority = .no
-            } label: {
+            Button(action: action) {
                 Icon(this: .cancel, size: .xsmall, style: IconOnly()) {}
             }
         }
         .padding(8).padding(.horizontal, 8)
         .fixedSize()
         .fontWeight(.medium)
-        .foregroundStyle(Color.text)
+        .foregroundStyle(textColor)
         .background(
             RoundedRectangle(cornerRadius: 5)
-                .fill(priority.background)
-                .stroke(priority.color, lineWidth: 2)
+                .fill(fillColor)
+                .stroke(strokeColor, lineWidth: 2)
         )
         .onTapGesture {
-            show.toggle()
+            tap()
         }
-        .popPriority(show: $show, input: $priority)
     }
 }
 
-struct ScheduleButton: View {
-    @State private var show: Bool = false
-    
-    @Binding var date: Date?
-    var body: some View {
-        HStack(spacing: 10) {
-            Text(date?.relative() ?? "").smallFont()
-                .foregroundStyle(isPast(date) ? Color.past : Color.text)
-            
-            Button {
-                date = nil
-            } label: {
-                Icon(this: .cancel, size: .xsmall, style: IconOnly()) {}
-            }
+#Preview("rounded") {
+    VStack {
+        RoundedButton("this is me") {
+            print("show!")
+        } action: {
+            print("cancel!")
         }
-        .padding(8).padding(.horizontal, 8)
-        .fixedSize()
-        .fontWeight(.medium)
-        .foregroundStyle(Color.text)
-        .background(
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.text.opacity(0.7), lineWidth: 2)
-        )
-        .onTapGesture {
-            show.toggle()
-        }
-        .popSchedule(show: $show, input: $date)
-    }
-    
-    private func isPast(_ date: Date?) -> Bool {
-        if let date = date {
-            return date.isPast()
-        }
-        return false
     }
 }
 
 #Preview("priority") {
-    VStack {
-        PriorityButton(priority: .constant(.high))
-        PriorityButton(priority: .constant(.medium))
-        PriorityButton(priority: .constant(.low))
+    let priorities: [PriorityItem] = [.high, .medium, .low]
+    
+    return VStack {
+        ForEach(priorities, id: \.self) { priorityInput in
+            RoundedButton(
+                priorityInput.text,
+                strokeColor: priorityInput.color,
+                fillColor: priorityInput.background,
+                tap: {},
+                action: {}
+            ) 
+        }
     }
 }
 
 #Preview("priority dark") {
-    ZStack {
+    let priorities: [PriorityItem] = [.high, .medium, .low]
+    
+    return ZStack {
         Color.background.ignoresSafeArea()
         
         VStack {
-            PriorityButton(priority: .constant(.high))
-            PriorityButton(priority: .constant(.medium))
-            PriorityButton(priority: .constant(.low))
+            ForEach(priorities, id: \.self) { priorityInput in
+                RoundedButton(
+                    priorityInput.text,
+                    strokeColor: priorityInput.color,
+                    fillColor: priorityInput.background,
+                    tap: {},
+                    action: {}
+                )
+            }
         }
     }
     .preferredColorScheme(.dark)
 }
 
-
 #Preview("future") {
-    VStack {
-        ScheduleButton(date: .constant(ago(days: 1)))
-        ScheduleButton(date: .constant(Date()))
-        ScheduleButton(date: .constant(fromNow(days: 1)))
-        ScheduleButton(date: .constant(fromNow(days: 2)))
-        ScheduleButton(date: .constant(fromNow(days: 3)))
-        ScheduleButton(date: .constant(fromNow(days: 4)))
-        ScheduleButton(date: .constant(fromNow(days: 5)))
-        ScheduleButton(date: .constant(fromNow(days: 6)))
-        ScheduleButton(date: .constant(fromNow(days: 7)))
-        ScheduleButton(date: .constant(fromNow(days: 8)))
-        ScheduleButton(date: .constant(fromNow(days: 9)))
-        ScheduleButton(date: .constant(fromNow(days: 400)))
+    let dates: [Date] = [
+        ago(days: 1),
+        Date(),
+        fromNow(days: 1),
+        fromNow(days: 2),
+        fromNow(days: 3),
+        fromNow(days: 4),
+        fromNow(days: 5),
+        fromNow(days: 6),
+        fromNow(days: 7),
+        fromNow(days: 8),
+        fromNow(days: 9),
+        fromNow(days: 400)
+    ]
+    
+    return VStack {
+        ForEach(dates, id: \.self) { dateInput in
+            RoundedButton(
+                dateInput.relative() ?? "",
+                textColor: dateInput.isPast() ?? false ? Color.past : Color.text,
+                tap: {},
+                action: {}
+            )
+        }
     }
 }
 
 #Preview("past") {
-    ZStack {
+    let dates: [Date] = [
+        ago(days: 21),
+        ago(days: 9),
+        ago(days: 7),
+        ago(days: 5),
+        ago(days: 4),
+        ago(days: 3),
+        ago(days: 2),
+        ago(days: 1),
+        Date(),
+        fromNow(days: 1)
+    ]
+    
+    return ZStack {
         Color.background.ignoresSafeArea()
         
         VStack {
-            ScheduleButton(date: .constant(ago(days: 21)))
-            ScheduleButton(date: .constant(ago(days: 9)))
-            ScheduleButton(date: .constant(ago(days: 7)))
-            ScheduleButton(date: .constant(ago(days: 6)))
-            ScheduleButton(date: .constant(ago(days: 5)))
-            ScheduleButton(date: .constant(ago(days: 4)))
-            ScheduleButton(date: .constant(ago(days: 3)))
-            ScheduleButton(date: .constant(ago(days: 2)))
-            ScheduleButton(date: .constant(ago(days: 1)))
-            ScheduleButton(date: .constant(Date()))
+            ForEach(dates, id: \.self) { dateInput in
+                RoundedButton(
+                    dateInput.relative() ?? "",
+                    textColor: dateInput.isPast() ?? false ? Color.past : Color.text,
+                    tap: {},
+                    action: {}
+                )
+            }
         }
     }
     .preferredColorScheme(.dark)

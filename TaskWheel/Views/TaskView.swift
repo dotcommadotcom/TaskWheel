@@ -63,8 +63,9 @@ extension TaskView {
             detailsView()
             
             if dateInput != nil {
-                ScheduleButton(date: $dateInput)
+                scheduleButton()
             }
+//            ScheduleButton(date: $dateInput)
             
             addBarView()
         }
@@ -187,7 +188,7 @@ extension TaskView {
                     Text("Add priority").greyed()
                         .opacity(priorityInput.rawValue == 3 ? 1 : 0)
                     
-                    PriorityButton(priority: $priorityInput)
+                    priorityButton()
                         .opacity(priorityInput.rawValue == 3 ? 0 : 1)
                 }
             }
@@ -195,6 +196,18 @@ extension TaskView {
         .foregroundStyle(isAdd ? priorityInput.color : Color.text)
         .onLongPressGesture(minimumDuration: 0.5) {
             priorityInput = PriorityItem(3)
+        }
+    }
+    
+    private func priorityButton() -> some View {
+        RoundedButton(
+            priorityInput.text,
+            strokeColor: priorityInput.color,
+            fillColor: priorityInput.background
+        ) {
+            showPriority.toggle()
+        } action: {
+            priorityInput = .no
         }
     }
     
@@ -210,10 +223,28 @@ extension TaskView {
                         .opacity(dateInput == nil ? 1 : 0)
                     
                     if dateInput != nil {
-                        ScheduleButton(date: $dateInput)
+                        scheduleButton()
+//                        ScheduleButton(date: $dateInput)
                     }
                 }
             }
+        }
+    }
+    
+    private func scheduleButton() -> some View {
+        RoundedButton(
+            dateInput?.relative() ?? "",
+            textColor: dateInput?.isPast() ?? false ? Color.past : Color.text
+        ) {
+            showSchedule.toggle()
+        } action: {
+            dateInput = nil
+            taskViewModel.changeDate(of: task, to: nil)
+//            if let input = task.date {
+//                print("after \(task.title) is \(input.string())")
+//            } else {
+//                print("after \(task.title) is nil")
+//            }
         }
     }
 }
@@ -254,33 +285,28 @@ extension TaskView {
     }
     
     private func clickUpdateSave() {
-        if let input = dateInput {
-            print("new date", input.string())
-        } else {
-            print("new date is nil")
-        }
+//        if let input = dateInput {
+//            print("new date of \(task.title) is \(input.string())")
+//        } else {
+//            print("new date of \(task.title) is nil")
+//        }
+        taskViewModel.changeDate(of: task, to: dateInput)
         
-        let updated: TaskModel = TaskModel(
-            id: task.id,
-            creation: task.creation,
+        taskViewModel.update(
+            this: task,
             title: titleInput,
-            ofTaskList: task.ofTaskList,
-            isDone: task.isDone,
+            ofTaskList: taskViewModel.currentId(),
             details: detailsInput,
             priority: priorityInput.rawValue,
             date: dateInput
         )
         
-        if let index = taskViewModel.tasks.firstIndex(where: { $0.id == task.id }) {
-            taskViewModel.tasks[index] = updated
-            
-            if let x = taskViewModel.tasks[index].date {
-                print("updated date", x.string())
-            } else {
-                print("update date is nil")
-            }
-        }
-
+//        if let input = task.date {
+//            print("after \(task.title) is \(input.string())")
+//        } else {
+//            print("after \(task.title) is nil")
+//        }
+        
         navigation.goBack()
     }
 }

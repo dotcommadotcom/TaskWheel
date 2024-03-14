@@ -58,19 +58,22 @@ extension TaskViewModel {
         tasks.removeAll(where: condition)
     }
     
-    func update(this task: TaskModel, 
-                title: String? = nil,
-                ofTaskList: UUID? = nil,
-                details: String? = nil,
-                priority: Int? = nil,
-                date: Date? = nil
+    func update(
+        this task: TaskModel,
+        title: String? = nil,
+        ofTaskList: UUID? = nil,
+        details: String? = nil,
+        priority: Int? = nil,
+        date: Date? = nil
     ) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
-            tasks[index] = task.edit(title: title ?? task.title,
-                                     ofTaskList: ofTaskList ?? task.ofTaskList,
-                                     details: details ?? task.details,
-                                     priority: priority ?? task.priority,
-                                     date: date ?? task.date)
+            tasks[index] = task.edit(
+                title: title,
+                ofTaskList: ofTaskList,
+                details: details,
+                priority: priority,
+                date: date
+            )
         }
         
         //        if task.title != titleInput ||
@@ -82,9 +85,9 @@ extension TaskViewModel {
         //        }
     }
     
-    func resetDate(of task: TaskModel) {
+    func changeDate(of task: TaskModel, to date: Date?) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
-            tasks[index] = task.resetToNil()
+            tasks[index] = task.changeDate(to: date)
         }
     }
 }
@@ -209,8 +212,8 @@ extension TaskViewModel {
     
     static func tasksExamples() -> Deque<TaskModel> {
         [
-            .init(
-                  title: "laundry", 
+            .init( // 0
+                  title: "laundry",
                   ofTaskList: uuids[0],
                   isDone: false,
                   date: ago(days: 14)),
@@ -237,12 +240,15 @@ extension TaskViewModel {
                   ofTaskList: uuids[1], isDone: false, priority: 0),
             
             .init(
-                  title: "vacuum", ofTaskList: uuids[0], isDone: true, 
+                  title: "vacuum", ofTaskList: uuids[0], isDone: true,
                   priority: 1),
             
             .init(title: "its all a big circle jerk", 
-                  ofTaskList: uuids[1], 
-                  isDone: false),
+                  ofTaskList: uuids[1],
+                  details: "chelsea",
+                  priority: 2,
+                  date: ago(days: 10)
+                 ),
             
             .init(creation: ago(days: 2),
                   title: "water plants",

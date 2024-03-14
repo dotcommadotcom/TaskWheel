@@ -29,6 +29,7 @@ struct TaskRowView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
     @State var dateInput: Date?
+    @State private var showSchedule = false
     
     let task: TaskModel
     
@@ -52,9 +53,9 @@ struct TaskRowView: View {
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
                 }
-    
+                
                 if !task.isDone && dateInput != nil {
-                    ScheduleButton(date: $dateInput)
+                    scheduleButton()
                 }
             }
         }
@@ -62,8 +63,20 @@ struct TaskRowView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .mediumFont()
         .mark(isDone: task.isDone)
-        .onChange(of: dateInput) { _, _ in
+        .onReceive(taskViewModel.$tasks) { _ in
             changeDate()
+        }
+//        .onChange(of: dateInput) { _, _ in
+//            changeDate()
+//        }
+        .onAppear{
+            if task.title == "mop" {
+                if let input = task.date {
+                    print("\(task.title) is \(input.string())")
+                } else {
+                    print("\(task.title) is nil")
+                }
+            }
         }
     }
 }
@@ -83,16 +96,25 @@ extension TaskRowView {
         }
         .alignIcon()
     }
+    
+    private func scheduleButton() -> some View {
+        RoundedButton(
+            dateInput?.relative() ?? "",
+            textColor: dateInput?.isPast() ?? false ? Color.past : Color.text
+        ) {
+            showSchedule.toggle()
+        } action: {
+            dateInput = nil
+            changeDate()
+        }
+        .popSchedule(show: $showSchedule, input: $dateInput)
+    }
 }
 
 extension TaskRowView {
     
     private func changeDate() {
-        if dateInput == nil {
-            taskViewModel.resetDate(of: task)
-        } else {
-            taskViewModel.update(this: task, date: dateInput)
-        }
+        taskViewModel.changeDate(of: task, to: dateInput)
     }
     
     private func clickDone() {
