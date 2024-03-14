@@ -116,9 +116,9 @@ extension TaskView {
                 Button(action: {
                     clickUpdateSave()
                 }) {
-                    Icon(this: .back, style: IconOnly(), color: Color.text)
+                    Icon(this: .back, style: IconOnly())
                 }
-                .foregroundStyle(Color.text)
+                .tint(Color.text)
                 .padding([.horizontal])
                 .fontWeight(.semibold)
             }
@@ -280,12 +280,12 @@ extension TaskView {
         taskViewModel.update(
             this: task,
             title: titleInput,
-            ofTaskList: taskViewModel.currentId(),
             details: detailsInput,
             priority: priorityInput.rawValue
         )
         
         taskViewModel.changeDate(of: task, to: dateInput)
+        taskViewModel.moveTaskList(of: task)
         
         navigation.goBack()
     }

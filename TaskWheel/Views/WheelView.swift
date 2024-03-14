@@ -31,12 +31,10 @@ struct WheelView: View {
         .scaleEffect(1.9)
         .padding()
         .onReceive(taskViewModel.$tasks) { _ in
-            self.selected = -1
-            self.spinAngle = 0
-            self.isSpinDisabled = taskViewModel.currentCount() == 0
+            resetWheel()
         }
         .onReceive(taskViewModel.$current) { _ in
-            self.isSpinDisabled = taskViewModel.currentCount() == 0
+            resetWheel()
         }
         .onLongPressGesture {
             spin()
@@ -63,9 +61,13 @@ extension WheelView {
         let angleRads = angle * .pi / 180.0
         
         return NavigationLink(value: task) {
-            VStack {
+            VStack(alignment: .trailing, spacing: 4) {
+                let scoreInt = Int(spinVM.score(of: task).rounded(.toNearestOrAwayFromZero))
+                
                 Text(task.title.isEmpty ? "Empty title" : task.title)
-                Text(String(spinVM.score(of: task)))
+                Text("\(scoreInt)")
+                .greyed()
+                .font(.system(size: 7))
             }
         }
         .lineLimit(1)
@@ -77,7 +79,7 @@ extension WheelView {
                     x: cos(angleRads) * (sizeOffset - proxy.size.width / 2),
                     y: sin(angleRads) * (sizeOffset - proxy.size.width / 2))
         }
-        .frame(maxWidth: diameter / 2 * 0.6)
+        .frame(maxWidth: diameter / 2 * 0.5)
     }
     
     private func spinButton() -> some View {
@@ -91,6 +93,12 @@ extension WheelView {
 }
 
 extension WheelView {
+    
+    private func resetWheel() {
+        self.selected = -1
+        self.spinAngle = 0
+        self.isSpinDisabled = taskViewModel.currentCount() == 0
+    }
     
     private func spin() {
         guard !isSpinDisabled else { return }

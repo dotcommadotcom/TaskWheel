@@ -18,6 +18,24 @@ final class TaskVMTests: XCTestCase {
         multipleVM = nil
     }
     
+    // TEST - Move task list
+    
+    func testMoveTaskListDoesNothingWhenInCurrent() throws {
+        let previousTaskList = multipleVM.tasks[0].ofTaskList
+        
+        multipleVM.moveTaskList(of: multipleVM.tasks[0])
+        
+        XCTAssertEqual(multipleVM.tasks[0].ofTaskList, previousTaskList)
+    }
+    
+    func testMoveTaskList() throws {
+        let previousTaskList = multipleVM.tasks[6].ofTaskList
+        
+        multipleVM.moveTaskList(of: multipleVM.tasks[6])
+        
+        XCTAssertNotEqual(multipleVM.tasks[6].ofTaskList, previousTaskList)
+    }
+    
     // TEST - Change date
     
     func testChangeDateToTomorrow() throws {
@@ -34,28 +52,18 @@ final class TaskVMTests: XCTestCase {
     
     // TEST - Update task
     
-//    func testUpdateTaskDateToNil() throws {
-//        let previousDate = multipleVM.tasks[6].date
-//        
-//        multipleVM.update(this: multipleVM.tasks[6], date: nil)
-//        
-//        XCTAssertNil(multipleVM.tasks[6].date)
-//    }
-    
     func testUpdateMultipleProperties() throws {
         let previousTitle = multipleVM.tasks[6].title
         let previousOfTaskList = multipleVM.tasks[6].ofTaskList
         let previousDetails = multipleVM.tasks[6].details
         let previousPriority = multipleVM.tasks[6].priority
-        let previousDate = multipleVM.tasks[6].date
         
         multipleVM.update(
             this: multipleVM.tasks[6],
             title: "new title",
             ofTaskList: multipleVM.currentId(),
             details: "lets add some more",
-            priority: 0,
-            date: fromNow(days: 1)
+            priority: 0
         )
         
         XCTAssertEqual(previousTitle, "its all a big circle jerk")
@@ -63,7 +71,6 @@ final class TaskVMTests: XCTestCase {
         XCTAssertNotEqual(multipleVM.tasks[6].ofTaskList, previousOfTaskList)
         XCTAssertNotEqual(multipleVM.tasks[6].details, previousDetails)
         XCTAssertNotEqual(multipleVM.tasks[6].priority, previousPriority)
-        XCTAssertNotEqual(multipleVM.tasks[6].date?.string(), previousDate?.string())
     }
     
     func testUpdateTaskWithNothingChangesNothing() throws {

@@ -33,6 +33,13 @@ final class TaskListVMTests: XCTestCase {
 
     // TEST - Count
     
+    func testMoveTaskListCallsIncrementAndDecrement() throws {
+        multipleVM.moveTaskList(of: multipleVM.tasks[6])
+        
+        XCTAssertEqual(multipleVM.taskLists[0].count, 10)
+        XCTAssertEqual(multipleVM.taskLists[1].count, 1)
+    }
+    
     func testDeleteCallsDecrement() throws {
         multipleVM.toggleDone(multipleVM.tasks[6])
         
@@ -56,6 +63,18 @@ final class TaskListVMTests: XCTestCase {
         multipleVM.addTask(title: "ninth task")
         
         XCTAssertEqual(multipleVM.taskLists[0].count, 10)
+    }
+    
+    func testDecrementWithIndex() throws {
+        multipleVM.decrementListCount(2)
+        
+        XCTAssertEqual(multipleVM.taskLists[2].count, 0)
+    }
+    
+    func testIncrementWithIndex() throws {
+        multipleVM.incrementListCount(2)
+        
+        XCTAssertEqual(multipleVM.taskLists[2].count, 2)
     }
     
     func testDecrement() throws {
