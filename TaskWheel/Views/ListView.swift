@@ -28,14 +28,13 @@ struct ListView: View {
 struct TaskRowView: View {
     
     @EnvironmentObject var taskViewModel: TaskViewModel
-    @State var dateInput: Date?
+    @State var dateInput: Date? = nil
     @State private var showSchedule = false
     
     let task: TaskModel
     
     init(task: TaskModel) {
         self.task = task
-        _dateInput = State(initialValue: self.task.date)
     }
     
     var body: some View {
@@ -54,7 +53,7 @@ struct TaskRowView: View {
                         .multilineTextAlignment(.leading)
                 }
                 
-                if !task.isDone && dateInput != nil {
+                if !task.isDone && task.date != nil {
                     scheduleButton()
                 }
             }
@@ -63,12 +62,9 @@ struct TaskRowView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .mediumFont()
         .mark(isDone: task.isDone)
-        .onReceive(taskViewModel.$tasks) { _ in
+        .onChange(of: dateInput) { _, _ in
             changeDate()
         }
-//        .onChange(of: dateInput) { _, _ in
-//            changeDate()
-//        }
         .onAppear{
             if task.title == "mop" {
                 if let input = task.date {
@@ -99,13 +95,12 @@ extension TaskRowView {
     
     private func scheduleButton() -> some View {
         RoundedButton(
-            dateInput?.relative() ?? "",
-            textColor: dateInput?.isPast() ?? false ? Color.past : Color.text
+            task.date?.relative() ?? "",
+            textColor: task.date?.isPast() ?? false ? Color.past : Color.text
         ) {
             showSchedule.toggle()
         } action: {
-            dateInput = nil
-            changeDate()
+            taskViewModel.changeDate(of: task, to: nil)
         }
         .popSchedule(show: $showSchedule, input: $dateInput)
     }

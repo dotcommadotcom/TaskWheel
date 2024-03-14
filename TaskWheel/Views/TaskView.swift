@@ -65,7 +65,6 @@ extension TaskView {
             if dateInput != nil {
                 scheduleButton()
             }
-//            ScheduleButton(date: $dateInput)
             
             addBarView()
         }
@@ -224,7 +223,6 @@ extension TaskView {
                     
                     if dateInput != nil {
                         scheduleButton()
-//                        ScheduleButton(date: $dateInput)
                     }
                 }
             }
@@ -240,11 +238,6 @@ extension TaskView {
         } action: {
             dateInput = nil
             taskViewModel.changeDate(of: task, to: nil)
-//            if let input = task.date {
-//                print("after \(task.title) is \(input.string())")
-//            } else {
-//                print("after \(task.title) is nil")
-//            }
         }
     }
 }
@@ -285,11 +278,6 @@ extension TaskView {
     }
     
     private func clickUpdateSave() {
-//        if let input = dateInput {
-//            print("new date of \(task.title) is \(input.string())")
-//        } else {
-//            print("new date of \(task.title) is nil")
-//        }
         taskViewModel.changeDate(of: task, to: dateInput)
         
         taskViewModel.update(
@@ -300,12 +288,6 @@ extension TaskView {
             priority: priorityInput.rawValue,
             date: dateInput
         )
-        
-//        if let input = task.date {
-//            print("after \(task.title) is \(input.string())")
-//        } else {
-//            print("after \(task.title) is nil")
-//        }
         
         navigation.goBack()
     }
