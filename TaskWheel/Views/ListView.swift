@@ -65,15 +65,6 @@ struct TaskRowView: View {
         .onChange(of: dateInput) { _, _ in
             changeDate()
         }
-        .onAppear{
-            if task.title == "mop" {
-                if let input = task.date {
-                    print("\(task.title) is \(input.string())")
-                } else {
-                    print("\(task.title) is nil")
-                }
-            }
-        }
     }
 }
 
@@ -98,19 +89,15 @@ extension TaskRowView {
             task.date?.relative() ?? "",
             textColor: task.date?.isPast() ?? false ? Color.past : Color.text
         ) {
-            showSchedule.toggle()
+            clickSchedule()
         } action: {
-            taskViewModel.changeDate(of: task, to: nil)
+            resetDate()
         }
         .popSchedule(show: $showSchedule, input: $dateInput)
     }
 }
 
 extension TaskRowView {
-    
-    private func changeDate() {
-        taskViewModel.changeDate(of: task, to: dateInput)
-    }
     
     private func clickDone() {
         taskViewModel.toggleDone(task)
@@ -120,6 +107,18 @@ extension TaskRowView {
         return task.isDone ? Color.text.opacity(0.5) :
         task.priority != 3 ? PriorityItem(task.priority).color :
         Color.text
+    }
+    
+    private func clickSchedule() {
+        showSchedule.toggle()
+    }
+    
+    private func changeDate() {
+        taskViewModel.changeDate(of: task, to: dateInput)
+    }
+    
+    private func resetDate() {
+        taskViewModel.changeDate(of: task, to: nil)
     }
 }
 
