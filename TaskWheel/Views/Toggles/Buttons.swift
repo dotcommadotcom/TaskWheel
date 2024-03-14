@@ -114,8 +114,8 @@ struct RoundedButton: View {
     return VStack {
         ForEach(dates, id: \.self) { dateInput in
             RoundedButton(
-                dateInput.relative() ?? "",
-                textColor: dateInput.isPast() ?? false ? Color.past : Color.text,
+                dateInput.relative(),
+                textColor: dateInput.isPast() ? Color.past : Color.text,
                 tap: {},
                 action: {}
             )
@@ -143,8 +143,8 @@ struct RoundedButton: View {
         VStack {
             ForEach(dates, id: \.self) { dateInput in
                 RoundedButton(
-                    dateInput.relative() ?? "",
-                    textColor: dateInput.isPast() ?? false ? Color.past : Color.text,
+                    dateInput.relative(),
+                    textColor: dateInput.isPast() ? Color.past : Color.text,
                     tap: {},
                     action: {}
                 )
