@@ -159,11 +159,6 @@ extension TaskViewModel {
     func deleteDone() {
         deleteIf { $0.isDone && $0.ofTaskList == self.currentId()}
     }
-    
-    // TEST
-    func countDone() -> Int {
-        return tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }.count
-    }
 
     func toggleCurrentDoneVisible() {
         taskLists[current] = taskLists[current].toggleDoneVisible()
@@ -205,5 +200,9 @@ extension TaskViewModel {
         } else {
             taskLists[index] = taskLists[index].decrementCount()
         }
+    }
+    
+    func countDone() -> Int {
+        return tasks.filter { $0.ofTaskList == taskLists[current].id && $0.isDone }.count
     }
 }

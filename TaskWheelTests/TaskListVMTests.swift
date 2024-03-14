@@ -31,6 +31,24 @@ final class TaskListVMTests: XCTestCase {
         orderVM = nil
     }
 
+    // TEST - Count done
+    
+    func testCountDoneAfterToggleDone() throws {
+        let previousCount = multipleVM.countDone()
+        
+        multipleVM.toggleDone(multipleVM.tasks[0])
+        
+        XCTAssertEqual(multipleVM.countDone(), previousCount + 1)
+    }
+    
+    func testCountDone() throws {
+        let doneTasks = multipleVM.tasks.filter { $0.ofTaskList == multipleVM.taskLists[0].id && $0.isDone }
+        
+        multipleVM.toggleDone(multipleVM.tasks[6])
+        
+        XCTAssertEqual(multipleVM.countDone(), doneTasks.count)
+    }
+    
     // TEST - Count
     
     func testMoveTaskListCallsIncrementAndDecrement() throws {
