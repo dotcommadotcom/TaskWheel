@@ -20,6 +20,7 @@
 		B72F692B2B8C296100525EF8 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F692A2B8C296100525EF8 /* ListView.swift */; };
 		B72F692D2B8C2DF000525EF8 /* WheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72F692C2B8C2DF000525EF8 /* WheelView.swift */; };
 		B72F69402B8C97AD00525EF8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B72F693F2B8C97AD00525EF8 /* .gitignore */; };
+		B74AB2202BA5A27100A8A124 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B74AB21F2BA5A27100A8A124 /* README.md */; };
 		B75F44022B8C253A00D0B182 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75F44012B8C253A00D0B182 /* TabView.swift */; };
 		B768297A2B98B2F000F73055 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76829772B98A77400F73055 /* DateExtensionTests.swift */; };
 		B768297E2B99494600F73055 /* SpinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768297D2B99494600F73055 /* SpinViewModel.swift */; };
@@ -69,6 +70,7 @@
 		B72F692A2B8C296100525EF8 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		B72F692C2B8C2DF000525EF8 /* WheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelView.swift; sourceTree = "<group>"; };
 		B72F693F2B8C97AD00525EF8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B74AB21F2BA5A27100A8A124 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B75F44012B8C253A00D0B182 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		B76829772B98A77400F73055 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		B768297D2B99494600F73055 /* SpinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinViewModel.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		B71A81CD2B830BB000A8886F = {
 			isa = PBXGroup;
 			children = (
+				B74AB21F2BA5A27100A8A124 /* README.md */,
 				B72F693F2B8C97AD00525EF8 /* .gitignore */,
 				B71A81D82B830BB000A8886F /* TaskWheel */,
 				B7F5B8122B83746300F5CD9D /* TaskWheelTests */,
@@ -315,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71A81E12B830BB100A8886F /* Preview Assets.xcassets in Resources */,
+				B74AB2202BA5A27100A8A124 /* README.md in Resources */,
 				B72F69402B8C97AD00525EF8 /* .gitignore in Resources */,
 				B71A81DE2B830BB100A8886F /* Assets.xcassets in Resources */,
 			);
