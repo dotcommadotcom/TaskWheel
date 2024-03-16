@@ -34,7 +34,7 @@ struct SheetViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .popover(item: $selected) { _ in
+            .sheet(item: $selected) { _ in
                 SheetView(selected: $selected)
                     .presentSheet($sheetHeight)
             }
@@ -66,7 +66,7 @@ struct PriorityViewModifer: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .popover(isPresented: $show) {
+            .sheet(isPresented: $show) {
                 VStack {
                     PriorityView(priorityInput: $input)
                 }
@@ -83,7 +83,7 @@ struct ScheduleViewModifer: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .popover(isPresented: $show) {
+            .sheet(isPresented: $show) {
                 VStack {
                     CalendarView(dateInput: $input)
                 }
@@ -119,7 +119,7 @@ struct SheetPresentationModifier: ViewModifier {
             .padding(30)
             .fixedSize(horizontal: false, vertical: true)
             .foregroundStyle(Color.text)
-            .presentationCompactAdaptation(.sheet)
+//            .presentationCompactAdaptation(.sheet)
             .getSheetHeight($sheetHeight)
             .presentationDetents([.height(sheetHeight)])
             .presentationCornerRadius(25)
