@@ -2,6 +2,12 @@
 
 Spend less time figuring out what needs to be done and more time doing with TaskWheel. TaskWheel is a simple task management app that handles the management, leaving you to focus on your tasks.
 
+
+
+https://github.com/dotcommadotcom/TaskWheel/assets/77752358/76c1a9ea-d6b1-4b9d-8df9-b346f4b806b8
+
+
+
 ## Features
 - **"Do First" Score:** Automatically assesses the urgency and importance of each task using an algorithm.
 - **Smart Task Picker:**  Spin the wheel to randomly pick tasks, prioritizing those with higher "Do First" scores.
