@@ -13,4 +13,4 @@ Spend less time figuring out what needs to be done and more time doing with Task
 
 ## Acknowledgements
 
-This project was inspired by [Google Tasks](https://g.co/kgs/vceY2Hn), a task management application developed by Google. The design and certain functionalities of this TaskWheel project draw heavily from the intuitive user interface and features found in Google Tasks. We are grateful for the inspiration provided by Google Tasks, which has helped shape and enhance the user experience of our Todo list application.
+This project was inspired by [Google Tasks](https://g.co/kgs/vceY2Hn), a task management application developed by Google. The design and certain functionalities of this TaskWheel project draw heavily from the intuitive user interface and features found in Google Tasks. We are grateful for the inspiration provided by Google Tasks, which has helped shape and enhance the user experience of our application.

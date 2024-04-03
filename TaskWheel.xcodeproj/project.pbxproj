@@ -117,6 +117,7 @@
 		B71A81CD2B830BB000A8886F = {
 			isa = PBXGroup;
 			children = (
+				B74AB2212BA5B68F00A8A124 /* Images */,
 				B74AB21F2BA5A27100A8A124 /* README.md */,
 				B72F693F2B8C97AD00525EF8 /* .gitignore */,
 				B71A81D82B830BB000A8886F /* TaskWheel */,
@@ -178,6 +179,13 @@
 				B7B71FB32B8F5A9400233641 /* TaskListModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		B74AB2212BA5B68F00A8A124 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		B7EAF4672B95DC0B006732EE /* Toggles */ = {
