@@ -8,8 +8,8 @@ struct TaskWheelApp: App {
     
     init() {
         _taskViewModel = StateObject(wrappedValue: TaskViewModel(
-            TaskViewModel.tasksExamples(),
-            TaskViewModel.examples)
+//            TaskViewModel.tasksExamples(),
+//            TaskViewModel.examples)
         )
     }
     
